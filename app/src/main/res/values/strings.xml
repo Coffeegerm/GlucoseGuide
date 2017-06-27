@@ -9,7 +9,12 @@
     <string name="navigation_drawer_news">News</string>
     <string name="navigation_drawer_settings">Settings</string>
 
-
+    <string name="new_entry_date_and_time_label">Date and Time:</string>
+    <string name="new_entry_blood_glucose_label">Blood Glucose:</string>
+    <string name="new_entry_carbohydrates_label">Carbohydrates:</string>
+    <string name="new_entry_insulin_label">Insulin:</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 

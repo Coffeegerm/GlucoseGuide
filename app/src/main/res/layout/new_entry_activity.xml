@@ -1,10 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:theme="@style/AppTheme.NoActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/new_entry_date_and_time_label"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/new_entry_date_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_toLeftOf="@+id/new_entry_time_btn"
+                    android:layout_toStartOf="@+id/new_entry_time_btn"
+                    android:background="@android:color/transparent"
+                    android:text="@string/date" />
+
+                <Button
+                    android:id="@+id/new_entry_time_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/time" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="@string/cancel"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/saveBtn"
@@ -30,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:text="@string/save"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
