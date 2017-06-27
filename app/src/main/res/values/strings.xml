@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Material Logbook</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="navigation_drawer_list">List</string>
+    <string name="navigation_drawer_graph">Graph</string>
+    <string name="navigation_drawer_news">News</string>
+    <string name="navigation_drawer_settings">Settings</string>
+
+
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="action_delete_entries">Delete all Entries?</string>
+
+    <string name="blood_glucose">Blood Glucose</string>
+    <string name="carbohydrates">Carbohydrates</string>
+    <string name="insulin">Insulin</string>
+
+    <string name="blood_glucose_measurement">mg/dl</string>
+    <string name="carbs_measurement">grams</string>
+    <string name="insulin_measurement">units</string>
+</resources>
