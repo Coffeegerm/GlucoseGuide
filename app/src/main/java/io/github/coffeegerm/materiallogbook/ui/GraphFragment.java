@@ -21,6 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.adapter.GraphAdapter;
 import io.github.coffeegerm.materiallogbook.database.DummyData;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
@@ -39,6 +40,8 @@ public class GraphFragment extends Fragment {
     @BindView(R.id.graph_rec_view)
     RecyclerView mGraphRecView;
 
+    GraphAdapter mGraphAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,7 +49,8 @@ public class GraphFragment extends Fragment {
         ButterKnife.bind(this, graphView);
 
         mGraphRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        // TODO Create and set adapter
+        mGraphAdapter = new GraphAdapter(DummyData.getListData(), getActivity());
+        mGraphRecView.setAdapter(mGraphAdapter);
 
         // TODO Create RecyclerView Adapter for graph list
 
