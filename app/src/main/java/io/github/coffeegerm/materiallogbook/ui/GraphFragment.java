@@ -17,12 +17,13 @@ import java.util.List;
 import butterknife.BindView;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.database.DummyData;
+import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
  * Graph View fragment that will show a graph of sugar levels to show
- * patterns of sugar
+ * patterns of highs and lows
  */
 
 public class GraphFragment extends Fragment {
@@ -40,12 +41,18 @@ public class GraphFragment extends Fragment {
 
         // TODO Create RecyclerView Adapter for graph list
 
-        List mData = DummyData.getListData();
+        // TODO Fix graph data chart
+        List<EntryItem> mEntryItemList = DummyData.getListData();
 
         List<Entry> entries = new ArrayList<Entry>();
 
-        for (int i = 0; i < mData.size(); i++) {
-            entries.add(new Entry());
+        for (int i = 0; i < mEntryItemList.size(); i++) {
+            // X value = Date/Time
+            // float itemDate = mEntryItemList.get(i).getDate();
+            // Y value = Blood glucose level
+            int itemGlucoseLevel = mEntryItemList.get(i).getGlucose();
+            // Set X and Y values in the entries list
+            // entries.add(new Entry(itemDate, itemGlucoseLevel));
             // Figure this shit out
         }
 

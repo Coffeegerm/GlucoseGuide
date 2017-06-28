@@ -40,13 +40,52 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toRightOf="@+id/tv_date"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <!-- Line view -->
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.517"
+            app:layout_constraintLeft_toRightOf="@+id/tv_blood_glucose_label"
+            app:layout_constraintRight_toLeftOf="@+id/carbohydrates_label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"/>
+
+        <!-- Line view -->
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/carbohydrates_label"
+            app:layout_constraintRight_toLeftOf="@+id/insulin_label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"/>
 
         <TextView
             android:id="@+id/tv_blood_glucose_label"
@@ -86,12 +125,15 @@
             android:id="@+id/insulin_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="0dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginStart="8dp"
             android:text="@string/insulin"
             android:textColor="@color/cardview_dark_background"
             android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/carbohydrates_label"
+            app:layout_constraintHorizontal_bias="0.73"
             app:layout_constraintLeft_toRightOf="@+id/carbohydrates_label"
             app:layout_constraintRight_toRightOf="parent"/>
 
@@ -109,9 +151,9 @@
             android:layout_marginRight="8dp"
             android:text="@string/blood_glucose_measurement"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-            app:layout_constraintHorizontal_bias="0.452"
+            app:layout_constraintHorizontal_bias="0.906"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/textView8"/>
+            app:layout_constraintRight_toLeftOf="@+id/view"/>
 
         <TextView
             android:id="@+id/textView8"
@@ -121,9 +163,9 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/carbs_measurement"
-            app:layout_constraintHorizontal_bias="0.58"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.795"
+            app:layout_constraintLeft_toRightOf="@+id/view"
+            app:layout_constraintRight_toLeftOf="@+id/view2"
             app:layout_constraintTop_toBottomOf="@+id/tv_blood_glucose"/>
 
         <TextView
@@ -134,8 +176,8 @@
             android:layout_marginRight="8dp"
             android:text="@string/insulin_measurement"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-            app:layout_constraintHorizontal_bias="0.561"
-            app:layout_constraintLeft_toRightOf="@+id/textView8"
+            app:layout_constraintHorizontal_bias="0.71"
+            app:layout_constraintLeft_toRightOf="@+id/view2"
             app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
@@ -148,7 +190,7 @@
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_carbs"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/tv_carbs"/>
+            app:layout_constraintRight_toLeftOf="@+id/view"/>
 
         <TextView
             android:id="@+id/tv_carbs"
@@ -157,13 +199,15 @@
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/textView8"
+            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_date"
+            app:layout_constraintVertical_bias="0.0"/>
 
         <TextView
             android:id="@+id/tv_insulin"
@@ -175,7 +219,7 @@
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_carbs"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintLeft_toRightOf="@+id/tv_carbs"
+            app:layout_constraintLeft_toRightOf="@+id/view2"
             app:layout_constraintRight_toRightOf="parent"/>
     </android.support.constraint.ConstraintLayout>
 
