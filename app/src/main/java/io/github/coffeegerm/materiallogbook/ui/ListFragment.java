@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.database.DummyData;
 import io.github.coffeegerm.materiallogbook.adapter.EntryAdapter;
+import io.github.coffeegerm.materiallogbook.database.DummyData;
 
 /**
  * Created by david_yarz on 6/7/17.
