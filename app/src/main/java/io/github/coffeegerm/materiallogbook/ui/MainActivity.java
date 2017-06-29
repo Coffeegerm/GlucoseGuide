@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 
 /*
@@ -25,35 +27,38 @@ public class MainActivity extends AppCompatActivity
     Fragment listFragment = new ListFragment();
     Fragment graphFragment = new GraphFragment();
     Fragment settingsFragment = new SettingsFragment();
-
+    Fragment newsFragment = new NewsFragment();
     FragmentManager fragmentManager;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
+    @BindView(R.id.nav_view)
+    NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         fragmentManager = getSupportFragmentManager();
-
         fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -66,8 +71,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_list) {
-            // Handle the list action
-
+            // Swaps fragment to list fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
         } else if (id == R.id.nav_graph) {
             // Swaps fragment to graph fragment
@@ -75,10 +79,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             // Swaps fragment to settings fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, settingsFragment).commit();
+        } else if (id == R.id.nav_news) {
+            //Swaps fragment to news fragment
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }

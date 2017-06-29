@@ -19,11 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.NewEntryActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.NewsFragment">
+        </activity>
     </application>
 
 </manifest>

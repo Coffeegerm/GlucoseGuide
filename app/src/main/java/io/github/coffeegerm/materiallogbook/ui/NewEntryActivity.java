@@ -53,7 +53,7 @@ public class NewEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(R.anim.slide_from_left, R.anim.from_x_100);
+                overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
             }
         });
 
