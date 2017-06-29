@@ -57,7 +57,7 @@ public class GraphFragment extends Fragment {
 
         List<EntryItem> mEntryItemList = DummyData.getListData();
 
-        List<Entry> entries = new ArrayList<Entry>();
+        List<Entry> entries = new ArrayList<>();
 
         for (int i = 0; i < mEntryItemList.size(); i++) {
             // X value = Date/Time
@@ -69,17 +69,17 @@ public class GraphFragment extends Fragment {
         }
 
         LineDataSet dataSet = new LineDataSet(entries, "Blood Sugar Levels"); // Adding entries to dataset
-        dataSet.setColor(Color.BLUE);
-        dataSet.setValueTextColor(Color.BLACK);
-        LineData lineData = new LineData(dataSet);
+        int lineColor = R.color.colorPrimaryDark;
+        dataSet.setColor(lineColor); // Sets line color of graph to colorPrimarDark
+        dataSet.setValueTextColor(Color.BLACK); // Values on side will have text color of black
+        LineData lineData = new LineData(dataSet); // Sets the data found in the database to the LineChart
         mLineChart.setData(lineData);
         Description description = new Description();
-        description.setText("");
+        description.setText(""); // Disables description below chart
         mLineChart.setDescription(description);
-        mLineChart.setDragEnabled(true);
-        mLineChart.getLegend().setEnabled(false);
+        mLineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
+        mLineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
         mLineChart.invalidate(); // Refreshes
-
 
         return graphView;
     }

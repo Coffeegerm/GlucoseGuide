@@ -9,6 +9,12 @@ import android.view.ViewGroup;
 
 import io.github.coffeegerm.materiallogbook.R;
 
+/*
+* News Fragment
+*
+* Fragment that shows an RSS feed of diabetic news from sources
+* */
+
 public class NewsFragment extends Fragment {
 
     @Nullable

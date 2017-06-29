@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
+ * <p>
  * EntryItem POJO for setting and retrieving data for layouts
  */
 

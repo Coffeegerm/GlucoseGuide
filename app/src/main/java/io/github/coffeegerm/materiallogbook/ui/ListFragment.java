@@ -22,7 +22,7 @@ import io.github.coffeegerm.materiallogbook.adapter.EntryAdapter;
 import io.github.coffeegerm.materiallogbook.database.DummyData;
 
 /**
- * Created by david_yarz on 6/7/17.
+ * Created by David Yarzebinski on 6/7/17.
  * <p>
  * Fragment for list view of Entries
  */

@@ -11,9 +11,13 @@ import io.github.coffeegerm.materiallogbook.R;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
+ *
+ * Fragment for settings to change the way the app looks and others minor things
  */
 
 public class SettingsFragment extends Fragment {
+
+    private static final String TAG = "SettingsFragment";
 
     @Nullable
     @Override
