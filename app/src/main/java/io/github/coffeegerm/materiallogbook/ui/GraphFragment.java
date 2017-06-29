@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -34,6 +35,8 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 public class GraphFragment extends Fragment {
 
+    private static final String TAG = "GraphFragment";
+
     @BindView(R.id.line_chart)
     LineChart mLineChart;
 
@@ -52,9 +55,6 @@ public class GraphFragment extends Fragment {
         mGraphAdapter = new GraphAdapter(DummyData.getListData(), getActivity());
         mGraphRecView.setAdapter(mGraphAdapter);
 
-        // TODO Create RecyclerView Adapter for graph list
-
-        // TODO Fix graph data chart
         List<EntryItem> mEntryItemList = DummyData.getListData();
 
         List<Entry> entries = new ArrayList<Entry>();
@@ -68,11 +68,16 @@ public class GraphFragment extends Fragment {
             entries.add(new Entry(itemDate, itemGlucoseLevel));
         }
 
-        LineDataSet dataSet = new LineDataSet(entries, "Test"); // Adding entries to dataset
+        LineDataSet dataSet = new LineDataSet(entries, "Blood Sugar Levels"); // Adding entries to dataset
         dataSet.setColor(Color.BLUE);
         dataSet.setValueTextColor(Color.BLACK);
         LineData lineData = new LineData(dataSet);
         mLineChart.setData(lineData);
+        Description description = new Description();
+        description.setText("");
+        mLineChart.setDescription(description);
+        mLineChart.setDragEnabled(true);
+        mLineChart.getLegend().setEnabled(false);
         mLineChart.invalidate(); // Refreshes
 
 

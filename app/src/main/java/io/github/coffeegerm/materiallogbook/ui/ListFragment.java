@@ -1,5 +1,6 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,7 +51,8 @@ public class ListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), NewEntryActivity.class));
+                Bundle bundle = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.from_x_100, R.anim.to_x_zero).toBundle();
+                startActivity(new Intent(getContext(), NewEntryActivity.class), bundle);
             }
         });
 
