@@ -16,6 +16,8 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 /**
  * Created by David Yarzebinski on 6/28/2017.
+ * <p>
+ * Adapter used to fill the Recycler View in the Graph Fragment
  */
 
 public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {

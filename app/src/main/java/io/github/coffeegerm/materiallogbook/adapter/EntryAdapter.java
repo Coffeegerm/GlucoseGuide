@@ -17,7 +17,7 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
- * List Fragment adapter for RecyclerView
+ * Adapter used for listFragment
  */
 
 public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.holder> {
