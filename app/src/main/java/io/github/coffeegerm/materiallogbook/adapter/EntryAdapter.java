@@ -22,7 +22,7 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.holder> {
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY", Locale.US);
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
     private List<EntryItem> mEntryItemList;
     private LayoutInflater inflater;
