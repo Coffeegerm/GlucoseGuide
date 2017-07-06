@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
@@ -22,8 +20,6 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY", Locale.US);
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
     private List<EntryItem> mEntryItemList;
     private LayoutInflater inflater;
 
@@ -41,10 +37,8 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
     @Override
     public void onBindViewHolder(holder holder, int position) {
         EntryItem item = mEntryItemList.get(position);
-        String formattedDate = dateFormat.format(item.getDate());
-        String formattedTime = timeFormat.format(item.getDate());
-        holder.tvGraphDate.setText(formattedDate);
-        holder.tvGraphTime.setText(formattedTime);
+        holder.tvGraphDate.setText(item.getDate());
+        holder.tvGraphTime.setText(item.getTime());
         holder.tvGraphBloodGlucose.setText(String.valueOf(item.getGlucose()));
     }
 

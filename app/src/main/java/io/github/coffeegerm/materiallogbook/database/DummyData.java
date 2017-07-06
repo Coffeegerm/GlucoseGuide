@@ -1,7 +1,6 @@
 package io.github.coffeegerm.materiallogbook.database;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
@@ -17,61 +16,11 @@ public class DummyData {
     public static List<EntryItem> getListData() {
         List<EntryItem> data = new ArrayList<>();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 200; i++) {
             EntryItem item = new EntryItem();
-            Date date = new Date();
-            item.setDate(date);
+            item.setDate("Jun, 20 2017");
+            item.setTime("12:00 pm");
             item.setGlucose(120);
-            item.setCarbohydrates(45);
-            item.setInsulin(4.5);
-            data.add(item);
-        }
-
-        for (int i = 0; i < 2; i++) {
-            EntryItem item = new EntryItem();
-            Date date = new Date();
-            item.setDate(date);
-            item.setGlucose(98);
-            item.setCarbohydrates(45);
-            item.setInsulin(4.5);
-            data.add(item);
-        }
-
-        for (int i = 0; i < 2; i++) {
-            EntryItem item = new EntryItem();
-            Date date = new Date();
-            item.setDate(date);
-            item.setGlucose(76);
-            item.setCarbohydrates(45);
-            item.setInsulin(4.5);
-            data.add(item);
-        }
-
-        for (int i = 0; i < 2; i++) {
-            EntryItem item = new EntryItem();
-            Date date = new Date();
-            item.setDate(date);
-            item.setGlucose(50);
-            item.setCarbohydrates(45);
-            item.setInsulin(4.5);
-            data.add(item);
-        }
-
-        for (int i = 0; i < 2; i++) {
-            EntryItem item = new EntryItem();
-            Date date = new Date();
-            item.setDate(date);
-            item.setGlucose(178);
-            item.setCarbohydrates(45);
-            item.setInsulin(4.5);
-            data.add(item);
-        }
-
-        for (int i = 0; i < 2; i++) {
-            EntryItem item = new EntryItem();
-            Date date = new Date();
-            item.setDate(date);
-            item.setGlucose(130);
             item.setCarbohydrates(45);
             item.setInsulin(4.5);
             data.add(item);

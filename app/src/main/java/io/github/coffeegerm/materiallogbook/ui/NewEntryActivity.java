@@ -20,6 +20,7 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.utils.Utilities;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -52,9 +53,6 @@ public class NewEntryActivity extends AppCompatActivity {
     @BindView(R.id.new_entry_insulin_units)
     EditText newEntryInsulin;
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +65,10 @@ public class NewEntryActivity extends AppCompatActivity {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int min = cal.get(Calendar.MINUTE);
+        int minute = cal.get(Calendar.MINUTE);
 
         newEntryDate.setText(month + "/" + day + "/" + year);
-        newEntryTime.setText(hour + ":" + min);
+        newEntryTime.setText(Utilities.checkTimeString(hour, minute));
 
         newEntryDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,13 +81,23 @@ public class NewEntryActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
                             android.R.style.Theme_Material_Dialog_Alert,
-                            mDateSetListener,
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
+                                }
+                            },
                             year, month, day);
                     dialog.show();
                 } else {
                     DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
                             android.R.style.Theme_Holo_Light_Dialog,
-                            mDateSetListener,
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
+                                }
+                            },
                             year, month, day);
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     dialog.show();
@@ -102,30 +110,20 @@ public class NewEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
                 int hour = cal.get(Calendar.HOUR_OF_DAY);
-                int min = cal.get(Calendar.MINUTE);
+                final int min = cal.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(NewEntryActivity.this,
-                        mTimeSetListener,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                newEntryTime.setText(Utilities.checkTimeString(hourOfDay, minute));
+                                // newEntryTime.setText(convertedHourOfDay + ":" + minute + " " + AM_PM);
+                            }
+                        },
                         hour, min, false);
                 timePickerDialog.show();
             }
         });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Log.i(TAG, "onDateSet: Date set");
-                newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
-            }
-        };
-
-        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Log.i(TAG, "onTimeSet:" + hourOfDay + ":" + minute);
-                newEntryTime.setText(hourOfDay + ":" + minute);
-            }
-        };
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +133,8 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
+        // TODO Create Realm database
+        // TODO saveBtn onClickListener saves data given to database
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,10 +146,4 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    // TODO Create Realm database
-
-    // TODO saveBtn onClickListener saves data given to database
-
 }

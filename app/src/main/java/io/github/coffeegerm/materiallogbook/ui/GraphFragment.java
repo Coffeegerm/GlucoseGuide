@@ -61,7 +61,7 @@ public class GraphFragment extends Fragment {
 
         for (int i = 0; i < mEntryItemList.size(); i++) {
             // X value = Date/Time
-            float itemDate = mEntryItemList.get(i).getDate().getTime();
+            float itemDate = mEntryItemList.get(i).getCreatedDate().getTime();
             // Y value = Blood glucose level
             int itemGlucoseLevel = mEntryItemList.get(i).getGlucose();
             // Set X and Y values in the entries list

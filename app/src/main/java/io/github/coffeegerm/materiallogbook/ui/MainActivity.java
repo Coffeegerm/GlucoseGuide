@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.realm.Realm;
 
 /*
 * Activity for controlling which fragment should be presented and containing
@@ -29,15 +30,13 @@ public class MainActivity extends AppCompatActivity
     Fragment settingsFragment = new SettingsFragment();
     Fragment newsFragment = new NewsFragment();
     FragmentManager fragmentManager;
-
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-
     @BindView(R.id.nav_view)
     NavigationView mNavigationView;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +50,16 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        realm = Realm.getDefaultInstance();
+
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 
     @Override

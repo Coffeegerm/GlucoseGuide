@@ -2,6 +2,8 @@ package io.github.coffeegerm.materiallogbook.model;
 
 import java.util.Date;
 
+import io.realm.RealmObject;
+
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
@@ -9,18 +11,36 @@ import java.util.Date;
  * EntryItem POJO for setting and retrieving data for layouts
  */
 
-public class EntryItem {
-    private Date mDate;
+public class EntryItem extends RealmObject {
+    private Date createdDate;
+    private String mDate;
+    private String mTime;
     private int mGlucose;
     private int mCarbohydrates;
     private double mInsulin;
 
-    public Date getDate() {
+    public EntryItem() {
+        this.createdDate = new Date();
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public String getDate() {
         return mDate;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         mDate = date;
+    }
+
+    public String getTime() {
+        return mTime;
+    }
+
+    public void setTime(String time) {
+        mTime = time;
     }
 
     public int getGlucose() {
