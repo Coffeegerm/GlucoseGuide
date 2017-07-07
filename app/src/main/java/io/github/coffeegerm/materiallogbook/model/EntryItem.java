@@ -1,5 +1,7 @@
 package io.github.coffeegerm.materiallogbook.model;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 
 /**
@@ -10,9 +12,7 @@ import io.realm.RealmObject;
  */
 
 public class EntryItem extends RealmObject {
-    private long timestamp;
-    private String mDate;
-    private String mTime;
+    private Date mDate;
     private int mGlucose;
     private int mCarbohydrates;
     private double mInsulin;
@@ -20,29 +20,14 @@ public class EntryItem extends RealmObject {
     public EntryItem() {
     }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getDate() {
+    public Date getDate() {
         return mDate;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         mDate = date;
     }
 
-    public String getTime() {
-        return mTime;
-    }
-
-    public void setTime(String time) {
-        mTime = time;
-    }
 
     public int getGlucose() {
         return mGlucose;

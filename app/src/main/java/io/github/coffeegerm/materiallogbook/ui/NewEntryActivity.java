@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,11 +65,7 @@ public class NewEntryActivity extends AppCompatActivity {
         mRealm = Realm.getDefaultInstance();
 
         final Calendar cal = Calendar.getInstance();
-        int yearForDb;
-        int monthForDb;
-        int dayForDb;
-        int hourForDb;
-        int minuteForDb;
+        final Calendar calendarForDb = Calendar.getInstance();
 
         // Set date and time to current date and time on initial create
         int year = cal.get(Calendar.YEAR);
@@ -87,8 +83,7 @@ public class NewEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-                month++;
+                final int day = cal.get(Calendar.DAY_OF_MONTH);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
@@ -96,8 +91,8 @@ public class NewEntryActivity extends AppCompatActivity {
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                    month++;
                                     newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
+                                    calendarForDb.set(year, month, dayOfMonth);
                                 }
                             },
                             year, month, day);
@@ -109,6 +104,7 @@ public class NewEntryActivity extends AppCompatActivity {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                     newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
+                                    calendarForDb.set(year, month, dayOfMonth);
                                 }
                             },
                             year, month, day);
@@ -130,7 +126,8 @@ public class NewEntryActivity extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 newEntryTime.setText(Utilities.checkTimeString(hourOfDay, minute));
-
+                                calendarForDb.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                calendarForDb.set(Calendar.MINUTE, minute);
                             }
                         },
                         hour, min, false);
@@ -146,24 +143,17 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        // TODO Create Realm database
-        // TODO saveBtn onClickListener saves data given to database
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: + " + newEntryDate.getText().toString());
-                Log.i(TAG, "onClick: + " + newEntryTime.getText().toString());
-                Log.i(TAG, "onClick: + " + newEntryBloodGlucose.getText().toString());
-                Log.i(TAG, "onClick: + " + newEntryCarbohydrates.getText().toString());
-                Log.i(TAG, "onClick: + " + newEntryInsulin.getText().toString());
 
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         // Save Entry to database
                         EntryItem entryItem = mRealm.createObject(EntryItem.class);
-                        entryItem.setDate(newEntryDate.getText().toString());
-                        entryItem.setTime(newEntryTime.getText().toString());
+                        Date date = calendarForDb.getTime();
+                        entryItem.setDate(date);
                         if (!newEntryBloodGlucose.getText().toString().equals("")) {
                             entryItem.setGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
                         }

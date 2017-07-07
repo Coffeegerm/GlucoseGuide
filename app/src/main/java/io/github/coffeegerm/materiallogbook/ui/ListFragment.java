@@ -24,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.adapter.EntryAdapter;
+import io.github.coffeegerm.materiallogbook.adapter.ListAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -44,7 +44,7 @@ public class ListFragment extends Fragment {
     @BindView(R.id.rec_view)
     RecyclerView recView;
 
-    EntryAdapter mEntryAdapter;
+    ListAdapter mListAdapter;
     private Realm mRealm;
 
     @Nullable
@@ -125,7 +125,7 @@ public class ListFragment extends Fragment {
         RealmResults<EntryItem> entryItems = entryQuery.findAll();
         List<EntryItem> entries = new ArrayList<>(entryItems);
 
-        mEntryAdapter = new EntryAdapter(entries, getActivity());
-        recView.setAdapter(mEntryAdapter);
+        mListAdapter = new ListAdapter(entries, getActivity());
+        recView.setAdapter(mListAdapter);
     }
 }
