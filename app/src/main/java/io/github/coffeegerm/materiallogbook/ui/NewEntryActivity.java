@@ -64,10 +64,17 @@ public class NewEntryActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mRealm = Realm.getDefaultInstance();
 
+        final Calendar cal = Calendar.getInstance();
+        int yearForDb;
+        int monthForDb;
+        int dayForDb;
+        int hourForDb;
+        int minuteForDb;
+
         // Set date and time to current date and time on initial create
-        Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
+        month++;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
@@ -78,10 +85,10 @@ public class NewEntryActivity extends AppCompatActivity {
         newEntryDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
+                month++;
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
@@ -89,6 +96,7 @@ public class NewEntryActivity extends AppCompatActivity {
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    month++;
                                     newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
                                 }
                             },
@@ -122,7 +130,7 @@ public class NewEntryActivity extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 newEntryTime.setText(Utilities.checkTimeString(hourOfDay, minute));
-                                // newEntryTime.setText(convertedHourOfDay + ":" + minute + " " + AM_PM);
+
                             }
                         },
                         hour, min, false);

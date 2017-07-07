@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /*
 * Activity for controlling which fragment should be presented and containing
@@ -44,14 +45,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-        mNavigationView.setNavigationItemSelectedListener(this);
-        Realm.init(this);
-        realm = Realm.getDefaultInstance();
-
+        realmSetup();
+        setDrawerLayout();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
     }
@@ -94,5 +89,22 @@ public class MainActivity extends AppCompatActivity
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void realmSetup() {
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
+        realm = Realm.getInstance(config);
+    }
+
+    private void setDrawerLayout() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 }
