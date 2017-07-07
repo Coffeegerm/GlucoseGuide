@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         mNavigationView.setNavigationItemSelectedListener(this);
-
+        Realm.init(this);
         realm = Realm.getDefaultInstance();
 
         fragmentManager = getSupportFragmentManager();
@@ -80,10 +80,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_list) {
             // Swaps fragment to list fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
-        } else if (id == R.id.nav_graph) {
+        } /*
+        else if (id == R.id.nav_graph) {
             // Swaps fragment to graph fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, graphFragment).commit();
-        } else if (id == R.id.nav_settings) {
+        }*/ else if (id == R.id.nav_settings) {
             // Swaps fragment to settings fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, settingsFragment).commit();
         } else if (id == R.id.nav_news) {

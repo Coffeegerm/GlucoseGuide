@@ -20,7 +20,9 @@ import java.util.Calendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
+import io.realm.Realm;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -53,11 +55,14 @@ public class NewEntryActivity extends AppCompatActivity {
     @BindView(R.id.new_entry_insulin_units)
     EditText newEntryInsulin;
 
+    private Realm mRealm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_entry_activity);
         ButterKnife.bind(this);
+        mRealm = Realm.getDefaultInstance();
 
         // Set date and time to current date and time on initial create
         Calendar cal = Calendar.getInstance();
@@ -110,7 +115,7 @@ public class NewEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
                 int hour = cal.get(Calendar.HOUR_OF_DAY);
-                final int min = cal.get(Calendar.MINUTE);
+                int min = cal.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(NewEntryActivity.this,
                         new TimePickerDialog.OnTimeSetListener() {
@@ -143,6 +148,29 @@ public class NewEntryActivity extends AppCompatActivity {
                 Log.i(TAG, "onClick: + " + newEntryBloodGlucose.getText().toString());
                 Log.i(TAG, "onClick: + " + newEntryCarbohydrates.getText().toString());
                 Log.i(TAG, "onClick: + " + newEntryInsulin.getText().toString());
+
+                mRealm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        // Save Entry to database
+                        EntryItem entryItem = mRealm.createObject(EntryItem.class);
+                        entryItem.setDate(newEntryDate.getText().toString());
+                        entryItem.setTime(newEntryTime.getText().toString());
+                        if (!newEntryBloodGlucose.getText().toString().equals("")) {
+                            entryItem.setGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
+                        }
+                        if (!newEntryCarbohydrates.getText().toString().equals("")) {
+                            entryItem.setCarbohydrates(Integer.parseInt(newEntryCarbohydrates.getText().toString()));
+                        }
+
+                        if (!newEntryCarbohydrates.getText().toString().equals("")) {
+                            entryItem.setInsulin(Double.parseDouble(newEntryInsulin.getText().toString()));
+                        }
+                    }
+                });
+
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
             }
         });
     }

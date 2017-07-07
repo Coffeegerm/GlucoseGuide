@@ -35,13 +35,13 @@ public class EntryAdapter extends RecyclerView.Adapter<EntryAdapter.holder> {
     }
 
     @Override
-    public void onBindViewHolder(holder holder, int position) {
+    public void onBindViewHolder(holder mHolder, int position) {
         EntryItem item = mEntryItemList.get(position);
-        holder.tvDate.setText(item.getDate());
-        holder.tvTime.setText(item.getTime());
-        holder.tvBloodGlucose.setText(String.valueOf(item.getGlucose()));
-        holder.tvCarbohydrates.setText(String.valueOf(item.getCarbohydrates()));
-        holder.tvInsulin.setText(String.valueOf(item.getInsulin()));
+        mHolder.tvDate.setText(item.getDate());
+        mHolder.tvTime.setText(item.getTime());
+        mHolder.tvBloodGlucose.setText(String.valueOf(item.getGlucose()));
+        mHolder.tvCarbohydrates.setText(String.valueOf(item.getCarbohydrates()));
+        mHolder.tvInsulin.setText(String.valueOf(item.getInsulin()));
     }
 
     @Override

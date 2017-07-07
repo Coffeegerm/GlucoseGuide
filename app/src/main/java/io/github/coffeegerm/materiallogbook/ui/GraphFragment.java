@@ -1,30 +1,19 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.GraphAdapter;
-import io.github.coffeegerm.materiallogbook.database.DummyData;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -51,6 +40,7 @@ public class GraphFragment extends Fragment {
         final View graphView = inflater.inflate(R.layout.fragment_graph, container, false);
         ButterKnife.bind(this, graphView);
 
+        /*
         mGraphRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mGraphAdapter = new GraphAdapter(DummyData.getListData(), getActivity());
         mGraphRecView.setAdapter(mGraphAdapter);
@@ -80,7 +70,9 @@ public class GraphFragment extends Fragment {
         mLineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
         mLineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
         mLineChart.invalidate(); // Refreshes
+        */
 
         return graphView;
+
     }
 }
