@@ -44,7 +44,7 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
         String formattedDate = dateFormat.format(item.getDate());
         String formattedTime = timeFormat.format(item.getDate());
         mHolder.tvGraphDate.setText(formattedDate);
-        mHolder.tvGraphDate.setText(formattedTime);
+        mHolder.tvGraphTime.setText(formattedTime);
         mHolder.tvGraphBloodGlucose.setText(String.valueOf(item.getGlucose()));
     }
 

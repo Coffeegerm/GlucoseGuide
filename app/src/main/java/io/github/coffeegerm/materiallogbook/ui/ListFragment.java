@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,9 +25,8 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.ListAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 /**
  * Created by David Yarzebinski on 6/7/17.
@@ -121,9 +119,7 @@ public class ListFragment extends Fragment {
     private void setUpRecyclerView() {
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        RealmQuery<EntryItem> entryQuery = mRealm.where(EntryItem.class);
-        RealmResults<EntryItem> entryItems = entryQuery.findAll();
-        List<EntryItem> entries = new ArrayList<>(entryItems);
+        List<EntryItem> entries = Utilities.getSortedRealmList();
 
         mListAdapter = new ListAdapter(entries, getActivity());
         recView.setAdapter(mListAdapter);

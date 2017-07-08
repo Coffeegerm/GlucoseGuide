@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -60,11 +61,13 @@ public class NewEntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate: NewEntryActivity started");
         setContentView(R.layout.new_entry_activity);
         ButterKnife.bind(this);
         mRealm = Realm.getDefaultInstance();
 
         final Calendar cal = Calendar.getInstance();
+        // Calendar for saving entered Date and Time
         final Calendar calendarForDb = Calendar.getInstance();
 
         // Set date and time to current date and time on initial create
@@ -83,7 +86,7 @@ public class NewEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
-                final int day = cal.get(Calendar.DAY_OF_MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
@@ -91,7 +94,9 @@ public class NewEntryActivity extends AppCompatActivity {
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    month++;
                                     newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
+                                    month--;
                                     calendarForDb.set(year, month, dayOfMonth);
                                 }
                             },
@@ -103,7 +108,9 @@ public class NewEntryActivity extends AppCompatActivity {
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    month++;
                                     newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
+                                    month--;
                                     calendarForDb.set(year, month, dayOfMonth);
                                 }
                             },
@@ -152,21 +159,25 @@ public class NewEntryActivity extends AppCompatActivity {
                     public void execute(Realm realm) {
                         // Save Entry to database
                         EntryItem entryItem = mRealm.createObject(EntryItem.class);
+                        // Creates Date object made from the DatePicker and TimePicker
                         Date date = calendarForDb.getTime();
                         entryItem.setDate(date);
+                        // Prevention of NullPointerException
                         if (!newEntryBloodGlucose.getText().toString().equals("")) {
                             entryItem.setGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
                         }
+                        // Prevention of NullPointerException
                         if (!newEntryCarbohydrates.getText().toString().equals("")) {
                             entryItem.setCarbohydrates(Integer.parseInt(newEntryCarbohydrates.getText().toString()));
                         }
-
+                        // Prevention of NullPointerException
                         if (!newEntryCarbohydrates.getText().toString().equals("")) {
                             entryItem.setInsulin(Double.parseDouble(newEntryInsulin.getText().toString()));
                         }
                     }
                 });
 
+                // After save returns to MainActivity ListFragment
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
             }
