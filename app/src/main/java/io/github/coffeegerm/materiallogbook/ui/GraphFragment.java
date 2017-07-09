@@ -28,9 +28,6 @@ import io.github.coffeegerm.materiallogbook.adapter.GraphAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
-import io.realm.Sort;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -65,9 +62,7 @@ public class GraphFragment extends Fragment {
     }
 
     private void setupRecView() {
-        RealmQuery<EntryItem> entryQuery = mRealm.where(EntryItem.class);
-        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("mDate", Sort.DESCENDING);
-        List<EntryItem> entries = new ArrayList<>(entryItems);
+        List<EntryItem> entries = Utilities.getSortedRealmList();
 
         mGraphRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mGraphAdapter = new GraphAdapter(entries, getActivity());
