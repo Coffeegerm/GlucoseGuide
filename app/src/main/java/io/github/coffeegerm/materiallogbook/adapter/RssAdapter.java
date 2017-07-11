@@ -27,7 +27,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
 
     @Override
     public holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.list_item, parent, false);
+        View view = inflater.inflate(R.layout.card_list_item, parent, false);
         return new holder(view);
     }
 

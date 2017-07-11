@@ -98,6 +98,7 @@ public class ListFragment extends Fragment {
                                 @Override
                                 public void execute(Realm realm) {
                                     realm.delete(EntryItem.class);
+                                    setUpRecyclerView();
                                 }
                             });
                         }
@@ -108,7 +109,7 @@ public class ListFragment extends Fragment {
                             dialog.dismiss();
                         }
                     })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setIcon(R.drawable.ic_trash)
                     .show();
             return true;
         }
@@ -118,9 +119,7 @@ public class ListFragment extends Fragment {
 
     private void setUpRecyclerView() {
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         List<EntryItem> entries = Utilities.getSortedRealmList();
-
         mListAdapter = new ListAdapter(entries, getActivity());
         recView.setAdapter(mListAdapter);
     }

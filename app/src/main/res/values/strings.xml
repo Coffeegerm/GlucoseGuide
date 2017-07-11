@@ -27,4 +27,7 @@
     <string name="blood_glucose_measurement">mg/dl</string>
     <string name="carbs_measurement">grams</string>
     <string name="insulin_measurement">units</string>
+
+    <string name="burn">Burn them all</string>
+    <string name="mistake">Pressed the wrong button</string>
 </resources>

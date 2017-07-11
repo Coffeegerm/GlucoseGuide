@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -27,7 +28,6 @@ import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.GraphAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
-import io.realm.Realm;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -40,6 +40,8 @@ public class GraphFragment extends Fragment {
 
     private static final String TAG = "GraphFragment";
 
+    int lineColor = R.color.colorPrimaryDark;
+
     @BindView(R.id.line_chart)
     LineChart mLineChart;
 
@@ -47,39 +49,37 @@ public class GraphFragment extends Fragment {
     RecyclerView mGraphRecView;
 
     GraphAdapter mGraphAdapter;
-    private Realm mRealm;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View graphView = inflater.inflate(R.layout.fragment_graph, container, false);
         ButterKnife.bind(this, graphView);
-        mRealm = Realm.getDefaultInstance();
         setupRecView();
         setupGraph();
-
         return graphView;
     }
 
     private void setupRecView() {
+        // Get sorted List from RealmResults
         List<EntryItem> entries = Utilities.getSortedRealmList();
-
         mGraphRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mGraphAdapter = new GraphAdapter(entries, getActivity());
         mGraphRecView.setAdapter(mGraphAdapter);
     }
 
     private void setupGraph() {
+        // Get sorted List from RealmResults
         List<EntryItem> realmEntries = Utilities.getSortedRealmList();
 
         // List of Entries for Graph
         List<Entry> entries = new ArrayList<>();
 
         for (int i = 0; i < realmEntries.size(); i++) {
-            // Y value = Date/Time
+            // X value = Date/Time
             float itemDate = realmEntries.get(i).getDate().getTime();
-            // X value = Blood glucose level
-            int itemGlucoseLevel = realmEntries.get(i).getGlucose();
+            // Y value = Blood glucose level
+            float itemGlucoseLevel = realmEntries.get(i).getGlucose();
             // Set X and Y values in the entries list
             entries.add(new Entry(itemDate, itemGlucoseLevel));
         }
@@ -89,16 +89,21 @@ public class GraphFragment extends Fragment {
             Toast.makeText(getContext(), "Enter entries to create a graph", Toast.LENGTH_SHORT).show();
         } else {
             LineDataSet dataSet = new LineDataSet(entries, "Blood Sugar Levels"); // Adding entries to dataset
-            int lineColor = R.color.colorPrimaryDark;
             dataSet.setColor(lineColor); // Sets line color of graph to colorPrimaryDark
             dataSet.setValueTextColor(Color.BLACK); // Values on side will have text color of black
             LineData lineData = new LineData(dataSet); // Sets the data found in the database to the LineChart
             mLineChart.setData(lineData);
             Description description = new Description();
-            description.setText("Shows sugar over time"); // Disables description below chart
+            description.setText(""); // Disables description below chart
             mLineChart.setDescription(description);
+            mLineChart.setScaleEnabled(true);
             mLineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
+            mLineChart.setDoubleTapToZoomEnabled(false); // Disables the user to double tap to zoom, rather useless feature in present day form factor
             mLineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
+
+            XAxis xAxis = mLineChart.getXAxis();
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Positions text of X Axis on bottom of Graph
+
             mLineChart.invalidate(); // Refreshes
         }
     }
