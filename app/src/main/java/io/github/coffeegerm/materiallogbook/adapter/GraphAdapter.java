@@ -34,18 +34,18 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
 
     @Override
     public holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.graph_list_item, parent, false);
+        View view = inflater.inflate(R.layout.item_graph_list, parent, false);
         return new holder(view);
     }
 
     @Override
-    public void onBindViewHolder(holder mHolder, int position) {
+    public void onBindViewHolder(holder holder, int position) {
         EntryItem item = mEntryItemList.get(position);
         String formattedDate = dateFormat.format(item.getDate());
         String formattedTime = timeFormat.format(item.getDate());
-        mHolder.tvGraphDate.setText(formattedDate);
-        mHolder.tvGraphTime.setText(formattedTime);
-        mHolder.tvGraphBloodGlucose.setText(String.valueOf(item.getGlucose()));
+        holder.tvGraphDate.setText(formattedDate);
+        holder.tvGraphTime.setText(formattedTime);
+        holder.tvGraphBloodGlucose.setText(String.valueOf(item.getGlucose()));
     }
 
     @Override

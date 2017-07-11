@@ -70,16 +70,16 @@ public class GraphFragment extends Fragment {
 
     private void setupGraph() {
         // Get sorted List from RealmResults
-        List<EntryItem> realmEntries = Utilities.getSortedRealmList();
+        List<EntryItem> listOfRealmEntries = Utilities.getSortedRealmList();
 
         // List of Entries for Graph
         List<Entry> entries = new ArrayList<>();
 
-        for (int i = 0; i < realmEntries.size(); i++) {
+        for (int i = 0; i < listOfRealmEntries.size(); i++) {
             // X value = Date/Time
-            float itemDate = realmEntries.get(i).getDate().getTime();
+            float itemDate = listOfRealmEntries.get(i).getDate().getTime();
             // Y value = Blood glucose level
-            float itemGlucoseLevel = realmEntries.get(i).getGlucose();
+            float itemGlucoseLevel = listOfRealmEntries.get(i).getGlucose();
             // Set X and Y values in the entries list
             entries.add(new Entry(itemDate, itemGlucoseLevel));
         }

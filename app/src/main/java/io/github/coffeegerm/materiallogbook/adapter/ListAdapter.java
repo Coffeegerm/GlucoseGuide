@@ -34,20 +34,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
 
     @Override
     public holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.card_list_item, parent, false);
+        View view = inflater.inflate(R.layout.item_card_list, parent, false);
         return new holder(view);
     }
 
     @Override
-    public void onBindViewHolder(holder mHolder, int position) {
+    public void onBindViewHolder(holder holder, int position) {
         EntryItem item = mEntryItemList.get(position);
         String formattedDate = dateFormat.format(item.getDate());
         String formattedTime = timeFormat.format(item.getDate());
-        mHolder.tvDate.setText(formattedDate);
-        mHolder.tvTime.setText(formattedTime);
-        mHolder.tvBloodGlucose.setText(String.valueOf(item.getGlucose()));
-        mHolder.tvCarbohydrates.setText(String.valueOf(item.getCarbohydrates()));
-        mHolder.tvInsulin.setText(String.valueOf(item.getInsulin()));
+        holder.tvDate.setText(formattedDate);
+        holder.tvTime.setText(formattedTime);
+        holder.tvBloodGlucose.setText(String.valueOf(item.getGlucose()));
+        holder.tvCarbohydrates.setText(String.valueOf(item.getCarbohydrates()));
+        holder.tvInsulin.setText(String.valueOf(item.getInsulin()));
     }
 
     @Override
