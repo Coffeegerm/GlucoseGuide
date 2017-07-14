@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -42,7 +43,6 @@ public class ListFragment extends Fragment {
     @BindView(R.id.rec_view)
     RecyclerView recView;
 
-    ListAdapter mListAdapter;
     private Realm mRealm;
 
     @Nullable
@@ -53,15 +53,7 @@ public class ListFragment extends Fragment {
         setHasOptionsMenu(true);
         mRealm = Realm.getDefaultInstance();
         setUpRecyclerView();
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.from_x_100, R.anim.to_x_zero).toBundle();
-                startActivity(new Intent(getContext(), NewEntryActivity.class), bundle);
-            }
-        });
-
+        setFab();
         return listView;
     }
 
@@ -120,7 +112,21 @@ public class ListFragment extends Fragment {
     private void setUpRecyclerView() {
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
         List<EntryItem> entries = Utilities.getSortedRealmList();
-        mListAdapter = new ListAdapter(entries, getActivity());
+        ListAdapter mListAdapter = new ListAdapter(entries, getActivity());
         recView.setAdapter(mListAdapter);
+    }
+
+    private void setFab() {
+        FloatingActionButton.Behavior fabBehavior = new fabBehavior();
+        CoordinatorLayout.LayoutParams fabLayout = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        fabLayout.setBehavior(fabBehavior);
+        fab.setLayoutParams(fabLayout);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.from_x_100, R.anim.to_x_zero).toBundle();
+                startActivity(new Intent(getContext(), NewEntryActivity.class), bundle);
+            }
+        });
     }
 }

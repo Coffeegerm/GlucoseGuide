@@ -30,4 +30,7 @@
 
     <string name="burn">Burn them all</string>
     <string name="mistake">Pressed the wrong button</string>
+
+    <!--Settings Strings-->
+    <string name="settings_dark_mode">Use dark mode:</string>
 </resources>

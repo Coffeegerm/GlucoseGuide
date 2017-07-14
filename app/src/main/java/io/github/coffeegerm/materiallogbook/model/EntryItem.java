@@ -28,6 +28,9 @@ public class EntryItem extends RealmObject {
         mDate = date;
     }
 
+    public long getTimestamp() {
+        return mDate.getTime();
+    }
 
     public int getGlucose() {
         return mGlucose;
