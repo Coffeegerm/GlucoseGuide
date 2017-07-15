@@ -58,7 +58,7 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
         private TextView tvGraphTime;
         private TextView tvGraphBloodGlucose;
 
-        public holder(View itemView) {
+        holder(View itemView) {
             super(itemView);
             tvGraphDate = (TextView) itemView.findViewById(R.id.graph_item_date_tv);
             tvGraphTime = (TextView) itemView.findViewById(R.id.graph_item_time_tv);

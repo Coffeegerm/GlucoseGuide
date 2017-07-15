@@ -62,7 +62,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
         private TextView tvInsulin;
         private TextView tvCarbohydrates;
 
-        public holder(View itemView) {
+        holder(View itemView) {
             super(itemView);
             tvDate = (TextView) itemView.findViewById(R.id.tv_date);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);

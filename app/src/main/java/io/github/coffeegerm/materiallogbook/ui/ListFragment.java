@@ -27,6 +27,7 @@ import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.ListAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
+import io.github.coffeegerm.materiallogbook.utils.fabBehavior;
 import io.realm.Realm;
 
 /**
@@ -117,10 +118,18 @@ public class ListFragment extends Fragment {
     }
 
     private void setFab() {
+        /*
+        * Creates new fabBehavior for animation of fab onScroll
+        * */
         FloatingActionButton.Behavior fabBehavior = new fabBehavior();
         CoordinatorLayout.LayoutParams fabLayout = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         fabLayout.setBehavior(fabBehavior);
         fab.setLayoutParams(fabLayout);
+
+        /*
+        * Starts NewEntryActivity, which allows the user to define
+        * a new entry
+        * */
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

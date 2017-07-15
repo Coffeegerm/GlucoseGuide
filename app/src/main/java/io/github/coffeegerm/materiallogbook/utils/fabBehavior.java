@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui;
+package io.github.coffeegerm.materiallogbook.utils;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -12,10 +12,10 @@ import android.view.animation.LinearInterpolator;
  * Class dedicated to create the animation for FAB to slide below screen.
  */
 
-class fabBehavior extends FloatingActionButton.Behavior {
+public class fabBehavior extends FloatingActionButton.Behavior {
 
     // Constructor for construction's sake
-    fabBehavior() {
+    public fabBehavior() {
     }
 
     @Override

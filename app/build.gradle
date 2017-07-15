@@ -40,4 +40,7 @@ dependencies {
 
     // MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
+    //RSS Parser
+    compile 'com.prof.rssparser:rssparser:1.0'
 }
