@@ -1,10 +1,13 @@
 package io.github.coffeegerm.materiallogbook.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.prof.rssparser.Article;
@@ -26,10 +29,12 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
 
     private LayoutInflater inflater;
     private ArrayList<Article> articleList;
+    private Context mContext;
 
     public RssAdapter(ArrayList<Article> articleList, Context c) {
         this.inflater = LayoutInflater.from(c);
         this.articleList = articleList;
+        this.mContext = c;
     }
 
     @Override
@@ -39,7 +44,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
     }
 
     @Override
-    public void onBindViewHolder(holder holder, int position) {
+    public void onBindViewHolder(holder holder, final int position) {
         Article currentArticle = articleList.get(position);
         Date date = currentArticle.getPubDate();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
@@ -48,6 +53,32 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
         holder.articleTitle.setText(currentArticle.getTitle());
         holder.articleDesc.setText(currentArticle.getDescription());
         holder.articlePubDate.setText(pubDate);
+
+        // Opens desired article onClick
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebView articleView = new WebView(mContext);
+                articleView.getSettings().setLoadWithOverviewMode(true);
+                String articleTitle = articleList.get(position).getTitle();
+                String articleLink = articleList.get(position).getLink();
+
+                articleView.getSettings().setJavaScriptEnabled(true);
+                articleView.setHorizontalScrollBarEnabled(false);
+                articleView.setWebChromeClient(new WebChromeClient());
+                articleView.loadUrl(articleLink);
+
+                android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(mContext).create();
+                alertDialog.setView(articleView);
+                alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL, "Close",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
     }
 
     @Override
