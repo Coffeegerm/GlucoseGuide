@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             app:theme="@style/AppTheme.NoActionBar">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:theme="@style/AppTheme.NoActionBar">
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"
+            android:text="@string/create_entry"
+            android:textSize="18sp"/>
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
@@ -18,7 +45,7 @@
         android:text="@string/new_entry_date_and_time_label"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"/>
 
 
     <TextView
@@ -53,9 +80,12 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/blood_glucose_measurement"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_blood_glucose_level"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/new_entry_blood_glucose_level"
@@ -93,9 +123,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/carbs_measurement"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_carbohydrates_amount"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/new_entry_carbohydrates_amount"
@@ -126,7 +159,7 @@
         android:inputType="numberDecimal"
         android:maxLength="4"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/textView4"
         app:layout_constraintRight_toLeftOf="@+id/textView5"/>
 
@@ -137,6 +170,7 @@
         android:layout_marginEnd="27dp"
         android:layout_marginRight="27dp"
         android:text="@string/insulin_measurement"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_insulin_units"
         app:layout_constraintRight_toRightOf="parent"/>
 
@@ -145,9 +179,6 @@
         style="?attr/buttonBarButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -187,8 +218,10 @@
         android:id="@+id/new_entry_date"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:ems="10"
         android:focusable="false"
         android:hint="@string/date"

@@ -62,7 +62,7 @@ public class NewEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate: NewEntryActivity started");
-        setContentView(R.layout.new_entry_activity);
+        setContentView(R.layout.activity_new_entry);
         ButterKnife.bind(this);
         mRealm = Realm.getDefaultInstance();
 
@@ -171,7 +171,7 @@ public class NewEntryActivity extends AppCompatActivity {
                             entryItem.setCarbohydrates(Integer.parseInt(newEntryCarbohydrates.getText().toString()));
                         }
                         // Prevention of NullPointerException
-                        if (!newEntryCarbohydrates.getText().toString().equals("")) {
+                        if (!newEntryInsulin.getText().toString().equals("")) {
                             entryItem.setInsulin(Double.parseDouble(newEntryInsulin.getText().toString()));
                         }
                     }

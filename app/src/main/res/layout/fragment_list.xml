@@ -18,6 +18,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/blood_drop"
-        app:fabSize="auto"/>
+        app:fabSize="normal"/>
 
 </android.support.design.widget.CoordinatorLayout>

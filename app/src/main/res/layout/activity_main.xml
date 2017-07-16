@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_marginTop="?attr/actionBarSize"
-        app:menu="@menu/activity_main_drawer"/>
+        app:menu="@menu/activity_main_drawer"
+        app:theme="@style/AppTheme.Drawer"/>
 
 </android.support.v4.widget.DrawerLayout>
