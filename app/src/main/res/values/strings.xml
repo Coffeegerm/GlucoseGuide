@@ -28,6 +28,8 @@
     <string name="carbs_measurement">grams</string>
     <string name="insulin_measurement">units</string>
 
+    <string name="dash">-</string>
+
     <string name="create_entry">Create a new log entry!</string>
 
     <string name="burn">Burn them all</string>

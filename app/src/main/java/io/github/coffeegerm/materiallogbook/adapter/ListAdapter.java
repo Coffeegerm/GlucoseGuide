@@ -22,9 +22,9 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
 
+    private List<EntryItem> mEntryItemList;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
-    private List<EntryItem> mEntryItemList;
     private LayoutInflater inflater;
 
     public ListAdapter(List<EntryItem> entryItemList, Context c) {
@@ -45,9 +45,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
         String formattedTime = timeFormat.format(item.getDate());
         holder.tvDate.setText(formattedDate);
         holder.tvTime.setText(formattedTime);
-        holder.tvBloodGlucose.setText(String.valueOf(item.getGlucose()));
-        holder.tvCarbohydrates.setText(String.valueOf(item.getCarbohydrates()));
-        holder.tvInsulin.setText(String.valueOf(item.getInsulin()));
+
+        if (String.valueOf(item.getGlucose()).equals("0")) {
+            holder.tvBloodGlucose.setText(R.string.dash);
+        } else {
+            holder.tvBloodGlucose.setText(String.valueOf(item.getGlucose()));
+        }
+
+        if (String.valueOf(item.getCarbohydrates()).equals("0")) {
+            holder.tvCarbohydrates.setText(R.string.dash);
+        } else {
+            holder.tvCarbohydrates.setText(String.valueOf(item.getCarbohydrates()));
+        }
+
+        if (String.valueOf(item.getInsulin()).equals("0.0")) {
+            holder.tvInsulin.setText(R.string.dash);
+        } else {
+            holder.tvInsulin.setText(String.valueOf(item.getInsulin()));
+        }
     }
 
     @Override
