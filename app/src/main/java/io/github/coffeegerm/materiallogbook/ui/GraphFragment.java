@@ -28,7 +28,6 @@ import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.GraphAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -92,7 +91,7 @@ public class GraphFragment extends Fragment {
 
         if (entries.size() == 0) {
             Log.i(TAG, "setupGraph: No entries found");
-            Toast.makeText(getContext(), "Enter entries to create a graph", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Enter entries with glucose levels higher than 0 to create a graph", Toast.LENGTH_SHORT).show();
         } else {
             LineDataSet dataSet = new LineDataSet(entries, "Blood Sugar Levels"); // Adding entries to dataset
             dataSet.setColor(lineColor); // Sets line color of graph to colorPrimaryDark
@@ -116,8 +115,7 @@ public class GraphFragment extends Fragment {
 
     private List<EntryItem> getSortedDataList() {
         Realm realm = Realm.getDefaultInstance();
-        RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
-        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("mDate", Sort.DESCENDING);
+        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("mGlucose", 0).findAllSorted("mDate", Sort.DESCENDING);
         List<EntryItem> realmEntries = new ArrayList<>(entryItems);
         return realmEntries;
     }
