@@ -2,12 +2,10 @@
 <resources>
     <color name="colorPrimary">#00B9AE</color>
     <color name="colorPrimaryDark">#00988F</color>
-    <color name="colorAccent">#A9A9A9</color>
-
+    <color name="colorAccent">#373F51</color>
     <color name="asparagus">#88AB75</color>
     <color name="trolley_grey">#7D7C84</color>
     <color name="smokey_black">#0D160B</color>
-
     <color name="black">#000</color>
     <color name="eerie_black">#0E1428</color>
     <color name="beige">#F2F3D9</color>

@@ -27,7 +27,10 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.GraphAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.utils.Utilities;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -50,6 +53,9 @@ public class GraphFragment extends Fragment {
 
     GraphAdapter mGraphAdapter;
 
+    // TODO if glucose has 0 value causes crash
+    // TODO Date formatting for x axis
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,7 +68,7 @@ public class GraphFragment extends Fragment {
 
     private void setupRecView() {
         // Get sorted List from RealmResults
-        List<EntryItem> entries = Utilities.getSortedRealmList();
+        List<EntryItem> entries = getSortedDataList();
         mGraphRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mGraphAdapter = new GraphAdapter(entries, getActivity());
         mGraphRecView.setAdapter(mGraphAdapter);
@@ -70,7 +76,7 @@ public class GraphFragment extends Fragment {
 
     private void setupGraph() {
         // Get sorted List from RealmResults
-        List<EntryItem> listOfRealmEntries = Utilities.getSortedRealmList();
+        List<EntryItem> listOfRealmEntries = getSortedDataList();
 
         // List of Entries for Graph
         List<Entry> entries = new ArrayList<>();
@@ -106,5 +112,13 @@ public class GraphFragment extends Fragment {
 
             mLineChart.invalidate(); // Refreshes
         }
+    }
+
+    private List<EntryItem> getSortedDataList() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
+        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("mDate", Sort.DESCENDING);
+        List<EntryItem> realmEntries = new ArrayList<>(entryItems);
+        return realmEntries;
     }
 }

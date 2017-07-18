@@ -1,6 +1,7 @@
 package io.github.coffeegerm.materiallogbook.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
 
+    private Typeface avenirRegular;
+    private Typeface avenirDemiBold;
     private List<EntryItem> mEntryItemList;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
@@ -30,6 +33,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
     public ListAdapter(List<EntryItem> entryItemList, Context c) {
         this.inflater = LayoutInflater.from(c);
         this.mEntryItemList = entryItemList;
+        avenirRegular = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-Regular.otf");
+        avenirDemiBold = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-DemiBold.otf");
     }
 
     @Override
@@ -84,6 +89,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
             tvBloodGlucose = (TextView) itemView.findViewById(R.id.tv_blood_glucose);
             tvInsulin = (TextView) itemView.findViewById(R.id.tv_insulin);
             tvCarbohydrates = (TextView) itemView.findViewById(R.id.tv_carbs);
+            tvDate.setTypeface(avenirRegular);
+            tvTime.setTypeface(avenirRegular);
+            tvBloodGlucose.setTypeface(avenirDemiBold);
+            tvInsulin.setTypeface(avenirDemiBold);
+            tvCarbohydrates.setTypeface(avenirDemiBold);
         }
     }
 }

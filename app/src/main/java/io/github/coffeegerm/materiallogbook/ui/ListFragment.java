@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,9 +27,11 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.ListAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.github.coffeegerm.materiallogbook.utils.fabBehavior;
 import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by David Yarzebinski on 6/7/17.
@@ -112,7 +115,7 @@ public class ListFragment extends Fragment {
 
     private void setUpRecyclerView() {
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        List<EntryItem> entries = Utilities.getSortedRealmList();
+        List<EntryItem> entries = getSortedDataList();
         ListAdapter mListAdapter = new ListAdapter(entries, getActivity());
         recView.setAdapter(mListAdapter);
     }
@@ -137,5 +140,13 @@ public class ListFragment extends Fragment {
                 startActivity(new Intent(getContext(), NewEntryActivity.class), bundle);
             }
         });
+    }
+
+    private List<EntryItem> getSortedDataList() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
+        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("mDate", Sort.DESCENDING);
+        List<EntryItem> realmEntries = new ArrayList<>(entryItems);
+        return realmEntries;
     }
 }
