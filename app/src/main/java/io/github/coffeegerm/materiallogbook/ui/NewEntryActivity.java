@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -37,28 +39,28 @@ public class NewEntryActivity extends AppCompatActivity {
 
     @BindView(R.id.cancelBtn)
     Button cancelBtn;
-
     @BindView(R.id.saveBtn)
     Button saveBtn;
-
     @BindView(R.id.new_entry_date)
     EditText newEntryDate;
-
     @BindView(R.id.new_entry_time)
     EditText newEntryTime;
-
     @BindView(R.id.new_entry_blood_glucose_level)
     EditText newEntryBloodGlucose;
-
     @BindView(R.id.new_entry_carbohydrates_amount)
     EditText newEntryCarbohydrates;
-
     @BindView(R.id.new_entry_insulin_units)
     EditText newEntryInsulin;
+    @BindView(R.id.new_entry_date_time_label)
+    TextView dateTimeLabel;
+    @BindView(R.id.new_entry_glucose_label)
+    TextView glucoseLabel;
+    @BindView(R.id.new_entry_carbs_label)
+    TextView carbsLabel;
+    @BindView(R.id.new_entry_insulin_label)
+    TextView insulinLabel;
 
-    private Realm mRealm;
-
-    // TODO add fonts to activity
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,8 @@ public class NewEntryActivity extends AppCompatActivity {
         Log.i(TAG, "onCreate: NewEntryActivity started");
         setContentView(R.layout.activity_new_entry);
         ButterKnife.bind(this);
-        mRealm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
+        setFonts();
 
         final Calendar cal = Calendar.getInstance();
         // Calendar for saving entered Date and Time
@@ -156,11 +159,11 @@ public class NewEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                mRealm.executeTransaction(new Realm.Transaction() {
+                realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         // Save Entry to database
-                        EntryItem entryItem = mRealm.createObject(EntryItem.class);
+                        EntryItem entryItem = NewEntryActivity.this.realm.createObject(EntryItem.class);
                         // Creates Date object made from the DatePicker and TimePicker
                         Date date = calendarForDb.getTime();
                         entryItem.setDate(date);
@@ -184,5 +187,23 @@ public class NewEntryActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
             }
         });
+    }
+
+    private void setFonts() {
+        // Fonts used in Activity
+        Typeface avenirRegular = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Regular.otf");
+        Typeface avenirDemiBold = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-DemiBold.otf");
+        Typeface avenirMedium = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Medium.otf");
+        cancelBtn.setTypeface(avenirMedium);
+        saveBtn.setTypeface(avenirMedium);
+        dateTimeLabel.setTypeface(avenirDemiBold);
+        carbsLabel.setTypeface(avenirDemiBold);
+        glucoseLabel.setTypeface(avenirDemiBold);
+        insulinLabel.setTypeface(avenirDemiBold);
+        newEntryDate.setTypeface(avenirRegular);
+        newEntryTime.setTypeface(avenirRegular);
+        newEntryBloodGlucose.setTypeface(avenirRegular);
+        newEntryCarbohydrates.setTypeface(avenirRegular);
+        newEntryInsulin.setTypeface(avenirRegular);
     }
 }

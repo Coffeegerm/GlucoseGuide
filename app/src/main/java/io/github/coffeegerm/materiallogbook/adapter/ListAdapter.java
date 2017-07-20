@@ -23,8 +23,10 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
 
+    // Fonts used in itemView
     private Typeface avenirRegular;
     private Typeface avenirDemiBold;
+    private Typeface avenirMedium;
     private List<EntryItem> mEntryItemList;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
@@ -35,6 +37,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
         this.mEntryItemList = entryItemList;
         avenirRegular = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-Regular.otf");
         avenirDemiBold = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-DemiBold.otf");
+        avenirMedium = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-Medium.otf");
     }
 
     @Override
@@ -81,6 +84,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
         private TextView tvBloodGlucose;
         private TextView tvInsulin;
         private TextView tvCarbohydrates;
+        private TextView bloodGlucoseLabel;
+        private TextView carbohydratesLabel;
+        private TextView insulinLabel;
+        private TextView bloodGlucoseMeasurementLabel;
+        private TextView carbsMeasurementLabel;
+        private TextView insulinMeasurementLabel;
 
         holder(View itemView) {
             super(itemView);
@@ -89,11 +98,23 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.holder> {
             tvBloodGlucose = (TextView) itemView.findViewById(R.id.tv_blood_glucose);
             tvInsulin = (TextView) itemView.findViewById(R.id.tv_insulin);
             tvCarbohydrates = (TextView) itemView.findViewById(R.id.tv_carbs);
+            bloodGlucoseLabel = (TextView) itemView.findViewById(R.id.blood_glucose_label);
+            carbohydratesLabel = (TextView) itemView.findViewById(R.id.carbohydrates_label);
+            insulinLabel = (TextView) itemView.findViewById(R.id.insulin_label);
+            bloodGlucoseMeasurementLabel = (TextView) itemView.findViewById(R.id.blood_glucose_measurement_label);
+            carbsMeasurementLabel = (TextView) itemView.findViewById(R.id.carbs_measurement_label);
+            insulinMeasurementLabel = (TextView) itemView.findViewById(R.id.insulin_measurement_label);
             tvDate.setTypeface(avenirRegular);
             tvTime.setTypeface(avenirRegular);
             tvBloodGlucose.setTypeface(avenirDemiBold);
             tvInsulin.setTypeface(avenirDemiBold);
             tvCarbohydrates.setTypeface(avenirDemiBold);
+            bloodGlucoseLabel.setTypeface(avenirMedium);
+            carbohydratesLabel.setTypeface(avenirMedium);
+            insulinLabel.setTypeface(avenirMedium);
+            insulinMeasurementLabel.setTypeface(avenirDemiBold);
+            bloodGlucoseMeasurementLabel.setTypeface(avenirDemiBold);
+            carbsMeasurementLabel.setTypeface(avenirDemiBold);
         }
     }
 }

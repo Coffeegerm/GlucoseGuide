@@ -18,7 +18,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 
-    <string name="action_delete_entries">Delete all Entries?</string>
+    <string name="sort">Sort</string>
 
     <string name="blood_glucose">Blood Glucose</string>
     <string name="carbohydrates">Carbohydrates</string>
@@ -37,4 +37,6 @@
 
     <!--Settings Strings-->
     <string name="settings_dark_mode">Use dark mode:</string>
+    <string name="settings_delete_entries">Delete all Entries?</string>
+    <string name="delete">Delete</string>
 </resources>

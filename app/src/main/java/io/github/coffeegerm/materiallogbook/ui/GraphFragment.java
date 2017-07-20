@@ -46,12 +46,12 @@ public class GraphFragment extends Fragment {
     int lineColor = R.color.colorPrimaryDark;
 
     @BindView(R.id.line_chart)
-    LineChart LineChart;
+    LineChart lineChart;
 
     @BindView(R.id.graph_rec_view)
-    RecyclerView mGraphRecView;
+    RecyclerView recyclerView;
 
-    GraphAdapter mGraphAdapter;
+    GraphAdapter graphAdapter;
 
     // TODO Date formatting for x axis
 
@@ -68,9 +68,9 @@ public class GraphFragment extends Fragment {
     private void setupRecView() {
         // Get sorted List from RealmResults
         List<EntryItem> entries = getDescendingDataList();
-        mGraphRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mGraphAdapter = new GraphAdapter(entries, getActivity());
-        mGraphRecView.setAdapter(mGraphAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        graphAdapter = new GraphAdapter(entries, getActivity());
+        recyclerView.setAdapter(graphAdapter);
     }
 
     private void setupGraph() {
@@ -98,23 +98,23 @@ public class GraphFragment extends Fragment {
             LineDataSet dataSet = new LineDataSet(entries, "Blood Sugar Levels"); // Adding entries to dataset
             dataSet.setValueTextColor(Color.BLACK); // Values on side will have text color of black
             LineData lineData = new LineData(dataSet); // Sets the data found in the database to the LineChart
-            LineChart.setData(lineData);
+            lineChart.setData(lineData);
             Description description = new Description();
             description.setText(""); // Disables description below chart
-            LineChart.setDescription(description);
-            LineChart.setScaleEnabled(true);
-            LineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
-            LineChart.setPinchZoom(false); // Disables the ability to pinch the chart to zoom in
-            LineChart.setDoubleTapToZoomEnabled(false); // Disables the user to double tap to zoom, rather useless feature in present day form factor
-            LineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
+            lineChart.setDescription(description);
+            lineChart.setScaleEnabled(true);
+            lineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
+            lineChart.setPinchZoom(false); // Disables the ability to pinch the chart to zoom in
+            lineChart.setDoubleTapToZoomEnabled(false); // Disables the user to double tap to zoom, rather useless feature in present day form factor
+            lineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
 
-            YAxis yAxisRight = LineChart.getAxisRight();
+            YAxis yAxisRight = lineChart.getAxisRight();
             yAxisRight.setEnabled(false); // Disables Y values on the right of chart
 
-            XAxis xAxis = LineChart.getXAxis();
+            XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Positions text of X Axis on bottom of Graph
 
-            LineChart.invalidate(); // Refreshes
+            lineChart.invalidate(); // Refreshes
         }
     }
 

@@ -63,7 +63,7 @@
             android:background="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.517"
-            app:layout_constraintLeft_toRightOf="@+id/tv_blood_glucose_label"
+            app:layout_constraintLeft_toRightOf="@+id/blood_glucose_label"
             app:layout_constraintRight_toLeftOf="@+id/carbohydrates_label"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"/>
@@ -101,7 +101,7 @@
             app:layout_constraintHorizontal_bias="0.578"/>
 
         <TextView
-            android:id="@+id/tv_blood_glucose_label"
+            android:id="@+id/blood_glucose_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -130,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/carbs_measurement_label"
             app:layout_constraintVertical_bias="1.0"/>
 
         <TextView
@@ -156,19 +156,19 @@
         <!-- Set programmatically -->
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/blood_glucose_measurement_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/blood_glucose_measurement"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
+            app:layout_constraintBaseline_toBaselineOf="@+id/carbs_measurement_label"
             app:layout_constraintHorizontal_bias="0.906"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/view"/>
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/carbs_measurement_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -181,13 +181,13 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_blood_glucose"/>
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/insulin_measurement_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/insulin_measurement"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
+            app:layout_constraintBaseline_toBaselineOf="@+id/carbs_measurement_label"
             app:layout_constraintHorizontal_bias="0.876"
             app:layout_constraintLeft_toRightOf="@+id/view2"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -232,7 +232,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView9"/>
+            app:layout_constraintBottom_toTopOf="@+id/insulin_measurement_label"/>
 
         <ImageView
             android:id="@+id/imageView2"
@@ -260,7 +260,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/tv_date"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView7"
+            app:layout_constraintBottom_toTopOf="@+id/blood_glucose_measurement_label"
             app:layout_constraintVertical_bias="1.0"/>
     </android.support.constraint.ConstraintLayout>
 
