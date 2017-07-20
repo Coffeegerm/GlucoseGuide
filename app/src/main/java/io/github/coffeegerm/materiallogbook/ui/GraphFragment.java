@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -45,14 +46,13 @@ public class GraphFragment extends Fragment {
     int lineColor = R.color.colorPrimaryDark;
 
     @BindView(R.id.line_chart)
-    LineChart mLineChart;
+    LineChart LineChart;
 
     @BindView(R.id.graph_rec_view)
     RecyclerView mGraphRecView;
 
     GraphAdapter mGraphAdapter;
 
-    // TODO if glucose has 0 value causes crash
     // TODO Date formatting for x axis
 
     @Nullable
@@ -67,7 +67,7 @@ public class GraphFragment extends Fragment {
 
     private void setupRecView() {
         // Get sorted List from RealmResults
-        List<EntryItem> entries = getSortedDataList();
+        List<EntryItem> entries = getDescendingDataList();
         mGraphRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mGraphAdapter = new GraphAdapter(entries, getActivity());
         mGraphRecView.setAdapter(mGraphAdapter);
@@ -75,7 +75,7 @@ public class GraphFragment extends Fragment {
 
     private void setupGraph() {
         // Get sorted List from RealmResults
-        List<EntryItem> listOfRealmEntries = getSortedDataList();
+        List<EntryItem> listOfRealmEntries = getAscendingDataList();
 
         // List of Entries for Graph
         List<Entry> entries = new ArrayList<>();
@@ -89,33 +89,51 @@ public class GraphFragment extends Fragment {
             entries.add(new Entry(itemDate, itemGlucoseLevel));
         }
 
+        Log.i(TAG, "setupGraph: " + entries.toString());
+
         if (entries.size() == 0) {
             Log.i(TAG, "setupGraph: No entries found");
             Toast.makeText(getContext(), "Enter entries with glucose levels higher than 0 to create a graph", Toast.LENGTH_SHORT).show();
         } else {
             LineDataSet dataSet = new LineDataSet(entries, "Blood Sugar Levels"); // Adding entries to dataset
-            dataSet.setColor(lineColor); // Sets line color of graph to colorPrimaryDark
             dataSet.setValueTextColor(Color.BLACK); // Values on side will have text color of black
             LineData lineData = new LineData(dataSet); // Sets the data found in the database to the LineChart
-            mLineChart.setData(lineData);
+            LineChart.setData(lineData);
             Description description = new Description();
             description.setText(""); // Disables description below chart
-            mLineChart.setDescription(description);
-            mLineChart.setScaleEnabled(true);
-            mLineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
-            mLineChart.setDoubleTapToZoomEnabled(false); // Disables the user to double tap to zoom, rather useless feature in present day form factor
-            mLineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
+            LineChart.setDescription(description);
+            LineChart.setScaleEnabled(true);
+            LineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
+            LineChart.setPinchZoom(false); // Disables the ability to pinch the chart to zoom in
+            LineChart.setDoubleTapToZoomEnabled(false); // Disables the user to double tap to zoom, rather useless feature in present day form factor
+            LineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
 
-            XAxis xAxis = mLineChart.getXAxis();
+            YAxis yAxisRight = LineChart.getAxisRight();
+            yAxisRight.setEnabled(false); // Disables Y values on the right of chart
+
+            XAxis xAxis = LineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Positions text of X Axis on bottom of Graph
 
-            mLineChart.invalidate(); // Refreshes
+            LineChart.invalidate(); // Refreshes
         }
     }
 
-    private List<EntryItem> getSortedDataList() {
+    // Method to get List of Realm Entries in timeline from newest to oldest
+    private List<EntryItem> getDescendingDataList() {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("mGlucose", 0).findAllSorted("mDate", Sort.DESCENDING);
+        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
+                .greaterThan("mGlucose", 0)
+                .findAllSorted("mDate", Sort.DESCENDING); // Finds all entries with Blood Glucose higher than zero order from newest to oldest
+        List<EntryItem> realmEntries = new ArrayList<>(entryItems);
+        return realmEntries;
+    }
+
+    // Method to get List of Realm Entries for LineChart so that they are from the oldest to the newest
+    private List<EntryItem> getAscendingDataList() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
+                .greaterThan("mGlucose", 0)
+                .findAllSorted("mDate", Sort.ASCENDING); // Finds all entries with Blood Glucose higher than zero order from oldest to newest
         List<EntryItem> realmEntries = new ArrayList<>(entryItems);
         return realmEntries;
     }

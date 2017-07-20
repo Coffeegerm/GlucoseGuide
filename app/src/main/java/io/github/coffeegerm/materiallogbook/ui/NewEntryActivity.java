@@ -58,6 +58,8 @@ public class NewEntryActivity extends AppCompatActivity {
 
     private Realm mRealm;
 
+    // TODO add fonts to activity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
