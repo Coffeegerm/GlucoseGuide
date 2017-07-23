@@ -39,4 +39,9 @@
     <string name="settings_dark_mode">Use dark mode:</string>
     <string name="settings_delete_entries">Delete all Entries?</string>
     <string name="delete">Delete</string>
+
+    <!--Image descriptions -->
+    <string name="blood_glucose_image">Blood Glucose Image</string>
+    <string name="carbs_image">Carbohydrates image</string>
+    <string name="insulin_image">Insulin Image</string>
 </resources>

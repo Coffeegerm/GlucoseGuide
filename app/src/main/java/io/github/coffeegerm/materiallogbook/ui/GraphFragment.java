@@ -102,6 +102,7 @@ public class GraphFragment extends Fragment {
             Description description = new Description();
             description.setText(""); // Disables description below chart
             lineChart.setDescription(description);
+            lineChart.setScaleMinima(10f, 1f);
             lineChart.setScaleEnabled(true);
             lineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
             lineChart.setPinchZoom(false); // Disables the ability to pinch the chart to zoom in
