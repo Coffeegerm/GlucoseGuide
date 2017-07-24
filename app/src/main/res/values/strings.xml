@@ -19,6 +19,8 @@
     <string name="cancel">Cancel</string>
 
     <string name="sort">Sort</string>
+    <string name="sort_from_newest">Newest to oldest</string>
+    <string name="sort_from_oldest">Oldest to newest</string>
 
     <string name="blood_glucose">Blood Glucose</string>
     <string name="carbohydrates">Carbohydrates</string>

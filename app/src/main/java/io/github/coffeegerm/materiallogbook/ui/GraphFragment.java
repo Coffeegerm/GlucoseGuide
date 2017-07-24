@@ -44,8 +44,6 @@ public class GraphFragment extends Fragment {
 
     private static final String TAG = "GraphFragment";
 
-    int lineColor = R.color.colorPrimaryDark;
-
     @BindView(R.id.line_chart)
     LineChart lineChart;
 
@@ -111,9 +109,9 @@ public class GraphFragment extends Fragment {
             yAxisRight.setEnabled(false); // Disables Y values on the right of chart
 
             XAxis xAxis = lineChart.getXAxis();
-            xAxis.setGranularity(1f); // only intervals of one day
             IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
             xAxis.setValueFormatter(xAxisFormatter);
+            xAxis.setGranularity(1f); // only intervals of one day
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Positions text of X Axis on bottom of Graph
 
             lineChart.invalidate(); // Refreshes
@@ -126,8 +124,7 @@ public class GraphFragment extends Fragment {
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
                 .greaterThan("mGlucose", 0)
                 .findAllSorted("mDate", Sort.DESCENDING); // Finds all entries with Blood Glucose higher than zero order from newest to oldest
-        List<EntryItem> realmEntries = new ArrayList<>(entryItems);
-        return realmEntries;
+        return new ArrayList<>(entryItems);
     }
 
     // Method to get List of Realm Entries for LineChart so that they are from the oldest to the newest
@@ -136,7 +133,6 @@ public class GraphFragment extends Fragment {
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
                 .greaterThan("mGlucose", 0)
                 .findAllSorted("mDate", Sort.ASCENDING); // Finds all entries with Blood Glucose higher than zero order from oldest to newest
-        List<EntryItem> realmEntries = new ArrayList<>(entryItems);
-        return realmEntries;
+        return new ArrayList<>(entryItems);
     }
 }

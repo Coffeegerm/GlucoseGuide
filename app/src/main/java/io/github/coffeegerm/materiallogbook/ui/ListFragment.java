@@ -40,11 +40,10 @@ public class ListFragment extends Fragment {
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
     @BindView(R.id.rec_view)
     RecyclerView recView;
-
-    Realm mRealm;
+    private int SORT_ORDER = 0; // 0 = Descending, 1 = Ascending
+    private Realm realm;
 
     @Nullable
     @Override
@@ -52,7 +51,7 @@ public class ListFragment extends Fragment {
         final View listView = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, listView);
         setHasOptionsMenu(true);
-        mRealm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
         return listView;
@@ -61,24 +60,34 @@ public class ListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        // TODO Update menu to sort list in different ways
         inflater.inflate(R.menu.list_fragment_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
 
+        switch (item.getItemId()) {
+            case R.id.list_sort_from_newest:
+                SORT_ORDER = 0;
+                setUpRecyclerView();
+                return true;
+            case R.id.list_sort_from_oldest:
+                SORT_ORDER = 1;
+                setUpRecyclerView();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
     private void setUpRecyclerView() {
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        List<EntryItem> entries = getSortedDataList();
-        ListAdapter mListAdapter = new ListAdapter(entries, getActivity());
-        recView.setAdapter(mListAdapter);
+        if (SORT_ORDER == 0) {
+            ListAdapter descendingList = new ListAdapter(getDescendingList(), getActivity());
+            recView.setAdapter(descendingList);
+        } else if (SORT_ORDER == 1) {
+            ListAdapter ascendingList = new ListAdapter(getAscendingList(), getActivity());
+            recView.setAdapter(ascendingList);
+        }
     }
 
     private void setFab() {
@@ -103,11 +112,15 @@ public class ListFragment extends Fragment {
         });
     }
 
-    private List<EntryItem> getSortedDataList() {
-        Realm realm = Realm.getDefaultInstance();
+    private List<EntryItem> getDescendingList() {
         RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
         RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("mDate", Sort.DESCENDING);
-        List<EntryItem> realmEntries = new ArrayList<>(entryItems);
-        return realmEntries;
+        return new ArrayList<>(entryItems);
+    }
+
+    private List<EntryItem> getAscendingList() {
+        RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
+        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("mDate", Sort.ASCENDING);
+        return new ArrayList<>(entryItems);
     }
 }
