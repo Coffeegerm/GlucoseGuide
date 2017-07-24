@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.GraphAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.XAxisValueFormatter;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -66,10 +67,8 @@ public class GraphFragment extends Fragment {
     }
 
     private void setupRecView() {
-        // Get sorted List from RealmResults
-        List<EntryItem> entries = getDescendingDataList();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        graphAdapter = new GraphAdapter(entries, getActivity());
+        graphAdapter = new GraphAdapter(getDescendingDataList(), getActivity());
         recyclerView.setAdapter(graphAdapter);
     }
 
@@ -78,30 +77,29 @@ public class GraphFragment extends Fragment {
         List<EntryItem> listOfRealmEntries = getAscendingDataList();
 
         // List of Entries for Graph
-        List<Entry> entries = new ArrayList<>();
+        List<Entry> graphEntryPoints = new ArrayList<>();
 
-        for (int i = 0; i < listOfRealmEntries.size(); i++) {
+        for (int positionInList = 0; positionInList < listOfRealmEntries.size(); positionInList++) {
             // X value = Date/Time
-            float itemDate = listOfRealmEntries.get(i).getDate().getTime();
+            float itemDate = listOfRealmEntries.get(positionInList).getDate().getTime();
             // Y value = Blood glucose level
-            float itemGlucoseLevel = listOfRealmEntries.get(i).getGlucose();
-            // Set X and Y values in the entries list
-            entries.add(new Entry(itemDate, itemGlucoseLevel));
+            float itemGlucoseLevel = listOfRealmEntries.get(positionInList).getGlucose();
+            // Set X and Y values in the graphEntryPoints list
+            graphEntryPoints.add(new Entry(itemDate, itemGlucoseLevel));
         }
 
-        Log.i(TAG, "setupGraph: " + entries.toString());
+        Log.i(TAG, "setupGraph: " + graphEntryPoints.toString());
 
-        if (entries.size() == 0) {
-            Log.i(TAG, "setupGraph: No entries found");
-            Toast.makeText(getContext(), "Enter entries with glucose levels higher than 0 to create a graph", Toast.LENGTH_SHORT).show();
+        if (graphEntryPoints.size() == 0) {
+            Log.i(TAG, "setupGraph: No graphEntryPoints found");
+            Toast.makeText(getContext(), "Enter graphEntryPoints with glucose levels higher than 0 to create a graph", Toast.LENGTH_SHORT).show();
         } else {
-            LineDataSet dataSet = new LineDataSet(entries, "Blood Sugar Levels"); // Adding entries to dataset
+            LineDataSet dataSet = new LineDataSet(graphEntryPoints, "Blood Sugar Levels"); // Adding graphEntryPoints to dataset
             dataSet.setValueTextColor(Color.BLACK); // Values on side will have text color of black
             LineData lineData = new LineData(dataSet); // Sets the data found in the database to the LineChart
             lineChart.setData(lineData);
-            Description description = new Description();
-            description.setText(""); // Disables description below chart
-            lineChart.setDescription(description);
+            lineChart.getDescription().setEnabled(false); // Disables description below chart
+            lineChart.setDrawGridBackground(false);
             lineChart.setScaleMinima(10f, 1f);
             lineChart.setScaleEnabled(true);
             lineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
@@ -113,6 +111,9 @@ public class GraphFragment extends Fragment {
             yAxisRight.setEnabled(false); // Disables Y values on the right of chart
 
             XAxis xAxis = lineChart.getXAxis();
+            xAxis.setGranularity(1f); // only intervals of one day
+            IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
+            xAxis.setValueFormatter(xAxisFormatter);
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Positions text of X Axis on bottom of Graph
 
             lineChart.invalidate(); // Refreshes
