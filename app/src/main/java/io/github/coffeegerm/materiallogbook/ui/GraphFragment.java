@@ -52,8 +52,6 @@ public class GraphFragment extends Fragment {
 
     GraphAdapter graphAdapter;
 
-    // TODO Date formatting for x axis
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,16 +70,16 @@ public class GraphFragment extends Fragment {
 
     private void setupGraph() {
         // Get sorted List from RealmResults
-        List<EntryItem> listOfRealmEntries = getAscendingDataList();
+        List<EntryItem> entryObjects = getAscendingDataList();
 
         // List of Entries for Graph
         List<Entry> graphEntryPoints = new ArrayList<>();
 
-        for (int positionInList = 0; positionInList < listOfRealmEntries.size(); positionInList++) {
+        for (int positionInList = 0; positionInList < entryObjects.size(); positionInList++) {
             // X value = Date/Time
-            float itemDate = listOfRealmEntries.get(positionInList).getDate().getTime();
+            float itemDate = entryObjects.get(positionInList).getDate().getTime();
             // Y value = Blood glucose level
-            float itemGlucoseLevel = listOfRealmEntries.get(positionInList).getGlucose();
+            float itemGlucoseLevel = entryObjects.get(positionInList).getGlucose();
             // Set X and Y values in the graphEntryPoints list
             graphEntryPoints.add(new Entry(itemDate, itemGlucoseLevel));
         }
@@ -111,10 +109,9 @@ public class GraphFragment extends Fragment {
             XAxis xAxis = lineChart.getXAxis();
             IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
             xAxis.setValueFormatter(xAxisFormatter);
-            xAxis.setGranularity(1f); // only intervals of one day
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Positions text of X Axis on bottom of Graph
 
-            lineChart.invalidate(); // Refreshes
+            lineChart.invalidate(); // Refreshes graph
         }
     }
 
@@ -122,7 +119,7 @@ public class GraphFragment extends Fragment {
     private List<EntryItem> getDescendingDataList() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
-                .greaterThan("mGlucose", 0)
+                .greaterThan("mGlucose", 0) // Only accounts for glucose levels higher than zero
                 .findAllSorted("mDate", Sort.DESCENDING); // Finds all entries with Blood Glucose higher than zero order from newest to oldest
         return new ArrayList<>(entryItems);
     }
@@ -131,7 +128,7 @@ public class GraphFragment extends Fragment {
     private List<EntryItem> getAscendingDataList() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
-                .greaterThan("mGlucose", 0)
+                .greaterThan("mGlucose", 0) // Only accounts for glucose levels higher than zero
                 .findAllSorted("mDate", Sort.ASCENDING); // Finds all entries with Blood Glucose higher than zero order from oldest to newest
         return new ArrayList<>(entryItems);
     }

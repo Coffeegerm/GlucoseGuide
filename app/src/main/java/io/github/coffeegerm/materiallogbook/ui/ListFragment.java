@@ -100,8 +100,8 @@ public class ListFragment extends Fragment {
         fab.setLayoutParams(fabLayout);
 
         /*
-        * Starts NewEntryActivity, which allows the user to define
-        * a new entry
+        * Starts NewEntryActivity, which allows the user
+        * to define a new entry
         * */
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
