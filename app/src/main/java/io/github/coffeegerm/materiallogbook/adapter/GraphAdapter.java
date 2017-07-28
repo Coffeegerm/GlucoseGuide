@@ -33,6 +33,12 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        // TODO if the date of the item is the same as the previous return that it is of type item_graph_list
+        return position;
+    }
+
+    @Override
     public holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_graph_list, parent, false);
         return new holder(view);
@@ -45,12 +51,7 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
         String formattedTime = timeFormat.format(item.getDate());
         holder.tvGraphDate.setText(formattedDate);
         holder.tvGraphTime.setText(formattedTime);
-        holder.tvGraphBloodGlucose.setText(String.valueOf(item.getGlucose()));
-    }
-
-    @Override
-    public int getItemCount() {
-        return mEntryItemList.size();
+        holder.tvGraphBloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
     }
 
     class holder extends RecyclerView.ViewHolder {
@@ -64,5 +65,10 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
             tvGraphTime = (TextView) itemView.findViewById(R.id.graph_item_time_tv);
             tvGraphBloodGlucose = (TextView) itemView.findViewById(R.id.graph_item_glucose_level_tv);
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mEntryItemList.size();
     }
 }

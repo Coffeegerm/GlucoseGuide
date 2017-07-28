@@ -54,10 +54,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         holder.tvDate.setText(formattedDate);
         holder.tvTime.setText(formattedTime);
 
-        if (String.valueOf(item.getGlucose()).equals("0")) {
+        if (String.valueOf(item.getBloodGlucose()).equals("0")) {
             holder.tvBloodGlucose.setText(R.string.dash);
         } else {
-            holder.tvBloodGlucose.setText(String.valueOf(item.getGlucose()));
+            holder.tvBloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
         }
 
         if (String.valueOf(item.getCarbohydrates()).equals("0")) {

@@ -79,7 +79,7 @@ public class GraphFragment extends Fragment {
             // X value = Date/Time
             float itemDate = entryObjects.get(positionInList).getDate().getTime();
             // Y value = Blood glucose level
-            float itemGlucoseLevel = entryObjects.get(positionInList).getGlucose();
+            float itemGlucoseLevel = entryObjects.get(positionInList).getBloodGlucose();
             // Set X and Y values in the graphEntryPoints list
             graphEntryPoints.add(new Entry(itemDate, itemGlucoseLevel));
         }
@@ -119,8 +119,8 @@ public class GraphFragment extends Fragment {
     private List<EntryItem> getDescendingDataList() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
-                .greaterThan("mGlucose", 0) // Only accounts for glucose levels higher than zero
-                .findAllSorted("mDate", Sort.DESCENDING); // Finds all entries with Blood Glucose higher than zero order from newest to oldest
+                .greaterThan("bloodGlucose", 0) // Only accounts for glucose levels higher than zero
+                .findAllSorted("date", Sort.DESCENDING); // Finds all entries with Blood Glucose higher than zero order from newest to oldest
         return new ArrayList<>(entryItems);
     }
 
@@ -128,8 +128,8 @@ public class GraphFragment extends Fragment {
     private List<EntryItem> getAscendingDataList() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
-                .greaterThan("mGlucose", 0) // Only accounts for glucose levels higher than zero
-                .findAllSorted("mDate", Sort.ASCENDING); // Finds all entries with Blood Glucose higher than zero order from oldest to newest
+                .greaterThan("bloodGlucose", 0) // Only accounts for glucose levels higher than zero
+                .findAllSorted("date", Sort.ASCENDING); // Finds all entries with Blood Glucose higher than zero order from oldest to newest
         return new ArrayList<>(entryItems);
     }
 }

@@ -114,13 +114,13 @@ public class ListFragment extends Fragment {
 
     private List<EntryItem> getDescendingList() {
         RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
-        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("mDate", Sort.DESCENDING);
+        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("date", Sort.DESCENDING);
         return new ArrayList<>(entryItems);
     }
 
     private List<EntryItem> getAscendingList() {
         RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
-        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("mDate", Sort.ASCENDING);
+        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("date", Sort.ASCENDING);
         return new ArrayList<>(entryItems);
     }
 }

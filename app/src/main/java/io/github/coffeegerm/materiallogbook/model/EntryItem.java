@@ -12,47 +12,47 @@ import io.realm.RealmObject;
  */
 
 public class EntryItem extends RealmObject {
-    private Date mDate;
-    private int mGlucose;
-    private int mCarbohydrates;
-    private double mInsulin;
+    private Date date;
+    private int bloodGlucose;
+    private int carbohydrates;
+    private double insulin;
 
     public EntryItem() {
     }
 
     public Date getDate() {
-        return mDate;
+        return date;
     }
 
     public void setDate(Date date) {
-        mDate = date;
+        this.date = date;
     }
 
     public long getTimestamp() {
-        return mDate.getTime();
+        return date.getTime();
     }
 
-    public int getGlucose() {
-        return mGlucose;
+    public int getBloodGlucose() {
+        return bloodGlucose;
     }
 
-    public void setGlucose(int glucose) {
-        mGlucose = glucose;
+    public void setBloodGlucose(int bloodGlucose) {
+        this.bloodGlucose = bloodGlucose;
     }
 
     public int getCarbohydrates() {
-        return mCarbohydrates;
+        return carbohydrates;
     }
 
     public void setCarbohydrates(int carbohydrates) {
-        mCarbohydrates = carbohydrates;
+        this.carbohydrates = carbohydrates;
     }
 
     public double getInsulin() {
-        return mInsulin;
+        return insulin;
     }
 
     public void setInsulin(double insulin) {
-        mInsulin = insulin;
+        this.insulin = insulin;
     }
 }

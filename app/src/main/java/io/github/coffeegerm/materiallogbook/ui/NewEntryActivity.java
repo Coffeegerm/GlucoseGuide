@@ -169,7 +169,7 @@ public class NewEntryActivity extends AppCompatActivity {
                         entryItem.setDate(date);
                         // Prevention of NullPointerException
                         if (!newEntryBloodGlucose.getText().toString().equals("")) {
-                            entryItem.setGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
+                            entryItem.setBloodGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
                         }
                         // Prevention of NullPointerException
                         if (!newEntryCarbohydrates.getText().toString().equals("")) {
