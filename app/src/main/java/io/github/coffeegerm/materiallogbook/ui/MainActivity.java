@@ -2,6 +2,7 @@ package io.github.coffeegerm.materiallogbook.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity
     FragmentManager fragmentManager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.nav_view)
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_stats) {
             // Swaps fragment to statistics fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, statsFragment).commit();
+            appBarLayout.setTargetElevation(0);
         } else if (id == R.id.nav_settings) {
             // Swaps fragment to settings fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, settingsFragment).commit();
