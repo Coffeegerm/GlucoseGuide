@@ -6,6 +6,7 @@
 
     <string name="navigation_drawer_list">List</string>
     <string name="navigation_drawer_graph">Graph</string>
+    <string name="navigation_drawer_statistics">Statistics</string>
     <string name="navigation_drawer_news">News</string>
     <string name="navigation_drawer_settings">Settings</string>
 

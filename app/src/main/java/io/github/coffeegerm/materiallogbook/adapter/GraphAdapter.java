@@ -24,12 +24,12 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
-    private List<EntryItem> mEntryItemList;
+    private List<EntryItem> entryItemList;
     private LayoutInflater inflater;
 
-    public GraphAdapter(List<EntryItem> entryItemList, Context c) {
-        this.inflater = LayoutInflater.from(c);
-        this.mEntryItemList = entryItemList;
+    public GraphAdapter(List<EntryItem> incomingEntryItemList, Context context) {
+        this.inflater = LayoutInflater.from(context);
+        this.entryItemList = incomingEntryItemList;
     }
 
     @Override
@@ -46,12 +46,17 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
 
     @Override
     public void onBindViewHolder(holder holder, int position) {
-        EntryItem item = mEntryItemList.get(position);
+        EntryItem item = entryItemList.get(position);
         String formattedDate = dateFormat.format(item.getDate());
         String formattedTime = timeFormat.format(item.getDate());
         holder.tvGraphDate.setText(formattedDate);
         holder.tvGraphTime.setText(formattedTime);
         holder.tvGraphBloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
+    }
+
+    @Override
+    public int getItemCount() {
+        return entryItemList.size();
     }
 
     class holder extends RecyclerView.ViewHolder {
@@ -65,10 +70,5 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
             tvGraphTime = (TextView) itemView.findViewById(R.id.graph_item_time_tv);
             tvGraphBloodGlucose = (TextView) itemView.findViewById(R.id.graph_item_glucose_level_tv);
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return mEntryItemList.size();
     }
 }

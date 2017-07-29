@@ -30,13 +30,14 @@ public class MainActivity extends AppCompatActivity
     Fragment graphFragment = new GraphFragment();
     Fragment settingsFragment = new SettingsFragment();
     Fragment newsFragment = new NewsFragment();
+    Fragment statsFragment = new StatisticsFragment();
     FragmentManager fragmentManager;
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
     @BindView(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+    DrawerLayout drawerLayout;
     @BindView(R.id.nav_view)
-    NavigationView mNavigationView;
+    NavigationView navigationView;
     private Realm realm;
 
     @Override
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         realmSetup();
         setDrawerLayout();
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -79,6 +80,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_graph) {
             // Swaps fragment to graph fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, graphFragment).commit();
+        } else if (id == R.id.nav_stats) {
+            // Swaps fragment to statistics fragment
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, statsFragment).commit();
         } else if (id == R.id.nav_settings) {
             // Swaps fragment to settings fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, settingsFragment).commit();
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
         }
 
-        mDrawerLayout.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -102,9 +106,9 @@ public class MainActivity extends AppCompatActivity
 
     private void setDrawerLayout() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        mNavigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 }
