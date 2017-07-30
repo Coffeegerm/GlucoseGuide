@@ -12,10 +12,10 @@ import android.view.animation.LinearInterpolator;
  * Class dedicated to create the animation for FAB to slide below screen.
  */
 
-public class fabBehavior extends FloatingActionButton.Behavior {
+public class FabBehavior extends FloatingActionButton.Behavior {
 
     // Constructor for construction's sake
-    public fabBehavior() {
+    public FabBehavior() {
     }
 
     @Override
