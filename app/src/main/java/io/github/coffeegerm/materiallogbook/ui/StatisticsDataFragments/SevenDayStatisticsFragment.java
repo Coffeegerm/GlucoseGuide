@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.StatisticsFragments;
+package io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,23 +10,23 @@ import android.view.ViewGroup;
 import io.github.coffeegerm.materiallogbook.R;
 
 /**
- * Created by David Yarzebinski on 7/29/2017.
+ * Created by David Yarzebinski on 7/28/2017.
  * <p>
  * Fragment used with Statistics ViewPager to show
- * the all amount of statistics
+ * the last seven days of statistics
  */
 
-public class AllStatisticsFragment extends Fragment {
+public class SevenDayStatisticsFragment extends Fragment {
     private String pageTitle;
     private int pageNumber;
 
-    public static AllStatisticsFragment newInstance(int pageNumber, String pageTitle) {
-        AllStatisticsFragment allStatisticsFragment = new AllStatisticsFragment();
+    public static SevenDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
+        SevenDayStatisticsFragment sevenDayStatisticsFragment = new SevenDayStatisticsFragment();
         Bundle args = new Bundle();
         args.putInt("pageNumber", pageNumber);
         args.putString("pageTitle", pageTitle);
-        allStatisticsFragment.setArguments(args);
-        return allStatisticsFragment;
+        sevenDayStatisticsFragment.setArguments(args);
+        return sevenDayStatisticsFragment;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class AllStatisticsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_stats, container, false);
+        View view = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
 
         return view;
     }

@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.StatisticsFragments;
+package io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,20 +13,21 @@ import io.github.coffeegerm.materiallogbook.R;
  * Created by David Yarzebinski on 7/28/2017.
  * <p>
  * Fragment used with Statistics ViewPager to show
- * the last seven days of statistics
+ * the last three days of statistics
  */
 
-public class SevenDayStatisticsFragment extends Fragment {
+public class ThreeDayStatisticsFragment extends Fragment {
+
     private String pageTitle;
     private int pageNumber;
 
-    public static SevenDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
-        SevenDayStatisticsFragment sevenDayStatisticsFragment = new SevenDayStatisticsFragment();
+    public static ThreeDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
+        ThreeDayStatisticsFragment threeDayStatisticsFragment = new ThreeDayStatisticsFragment();
         Bundle args = new Bundle();
         args.putInt("pageNumber", pageNumber);
         args.putString("pageTitle", pageTitle);
-        sevenDayStatisticsFragment.setArguments(args);
-        return sevenDayStatisticsFragment;
+        threeDayStatisticsFragment.setArguments(args);
+        return threeDayStatisticsFragment;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class SevenDayStatisticsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
+        View view = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
 
         return view;
     }

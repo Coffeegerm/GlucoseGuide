@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.ListAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.utils.fabBehavior;
+import io.github.coffeegerm.materiallogbook.utils.FabBehavior;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -94,7 +94,7 @@ public class ListFragment extends Fragment {
         /*
         * Creates new fabBehavior for animation of fab onScroll
         * */
-        FloatingActionButton.Behavior fabBehavior = new fabBehavior();
+        FloatingActionButton.Behavior fabBehavior = new FabBehavior();
         CoordinatorLayout.LayoutParams fabLayout = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         fabLayout.setBehavior(fabBehavior);
         fab.setLayoutParams(fabLayout);
