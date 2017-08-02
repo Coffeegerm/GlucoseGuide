@@ -1,9 +1,11 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -90,18 +92,22 @@ public class GraphFragment extends Fragment {
             Log.i(TAG, "setupGraph: No graphEntryPoints found");
             Toast.makeText(getContext(), "Enter graphEntryPoints with glucose levels higher than 0 to create a graph", Toast.LENGTH_SHORT).show();
         } else {
+            Drawable tealGradient = ContextCompat.getDrawable(getContext(), R.drawable.fade_teal);
             LineDataSet dataSet = new LineDataSet(graphEntryPoints, "Blood Sugar Levels"); // Adding graphEntryPoints to dataset
+            dataSet.setLineWidth(1.5f);
+            dataSet.setFillDrawable(tealGradient);
             dataSet.setValueTextColor(Color.BLACK); // Values on side will have text color of black
             LineData lineData = new LineData(dataSet); // Sets the data found in the database to the LineChart
             lineChart.setData(lineData);
             lineChart.getDescription().setEnabled(false); // Disables description below chart
             lineChart.setDrawGridBackground(false);
-            lineChart.setScaleMinima(10f, 1f);
+            lineChart.setScaleMinima(5f, 1f);
             lineChart.setScaleEnabled(true);
             lineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
             lineChart.setPinchZoom(false); // Disables the ability to pinch the chart to zoom in
             lineChart.setDoubleTapToZoomEnabled(false); // Disables the user to double tap to zoom, rather useless feature in present day form factor
             lineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
+            lineChart.getAxisLeft().setDrawGridLines(false);
 
             YAxis yAxisRight = lineChart.getAxisRight();
             yAxisRight.setEnabled(false); // Disables Y values on the right of chart
@@ -109,6 +115,8 @@ public class GraphFragment extends Fragment {
             XAxis xAxis = lineChart.getXAxis();
             IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
             xAxis.setValueFormatter(xAxisFormatter);
+            xAxis.setGranularity(1f);
+            xAxis.setDrawGridLines(false);
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Positions text of X Axis on bottom of Graph
 
             lineChart.invalidate(); // Refreshes graph

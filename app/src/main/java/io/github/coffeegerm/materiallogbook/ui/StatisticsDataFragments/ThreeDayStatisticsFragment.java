@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import io.github.coffeegerm.materiallogbook.R;
 
 /**
@@ -17,6 +20,8 @@ import io.github.coffeegerm.materiallogbook.R;
  */
 
 public class ThreeDayStatisticsFragment extends Fragment {
+
+    private static final String TAG = "ThreeDaysStatistics";
 
     private String pageTitle;
     private int pageNumber;
@@ -43,5 +48,11 @@ public class ThreeDayStatisticsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
 
         return view;
+    }
+
+    public Date getThreeDaysAgo() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -3);
+        return calendar.getTime();
     }
 }

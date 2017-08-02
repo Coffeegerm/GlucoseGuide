@@ -28,10 +28,6 @@ public class EntryItem extends RealmObject {
         this.date = date;
     }
 
-    public long getTimestamp() {
-        return date.getTime();
-    }
-
     public int getBloodGlucose() {
         return bloodGlucose;
     }

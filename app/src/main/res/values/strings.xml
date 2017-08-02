@@ -47,4 +47,8 @@
     <string name="blood_glucose_image">Blood Glucose Image</string>
     <string name="carbs_image">Carbohydrates image</string>
     <string name="insulin_image">Insulin Image</string>
+
+    <string name="average">Average blood glucose:</string>
+    <string name="highest_of_all">Highest blood glucose:</string>
+    <string name="lowest_of_all">Lowest blood glucose:</string>
 </resources>
