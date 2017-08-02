@@ -7,4 +7,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appBarElevation">8dp</dimen>
     <dimen name="item_card_elevation">8dp</dimen>
+
+    <!-- Dimens for Statistics Fragment views -->
+    <dimen name="stats_cardview_start_end_margins">8dp</dimen>
+    <dimen name="stats_textview_margin_top">16dp</dimen>
+    <dimen name="stats_view_seperator_margin_top_bottom">8dp</dimen>
 </resources>
