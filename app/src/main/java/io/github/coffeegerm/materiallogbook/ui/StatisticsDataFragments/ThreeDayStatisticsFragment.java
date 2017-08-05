@@ -62,23 +62,28 @@ public class ThreeDayStatisticsFragment extends Fragment {
         ButterKnife.bind(this, threeDaysStatisticsView);
         realm = Realm.getDefaultInstance();
         Date threeDaysAgo = getDateThreeDaysAgo();
-        averageTextView.setText(String.valueOf(getAverageGlucose(threeDaysAgo)));
-        highestGlucoseTextView.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
-        lowestGlucoseTextView.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
+        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
+
+        if (entriesFromLastThreeDays.size() == 0) {
+            averageTextView.setText(R.string.dash);
+            highestGlucoseTextView.setText(R.string.dash);
+            lowestGlucoseTextView.setText(R.string.dash);
+        } else {
+            averageTextView.setText(String.valueOf(getAverageGlucose(threeDaysAgo)));
+            highestGlucoseTextView.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
+            lowestGlucoseTextView.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
+        }
         return threeDaysStatisticsView;
     }
 
     public int getAverageGlucose(Date threeDaysAgo) {
         int total = 0;
         RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        if (entriesFromLastThreeDays.size() != 0) {
-            for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
-                EntryItem currentItem = entriesFromLastThreeDays.get(position);
-                total += currentItem.getBloodGlucose();
-            }
-            return total / entriesFromLastThreeDays.size();
+        for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
+            EntryItem currentItem = entriesFromLastThreeDays.get(position);
+            total += currentItem.getBloodGlucose();
         }
-        return 0;
+        return total / entriesFromLastThreeDays.size();
     }
 
     public int getHighestGlucose(Date threeDaysAgo) {
