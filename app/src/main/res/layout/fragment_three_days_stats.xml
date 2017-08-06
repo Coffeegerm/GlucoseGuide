@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -22,10 +21,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:src="@drawable/ic_average"/>
+                android:src="@drawable/ic_average" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/three_days_average_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -34,12 +33,12 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/average"
                 android:textColor="@color/black"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/three_days_average"
@@ -47,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -61,7 +60,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/stats_view_seperator_margin_top_bottom"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -79,10 +78,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:src="@drawable/ic_up_arrow"/>
+                android:src="@drawable/ic_up_arrow" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/three_days_highest_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -91,12 +90,12 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/highest_of_all"
                 android:textColor="@color/black"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/three_days_highest"
@@ -104,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -117,7 +116,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/stats_view_seperator_margin_top_bottom"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary" />
 
 
     <android.support.v7.widget.CardView
@@ -136,10 +135,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:src="@drawable/ic_down_arrow"/>
+                android:src="@drawable/ic_down_arrow" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/three_days_lowest_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -148,12 +147,12 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/lowest_of_all"
                 android:textColor="@color/black"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/three_days_lowest"
@@ -161,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
 

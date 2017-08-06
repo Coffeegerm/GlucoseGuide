@@ -1,5 +1,6 @@
 package io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,11 +31,17 @@ public class ThreeDayStatisticsFragment extends Fragment {
     private static final String TAG = "ThreeDaysStatistics";
 
     @BindView(R.id.three_days_lowest)
-    TextView lowestGlucoseTextView;
+    TextView lowestBloodGlucose;
     @BindView(R.id.three_days_highest)
-    TextView highestGlucoseTextView;
+    TextView highestBloodGlucose;
     @BindView(R.id.three_days_average)
-    TextView averageTextView;
+    TextView averageBloodGlucose;
+    @BindView(R.id.three_days_average_label)
+    TextView averageLabel;
+    @BindView(R.id.three_days_highest_label)
+    TextView highestLabel;
+    @BindView(R.id.three_days_lowest_label)
+    TextView lowestLabel;
     Realm realm;
     private String pageTitle;
     private int pageNumber;
@@ -63,15 +70,16 @@ public class ThreeDayStatisticsFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         Date threeDaysAgo = getDateThreeDaysAgo();
         RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
+        setFonts();
 
         if (entriesFromLastThreeDays.size() == 0) {
-            averageTextView.setText(R.string.dash);
-            highestGlucoseTextView.setText(R.string.dash);
-            lowestGlucoseTextView.setText(R.string.dash);
+            averageBloodGlucose.setText(R.string.dash);
+            highestBloodGlucose.setText(R.string.dash);
+            lowestBloodGlucose.setText(R.string.dash);
         } else {
-            averageTextView.setText(String.valueOf(getAverageGlucose(threeDaysAgo)));
-            highestGlucoseTextView.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
-            lowestGlucoseTextView.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
+            averageBloodGlucose.setText(String.valueOf(getAverageGlucose(threeDaysAgo)));
+            highestBloodGlucose.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
+            lowestBloodGlucose.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
         }
         return threeDaysStatisticsView;
     }
@@ -114,5 +122,16 @@ public class ThreeDayStatisticsFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -3);
         return calendar.getTime();
+    }
+
+    private void setFonts() {
+        Typeface avenirRegular = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNext-Regular.otf");
+        Typeface avenirMedium = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNext-Medium.otf");
+        averageBloodGlucose.setTypeface(avenirMedium);
+        highestBloodGlucose.setTypeface(avenirMedium);
+        lowestBloodGlucose.setTypeface(avenirMedium);
+        averageLabel.setTypeface(avenirRegular);
+        highestLabel.setTypeface(avenirRegular);
+        lowestLabel.setTypeface(avenirRegular);
     }
 }

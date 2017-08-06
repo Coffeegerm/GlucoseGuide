@@ -1,5 +1,6 @@
 package io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,11 +28,17 @@ import io.realm.RealmResults;
 public class AllStatisticsFragment extends Fragment {
     private static final String TAG = "AllStatisticsFragment";
     @BindView(R.id.all_days_statistics_average)
-    TextView allStatsAverage;
+    TextView averageBloodGlucose;
     @BindView(R.id.highest_of_all_glucose)
     TextView highestBloodGlucose;
     @BindView(R.id.lowest_of_all_glucose)
     TextView lowestBloodGlucose;
+    @BindView(R.id.all_stats_average_label)
+    TextView averageLabel;
+    @BindView(R.id.all_stats_highest_label)
+    TextView highestLabel;
+    @BindView(R.id.all_stats_lowest_label)
+    TextView lowestLabel;
     private String pageTitle;
     private int pageNumber;
     private Realm realm;
@@ -59,9 +66,17 @@ public class AllStatisticsFragment extends Fragment {
         ButterKnife.bind(this, allStatsView);
         realm = Realm.getDefaultInstance();
 
-        allStatsAverage.setText(String.valueOf(getAverage()));
-        highestBloodGlucose.setText(String.valueOf(getHighestBloodGlucose()));
-        lowestBloodGlucose.setText(String.valueOf(getLowestBloodGlucose()));
+        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
+
+        if (entryItems.size() == 0) {
+            averageBloodGlucose.setText(R.string.dash);
+            highestBloodGlucose.setText(R.string.dash);
+            lowestBloodGlucose.setText(R.string.dash);
+        } else {
+            averageBloodGlucose.setText(String.valueOf(getAverage()));
+            highestBloodGlucose.setText(String.valueOf(getHighestBloodGlucose()));
+            lowestBloodGlucose.setText(String.valueOf(getLowestBloodGlucose()));
+        }
 
         return allStatsView;
     }
@@ -121,5 +136,16 @@ public class AllStatisticsFragment extends Fragment {
             }
         }
         return lowest;
+    }
+
+    private void setFonts() {
+        Typeface avenirRegular = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNext-Regular.otf");
+        Typeface avenirMedium = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNext-Medium.otf");
+        averageBloodGlucose.setTypeface(avenirMedium);
+        highestBloodGlucose.setTypeface(avenirMedium);
+        lowestBloodGlucose.setTypeface(avenirMedium);
+        averageLabel.setTypeface(avenirRegular);
+        highestLabel.setTypeface(avenirRegular);
+        lowestLabel.setTypeface(avenirRegular);
     }
 }
