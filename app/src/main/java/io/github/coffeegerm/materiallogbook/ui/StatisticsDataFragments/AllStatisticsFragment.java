@@ -65,7 +65,7 @@ public class AllStatisticsFragment extends Fragment {
         View allStatsView = inflater.inflate(R.layout.fragment_all_stats, container, false);
         ButterKnife.bind(this, allStatsView);
         realm = Realm.getDefaultInstance();
-
+        setFonts();
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
 
         if (entryItems.size() == 0) {
@@ -82,24 +82,18 @@ public class AllStatisticsFragment extends Fragment {
     }
 
     public int getAverage() {
-
         int averageCalculated = 0;
-
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
         if (entryItems.size() == 0) {
             Log.e(TAG, "onCreateView: no entries");
-            Toast.makeText(getContext(), "Make some entries dawg.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.no_data, Toast.LENGTH_SHORT).show();
         } else {
-
             int total = 0;
-
             for (int position = 0; position < entryItems.size(); position++) {
                 EntryItem item = entryItems.get(position);
                 total += item.getBloodGlucose();
             }
-
             averageCalculated = total / entryItems.size();
-
         }
         return averageCalculated;
     }
@@ -107,32 +101,23 @@ public class AllStatisticsFragment extends Fragment {
     public int getHighestBloodGlucose() {
         int highest = 0;
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
-        if (entryItems.size() == 0) {
-            Log.e(TAG, "onCreateView: no entries");
-            Toast.makeText(getContext(), "Make some entries dawg.", Toast.LENGTH_SHORT).show();
-        } else {
-            for (int position = 0; position < entryItems.size(); position++) {
-                EntryItem item = entryItems.get(position);
-                if (item.getBloodGlucose() > highest) {
-                    highest = item.getBloodGlucose();
-                }
+        for (int position = 0; position < entryItems.size(); position++) {
+            EntryItem item = entryItems.get(position);
+            if (item.getBloodGlucose() > highest) {
+                highest = item.getBloodGlucose();
             }
         }
         return highest;
     }
 
+
     public int getLowestBloodGlucose() {
         int lowest = 1000;
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
-        if (entryItems.size() == 0) {
-            Log.e(TAG, "onCreateView: no entries");
-            Toast.makeText(getContext(), "Make some entries dawg.", Toast.LENGTH_SHORT).show();
-        } else {
-            for (int position = 0; position < entryItems.size(); position++) {
-                EntryItem item = entryItems.get(position);
-                if (item.getBloodGlucose() < lowest) {
-                    lowest = item.getBloodGlucose();
-                }
+        for (int position = 0; position < entryItems.size(); position++) {
+            EntryItem item = entryItems.get(position);
+            if (item.getBloodGlucose() < lowest) {
+                lowest = item.getBloodGlucose();
             }
         }
         return lowest;

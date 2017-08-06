@@ -37,6 +37,7 @@
 
     <!--Settings Strings-->
     <string name="ui">UI</string>
+    <string name="data">Data</string>
     <string name="settings_dark_mode">Use dark mode:</string>
     <string name="settings_glucose_goal_section">Target range of glucose</string>
     <string name="settings_hypoglycemic">Below this your sugar is low:</string>
@@ -53,4 +54,5 @@
     <string name="average">Average blood glucose:</string>
     <string name="highest_of_all">Highest blood glucose:</string>
     <string name="lowest_of_all">Lowest blood glucose:</string>
+    <string name="no_data">No data to calculate</string>
 </resources>

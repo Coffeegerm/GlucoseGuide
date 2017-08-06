@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -73,6 +74,7 @@ public class ThreeDayStatisticsFragment extends Fragment {
         setFonts();
 
         if (entriesFromLastThreeDays.size() == 0) {
+            Toast.makeText(getContext(), R.string.no_data, Toast.LENGTH_SHORT).show();
             averageBloodGlucose.setText(R.string.dash);
             highestBloodGlucose.setText(R.string.dash);
             lowestBloodGlucose.setText(R.string.dash);

@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
-    <TextView
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/settings_dark_mode"
-        android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ui_section_label" />
 
@@ -25,10 +22,9 @@
         android:id="@+id/toggle_dark_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView10"
-        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent" />
 
     <View
@@ -37,60 +33,125 @@
         android:layout_height="1dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="14dp"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-    <TextView
+    <View
+        android:id="@+id/view5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hyperglycemic_edit_text" />
+
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/settings_delete_entries"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        tools:layout_editor_absoluteY="291dp"
-        tools:layout_editor_absoluteX="16dp" />
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/btn_delete_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/delete"
         android:layout_marginEnd="16dp"
-        tools:layout_editor_absoluteY="301dp"
-        tools:layout_editor_absoluteX="280dp" />
+        android:text="@string/delete"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView12"
+        app:layout_constraintRight_toRightOf="parent" />
 
-    <TextView
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularLight
         android:id="@+id/ui_section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ui"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:text="@string/ui"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularLight
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/settings_glucose_goal_section"
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4" />
 
-    <TextView
-        android:id="@+id/textView8"
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+        android:id="@+id/avenirRegularTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/settings_hypoglycemic"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <EditText
+        android:id="@+id/hypoglycemic_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:ems="10"
+        android:inputType="number"
+        android:labelFor="@id/hypoglycemic_edit_text"
+        android:maxLength="3"
+        app:layout_constraintBaseline_toBaselineOf="@+id/avenirRegularTextView"
+        app:layout_constraintLeft_toRightOf="@+id/avenirRegularTextView"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+        android:id="@+id/hypo_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/settings_hyperglycemic"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/avenirRegularTextView" />
+
+    <EditText
+        android:id="@+id/hyperglycemic_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:ems="10"
+        android:inputType="number"
+        android:labelFor="@+id/hyperglycemic_edit_text"
+        android:maxLength="3"
+        app:layout_constraintBaseline_toBaselineOf="@+id/hypo_label"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/hypo_label"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularLight
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/data"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
 </android.support.constraint.ConstraintLayout>
