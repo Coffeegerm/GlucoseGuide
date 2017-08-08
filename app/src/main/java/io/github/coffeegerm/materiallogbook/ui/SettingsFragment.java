@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Switch;
 
 import butterknife.BindView;
@@ -30,7 +33,10 @@ public class SettingsFragment extends Fragment {
 
     @BindView(R.id.btn_delete_all)
     Button deleteAllEntries;
-
+    @BindView(R.id.hyperglycemic_edit_text)
+    EditText hyperglycemicEditText;
+    @BindView(R.id.hypoglycemic_edit_text)
+    EditText hypoglycemicEditText;
     @BindView(R.id.toggle_dark_mode)
     Switch toggleDarkSwitch;
 
@@ -39,7 +45,46 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View settingsView = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, settingsView);
+        initView();
+        return settingsView;
+    }
+
+    public void initView() {
         final Realm realm = Realm.getDefaultInstance();
+
+        hypoglycemicEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // do nothing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        hyperglycemicEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // do nothing.
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         deleteAllEntries.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +121,5 @@ public class SettingsFragment extends Fragment {
                         .show();
             }
         });
-
-        return settingsView;
     }
 }
