@@ -1,6 +1,8 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,8 @@ import io.realm.Realm;
 public class SettingsFragment extends Fragment {
 
     private static final String TAG = "SettingsFragment";
+    private SharedPreferences rangeIndex;
+    private SharedPreferences.Editor editor;
 
     @BindView(R.id.btn_delete_all)
     Button deleteAllEntries;
@@ -51,11 +56,14 @@ public class SettingsFragment extends Fragment {
 
     public void initView() {
         final Realm realm = Realm.getDefaultInstance();
+        rangeIndex = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = rangeIndex.edit();
+        checkRangeStatus();
+        setHints();
 
         hypoglycemicEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // do nothing
             }
 
             @Override
@@ -65,14 +73,16 @@ public class SettingsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                Log.i(TAG, "afterTextChanged: " + s.toString());
+                editor.putInt("hypoglycemicIndex", Integer.parseInt(s.toString()));
+                editor.apply();
             }
         });
 
         hyperglycemicEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // do nothing
+
             }
 
             @Override
@@ -82,7 +92,9 @@ public class SettingsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                Log.i(TAG, "afterTextChanged: " + s.toString());
+                editor.putInt("hyperglycemicIndex", Integer.parseInt(s.toString()));
+                editor.apply();
             }
         });
 
@@ -121,5 +133,23 @@ public class SettingsFragment extends Fragment {
                         .show();
             }
         });
+    }
+
+    public void checkRangeStatus() {
+        int hyperglycemicIndex = rangeIndex.getInt("hyperglycemicIndex", 0);
+        int hypoglycemicIndex = rangeIndex.getInt("hypoglycemicIndex", 0);
+        if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
+            editor.putInt("hypoglycemicIndex", 80);
+            editor.putInt("hyperglycemicIndex", 140);
+            editor.apply();
+        }
+    }
+
+    public void setHints() {
+        String hyperString = String.valueOf(rangeIndex.getInt("hyperglycemicIndex", 0));
+        hyperglycemicEditText.setHint(hyperString);
+
+        String hypoString = String.valueOf(rangeIndex.getInt("hypoglycemicIndex", 0));
+        hypoglycemicEditText.setHint(hypoString);
     }
 }
