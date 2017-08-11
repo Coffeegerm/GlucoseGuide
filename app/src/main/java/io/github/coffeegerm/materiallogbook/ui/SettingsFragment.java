@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -34,7 +35,9 @@ public class SettingsFragment extends Fragment {
 
     private static final String TAG = "SettingsFragment";
     private SharedPreferences rangeIndex;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences settings;
+    private SharedPreferences.Editor rangeIndexEditor;
+    private SharedPreferences.Editor settingsEditor;
 
     @BindView(R.id.btn_delete_all)
     Button deleteAllEntries;
@@ -43,7 +46,7 @@ public class SettingsFragment extends Fragment {
     @BindView(R.id.hypoglycemic_edit_text)
     EditText hypoglycemicEditText;
     @BindView(R.id.toggle_dark_mode)
-    Switch toggleDarkSwitch;
+    Switch toggleDarkMode;
 
     @Nullable
     @Override
@@ -57,9 +60,26 @@ public class SettingsFragment extends Fragment {
     public void initView() {
         final Realm realm = Realm.getDefaultInstance();
         rangeIndex = getActivity().getPreferences(Context.MODE_PRIVATE);
-        editor = rangeIndex.edit();
+        settings = getActivity().getPreferences(Context.MODE_PRIVATE);
+        rangeIndexEditor = rangeIndex.edit();
+        settingsEditor = settings.edit();
         checkRangeStatus();
         setHints();
+        setDarkModeToggle(settings.getBoolean("darkModeStatus", false));
+
+        toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    settingsEditor.putBoolean("darkModeStatus", true);
+                    settingsEditor.apply();
+                } else {
+                    settingsEditor.putBoolean("darkModeStatus", true);
+                    settingsEditor.apply();
+                }
+
+            }
+        });
 
         hypoglycemicEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -74,8 +94,8 @@ public class SettingsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
-                editor.putInt("hypoglycemicIndex", Integer.parseInt(s.toString()));
-                editor.apply();
+                rangeIndexEditor.putInt("hypoglycemicIndex", Integer.parseInt(s.toString()));
+                rangeIndexEditor.apply();
             }
         });
 
@@ -93,8 +113,8 @@ public class SettingsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
-                editor.putInt("hyperglycemicIndex", Integer.parseInt(s.toString()));
-                editor.apply();
+                rangeIndexEditor.putInt("hyperglycemicIndex", Integer.parseInt(s.toString()));
+                rangeIndexEditor.apply();
             }
         });
 
@@ -135,13 +155,21 @@ public class SettingsFragment extends Fragment {
         });
     }
 
+    public void setDarkModeToggle(boolean status) {
+        if (status) {
+            toggleDarkMode.setChecked(true);
+        } else {
+            toggleDarkMode.setChecked(false);
+        }
+    }
+
     public void checkRangeStatus() {
         int hyperglycemicIndex = rangeIndex.getInt("hyperglycemicIndex", 0);
         int hypoglycemicIndex = rangeIndex.getInt("hypoglycemicIndex", 0);
         if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
-            editor.putInt("hypoglycemicIndex", 80);
-            editor.putInt("hyperglycemicIndex", 140);
-            editor.apply();
+            rangeIndexEditor.putInt("hypoglycemicIndex", 80);
+            rangeIndexEditor.putInt("hyperglycemicIndex", 140);
+            rangeIndexEditor.apply();
         }
     }
 
