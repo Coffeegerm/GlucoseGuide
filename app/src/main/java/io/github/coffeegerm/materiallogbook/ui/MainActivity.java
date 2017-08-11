@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        if (settings.getBoolean("darkModeStatus", false) == true) {
+        if (settings.getInt("darkMode", 0) == 1) {
             setTheme(R.style.AppTheme_Dark);
         }
         setContentView(R.layout.activity_main);

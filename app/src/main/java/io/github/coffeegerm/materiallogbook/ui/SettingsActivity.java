@@ -61,17 +61,17 @@ public class SettingsActivity extends AppCompatActivity {
         settingsEditor = settings.edit();
         checkRangeStatus();
         setHints();
-        setDarkModeToggle(settings.getBoolean("darkModeStatus", false));
+        setDarkModeToggle(settings.getInt("darkMode", 0));
 
         toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    settingsEditor.putBoolean("darkModeStatus", true);
+                    settingsEditor.putInt("darkMode", 1);
                     settingsEditor.apply();
 
                 } else {
-                    settingsEditor.putBoolean("darkModeStatus", true);
+                    settingsEditor.putInt("darkMode", 0);
                     settingsEditor.apply();
                 }
 
@@ -156,8 +156,8 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    public void setDarkModeToggle(boolean status) {
-        if (status) {
+    public void setDarkModeToggle(int status) {
+        if (status == 1) {
             toggleDarkMode.setChecked(true);
         } else {
             toggleDarkMode.setChecked(false);
