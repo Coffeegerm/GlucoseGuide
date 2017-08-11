@@ -34,9 +34,7 @@ import io.realm.Realm;
 public class SettingsFragment extends Fragment {
 
     private static final String TAG = "SettingsFragment";
-    private SharedPreferences rangeIndex;
     private SharedPreferences settings;
-    private SharedPreferences.Editor rangeIndexEditor;
     private SharedPreferences.Editor settingsEditor;
 
     @BindView(R.id.btn_delete_all)
@@ -59,9 +57,9 @@ public class SettingsFragment extends Fragment {
 
     public void initView() {
         final Realm realm = Realm.getDefaultInstance();
-        rangeIndex = getActivity().getPreferences(Context.MODE_PRIVATE);
         settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-        rangeIndexEditor = rangeIndex.edit();
+        settings = getActivity().getPreferences(Context.MODE_PRIVATE);
+        settingsEditor = settings.edit();
         settingsEditor = settings.edit();
         checkRangeStatus();
         setHints();
@@ -73,6 +71,7 @@ public class SettingsFragment extends Fragment {
                 if (isChecked) {
                     settingsEditor.putBoolean("darkModeStatus", true);
                     settingsEditor.apply();
+
                 } else {
                     settingsEditor.putBoolean("darkModeStatus", true);
                     settingsEditor.apply();
@@ -94,8 +93,10 @@ public class SettingsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
-                rangeIndexEditor.putInt("hypoglycemicIndex", Integer.parseInt(s.toString()));
-                rangeIndexEditor.apply();
+                if (!s.toString().equals("")) {
+                    settingsEditor.putInt("hypoglycemicIndex", Integer.parseInt(s.toString()));
+                    settingsEditor.apply();
+                }
             }
         });
 
@@ -113,8 +114,10 @@ public class SettingsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
-                rangeIndexEditor.putInt("hyperglycemicIndex", Integer.parseInt(s.toString()));
-                rangeIndexEditor.apply();
+                if (!s.toString().equals("")) {
+                    settingsEditor.putInt("hyperglycemicIndex", Integer.parseInt(s.toString()));
+                    settingsEditor.apply();
+                }
             }
         });
 
@@ -164,20 +167,20 @@ public class SettingsFragment extends Fragment {
     }
 
     public void checkRangeStatus() {
-        int hyperglycemicIndex = rangeIndex.getInt("hyperglycemicIndex", 0);
-        int hypoglycemicIndex = rangeIndex.getInt("hypoglycemicIndex", 0);
+        int hyperglycemicIndex = settings.getInt("hyperglycemicIndex", 0);
+        int hypoglycemicIndex = settings.getInt("hypoglycemicIndex", 0);
         if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
-            rangeIndexEditor.putInt("hypoglycemicIndex", 80);
-            rangeIndexEditor.putInt("hyperglycemicIndex", 140);
-            rangeIndexEditor.apply();
+            settingsEditor.putInt("hypoglycemicIndex", 80);
+            settingsEditor.putInt("hyperglycemicIndex", 140);
+            settingsEditor.apply();
         }
     }
 
     public void setHints() {
-        String hyperString = String.valueOf(rangeIndex.getInt("hyperglycemicIndex", 0));
+        String hyperString = String.valueOf(settings.getInt("hyperglycemicIndex", 0));
         hyperglycemicEditText.setHint(hyperString);
 
-        String hypoString = String.valueOf(rangeIndex.getInt("hypoglycemicIndex", 0));
+        String hypoString = String.valueOf(settings.getInt("hypoglycemicIndex", 0));
         hypoglycemicEditText.setHint(hypoString);
     }
 }
