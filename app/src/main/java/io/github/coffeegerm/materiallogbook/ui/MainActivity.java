@@ -2,8 +2,8 @@ package io.github.coffeegerm.materiallogbook.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -48,11 +48,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        if (settings.getInt("darkMode", 0) == 1) {
+        if (PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("pref_dark_mode", false)) {
             setTheme(R.style.AppTheme_Dark);
         }
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);

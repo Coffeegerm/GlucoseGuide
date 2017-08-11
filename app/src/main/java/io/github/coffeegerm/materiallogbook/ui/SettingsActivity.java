@@ -27,7 +27,7 @@ import io.realm.Realm;
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
- * Activity for changing and showing chosen settings of app.
+ * Activity for changing and showing chosen settings of Material Logbook.
  */
 
 public class SettingsActivity extends AppCompatActivity {
@@ -61,17 +61,16 @@ public class SettingsActivity extends AppCompatActivity {
         settingsEditor = settings.edit();
         checkRangeStatus();
         setHints();
-        setDarkModeToggle(settings.getInt("darkMode", 0));
 
         toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    settingsEditor.putInt("darkMode", 1);
+                    settingsEditor.putBoolean("pref_dark_mode", false);
                     settingsEditor.apply();
 
                 } else {
-                    settingsEditor.putInt("darkMode", 0);
+                    settingsEditor.putBoolean("pref_dark_mode", false);
                     settingsEditor.apply();
                 }
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:theme="@style/AppTheme.NoActionBar">
+    app:theme="@style/AppTheme">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -24,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:textColor="@color/white"
             android:text="@string/create_entry"
-            android:textSize="18sp"/>
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
 
     </LinearLayout>
@@ -42,7 +41,7 @@
         android:text="@string/new_entry_date_and_time_label"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 
     <TextView
@@ -56,7 +55,7 @@
         android:text="@string/new_entry_blood_glucose_label"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_entry_date_time_label"/>
+        app:layout_constraintTop_toBottomOf="@+id/new_entry_date_time_label" />
 
     <EditText
         android:id="@+id/new_entry_blood_glucose_level"
@@ -71,7 +70,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_glucose_label"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/new_entry_glucose_label"
-        app:layout_constraintRight_toRightOf="@+id/textView6"/>
+        app:layout_constraintRight_toRightOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView6"
@@ -86,7 +85,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_blood_glucose_level"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/new_entry_blood_glucose_level"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 
     <TextView
@@ -100,7 +99,7 @@
         android:text="@string/new_entry_carbohydrates_label"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_entry_glucose_label"/>
+        app:layout_constraintTop_toBottomOf="@+id/new_entry_glucose_label" />
 
 
     <EditText
@@ -112,7 +111,7 @@
         android:inputType="number"
         android:maxLength="4"
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_carbs_label"
-        app:layout_constraintLeft_toRightOf="@+id/new_entry_carbs_label"/>
+        app:layout_constraintLeft_toRightOf="@+id/new_entry_carbs_label" />
 
     <TextView
         android:id="@+id/new_entry_carbs_measure_label"
@@ -129,7 +128,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_carbohydrates_amount"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/new_entry_carbohydrates_amount"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 
     <TextView
@@ -143,7 +142,7 @@
         android:text="@string/new_entry_insulin_label"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_entry_carbs_label"/>
+        app:layout_constraintTop_toBottomOf="@+id/new_entry_carbs_label" />
 
     <EditText
         android:id="@+id/new_entry_insulin_units"
@@ -158,7 +157,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_insulin_label"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/new_entry_insulin_label"
-        app:layout_constraintRight_toLeftOf="@+id/textView5"/>
+        app:layout_constraintRight_toLeftOf="@+id/textView5" />
 
     <TextView
         android:id="@+id/textView5"
@@ -169,7 +168,7 @@
         android:text="@string/insulin_measurement"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_insulin_units"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -194,7 +193,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/saveBtn"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/saveBtn"/>
+            app:layout_constraintRight_toLeftOf="@+id/saveBtn" />
 
         <Button
             android:id="@+id/saveBtn"
@@ -207,7 +206,7 @@
             android:text="@string/save"
             android:textColor="@color/black"
             app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="553dp"/>
+            tools:layout_editor_absoluteY="553dp" />
 
     </LinearLayout>
 
@@ -227,7 +226,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_date_time_label"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/new_entry_date_time_label"
-        app:layout_constraintRight_toLeftOf="@+id/new_entry_time"/>
+        app:layout_constraintRight_toLeftOf="@+id/new_entry_time" />
 
     <EditText
         android:id="@+id/new_entry_time"
@@ -241,7 +240,7 @@
         android:inputType="datetime"
         android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/new_entry_date"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
