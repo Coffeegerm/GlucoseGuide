@@ -57,9 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void initView() {
         final Realm realm = Realm.getDefaultInstance();
-        setSupportActionBar(settingsToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        setupToolbar();
         settings = getPreferences(Context.MODE_PRIVATE);
         settingsEditor = settings.edit();
         checkRangeStatus();
@@ -183,6 +181,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         String hypoString = String.valueOf(settings.getInt("hypoglycemicIndex", 0));
         hypoglycemicEditText.setHint(hypoString);
+    }
+
+    public void setupToolbar() {
+        setSupportActionBar(settingsToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
