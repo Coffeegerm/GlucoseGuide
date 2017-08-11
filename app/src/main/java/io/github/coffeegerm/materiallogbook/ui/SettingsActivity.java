@@ -6,14 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -31,7 +30,7 @@ import io.realm.Realm;
  * Fragment for settings to change the way the app looks and others minor things
  */
 
-public class SettingsFragment extends Fragment {
+public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsFragment";
     private SharedPreferences settings;
@@ -45,21 +44,23 @@ public class SettingsFragment extends Fragment {
     EditText hypoglycemicEditText;
     @BindView(R.id.toggle_dark_mode)
     Switch toggleDarkMode;
+    @BindView(R.id.setting_toolbar)
+    Toolbar settingsToolbar;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View settingsView = inflater.inflate(R.layout.fragment_settings, container, false);
-        ButterKnife.bind(this, settingsView);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        ButterKnife.bind(this);
         initView();
-        return settingsView;
     }
 
     public void initView() {
         final Realm realm = Realm.getDefaultInstance();
-        settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-        settings = getActivity().getPreferences(Context.MODE_PRIVATE);
-        settingsEditor = settings.edit();
+        setSupportActionBar(settingsToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        settings = getPreferences(Context.MODE_PRIVATE);
         settingsEditor = settings.edit();
         checkRangeStatus();
         setHints();
@@ -128,9 +129,9 @@ public class SettingsFragment extends Fragment {
 
                 // Sets theme based on VERSION_CODE
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Dialog_Alert);
+                    builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_Material_Dialog_Alert);
                 } else {
-                    builder = new AlertDialog.Builder(getContext());
+                    builder = new AlertDialog.Builder(getApplicationContext());
                 }
 
                 builder.setTitle("Delete all entries")
@@ -182,5 +183,11 @@ public class SettingsFragment extends Fragment {
 
         String hypoString = String.valueOf(settings.getInt("hypoglycemicIndex", 0));
         hypoglycemicEditText.setHint(hypoString);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 }

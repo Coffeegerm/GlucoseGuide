@@ -1,6 +1,7 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity
 
     Fragment listFragment = new ListFragment();
     Fragment graphFragment = new GraphFragment();
-    Fragment settingsFragment = new SettingsFragment();
     Fragment newsFragment = new NewsFragment();
     Fragment statsFragment = new StatisticsFragment();
     FragmentManager fragmentManager;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences settings = getPreferences(MODE_PRIVATE);
-        if (settings.getBoolean("darkModeStatus", false)) {
+        if (settings.getBoolean("darkModeStatus", false) == true) {
             setTheme(R.style.AppTheme_Dark);
         }
         setContentView(R.layout.activity_main);
@@ -103,12 +103,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_stats) {
             // Swaps fragment to statistics fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, statsFragment).commit();
-        } else if (id == R.id.nav_settings) {
-            // Swaps fragment to settings fragment
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, settingsFragment).commit();
         } else if (id == R.id.nav_news) {
             //Swaps fragment to news fragment
             fragmentManager.beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+        } else if (id == R.id.nav_settings) {
+            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
