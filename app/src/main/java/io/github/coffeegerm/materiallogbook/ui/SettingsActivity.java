@@ -27,15 +27,12 @@ import io.realm.Realm;
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
- * Fragment for settings to change the way the app looks and others minor things
+ * Activity for changing and showing chosen settings of app.
  */
 
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsFragment";
-    private SharedPreferences settings;
-    private SharedPreferences.Editor settingsEditor;
-
     @BindView(R.id.btn_delete_all)
     Button deleteAllEntries;
     @BindView(R.id.hyperglycemic_edit_text)
@@ -46,6 +43,8 @@ public class SettingsActivity extends AppCompatActivity {
     Switch toggleDarkMode;
     @BindView(R.id.setting_toolbar)
     Toolbar settingsToolbar;
+    private SharedPreferences settings;
+    private SharedPreferences.Editor settingsEditor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
