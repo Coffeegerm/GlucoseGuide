@@ -14,7 +14,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -32,7 +31,9 @@ import io.realm.Realm;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private static final String TAG = "SettingsFragment";
+    private static final String TAG = "SettingsActivity";
+    private static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
+    private static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     @BindView(R.id.btn_delete_all)
     Button deleteAllEntries;
     @BindView(R.id.hyperglycemic_edit_text)
@@ -62,21 +63,6 @@ public class SettingsActivity extends AppCompatActivity {
         checkRangeStatus();
         setHints();
 
-        toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    settingsEditor.putBoolean("pref_dark_mode", false);
-                    settingsEditor.apply();
-
-                } else {
-                    settingsEditor.putBoolean("pref_dark_mode", false);
-                    settingsEditor.apply();
-                }
-
-            }
-        });
-
         hypoglycemicEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -91,7 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
                 if (!s.toString().equals("")) {
-                    settingsEditor.putInt("hypoglycemicIndex", Integer.parseInt(s.toString()));
+                    settingsEditor.putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString()));
                     settingsEditor.apply();
                 }
             }
@@ -112,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
                 if (!s.toString().equals("")) {
-                    settingsEditor.putInt("hyperglycemicIndex", Integer.parseInt(s.toString()));
+                    settingsEditor.putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString()));
                     settingsEditor.apply();
                 }
             }
@@ -153,14 +139,6 @@ public class SettingsActivity extends AppCompatActivity {
                         .show();
             }
         });
-    }
-
-    public void setDarkModeToggle(int status) {
-        if (status == 1) {
-            toggleDarkMode.setChecked(true);
-        } else {
-            toggleDarkMode.setChecked(false);
-        }
     }
 
     public void checkRangeStatus() {

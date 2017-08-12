@@ -9,7 +9,7 @@ import android.view.animation.LinearInterpolator;
 /**
  * Created by David Yarzebinski on 7/14/2017.
  * <p>
- * Class dedicated to create the animation for FAB to slide below screen.
+ * Class dedicated to create the animation for FAB to slide below screen on ListFragment.
  */
 
 public class FabBehavior extends FloatingActionButton.Behavior {
