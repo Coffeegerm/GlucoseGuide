@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -16,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.MainActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -27,11 +29,8 @@ import io.realm.RealmResults;
  */
 
 public class SevenDayStatisticsFragment extends Fragment {
-
     private static final String TAG = "SevenDaysStatistics";
-    private String pageTitle;
-    private int pageNumber;
-    private Realm realm;
+
     @BindView(R.id.seven_days_average)
     TextView averageBloodGlucose;
     @BindView(R.id.seven_days_highest)
@@ -44,6 +43,17 @@ public class SevenDayStatisticsFragment extends Fragment {
     TextView highestLabel;
     @BindView(R.id.seven_days_lowest_label)
     TextView lowestLabel;
+
+    @BindView(R.id.imgAvg)
+    ImageView ivAvg;
+    @BindView(R.id.imgUpArrow)
+    ImageView ivUpArrow;
+    @BindView(R.id.imgDownArrow)
+    ImageView ivDownArrow;
+
+    Realm realm;
+    String pageTitle;
+    int pageNumber;
 
     public static SevenDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
         SevenDayStatisticsFragment sevenDayStatisticsFragment = new SevenDayStatisticsFragment();
@@ -81,6 +91,15 @@ public class SevenDayStatisticsFragment extends Fragment {
             lowestBloodGlucose.setText(String.valueOf(getLowestGlucose(sevenDaysAgo)));
         }
 
+        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+            ivAvg.setImageResource(R.drawable.ic_average_dark);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
+        } else {
+            ivAvg.setImageResource(R.drawable.ic_average);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
+        }
         return sevenDaysView;
     }
 

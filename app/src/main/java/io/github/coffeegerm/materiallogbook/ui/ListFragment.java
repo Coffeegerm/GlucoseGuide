@@ -2,8 +2,10 @@ package io.github.coffeegerm.materiallogbook.ui;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -54,6 +56,7 @@ public class ListFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
+
         return listView;
     }
 
@@ -65,7 +68,6 @@ public class ListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.list_sort_from_newest:
                 SORT_ORDER = 0;
@@ -81,12 +83,10 @@ public class ListFragment extends Fragment {
 
     private void setUpRecyclerView() {
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (SORT_ORDER == 0) {
-            ListAdapter descendingList = new ListAdapter(getDescendingList(), getActivity());
-            recView.setAdapter(descendingList);
-        } else if (SORT_ORDER == 1) {
-            ListAdapter ascendingList = new ListAdapter(getAscendingList(), getActivity());
-            recView.setAdapter(ascendingList);
+        if (SORT_ORDER == 0)            // descending list
+            recView.setAdapter(new ListAdapter(getDescendingList(), getActivity()));
+        else if (SORT_ORDER == 1) {     // ascending list
+            recView.setAdapter(new ListAdapter(getAscendingList(), getActivity()));
         }
     }
 
@@ -106,7 +106,8 @@ public class ListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.from_x_100, R.anim.to_x_zero).toBundle();
+                Bundle bundle = ActivityOptions.makeCustomAnimation(getActivity(),
+                        R.anim.from_x_100, R.anim.to_x_zero).toBundle();
                 startActivity(new Intent(getContext(), NewEntryActivity.class), bundle);
             }
         });

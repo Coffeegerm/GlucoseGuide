@@ -16,7 +16,6 @@
     <string name="new_entry_insulin_label">Insulin:</string>
     <string name="time">Time</string>
     <string name="date">Date</string>
-    <string name="no_glucose_toast">Please enter your current glucose.</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 
@@ -35,6 +34,8 @@
     <string name="dash">-</string>
 
     <string name="create_entry">Create a new log entry!</string>
+
+    <string name="no_glucose_toast">Please enter your current glucose.</string>
 
     <!--Settings Strings-->
     <string name="ui">UI</string>
@@ -56,4 +57,5 @@
     <string name="highest_of_all">Highest blood glucose:</string>
     <string name="lowest_of_all">Lowest blood glucose:</string>
     <string name="no_data">No data to calculate</string>
+
 </resources>

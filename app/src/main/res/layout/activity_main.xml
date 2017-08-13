@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start">
+    tools:openDrawer="start" android:fitsSystemWindows="false">
 
     <include layout="@layout/fragment_container"/>
 
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_marginTop="?attr/actionBarSize"
+        app:headerLayout="@layout/header_layout"
         app:menu="@menu/activity_main_drawer"
         app:theme="@style/AppTheme.Drawer"/>
 

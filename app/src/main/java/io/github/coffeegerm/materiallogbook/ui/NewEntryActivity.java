@@ -2,12 +2,13 @@ package io.github.coffeegerm.materiallogbook.ui;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +28,6 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.isLollipopPlus;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -74,6 +74,9 @@ public class NewEntryActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         setFonts();
 
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.create_entry);
+
         final Calendar cal = Calendar.getInstance();
         // Calendar for saving entered Date and Time
         calendarForDb = Calendar.getInstance();
@@ -86,46 +89,32 @@ public class NewEntryActivity extends AppCompatActivity {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
 
-        newEntryDate.setText(month + "/" + day + "/" + year);
+        newEntryDate.setText(i18Fix(month, day, year));
         newEntryTime.setText(checkTimeString(hour, minute));
 
         newEntryDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
+                        (Build.VERSION.SDK_INT >= 21 ? android.R.style.Theme_Material_Dialog_Alert
+                                : android.R.style.Theme_Holo_Light_Dialog),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                month++;
+                                newEntryDate.setText(i18Fix(month, dayOfMonth, year));
+                                month--;
+                                calendarForDb.set(year, month, dayOfMonth);
+                            }
+                        }, cal.get(Calendar.YEAR), // year
+                        cal.get(Calendar.MONTH), // month
+                        cal.get(Calendar.DAY_OF_MONTH)); // day
 
-                if (isLollipopPlus()) {
-                    DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
-                            android.R.style.Theme_Material_Dialog_Alert,
-                            new DatePickerDialog.OnDateSetListener() {
-                                @Override
-                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                    month++;
-                                    newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
-                                    month--;
-                                    calendarForDb.set(year, month, dayOfMonth);
-                                }
-                            },
-                            year, month, day);
-                    dialog.show();
-                } else {
-                    DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
-                            android.R.style.Theme_Holo_Light_Dialog,
-                            new DatePickerDialog.OnDateSetListener() {
-                                @Override
-                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                    month++;
-                                    newEntryDate.setText(month + "/" + dayOfMonth + "/" + year);
-                                    month--;
-                                    calendarForDb.set(year, month, dayOfMonth);
-                                }
-                            },
-                            year, month, day);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.show();
-                }
+                if (Build.VERSION.SDK_INT < 21)
+                    if (dialog.getWindow() != null)
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
+                dialog.show();
             }
         });
 
@@ -133,8 +122,6 @@ public class NewEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar cal = Calendar.getInstance();
-                int hour = cal.get(Calendar.HOUR_OF_DAY);
-                int min = cal.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(NewEntryActivity.this,
                         new TimePickerDialog.OnTimeSetListener() {
@@ -145,7 +132,9 @@ public class NewEntryActivity extends AppCompatActivity {
                                 calendarForDb.set(Calendar.MINUTE, minute);
                             }
                         },
-                        hour, min, false);
+                        cal.get(Calendar.HOUR_OF_DAY), // current hour
+                        cal.get(Calendar.MINUTE), // current minute
+                        false); //no 24 hour view
                 timePickerDialog.show();
             }
         });
@@ -166,15 +155,17 @@ public class NewEntryActivity extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//        startActivity(new Intent(getApplicationContext(), MainActivity.class));
         overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
+        finish();
     }
 
     private void saveEntry() {
         // Checks to make sure there is a blood glucose given.
-        if (newEntryBloodGlucose.getText().toString().equals("")) {
-            Toast.makeText(this, R.string.no_glucose_toast, Toast.LENGTH_SHORT).show();
-        } else {
+        if (newEntryBloodGlucose.getText().toString().equals(""))
+            Snackbar.make(getWindow().getDecorView().getRootView(),
+                    R.string.no_glucose_toast, Snackbar.LENGTH_SHORT).show();
+        else {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
@@ -216,5 +207,11 @@ public class NewEntryActivity extends AppCompatActivity {
         newEntryBloodGlucose.setTypeface(avenirRegular);
         newEntryCarbohydrates.setTypeface(avenirRegular);
         newEntryInsulin.setTypeface(avenirRegular);
+    }
+
+    // i18 fix
+    StringBuilder i18Fix(int month, int day, int year) {
+        return new StringBuilder().append(month).append("/").append(day).append("/")
+                .append(year);
     }
 }

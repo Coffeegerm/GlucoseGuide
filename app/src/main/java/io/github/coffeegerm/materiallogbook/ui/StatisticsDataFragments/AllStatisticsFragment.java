@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.MainActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -27,6 +29,7 @@ import io.realm.RealmResults;
 
 public class AllStatisticsFragment extends Fragment {
     private static final String TAG = "AllStatisticsFragment";
+
     @BindView(R.id.all_days_statistics_average)
     TextView averageBloodGlucose;
     @BindView(R.id.highest_of_all_glucose)
@@ -39,9 +42,17 @@ public class AllStatisticsFragment extends Fragment {
     TextView highestLabel;
     @BindView(R.id.all_stats_lowest_label)
     TextView lowestLabel;
-    private String pageTitle;
-    private int pageNumber;
-    private Realm realm;
+
+    @BindView(R.id.imgAvg)
+    ImageView ivAvg;
+    @BindView(R.id.imgUpArrow)
+    ImageView ivUpArrow;
+    @BindView(R.id.imgDownArrow)
+    ImageView ivDownArrow;
+
+    Realm realm;
+    String pageTitle;
+    int pageNumber;
 
     public static AllStatisticsFragment newInstance(int pageNumber, String pageTitle) {
         AllStatisticsFragment allStatisticsFragment = new AllStatisticsFragment();
@@ -76,6 +87,16 @@ public class AllStatisticsFragment extends Fragment {
             averageBloodGlucose.setText(String.valueOf(getAverage()));
             highestBloodGlucose.setText(String.valueOf(getHighestBloodGlucose()));
             lowestBloodGlucose.setText(String.valueOf(getLowestBloodGlucose()));
+        }
+
+        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+            ivAvg.setImageResource(R.drawable.ic_average_dark);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
+        } else {
+            ivAvg.setImageResource(R.drawable.ic_average);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
         }
 
         return allStatsView;
