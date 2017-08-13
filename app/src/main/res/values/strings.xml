@@ -16,6 +16,7 @@
     <string name="new_entry_insulin_label">Insulin:</string>
     <string name="time">Time</string>
     <string name="date">Date</string>
+    <string name="no_glucose_toast">Please enter your current glucose.</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 

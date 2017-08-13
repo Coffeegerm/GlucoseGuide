@@ -1,5 +1,7 @@
 package io.github.coffeegerm.materiallogbook.utils;
 
+import android.os.Build;
+
 /**
  * Created by David Yarzebinski on 7/6/2017.
  * <p>
@@ -32,5 +34,13 @@ public final class Utilities {
             min = String.valueOf(minute);
 
         return hour + ":" + min + " " + timeSet;
+    }
+
+    public static boolean isKitKatPlus() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    }
+
+    public static boolean isLollipopPlus() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 }

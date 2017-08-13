@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -24,8 +24,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
+
+import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
+import static io.github.coffeegerm.materiallogbook.utils.Utilities.isLollipopPlus;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -61,6 +63,7 @@ public class NewEntryActivity extends AppCompatActivity {
     TextView insulinLabel;
 
     private Realm realm;
+    private Calendar calendarForDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class NewEntryActivity extends AppCompatActivity {
 
         final Calendar cal = Calendar.getInstance();
         // Calendar for saving entered Date and Time
-        final Calendar calendarForDb = Calendar.getInstance();
+        calendarForDb = Calendar.getInstance();
 
         // Set date and time to current date and time on initial create
         int year = cal.get(Calendar.YEAR);
@@ -84,7 +87,7 @@ public class NewEntryActivity extends AppCompatActivity {
         int minute = cal.get(Calendar.MINUTE);
 
         newEntryDate.setText(month + "/" + day + "/" + year);
-        newEntryTime.setText(Utilities.checkTimeString(hour, minute));
+        newEntryTime.setText(checkTimeString(hour, minute));
 
         newEntryDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +96,7 @@ public class NewEntryActivity extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (isLollipopPlus()) {
                     DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
                             android.R.style.Theme_Material_Dialog_Alert,
                             new DatePickerDialog.OnDateSetListener() {
@@ -137,7 +140,7 @@ public class NewEntryActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                newEntryTime.setText(Utilities.checkTimeString(hourOfDay, minute));
+                                newEntryTime.setText(checkTimeString(hourOfDay, minute));
                                 calendarForDb.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 calendarForDb.set(Calendar.MINUTE, minute);
                             }
@@ -150,43 +153,51 @@ public class NewEntryActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
+                startMainActivity();
             }
         });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        // Save Entry to database
-                        EntryItem entryItem = NewEntryActivity.this.realm.createObject(EntryItem.class);
-                        // Creates Date object made from the DatePicker and TimePicker
-                        Date date = calendarForDb.getTime();
-                        entryItem.setDate(date);
-                        // Prevention of NullPointerException
-                        if (!newEntryBloodGlucose.getText().toString().equals("")) {
-                            entryItem.setBloodGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
-                        }
-                        // Prevention of NullPointerException
-                        if (!newEntryCarbohydrates.getText().toString().equals("")) {
-                            entryItem.setCarbohydrates(Integer.parseInt(newEntryCarbohydrates.getText().toString()));
-                        }
-                        // Prevention of NullPointerException
-                        if (!newEntryInsulin.getText().toString().equals("")) {
-                            entryItem.setInsulin(Double.parseDouble(newEntryInsulin.getText().toString()));
-                        }
-                    }
-                });
-
-                // After save returns to MainActivity ListFragment
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
+                saveEntry();
             }
         });
+    }
+
+    private void startMainActivity() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
+    }
+
+    private void saveEntry() {
+        // Checks to make sure there is a blood glucose given.
+        if (newEntryBloodGlucose.getText().toString().equals("")) {
+            Toast.makeText(this, R.string.no_glucose_toast, Toast.LENGTH_SHORT).show();
+        } else {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    // Save Entry to database
+                    EntryItem entryItem = NewEntryActivity.this.realm.createObject(EntryItem.class);
+                    // Creates Date object made from the DatePicker and TimePicker
+                    Date date = calendarForDb.getTime();
+                    entryItem.setDate(date);
+                    entryItem.setBloodGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
+                    // Prevention of NullPointerException
+                    if (!newEntryCarbohydrates.getText().toString().equals("")) {
+                        entryItem.setCarbohydrates(Integer.parseInt(newEntryCarbohydrates.getText().toString()));
+                    }
+                    // Prevention of NullPointerException
+                    if (!newEntryInsulin.getText().toString().equals("")) {
+                        entryItem.setInsulin(Double.parseDouble(newEntryInsulin.getText().toString()));
+                    }
+                }
+            });
+
+            // After save returns to MainActivity ListFragment
+            startMainActivity();
+        }
     }
 
     private void setFonts() {
