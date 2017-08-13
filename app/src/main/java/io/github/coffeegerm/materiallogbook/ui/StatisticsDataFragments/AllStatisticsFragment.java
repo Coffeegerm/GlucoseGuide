@@ -77,8 +77,13 @@ public class AllStatisticsFragment extends Fragment {
         ButterKnife.bind(this, allStatsView);
         realm = Realm.getDefaultInstance();
         setFonts();
-        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
+        setValues();
+        setImages();
+        return allStatsView;
+    }
 
+    public void setValues() {
+        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
         if (entryItems.size() == 0) {
             averageBloodGlucose.setText(R.string.dash);
             highestBloodGlucose.setText(R.string.dash);
@@ -88,18 +93,6 @@ public class AllStatisticsFragment extends Fragment {
             highestBloodGlucose.setText(String.valueOf(getHighestBloodGlucose()));
             lowestBloodGlucose.setText(String.valueOf(getLowestBloodGlucose()));
         }
-
-        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
-            ivAvg.setImageResource(R.drawable.ic_average_dark);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-        } else {
-            ivAvg.setImageResource(R.drawable.ic_average);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
-        }
-
-        return allStatsView;
     }
 
     public int getAverage() {
@@ -142,6 +135,18 @@ public class AllStatisticsFragment extends Fragment {
             }
         }
         return lowest;
+    }
+
+    private void setImages() {
+        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+            ivAvg.setImageResource(R.drawable.ic_average_dark);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
+        } else {
+            ivAvg.setImageResource(R.drawable.ic_average);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
+        }
     }
 
     private void setFonts() {

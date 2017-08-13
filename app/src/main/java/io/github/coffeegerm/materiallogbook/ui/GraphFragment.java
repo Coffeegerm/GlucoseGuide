@@ -87,6 +87,7 @@ public class GraphFragment extends Fragment {
             Log.i(TAG, "setupGraph: No graphEntryPoints found");
             Toast.makeText(getContext(), "Enter graphEntryPoints with glucose levels higher than 0 to create a graph", Toast.LENGTH_SHORT).show();
         } else {
+            // TODO: 8/13/2017 If dark mode present change accordingly
             Drawable tealGradient = ContextCompat.getDrawable(getContext(), R.drawable.fade_teal);
             LineDataSet dataSet = new LineDataSet(graphEntryPoints, "Blood Sugar Levels"); // Adding graphEntryPoints to dataset
             dataSet.setLineWidth(1.5f);
@@ -103,10 +104,10 @@ public class GraphFragment extends Fragment {
             lineChart.setDoubleTapToZoomEnabled(false); // Disables the user to double tap to zoom, rather useless feature in present day form factor
             lineChart.getLegend().setEnabled(false); // Disables the legend at the bottom
             lineChart.getAxisLeft().setDrawGridLines(false);
-
+            // Disables Y values on the right of chart
             YAxis yAxisRight = lineChart.getAxisRight();
-            yAxisRight.setEnabled(false); // Disables Y values on the right of chart
-
+            yAxisRight.setEnabled(false);
+            // Handles X Axis formatting, position and such
             XAxis xAxis = lineChart.getXAxis();
             IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
             xAxis.setValueFormatter(xAxisFormatter);

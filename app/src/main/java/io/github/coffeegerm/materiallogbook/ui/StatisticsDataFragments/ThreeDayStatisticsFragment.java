@@ -78,10 +78,15 @@ public class ThreeDayStatisticsFragment extends Fragment {
         View threeDaysStatisticsView = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
         ButterKnife.bind(this, threeDaysStatisticsView);
         realm = Realm.getDefaultInstance();
+        setFonts();
+        setValues();
+        setImages();
+        return threeDaysStatisticsView;
+    }
+
+    private void setValues() {
         Date threeDaysAgo = getDateThreeDaysAgo();
         RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        setFonts();
-
         if (entriesFromLastThreeDays.size() == 0) {
             Toast.makeText(getContext(), R.string.no_data, Toast.LENGTH_SHORT).show();
             averageBloodGlucose.setText(R.string.dash);
@@ -92,18 +97,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
             highestBloodGlucose.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
             lowestBloodGlucose.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
         }
-
-        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
-            ivAvg.setImageResource(R.drawable.ic_average_dark);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-        } else {
-            ivAvg.setImageResource(R.drawable.ic_average);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
-        }
-
-        return threeDaysStatisticsView;
     }
 
     public int getAverageGlucose(Date threeDaysAgo) {
@@ -144,6 +137,18 @@ public class ThreeDayStatisticsFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -3);
         return calendar.getTime();
+    }
+
+    private void setImages() {
+        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+            ivAvg.setImageResource(R.drawable.ic_average_dark);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
+        } else {
+            ivAvg.setImageResource(R.drawable.ic_average);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
+        }
     }
 
     private void setFonts() {
