@@ -16,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -69,6 +68,8 @@ public class NewEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate: NewEntryActivity started");
+        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false))
+            setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_new_entry);
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
@@ -89,7 +90,7 @@ public class NewEntryActivity extends AppCompatActivity {
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
 
-        newEntryDate.setText(i18Fix(month, day, year));
+        newEntryDate.setText(dateFix(month, day, year));
         newEntryTime.setText(checkTimeString(hour, minute));
 
         newEntryDate.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +103,7 @@ public class NewEntryActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                                 month++;
-                                newEntryDate.setText(i18Fix(month, dayOfMonth, year));
+                                newEntryDate.setText(dateFix(month, dayOfMonth, year));
                                 month--;
                                 calendarForDb.set(year, month, dayOfMonth);
                             }
@@ -209,8 +210,8 @@ public class NewEntryActivity extends AppCompatActivity {
         newEntryInsulin.setTypeface(avenirRegular);
     }
 
-    // i18 fix
-    StringBuilder i18Fix(int month, int day, int year) {
+    // dateFix
+    StringBuilder dateFix(int month, int day, int year) {
         return new StringBuilder().append(month).append("/").append(day).append("/")
                 .append(year);
     }

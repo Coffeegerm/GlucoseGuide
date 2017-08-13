@@ -17,6 +17,8 @@
     <color name="textColorSecondaryInverse">#D1D1D1</color>
 
     <!-- Dark theme -->
+    <color name="darkThemeColorPrimary">#00877F</color>
+    <color name="darkThemeColorPrimaryDark">#00655F</color>
     <color name="darkThemeBackground">#7D7C84</color>
     <color name="smokey_black">#0D160B</color>
     <color name="black">#000</color>

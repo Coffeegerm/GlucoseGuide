@@ -26,9 +26,9 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
-* Activity for controlling which fragment should be presented and containing
-* the main activity for holding Fragments
-**/
+ * Activity for controlling which fragment should be presented and containing
+ * the main activity for holding Fragments
+ **/
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,28 +50,21 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
     private Realm realm;
     public int lastSelectedTab;
-
     private boolean isCreated = false;
     public static boolean isResumed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
         if (sharedPreferences.getBoolean("pref_dark_mode", false)) setTheme(R.style.AppTheme_Dark);
-        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         isCreated = true;
-
         ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(true);
-
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
         realmSetup();
         setDrawerLayout();
-
         fragmentManager = getSupportFragmentManager();
         if (isCreated && !isResumed)
             fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
@@ -79,21 +72,21 @@ public class MainActivity extends AppCompatActivity
 
         int textColor;
         if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-            ///////////////// DARK MODE
+            // DARK MODE
             navigationView.getHeaderView(0).setBackground(getResources()
                     .getDrawable(R.drawable.header_dark));
             navigationView.setBackgroundColor(getResources().getColor(R.color.darkThemeBackground));
             textColor = R.color.textColorPrimaryInverse;
         } else {
-            ///////////////// LIGHT MODE
+            // LIGHT MODE
             navigationView.getHeaderView(0).setBackground(getResources()
                     .getDrawable(R.drawable.header_light));
             textColor = R.color.textColorPrimary;
         }
 
         ColorStateList csl = new ColorStateList(
-                new int[][] {new int[] {android.R.attr.state_checked}, new int[] {-android.R.attr.state_checked}},
-                new int[] {getResources().getColor(R.color.colorPrimary), getResources().getColor(textColor)});
+                new int[][]{new int[]{android.R.attr.state_checked}, new int[]{-android.R.attr.state_checked}},
+                new int[]{getResources().getColor(R.color.colorPrimary), getResources().getColor(textColor)});
         navigationView.setItemTextColor(csl);
         navigationView.setItemIconTintList(csl);
     }
@@ -104,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         if (sharedPreferences.getBoolean("pref_dark_mode", false))
             setTheme(R.style.AppTheme_Dark);
         else setTheme(R.style.AppTheme);
-        
+
         if (isCreated) isCreated = false;
         else {
             recreate();
@@ -140,13 +133,13 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
         else
             new AlertDialog.Builder(this).setTitle("Close Material Logbook?")
-                .setMessage("Do you really want to close Material Logbook?")
-                .setPositiveButton("Get me out of here!", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).setNegativeButton("No", null).show();
+                    .setMessage("Do you really want to close Material Logbook?")
+                    .setPositiveButton("Get me out of here!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).setNegativeButton("No", null).show();
     }
 
     @Override

@@ -2,10 +2,8 @@ package io.github.coffeegerm.materiallogbook.ui;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,13 +45,10 @@ import io.realm.Sort;
 public class GraphFragment extends Fragment {
 
     private static final String TAG = "GraphFragment";
-
     @BindView(R.id.line_chart)
     LineChart lineChart;
-
     @BindView(R.id.graph_rec_view)
     RecyclerView recyclerView;
-
     GraphAdapter graphAdapter;
 
     @Nullable
@@ -63,7 +58,6 @@ public class GraphFragment extends Fragment {
         ButterKnife.bind(this, graphView);
         setupRecView();
         setupGraph();
-
         return graphView;
     }
 
@@ -76,10 +70,8 @@ public class GraphFragment extends Fragment {
     private void setupGraph() {
         // Get sorted List from RealmResults
         List<EntryItem> entryObjects = getAscendingDataList();
-
         // List of Entries for Graph
         List<Entry> graphEntryPoints = new ArrayList<>();
-
         for (int positionInList = 0; positionInList < entryObjects.size(); positionInList++) {
             // X value = Date/Time
             float itemDate = entryObjects.get(positionInList).getDate().getTime();
