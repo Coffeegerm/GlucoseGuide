@@ -3,4 +3,5 @@ Stylish Logbook for Diabetics to keep track of what they've eaten, units of insu
 
 
 ## Contributors
+@eddieberklee
 @AwaisKing
