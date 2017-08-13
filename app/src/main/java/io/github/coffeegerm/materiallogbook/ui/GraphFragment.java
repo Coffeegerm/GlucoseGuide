@@ -2,8 +2,10 @@ package io.github.coffeegerm.materiallogbook.ui;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -61,6 +63,7 @@ public class GraphFragment extends Fragment {
         ButterKnife.bind(this, graphView);
         setupRecView();
         setupGraph();
+
         return graphView;
     }
 

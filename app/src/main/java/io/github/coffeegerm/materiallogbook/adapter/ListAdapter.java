@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import java.util.Locale;
 
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.MainActivity;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -54,23 +56,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         holder.tvDate.setText(formattedDate);
         holder.tvTime.setText(formattedTime);
 
-        if (String.valueOf(item.getBloodGlucose()).equals("0")) {
+        if (String.valueOf(item.getBloodGlucose()).equals("0"))
             holder.tvBloodGlucose.setText(R.string.dash);
-        } else {
+        else
             holder.tvBloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
-        }
 
-        if (String.valueOf(item.getCarbohydrates()).equals("0")) {
+        if (String.valueOf(item.getCarbohydrates()).equals("0"))
             holder.tvCarbohydrates.setText(R.string.dash);
-        } else {
+        else
             holder.tvCarbohydrates.setText(String.valueOf(item.getCarbohydrates()));
-        }
 
-        if (String.valueOf(item.getInsulin()).equals("0.0")) {
+        if (String.valueOf(item.getInsulin()).equals("0.0"))
             holder.tvInsulin.setText(R.string.dash);
-        } else {
+        else
             holder.tvInsulin.setText(String.valueOf(item.getInsulin()));
-        }
     }
 
     @Override
@@ -79,17 +78,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
-        private TextView tvDate;
-        private TextView tvTime;
-        private TextView tvBloodGlucose;
-        private TextView tvInsulin;
-        private TextView tvCarbohydrates;
-        private TextView bloodGlucoseLabel;
-        private TextView carbohydratesLabel;
-        private TextView insulinLabel;
-        private TextView bloodGlucoseMeasurementLabel;
-        private TextView carbsMeasurementLabel;
-        private TextView insulinMeasurementLabel;
+        private TextView tvDate, tvTime, tvBloodGlucose, tvInsulin, tvCarbohydrates,
+                bloodGlucoseLabel, carbohydratesLabel, insulinLabel, bloodGlucoseMeasurementLabel,
+                carbsMeasurementLabel, insulinMeasurementLabel;
+        private ImageView ivInsulins, ivCarbs, ivFinger;
 
         viewHolder(View itemView) {
             super(itemView);
@@ -106,6 +98,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             bloodGlucoseMeasurementLabel = (TextView) itemView.findViewById(R.id.blood_glucose_measurement_label);
             carbsMeasurementLabel = (TextView) itemView.findViewById(R.id.carbs_measurement_label);
             insulinMeasurementLabel = (TextView) itemView.findViewById(R.id.insulin_measurement_label);
+            ivInsulins = (ImageView) itemView.findViewById(R.id.imgInsulins);
+            ivCarbs = (ImageView) itemView.findViewById(R.id.imgCarbs);
+            ivFinger = (ImageView) itemView.findViewById(R.id.imgFinger);
 
             // Set fonts
             tvDate.setTypeface(avenirRegular);
@@ -119,6 +114,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             insulinMeasurementLabel.setTypeface(avenirDemiBold);
             bloodGlucoseMeasurementLabel.setTypeface(avenirDemiBold);
             carbsMeasurementLabel.setTypeface(avenirDemiBold);
+
+            if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+                ivFinger.setImageResource(R.drawable.ic_finger_dark);
+                ivCarbs.setImageResource(R.drawable.ic_food_dark);
+                ivInsulins.setImageResource(R.drawable.ic_syringe_dark);
+            } else {
+                ivFinger.setImageResource(R.drawable.ic_finger);
+                ivCarbs.setImageResource(R.drawable.ic_food);
+                ivInsulins.setImageResource(R.drawable.ic_syringe);
+            }
         }
     }
 }

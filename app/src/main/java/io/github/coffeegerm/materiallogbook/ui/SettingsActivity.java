@@ -1,8 +1,6 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -32,6 +31,7 @@ import io.realm.Realm;
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsActivity";
+
     private static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
     private static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     @BindView(R.id.btn_delete_all)
@@ -44,12 +44,12 @@ public class SettingsActivity extends AppCompatActivity {
     Switch toggleDarkMode;
     @BindView(R.id.setting_toolbar)
     Toolbar settingsToolbar;
-    private SharedPreferences settings;
-    private SharedPreferences.Editor settingsEditor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false))
+            setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         initView();
@@ -58,49 +58,46 @@ public class SettingsActivity extends AppCompatActivity {
     public void initView() {
         final Realm realm = Realm.getDefaultInstance();
         setupToolbar();
-        settings = getPreferences(Context.MODE_PRIVATE);
-        settingsEditor = settings.edit();
         checkRangeStatus();
         setHints();
 
+        toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false));
+
+        toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MainActivity.sharedPreferences.edit().putBoolean("pref_dark_mode", isChecked).apply();
+                recreate();
+            }
+        });
+
         hypoglycemicEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // do nothing
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
-                if (!s.toString().equals("")) {
-                    settingsEditor.putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString()));
-                    settingsEditor.apply();
-                }
+                if (!s.toString().equals(""))
+                    MainActivity.sharedPreferences.edit()
+                            .putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
             }
         });
 
         hyperglycemicEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // do nothing.
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
-                if (!s.toString().equals("")) {
-                    settingsEditor.putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString()));
-                    settingsEditor.apply();
-                }
+                if (!s.toString().equals("")) MainActivity.sharedPreferences.edit()
+                        .putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
             }
         });
 
@@ -110,11 +107,9 @@ public class SettingsActivity extends AppCompatActivity {
                 final AlertDialog.Builder builder;
 
                 // Sets theme based on VERSION_CODE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(getApplicationContext(), android.R.style.Theme_Material_Dialog_Alert);
-                } else {
-                    builder = new AlertDialog.Builder(getApplicationContext());
-                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    builder = new AlertDialog.Builder(SettingsActivity.this, android.R.style.Theme_Material_Dialog_NoActionBar);
+                else builder = new AlertDialog.Builder(SettingsActivity.this);
 
                 builder.setTitle("Delete all entries")
                         .setMessage("Are you sure you want to delete all entries?")
@@ -142,27 +137,28 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void checkRangeStatus() {
-        int hyperglycemicIndex = settings.getInt("hyperglycemicIndex", 0);
-        int hypoglycemicIndex = settings.getInt("hypoglycemicIndex", 0);
+        int hyperglycemicIndex = MainActivity.sharedPreferences.getInt("hyperglycemicIndex", 0);
+        int hypoglycemicIndex = MainActivity.sharedPreferences.getInt("hypoglycemicIndex", 0);
         if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
-            settingsEditor.putInt("hypoglycemicIndex", 80);
-            settingsEditor.putInt("hyperglycemicIndex", 140);
-            settingsEditor.apply();
+            MainActivity.sharedPreferences.edit().putInt("hypoglycemicIndex", 80).apply();
+            MainActivity.sharedPreferences.edit().putInt("hyperglycemicIndex", 140).apply();
         }
     }
 
     public void setHints() {
-        String hyperString = String.valueOf(settings.getInt("hyperglycemicIndex", 0));
+        String hyperString = String.valueOf(MainActivity.sharedPreferences.getInt("hyperglycemicIndex", 0));
         hyperglycemicEditText.setHint(hyperString);
 
-        String hypoString = String.valueOf(settings.getInt("hypoglycemicIndex", 0));
+        String hypoString = String.valueOf(MainActivity.sharedPreferences.getInt("hypoglycemicIndex", 0));
         hypoglycemicEditText.setHint(hypoString);
     }
 
     public void setupToolbar() {
         setSupportActionBar(settingsToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
 
     @Override

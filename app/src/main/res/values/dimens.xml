@@ -6,7 +6,7 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appBarElevation">8dp</dimen>
-    <dimen name="item_card_elevation">8dp</dimen>
+    <dimen name="item_card_elevation">4dp</dimen>
 
     <!-- Dimens for Statistics Fragment views -->
     <dimen name="stats_cardview_start_end_margins">8dp</dimen>

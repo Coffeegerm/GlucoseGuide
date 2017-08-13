@@ -4,19 +4,26 @@
     <color name="colorPrimary">#00B9AE</color>
     <color name="colorPrimaryDark">#00988F</color>
     <color name="colorPrimaryLight">#2EC5BC</color>
+
     <!-- Accent color: dark grey -->
     <color name="colorAccent">#373F51</color>
+
     <!-- Text color primary: white -->
     <color name="textColorPrimary">#0D160B</color>
     <color name="textColorSecondary">#2C2C2C</color>
+
     <!-- Text color inverse: mostly black -->
     <color name="textColorPrimaryInverse">#FFFFFF</color>
     <color name="textColorSecondaryInverse">#D1D1D1</color>
 
+    <!-- Dark theme -->
     <color name="darkThemeBackground">#7D7C84</color>
     <color name="smokey_black">#0D160B</color>
     <color name="black">#000</color>
     <color name="beige">#F2F3D9</color>
     <color name="light_grey">#D3D4D9</color>
     <color name="white">#fff</color>
+
+    <!-- Others -->
+    <color name="fabRippleColor">#5FD3D4D9</color>
 </resources>

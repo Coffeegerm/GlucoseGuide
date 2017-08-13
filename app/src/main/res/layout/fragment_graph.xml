@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View android:layout_width="match_parent" android:layout_height="5dp"
+        android:background="@drawable/elevation" android:id="@+id/shadow" />
+
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart"
         android:layout_width="match_parent"

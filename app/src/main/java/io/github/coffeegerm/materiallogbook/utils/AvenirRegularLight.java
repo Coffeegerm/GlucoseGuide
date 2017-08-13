@@ -13,6 +13,7 @@ import android.util.AttributeSet;
  */
 
 public class AvenirRegularLight extends android.support.v7.widget.AppCompatTextView {
+
     public AvenirRegularLight(Context context) {
         super(context);
         Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/AvenirNext-UltraLight.otf");

@@ -17,7 +17,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+            <ImageView android:id="@+id/imgAvg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -32,7 +32,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/average"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <View
@@ -74,7 +73,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+            <ImageView android:id="@+id/imgUpArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -89,7 +88,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/highest_of_all"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <View
@@ -131,7 +129,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+            <ImageView android:id="@+id/imgDownArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -146,7 +144,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/lowest_of_all"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <View

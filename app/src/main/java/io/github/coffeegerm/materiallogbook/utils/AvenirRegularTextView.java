@@ -13,6 +13,7 @@ import android.util.AttributeSet;
  */
 
 public class AvenirRegularTextView extends android.support.v7.widget.AppCompatTextView {
+
     public AvenirRegularTextView(Context context) {
         super(context);
         Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/AvenirNext-Regular.otf");

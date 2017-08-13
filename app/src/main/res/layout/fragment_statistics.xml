@@ -8,7 +8,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp">
+        android:layout_height="?attr/actionBarSize">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.MainActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -28,24 +30,31 @@ import io.realm.RealmResults;
  */
 
 public class ThreeDayStatisticsFragment extends Fragment {
-
     private static final String TAG = "ThreeDaysStatistics";
 
-    @BindView(R.id.three_days_lowest)
-    TextView lowestBloodGlucose;
-    @BindView(R.id.three_days_highest)
-    TextView highestBloodGlucose;
     @BindView(R.id.three_days_average)
     TextView averageBloodGlucose;
+    @BindView(R.id.three_days_highest)
+    TextView highestBloodGlucose;
+    @BindView(R.id.three_days_lowest)
+    TextView lowestBloodGlucose;
     @BindView(R.id.three_days_average_label)
     TextView averageLabel;
     @BindView(R.id.three_days_highest_label)
     TextView highestLabel;
     @BindView(R.id.three_days_lowest_label)
     TextView lowestLabel;
+
+    @BindView(R.id.imgAvg)
+    ImageView ivAvg;
+    @BindView(R.id.imgUpArrow)
+    ImageView ivUpArrow;
+    @BindView(R.id.imgDownArrow)
+    ImageView ivDownArrow;
+
     Realm realm;
-    private String pageTitle;
-    private int pageNumber;
+    String pageTitle;
+    int pageNumber;
 
     public static ThreeDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
         ThreeDayStatisticsFragment threeDayStatisticsFragment = new ThreeDayStatisticsFragment();
@@ -83,6 +92,17 @@ public class ThreeDayStatisticsFragment extends Fragment {
             highestBloodGlucose.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
             lowestBloodGlucose.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
         }
+
+        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+            ivAvg.setImageResource(R.drawable.ic_average_dark);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
+        } else {
+            ivAvg.setImageResource(R.drawable.ic_average);
+            ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
+            ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
+        }
+
         return threeDaysStatisticsView;
     }
 

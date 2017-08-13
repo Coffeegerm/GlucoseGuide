@@ -1,7 +1,9 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,11 +28,11 @@ import io.github.coffeegerm.materiallogbook.adapter.RssAdapter;
 * News Fragment
 *
 * Fragment that shows an RSS feed of diabetic news from sources
-* */
+*/
 
 public class NewsFragment extends Fragment {
 
-    private static final String TAG = "NewsFragment";
+//    private static final String TAG = "NewsFragment";
 
     String diabetesCoUkRelatedArticleLinks = "http://www.diabetes.co.uk/News/rss/newsindex.xml";
     @BindView(R.id.newsRecView)
@@ -48,17 +50,17 @@ public class NewsFragment extends Fragment {
         ButterKnife.bind(this, newsView);
         swipeRefreshSetup();
         loadNews();
+
         return newsView;
     }
 
     private void loadNews() {
 
-        if (!newsSwipeRefresh.isRefreshing()) {
-            progressBar.setVisibility(View.VISIBLE);
-        }
+        if (!newsSwipeRefresh.isRefreshing()) progressBar.setVisibility(View.VISIBLE);
 
         Parser parser = new Parser();
         parser.execute(diabetesCoUkRelatedArticleLinks);
+
         parser.onFinish(new Parser.OnTaskCompleted() {
 
             @Override
