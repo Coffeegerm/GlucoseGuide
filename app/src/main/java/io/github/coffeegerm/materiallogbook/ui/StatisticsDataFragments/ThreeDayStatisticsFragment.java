@@ -1,6 +1,5 @@
 package io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -78,7 +77,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
         View threeDaysStatisticsView = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
         ButterKnife.bind(this, threeDaysStatisticsView);
         realm = Realm.getDefaultInstance();
-        setFonts();
         setValues();
         setImages();
         return threeDaysStatisticsView;
@@ -149,16 +147,5 @@ public class ThreeDayStatisticsFragment extends Fragment {
             ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
         }
-    }
-
-    private void setFonts() {
-        Typeface avenirRegular = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNext-Regular.otf");
-        Typeface avenirMedium = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNext-Medium.otf");
-        averageBloodGlucose.setTypeface(avenirMedium);
-        highestBloodGlucose.setTypeface(avenirMedium);
-        lowestBloodGlucose.setTypeface(avenirMedium);
-        averageLabel.setTypeface(avenirRegular);
-        highestLabel.setTypeface(avenirRegular);
-        lowestLabel.setTypeface(avenirRegular);
     }
 }

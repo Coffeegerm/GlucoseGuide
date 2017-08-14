@@ -17,13 +17,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView android:id="@+id/imgAvg"
+            <ImageView
+                android:id="@+id/imgAvg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_average" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:id="@+id/all_stats_average_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +33,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/average"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <View
@@ -40,7 +40,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
                 android:id="@+id/all_days_statistics_average"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,13 +74,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView android:id="@+id/imgUpArrow"
+            <ImageView
+                android:id="@+id/imgUpArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_up_arrow" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:id="@+id/all_stats_highest_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,7 +90,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/highest_of_all"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <View
@@ -97,7 +97,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
                 android:id="@+id/highest_of_all_glucose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,13 +131,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView android:id="@+id/imgDownArrow"
+            <ImageView
+                android:id="@+id/imgDownArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_down_arrow" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:id="@+id/all_stats_lowest_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -146,7 +147,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/lowest_of_all"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <View
@@ -154,7 +154,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
                 android:id="@+id/lowest_of_all_glucose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

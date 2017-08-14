@@ -17,13 +17,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView android:id="@+id/imgAvg"
+            <ImageView
+                android:id="@+id/imgAvg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_average" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:id="@+id/three_days_average_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,7 +40,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
                 android:id="@+id/three_days_average"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,13 +74,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView android:id="@+id/imgUpArrow"
+            <ImageView
+                android:id="@+id/imgUpArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_up_arrow" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:id="@+id/three_days_highest_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,7 +97,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
                 android:id="@+id/three_days_highest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -129,13 +131,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView android:id="@+id/imgDownArrow"
+            <ImageView
+                android:id="@+id/imgDownArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_down_arrow" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:id="@+id/three_days_lowest_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,7 +154,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
                 android:id="@+id/three_days_lowest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
