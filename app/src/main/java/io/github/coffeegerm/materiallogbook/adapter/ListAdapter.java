@@ -1,7 +1,6 @@
 package io.github.coffeegerm.materiallogbook.adapter;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +24,6 @@ import io.github.coffeegerm.materiallogbook.ui.MainActivity;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
-    // Fonts used in itemView
-    private Typeface avenirRegular;
-    private Typeface avenirDemiBold;
-    private Typeface avenirMedium;
     private List<EntryItem> entryItems;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
@@ -37,9 +32,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     public ListAdapter(List<EntryItem> entryItemList, Context c) {
         this.inflater = LayoutInflater.from(c);
         this.entryItems = entryItemList;
-        avenirRegular = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-Regular.otf");
-        avenirDemiBold = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-DemiBold.otf");
-        avenirMedium = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-Medium.otf");
     }
 
     @Override
@@ -78,9 +70,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
-        private TextView tvDate, tvTime, tvBloodGlucose, tvInsulin, tvCarbohydrates,
-                bloodGlucoseLabel, carbohydratesLabel, insulinLabel, bloodGlucoseMeasurementLabel,
-                carbsMeasurementLabel, insulinMeasurementLabel;
+        private TextView tvDate, tvTime, tvBloodGlucose, tvInsulin, tvCarbohydrates;
         private ImageView ivInsulins, ivCarbs, ivFinger;
 
         viewHolder(View itemView) {
@@ -92,28 +82,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             tvBloodGlucose = (TextView) itemView.findViewById(R.id.tv_blood_glucose);
             tvInsulin = (TextView) itemView.findViewById(R.id.tv_insulin);
             tvCarbohydrates = (TextView) itemView.findViewById(R.id.tv_carbs);
-            bloodGlucoseLabel = (TextView) itemView.findViewById(R.id.blood_glucose_label);
-            carbohydratesLabel = (TextView) itemView.findViewById(R.id.carbohydrates_label);
-            insulinLabel = (TextView) itemView.findViewById(R.id.insulin_label);
-            bloodGlucoseMeasurementLabel = (TextView) itemView.findViewById(R.id.blood_glucose_measurement_label);
-            carbsMeasurementLabel = (TextView) itemView.findViewById(R.id.carbs_measurement_label);
-            insulinMeasurementLabel = (TextView) itemView.findViewById(R.id.insulin_measurement_label);
             ivInsulins = (ImageView) itemView.findViewById(R.id.imgInsulins);
             ivCarbs = (ImageView) itemView.findViewById(R.id.imgCarbs);
             ivFinger = (ImageView) itemView.findViewById(R.id.imgFinger);
-
-            // Set fonts
-            tvDate.setTypeface(avenirRegular);
-            tvTime.setTypeface(avenirRegular);
-            tvBloodGlucose.setTypeface(avenirDemiBold);
-            tvInsulin.setTypeface(avenirDemiBold);
-            tvCarbohydrates.setTypeface(avenirDemiBold);
-            bloodGlucoseLabel.setTypeface(avenirMedium);
-            carbohydratesLabel.setTypeface(avenirMedium);
-            insulinLabel.setTypeface(avenirMedium);
-            insulinMeasurementLabel.setTypeface(avenirDemiBold);
-            bloodGlucoseMeasurementLabel.setTypeface(avenirDemiBold);
-            carbsMeasurementLabel.setTypeface(avenirDemiBold);
 
             if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
                 ivFinger.setImageResource(R.drawable.ic_finger_dark);

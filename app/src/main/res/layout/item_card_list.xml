@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="wrap_content" app:cardCornerRadius="6dp" app:cardElevation="@dimen/item_card_elevation"
-    android:layout_marginBottom="4dp" android:layout_marginLeft="10dp"
-    android:layout_marginTop="4dp" android:layout_marginRight="10dp" android:clickable="true"
-    android:focusable="true" android:foreground="?android:attr/selectableItemBackground">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="@dimen/item_card_elevation">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,20 +22,20 @@
 
         <!-- Set programmatically -->
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_time"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_goneMarginStart="16dp"/>
+            app:layout_goneMarginStart="16dp" />
 
         <!-- Set programmatically -->
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +49,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_goneMarginEnd="8dp"
-            app:layout_goneMarginStart="16dp"/>
+            app:layout_goneMarginStart="16dp" />
 
         <!-- Line view -->
 
@@ -60,8 +66,7 @@
             app:layout_constraintLeft_toRightOf="@+id/blood_glucose_label"
             app:layout_constraintRight_toLeftOf="@+id/carbohydrates_label"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginEnd="8dp"
-            />
+            app:layout_goneMarginEnd="8dp" />
 
         <!-- Line view -->
 
@@ -77,10 +82,9 @@
             app:layout_constraintLeft_toRightOf="@+id/carbohydrates_label"
             app:layout_constraintRight_toLeftOf="@+id/insulin_label"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginEnd="8dp"
-            />
+            app:layout_goneMarginEnd="8dp" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/tv_blood_glucose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,9 +94,9 @@
             app:layout_constraintHorizontal_bias="0.578"
             app:layout_constraintLeft_toRightOf="@+id/imgFinger"
             app:layout_constraintRight_toLeftOf="@+id/view"
-            app:layout_goneMarginEnd="8dp"/>
+            app:layout_goneMarginEnd="8dp" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
             android:id="@+id/blood_glucose_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,9 +109,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/insulin_label"
             app:layout_goneMarginEnd="8dp"
-            app:layout_goneMarginStart="16dp"/>
+            app:layout_goneMarginStart="16dp" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
             android:id="@+id/carbohydrates_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -123,9 +127,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/carbs_measurement_label"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintVertical_bias="1.0" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
             android:id="@+id/insulin_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -136,7 +140,7 @@
             app:layout_constraintHorizontal_bias="0.683"
             app:layout_constraintLeft_toRightOf="@+id/carbohydrates_label"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_goneMarginStart="8dp"/>
+            app:layout_goneMarginStart="8dp" />
 
         <!-- Set programmatically -->
 
@@ -156,9 +160,9 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/carbs_measurement_label"
             app:layout_constraintHorizontal_bias="0.906"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/view"/>
+            app:layout_constraintRight_toLeftOf="@+id/view" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/tv_carbs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -168,9 +172,9 @@
             app:layout_constraintHorizontal_bias="0.545"
             app:layout_constraintLeft_toRightOf="@+id/imgCarbs"
             app:layout_constraintRight_toLeftOf="@+id/view2"
-            app:layout_goneMarginEnd="8dp"/>
+            app:layout_goneMarginEnd="8dp" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/carbs_measurement_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -183,9 +187,9 @@
             app:layout_constraintHorizontal_bias="0.795"
             app:layout_constraintLeft_toRightOf="@+id/view"
             app:layout_constraintRight_toLeftOf="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_blood_glucose"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_blood_glucose" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/insulin_measurement_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -197,9 +201,9 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/carbs_measurement_label"
             app:layout_constraintHorizontal_bias="0.876"
             app:layout_constraintLeft_toRightOf="@+id/view2"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/tv_insulin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -209,33 +213,34 @@
             app:layout_constraintLeft_toRightOf="@+id/imgInsulins"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_time"
-            app:layout_goneMarginEnd="8dp"/>
+            app:layout_goneMarginEnd="8dp" />
 
         <ImageView
             android:id="@+id/imgInsulins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:contentDescription="@string/insulin_image"
             app:layout_constraintBottom_toTopOf="@+id/insulin_measurement_label"
+            app:layout_constraintEnd_toEndOf="@+id/insulin_measurement_label"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toRightOf="@+id/view2"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view2"
             app:layout_constraintTop_toBottomOf="@+id/tv_time"
             app:layout_goneMarginEnd="8dp"
             app:layout_goneMarginStart="23dp"
-            app:srcCompat="@drawable/ic_syringe"
-            app:layout_constraintEnd_toEndOf="@+id/insulin_measurement_label"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/view2" />
+            app:srcCompat="@drawable/ic_syringe" />
 
         <ImageView
             android:id="@+id/imgCarbs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="31dp"
             android:contentDescription="@string/carbs_image"
             app:layout_constraintHorizontal_bias="0.194"
@@ -243,8 +248,7 @@
             app:layout_constraintRight_toLeftOf="@+id/view2"
             app:layout_constraintTop_toBottomOf="@+id/tv_date"
             app:layout_goneMarginEnd="8dp"
-            app:srcCompat="@drawable/ic_food"
-            android:layout_marginStart="0dp" />
+            app:srcCompat="@drawable/ic_food" />
 
         <ImageView
             android:id="@+id/imgFinger"
@@ -261,7 +265,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_date"
             app:layout_constraintVertical_bias="1.0"
             app:layout_goneMarginStart="8dp"
-            app:srcCompat="@drawable/ic_finger"/>
+            app:srcCompat="@drawable/ic_finger" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

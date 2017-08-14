@@ -1,9 +1,7 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,14 +53,10 @@ public class NewsFragment extends Fragment {
     }
 
     private void loadNews() {
-
         if (!newsSwipeRefresh.isRefreshing()) progressBar.setVisibility(View.VISIBLE);
-
         Parser parser = new Parser();
         parser.execute(diabetesCoUkRelatedArticleLinks);
-
         parser.onFinish(new Parser.OnTaskCompleted() {
-
             @Override
             public void onTaskCompleted(ArrayList<Article> list) {
                 progressBar.setVisibility(View.GONE);

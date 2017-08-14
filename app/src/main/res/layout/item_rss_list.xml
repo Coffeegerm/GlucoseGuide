@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/articleTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:layout_marginTop="16dp"
             android:textSize="18sp" />
 
-        <TextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
             android:id="@+id/articleDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularLight
                 android:id="@+id/articlePubDateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

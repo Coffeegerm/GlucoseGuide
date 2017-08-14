@@ -2,7 +2,6 @@ package io.github.coffeegerm.materiallogbook.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,17 +30,11 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
     private LayoutInflater inflater;
     private ArrayList<Article> articleList;
     private Context mContext;
-    private Typeface avenirRegular;
-    private Typeface avenirDemiBold;
-    private Typeface avenirLight;
 
     public RssAdapter(ArrayList<Article> articleList, Context c) {
         this.inflater = LayoutInflater.from(c);
         this.articleList = articleList;
         this.mContext = c;
-        avenirRegular = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-Regular.otf");
-        avenirDemiBold = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-DemiBold.otf");
-        avenirLight = Typeface.createFromAsset(c.getAssets(), "fonts/AvenirNext-UltraLight.otf");
     }
 
     @Override
@@ -102,9 +95,6 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
             articleTitle = (TextView) itemView.findViewById(R.id.articleTitleTextView);
             articleDesc = (TextView) itemView.findViewById(R.id.articleDescriptionTextView);
             articlePubDate = (TextView) itemView.findViewById(R.id.articlePubDateTextView);
-            articleTitle.setTypeface(avenirDemiBold);
-            articleDesc.setTypeface(avenirRegular);
-            articlePubDate.setTypeface(avenirLight);
         }
     }
 
