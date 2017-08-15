@@ -1,18 +1,15 @@
 package io.github.coffeegerm.materiallogbook.ui;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -85,13 +82,10 @@ public class GraphFragment extends Fragment {
 
         if (graphEntryPoints.size() == 0) {
             Log.i(TAG, "setupGraph: No graphEntryPoints found");
-            Toast.makeText(getContext(), "Enter graphEntryPoints with glucose levels higher than 0 to create a graph", Toast.LENGTH_SHORT).show();
+            lineChart.setNoDataText("No data to display");
         } else {
-            // TODO: 8/13/2017 If dark mode present change accordingly
-            Drawable tealGradient = ContextCompat.getDrawable(getContext(), R.drawable.fade_teal);
             LineDataSet dataSet = new LineDataSet(graphEntryPoints, "Blood Sugar Levels"); // Adding graphEntryPoints to dataset
-            dataSet.setLineWidth(1.5f);
-            dataSet.setFillDrawable(tealGradient);
+            dataSet.setLineWidth(1f);
             dataSet.setValueTextColor(Color.BLACK); // Values on side will have text color of black
             LineData lineData = new LineData(dataSet); // Sets the data found in the database to the LineChart
             lineChart.setData(lineData);
@@ -99,6 +93,7 @@ public class GraphFragment extends Fragment {
             lineChart.setDrawGridBackground(false);
             lineChart.setScaleMinima(5f, 1f);
             lineChart.setScaleEnabled(true);
+            lineChart.getXAxis().setLabelCount(graphEntryPoints.size());
             lineChart.setDragEnabled(true); // Enables the user to drag the chart left and right to see varying days and times of pattern
             lineChart.setPinchZoom(false); // Disables the ability to pinch the chart to zoom in
             lineChart.setDoubleTapToZoomEnabled(false); // Disables the user to double tap to zoom, rather useless feature in present day form factor
@@ -109,6 +104,13 @@ public class GraphFragment extends Fragment {
             yAxisRight.setEnabled(false);
             // Handles X Axis formatting, position and such
             XAxis xAxis = lineChart.getXAxis();
+            // Changes text color according to dark mode preference
+            if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+                int white = getResources().getColor(R.color.white);
+                xAxis.setTextColor(white);
+                YAxis yAxisLeft = lineChart.getAxisLeft();
+                yAxisLeft.setTextColor(white);
+            }
             IAxisValueFormatter xAxisFormatter = new XAxisValueFormatter();
             xAxis.setValueFormatter(xAxisFormatter);
             xAxis.setGranularity(1f);

@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorSecondary">@color/darkThemeBackground</item>
         <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>
         <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>
     </style>
@@ -29,5 +29,5 @@
         <item name="android:textColorSecondaryInverse">@color/textColorSecondary</item>
     </style>
 
-    <style name="AppTheme.DialogAlert" parent="Theme.AppCompat.Dialog.Alert"></style>
+    <style name="AppTheme.DialogAlert" parent="Theme.AppCompat.Dialog.Alert" />
 </resources>

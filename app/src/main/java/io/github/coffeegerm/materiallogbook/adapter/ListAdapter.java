@@ -28,10 +28,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
     private LayoutInflater inflater;
+    private Context context;
 
     public ListAdapter(List<EntryItem> entryItemList, Context c) {
         this.inflater = LayoutInflater.from(c);
         this.entryItems = entryItemList;
+        this.context = c;
     }
 
     @Override
@@ -71,7 +73,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
     class viewHolder extends RecyclerView.ViewHolder {
         private TextView tvDate, tvTime, tvBloodGlucose, tvInsulin, tvCarbohydrates;
-        private ImageView ivInsulins, ivCarbs, ivFinger;
+        private ImageView ivInsulin, ivCarbs, ivFinger;
+        private View line1, line2;
 
         viewHolder(View itemView) {
             super(itemView);
@@ -82,18 +85,23 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             tvBloodGlucose = (TextView) itemView.findViewById(R.id.tv_blood_glucose);
             tvInsulin = (TextView) itemView.findViewById(R.id.tv_insulin);
             tvCarbohydrates = (TextView) itemView.findViewById(R.id.tv_carbs);
-            ivInsulins = (ImageView) itemView.findViewById(R.id.imgInsulins);
+            ivInsulin = (ImageView) itemView.findViewById(R.id.imgInsulins);
             ivCarbs = (ImageView) itemView.findViewById(R.id.imgCarbs);
             ivFinger = (ImageView) itemView.findViewById(R.id.imgFinger);
+            line1 = itemView.findViewById(R.id.view);
+            line2 = itemView.findViewById(R.id.view2);
 
             if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
                 ivFinger.setImageResource(R.drawable.ic_finger_dark);
                 ivCarbs.setImageResource(R.drawable.ic_food_dark);
-                ivInsulins.setImageResource(R.drawable.ic_syringe_dark);
+                ivInsulin.setImageResource(R.drawable.ic_syringe_dark);
+                int white = context.getResources().getColor(R.color.white);
+                line1.setBackgroundColor(white);
+                line2.setBackgroundColor(white);
             } else {
                 ivFinger.setImageResource(R.drawable.ic_finger);
                 ivCarbs.setImageResource(R.drawable.ic_food);
-                ivInsulins.setImageResource(R.drawable.ic_syringe);
+                ivInsulin.setImageResource(R.drawable.ic_syringe);
             }
         }
     }

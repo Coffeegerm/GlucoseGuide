@@ -26,10 +26,12 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
     private List<EntryItem> entryItemList;
     private LayoutInflater inflater;
+    private Context context;
 
     public GraphAdapter(List<EntryItem> incomingEntryItemList, Context context) {
         this.inflater = LayoutInflater.from(context);
         this.entryItemList = incomingEntryItemList;
+        this.context = context;
     }
 
     @Override
@@ -60,9 +62,7 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
     }
 
     class holder extends RecyclerView.ViewHolder {
-        private TextView tvGraphDate;
-        private TextView tvGraphTime;
-        private TextView tvGraphBloodGlucose;
+        private TextView tvGraphDate, tvGraphBloodGlucose, tvGraphTime;
 
         holder(View itemView) {
             super(itemView);
