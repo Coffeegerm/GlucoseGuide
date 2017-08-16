@@ -5,8 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import io.github.coffeegerm.materiallogbook.ui.fragment.AllStatisticsFragment;
+import io.github.coffeegerm.materiallogbook.ui.fragment.OneMonthStatisticsFragment;
 import io.github.coffeegerm.materiallogbook.ui.fragment.SevenDayStatisticsFragment;
 import io.github.coffeegerm.materiallogbook.ui.fragment.ThreeDayStatisticsFragment;
+import io.github.coffeegerm.materiallogbook.ui.fragment.ThreeMonthsStatisticsFragment;
 
 /**
  * Created by David Yarzebinski on 7/28/2017.
@@ -16,8 +18,8 @@ import io.github.coffeegerm.materiallogbook.ui.fragment.ThreeDayStatisticsFragme
 
 public class StatisticsPagerAdapter extends FragmentPagerAdapter {
 
-    private static int NUM_ITEMS = 3;
-    private String tabTitles[] = new String[]{"3 Days", "7 Days", "All"};
+    private static int NUM_ITEMS = 5;
+    private String tabTitles[] = new String[]{"3 Days", "7 Days", "One Month", "Three Months", "All"};
 
     public StatisticsPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -30,8 +32,12 @@ public class StatisticsPagerAdapter extends FragmentPagerAdapter {
                 return ThreeDayStatisticsFragment.newInstance(0, "Three Days");
             case 1: // 7 days stats returned
                 return SevenDayStatisticsFragment.newInstance(1, "Seven Days");
-            case 2: // all stats returned
-                return AllStatisticsFragment.newInstance(2, "All");
+            case 2:
+                return OneMonthStatisticsFragment.newInstance(2, "One Month");
+            case 3:
+                return ThreeMonthsStatisticsFragment.newInstance(3, "Three Months");
+            case 4: // all stats returned
+                return AllStatisticsFragment.newInstance(4, "All");
             default:
                 return null;
         }

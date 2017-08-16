@@ -6,13 +6,13 @@
     <color name="colorPrimaryLight">#2EC5BC</color>
 
     <!-- Accent color: dark grey -->
-    <color name="colorAccent">#373F51</color>
+    <color name="colorAccent">#086375</color>
 
     <!-- Text color primary: white -->
     <color name="textColorPrimary">#0D160B</color>
     <color name="textColorSecondary">#2C2C2C</color>
 
-    <!-- Text color inverse: mostly black -->
+    <!-- Text color inverse -->
     <color name="textColorPrimaryInverse">#FFFFFF</color>
     <color name="textColorSecondaryInverse">#D1D1D1</color>
 

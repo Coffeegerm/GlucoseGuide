@@ -60,4 +60,6 @@
 
     <string name="bug_feedback">Report a bug or give feedback.</string>
 
+    <string name="estimated_a1c">Estimated A1C:</string>
+
 </resources>

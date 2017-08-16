@@ -142,10 +142,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
             ivAvg.setImageResource(R.drawable.ic_average_dark);
             ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-        } else {
-            ivAvg.setImageResource(R.drawable.ic_average);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow);
         }
     }
 }
