@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,7 +97,6 @@ public class AllStatisticsFragment extends Fragment {
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
         if (entryItems.size() == 0) {
             Log.e(TAG, "onCreateView: no entries");
-            Toast.makeText(getContext(), R.string.no_data, Toast.LENGTH_SHORT).show();
         } else {
             int total = 0;
             for (int position = 0; position < entryItems.size(); position++) {

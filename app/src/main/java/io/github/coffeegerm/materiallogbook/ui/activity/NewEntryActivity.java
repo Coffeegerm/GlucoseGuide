@@ -192,17 +192,12 @@ public class NewEntryActivity extends AppCompatActivity {
         }
     }
 
+    // Fonts used in Activity
     private void setFonts() {
-        // Fonts used in Activity
         Typeface avenirRegular = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Regular.otf");
-        Typeface avenirDemiBold = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-DemiBold.otf");
         Typeface avenirMedium = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Medium.otf");
         cancelBtn.setTypeface(avenirMedium);
         saveBtn.setTypeface(avenirMedium);
-        dateTimeLabel.setTypeface(avenirDemiBold);
-        carbsLabel.setTypeface(avenirDemiBold);
-        glucoseLabel.setTypeface(avenirDemiBold);
-        insulinLabel.setTypeface(avenirDemiBold);
         newEntryDate.setTypeface(avenirRegular);
         newEntryTime.setTypeface(avenirRegular);
         newEntryBloodGlucose.setTypeface(avenirRegular);
