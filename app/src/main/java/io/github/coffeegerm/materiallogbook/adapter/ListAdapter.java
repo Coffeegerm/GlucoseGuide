@@ -14,7 +14,7 @@ import java.util.Locale;
 
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.ui.MainActivity;
+import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.

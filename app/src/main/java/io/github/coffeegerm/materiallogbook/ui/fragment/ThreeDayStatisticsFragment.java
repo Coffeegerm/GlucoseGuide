@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments;
+package io.github.coffeegerm.materiallogbook.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.ui.MainActivity;
+import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -24,23 +25,23 @@ import io.realm.RealmResults;
  * Created by David Yarzebinski on 7/28/2017.
  * <p>
  * Fragment used with Statistics ViewPager to show
- * the last seven days of statistics
+ * the last three days of statistics
  */
 
-public class SevenDayStatisticsFragment extends Fragment {
-    private static final String TAG = "SevenDaysStatistics";
+public class ThreeDayStatisticsFragment extends Fragment {
+    private static final String TAG = "ThreeDaysStatistics";
 
-    @BindView(R.id.seven_days_average)
+    @BindView(R.id.three_days_average)
     TextView averageBloodGlucose;
-    @BindView(R.id.seven_days_highest)
+    @BindView(R.id.three_days_highest)
     TextView highestBloodGlucose;
-    @BindView(R.id.seven_days_lowest)
+    @BindView(R.id.three_days_lowest)
     TextView lowestBloodGlucose;
-    @BindView(R.id.seven_days_average_label)
+    @BindView(R.id.three_days_average_label)
     TextView averageLabel;
-    @BindView(R.id.seven_days_highest_label)
+    @BindView(R.id.three_days_highest_label)
     TextView highestLabel;
-    @BindView(R.id.seven_days_lowest_label)
+    @BindView(R.id.three_days_lowest_label)
     TextView lowestLabel;
 
     @BindView(R.id.imgAvg)
@@ -54,13 +55,13 @@ public class SevenDayStatisticsFragment extends Fragment {
     String pageTitle;
     int pageNumber;
 
-    public static SevenDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
-        SevenDayStatisticsFragment sevenDayStatisticsFragment = new SevenDayStatisticsFragment();
+    public static ThreeDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
+        ThreeDayStatisticsFragment threeDayStatisticsFragment = new ThreeDayStatisticsFragment();
         Bundle args = new Bundle();
         args.putInt("pageNumber", pageNumber);
         args.putString("pageTitle", pageTitle);
-        sevenDayStatisticsFragment.setArguments(args);
-        return sevenDayStatisticsFragment;
+        threeDayStatisticsFragment.setArguments(args);
+        return threeDayStatisticsFragment;
     }
 
     @Override
@@ -73,43 +74,44 @@ public class SevenDayStatisticsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View sevenDaysView = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
-        ButterKnife.bind(this, sevenDaysView);
+        View threeDaysStatisticsView = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
+        ButterKnife.bind(this, threeDaysStatisticsView);
         realm = Realm.getDefaultInstance();
         setValues();
         setImages();
-        return sevenDaysView;
+        return threeDaysStatisticsView;
     }
 
     private void setValues() {
-        Date sevenDaysAgo = getSevenDaysAgo();
-        RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        if (entriesFromLastWeek.size() == 0) {
+        Date threeDaysAgo = getDateThreeDaysAgo();
+        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
+        if (entriesFromLastThreeDays.size() == 0) {
+            Toast.makeText(getContext(), R.string.no_data, Toast.LENGTH_SHORT).show();
             averageBloodGlucose.setText(R.string.dash);
             highestBloodGlucose.setText(R.string.dash);
             lowestBloodGlucose.setText(R.string.dash);
         } else {
-            averageBloodGlucose.setText(String.valueOf(getAverageGlucose(sevenDaysAgo)));
-            highestBloodGlucose.setText(String.valueOf(getHighestGlucose(sevenDaysAgo)));
-            lowestBloodGlucose.setText(String.valueOf(getLowestGlucose(sevenDaysAgo)));
+            averageBloodGlucose.setText(String.valueOf(getAverageGlucose(threeDaysAgo)));
+            highestBloodGlucose.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
+            lowestBloodGlucose.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
         }
     }
 
-    public int getAverageGlucose(Date sevenDaysAgo) {
+    public int getAverageGlucose(Date threeDaysAgo) {
         int total = 0;
-        RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entriesFromLastWeek.size(); position++) {
-            EntryItem currentItem = entriesFromLastWeek.get(position);
+        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
+        for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
+            EntryItem currentItem = entriesFromLastThreeDays.get(position);
             total += currentItem.getBloodGlucose();
         }
-        return total / entriesFromLastWeek.size();
+        return total / entriesFromLastThreeDays.size();
     }
 
-    public int getHighestGlucose(Date sevenDaysAgo) {
+    public int getHighestGlucose(Date threeDaysAgo) {
         int highest = 0;
-        RealmResults<EntryItem> entriesFromPastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entriesFromPastWeek.size(); position++) {
-            EntryItem currentItem = entriesFromPastWeek.get(position);
+        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
+        for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
+            EntryItem currentItem = entriesFromLastThreeDays.get(position);
             if (currentItem.getBloodGlucose() > highest) {
                 highest = currentItem.getBloodGlucose();
             }
@@ -117,11 +119,11 @@ public class SevenDayStatisticsFragment extends Fragment {
         return highest;
     }
 
-    public int getLowestGlucose(Date sevenDaysAgo) {
+    public int getLowestGlucose(Date threeDaysAgo) {
         int lowest = 1000;
-        RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entriesFromLastWeek.size(); position++) {
-            EntryItem currentItem = entriesFromLastWeek.get(position);
+        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
+        for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
+            EntryItem currentItem = entriesFromLastThreeDays.get(position);
             if (currentItem.getBloodGlucose() < lowest) {
                 lowest = currentItem.getBloodGlucose();
             }
@@ -129,9 +131,9 @@ public class SevenDayStatisticsFragment extends Fragment {
         return lowest;
     }
 
-    public Date getSevenDaysAgo() {
+    public Date getDateThreeDaysAgo() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -7);
+        calendar.add(Calendar.DATE, -3);
         return calendar.getTime();
     }
 

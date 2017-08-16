@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui;
+package io.github.coffeegerm.materiallogbook.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -58,4 +58,6 @@
     <string name="lowest_of_all">Lowest blood glucose:</string>
     <string name="no_data">No data to calculate</string>
 
+    <string name="bug_feedback">Report a bug or give feedback.</string>
+
 </resources>

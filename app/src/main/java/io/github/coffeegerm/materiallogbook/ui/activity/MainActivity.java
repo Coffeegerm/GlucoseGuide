@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui;
+package io.github.coffeegerm.materiallogbook.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +22,10 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.ui.fragment.GraphFragment;
+import io.github.coffeegerm.materiallogbook.ui.fragment.ListFragment;
+import io.github.coffeegerm.materiallogbook.ui.fragment.NewsFragment;
+import io.github.coffeegerm.materiallogbook.ui.fragment.StatisticsFragment;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -34,7 +38,10 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static SharedPreferences sharedPreferences;
-
+    public static boolean isResumed = false;
+    @BindView(R.id.appBarLayout)
+    public AppBarLayout appBarLayout;
+    public int lastSelectedTab;
     Fragment listFragment = new ListFragment();
     Fragment graphFragment = new GraphFragment();
     Fragment newsFragment = new NewsFragment();
@@ -42,16 +49,12 @@ public class MainActivity extends AppCompatActivity
     FragmentManager fragmentManager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.appBarLayout)
-    public AppBarLayout appBarLayout;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
     private Realm realm;
-    public int lastSelectedTab;
     private boolean isCreated = false;
-    public static boolean isResumed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

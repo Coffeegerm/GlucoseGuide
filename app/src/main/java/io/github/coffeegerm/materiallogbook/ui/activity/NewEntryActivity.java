@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui;
+package io.github.coffeegerm.materiallogbook.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;

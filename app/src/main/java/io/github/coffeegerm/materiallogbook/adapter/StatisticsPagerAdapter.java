@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments.AllStatisticsFragment;
-import io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments.SevenDayStatisticsFragment;
-import io.github.coffeegerm.materiallogbook.ui.StatisticsDataFragments.ThreeDayStatisticsFragment;
+import io.github.coffeegerm.materiallogbook.ui.fragment.AllStatisticsFragment;
+import io.github.coffeegerm.materiallogbook.ui.fragment.SevenDayStatisticsFragment;
+import io.github.coffeegerm.materiallogbook.ui.fragment.ThreeDayStatisticsFragment;
 
 /**
  * Created by David Yarzebinski on 7/28/2017.

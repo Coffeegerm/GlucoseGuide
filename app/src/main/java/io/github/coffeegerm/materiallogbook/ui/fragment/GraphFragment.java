@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui;
+package io.github.coffeegerm.materiallogbook.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.adapter.GraphAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.utils.XAxisValueFormatter;
 import io.realm.Realm;
 import io.realm.RealmResults;
