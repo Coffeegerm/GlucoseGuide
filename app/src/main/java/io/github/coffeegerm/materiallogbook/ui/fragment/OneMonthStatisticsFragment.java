@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,8 +15,14 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 import io.realm.Realm;
+import io.realm.RealmResults;
+
+import static io.github.coffeegerm.materiallogbook.utils.Utilities.getAverageGlucose;
+import static io.github.coffeegerm.materiallogbook.utils.Utilities.getHighestGlucose;
+import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGlucose;
 
 /**
  * Created by dyarz on 8/15/2017.
@@ -26,6 +33,12 @@ import io.realm.Realm;
 
 public class OneMonthStatisticsFragment extends Fragment {
     private static final String TAG = "OneMonthStatistics";
+    @BindView(R.id.average)
+    TextView average;
+    @BindView(R.id.highest)
+    TextView highest;
+    @BindView(R.id.lowest)
+    TextView lowest;
     @BindView(R.id.imgAvg)
     ImageView ivAvg;
     @BindView(R.id.imgUpArrow)
@@ -50,6 +63,19 @@ public class OneMonthStatisticsFragment extends Fragment {
         ButterKnife.bind(this, oneMonth);
         realm = Realm.getDefaultInstance();
         setImages();
+
+        Date oneMonthAgo = getOneMonthAgo();
+        RealmResults<EntryItem> entriesFromPastMonth = realm.where(EntryItem.class).greaterThan("date", oneMonthAgo).greaterThan("bloodGlucose", 0).findAll();
+        if (entriesFromPastMonth.size() == 0) {
+            average.setText(R.string.dash);
+            highest.setText(R.string.dash);
+            lowest.setText(R.string.dash);
+        } else {
+            average.setText(String.valueOf(getAverageGlucose(oneMonthAgo)));
+            highest.setText(String.valueOf(getHighestGlucose(oneMonthAgo)));
+            lowest.setText(String.valueOf(getLowestGlucose(oneMonthAgo)));
+        }
+
         return oneMonth;
     }
 

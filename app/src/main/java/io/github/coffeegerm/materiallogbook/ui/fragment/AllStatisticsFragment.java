@@ -34,13 +34,6 @@ public class AllStatisticsFragment extends Fragment {
     TextView highestBloodGlucose;
     @BindView(R.id.lowest_of_all_glucose)
     TextView lowestBloodGlucose;
-    @BindView(R.id.all_stats_average_label)
-    TextView averageLabel;
-    @BindView(R.id.all_stats_highest_label)
-    TextView highestLabel;
-    @BindView(R.id.all_stats_lowest_label)
-    TextView lowestLabel;
-
     @BindView(R.id.imgAvg)
     ImageView ivAvg;
     @BindView(R.id.imgUpArrow)

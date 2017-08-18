@@ -20,6 +20,10 @@ import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+import static io.github.coffeegerm.materiallogbook.utils.Utilities.getAverageGlucose;
+import static io.github.coffeegerm.materiallogbook.utils.Utilities.getHighestGlucose;
+import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGlucose;
+
 /**
  * Created by David Yarzebinski on 7/28/2017.
  * <p>
@@ -93,40 +97,6 @@ public class SevenDayStatisticsFragment extends Fragment {
             highestBloodGlucose.setText(String.valueOf(getHighestGlucose(sevenDaysAgo)));
             lowestBloodGlucose.setText(String.valueOf(getLowestGlucose(sevenDaysAgo)));
         }
-    }
-
-    public int getAverageGlucose(Date sevenDaysAgo) {
-        int total = 0;
-        RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entriesFromLastWeek.size(); position++) {
-            EntryItem currentItem = entriesFromLastWeek.get(position);
-            total += currentItem.getBloodGlucose();
-        }
-        return total / entriesFromLastWeek.size();
-    }
-
-    public int getHighestGlucose(Date sevenDaysAgo) {
-        int highest = 0;
-        RealmResults<EntryItem> entriesFromPastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entriesFromPastWeek.size(); position++) {
-            EntryItem currentItem = entriesFromPastWeek.get(position);
-            if (currentItem.getBloodGlucose() > highest) {
-                highest = currentItem.getBloodGlucose();
-            }
-        }
-        return highest;
-    }
-
-    public int getLowestGlucose(Date sevenDaysAgo) {
-        int lowest = 1000;
-        RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entriesFromLastWeek.size(); position++) {
-            EntryItem currentItem = entriesFromLastWeek.get(position);
-            if (currentItem.getBloodGlucose() < lowest) {
-                lowest = currentItem.getBloodGlucose();
-            }
-        }
-        return lowest;
     }
 
     public Date getSevenDaysAgo() {
