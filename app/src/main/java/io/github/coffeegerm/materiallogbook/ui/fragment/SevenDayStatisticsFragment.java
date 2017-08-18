@@ -35,17 +35,11 @@ public class SevenDayStatisticsFragment extends Fragment {
     private static final String TAG = "SevenDaysStatistics";
 
     @BindView(R.id.seven_days_average)
-    TextView averageBloodGlucose;
+    TextView average;
     @BindView(R.id.seven_days_highest)
-    TextView highestBloodGlucose;
+    TextView highest;
     @BindView(R.id.seven_days_lowest)
-    TextView lowestBloodGlucose;
-    @BindView(R.id.seven_days_average_label)
-    TextView averageLabel;
-    @BindView(R.id.seven_days_highest_label)
-    TextView highestLabel;
-    @BindView(R.id.seven_days_lowest_label)
-    TextView lowestLabel;
+    TextView lowest;
 
     @BindView(R.id.imgAvg)
     ImageView ivAvg;
@@ -89,13 +83,13 @@ public class SevenDayStatisticsFragment extends Fragment {
         Date sevenDaysAgo = getSevenDaysAgo();
         RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
         if (entriesFromLastWeek.size() == 0) {
-            averageBloodGlucose.setText(R.string.dash);
-            highestBloodGlucose.setText(R.string.dash);
-            lowestBloodGlucose.setText(R.string.dash);
+            average.setText(R.string.dash);
+            highest.setText(R.string.dash);
+            lowest.setText(R.string.dash);
         } else {
-            averageBloodGlucose.setText(String.valueOf(getAverageGlucose(sevenDaysAgo)));
-            highestBloodGlucose.setText(String.valueOf(getHighestGlucose(sevenDaysAgo)));
-            lowestBloodGlucose.setText(String.valueOf(getLowestGlucose(sevenDaysAgo)));
+            average.setText(String.valueOf(getAverageGlucose(sevenDaysAgo)));
+            highest.setText(String.valueOf(getHighestGlucose(sevenDaysAgo)));
+            lowest.setText(String.valueOf(getLowestGlucose(sevenDaysAgo)));
         }
     }
 

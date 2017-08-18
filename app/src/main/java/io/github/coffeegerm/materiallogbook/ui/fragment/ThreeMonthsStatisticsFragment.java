@@ -67,7 +67,11 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
         ButterKnife.bind(this, threeMonths);
         realm = Realm.getDefaultInstance();
         setImages();
+        setValues();
+        return threeMonths;
+    }
 
+    private void setValues() {
         Date threeMonthsAgo = getThreeMonthsAgo();
         RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", threeMonthsAgo).greaterThan("bloodGlucose", 0).findAll();
         if (entriesFromLastThreeMonths.size() == 0) {
@@ -85,8 +89,6 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
         } else {
             a1c.setText(String.valueOf(getA1C(getAverageGlucose(threeMonthsAgo))));
         }
-
-        return threeMonths;
     }
 
     public Date getThreeMonthsAgo() {

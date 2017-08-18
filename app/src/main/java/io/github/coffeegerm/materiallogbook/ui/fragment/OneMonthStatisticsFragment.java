@@ -63,7 +63,11 @@ public class OneMonthStatisticsFragment extends Fragment {
         ButterKnife.bind(this, oneMonth);
         realm = Realm.getDefaultInstance();
         setImages();
+        setValues();
+        return oneMonth;
+    }
 
+    private void setValues() {
         Date oneMonthAgo = getOneMonthAgo();
         RealmResults<EntryItem> entriesFromPastMonth = realm.where(EntryItem.class).greaterThan("date", oneMonthAgo).greaterThan("bloodGlucose", 0).findAll();
         if (entriesFromPastMonth.size() == 0) {
@@ -75,11 +79,9 @@ public class OneMonthStatisticsFragment extends Fragment {
             highest.setText(String.valueOf(getHighestGlucose(oneMonthAgo)));
             lowest.setText(String.valueOf(getLowestGlucose(oneMonthAgo)));
         }
-
-        return oneMonth;
     }
 
-    public Date getOneMonthAgo() {
+    private Date getOneMonthAgo() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -30);
         return calendar.getTime();
