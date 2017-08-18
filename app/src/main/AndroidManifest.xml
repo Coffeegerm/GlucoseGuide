@@ -29,6 +29,7 @@
         </activity>
         <activity android:name=".ui.activity.NewEntryActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
+        <activity android:name=".ui.activity.EditEntryActivity" />
     </application>
 
 </manifest>

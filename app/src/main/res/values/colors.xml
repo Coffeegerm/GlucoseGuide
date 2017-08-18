@@ -10,7 +10,7 @@
 
     <!-- Text color primary: white -->
     <color name="textColorPrimary">#0D160B</color>
-    <color name="textColorSecondary">#2C2C2C</color>
+    <color name="textColorSecondary">#0D160B</color>
 
     <!-- Text color inverse -->
     <color name="textColorPrimaryInverse">#FFFFFF</color>
@@ -20,13 +20,9 @@
     <color name="darkThemeColorPrimary">#00877F</color>
     <color name="darkThemeColorPrimaryDark">#00655F</color>
     <color name="darkThemeBackground">#7D7C84</color>
-    <color name="smokey_black">#0D160B</color>
-    <color name="black">#000</color>
-    <color name="beige">#F2F3D9</color>
-    <color name="light_grey">#D3D4D9</color>
-    <color name="white">#fff</color>
 
     <!-- Others -->
     <color name="fabRippleColor">#5FD3D4D9</color>
-    <color name="almond">#EFD9CE</color>
+    <color name="black">#000</color>
+    <color name="white">#fff</color>
 </resources>

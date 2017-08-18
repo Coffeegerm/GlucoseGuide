@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -19,11 +20,12 @@ import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
- * Adapter used for listFragment
+ * Adapter used for filling RecyclerView within ListFragment
  */
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
+    private static int shortClickHintCount = 0;
     private List<EntryItem> entryItems;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
@@ -49,6 +51,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         String formattedTime = timeFormat.format(item.getDate());
         holder.tvDate.setText(formattedDate);
         holder.tvTime.setText(formattedTime);
+        /*
+        * Handle item clicks on List Fragment
+        * Long click will start EditEntryActivity
+        * */
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (shortClickHintCount <= 5) {
+                    Toast.makeText(context, R.string.list_item_short_click, Toast.LENGTH_SHORT).show();
+                    shortClickHintCount++;
+                }
+            }
+        });
+
+        holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                return false;
+                // TODO pass date from selected item to EditEntryActivity and start activity
+            }
+        });
 
         if (String.valueOf(item.getBloodGlucose()).equals("0"))
             holder.tvBloodGlucose.setText(R.string.dash);
@@ -72,24 +95,26 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
+        public View view;
         private TextView tvDate, tvTime, tvBloodGlucose, tvInsulin, tvCarbohydrates;
         private ImageView ivInsulin, ivCarbs, ivFinger;
         private View line1, line2;
 
         viewHolder(View itemView) {
             super(itemView);
+            this.view = itemView;
 
             // Find item's views
-            tvDate = (TextView) itemView.findViewById(R.id.tv_date);
-            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-            tvBloodGlucose = (TextView) itemView.findViewById(R.id.tv_blood_glucose);
-            tvInsulin = (TextView) itemView.findViewById(R.id.tv_insulin);
-            tvCarbohydrates = (TextView) itemView.findViewById(R.id.tv_carbs);
-            ivInsulin = (ImageView) itemView.findViewById(R.id.imgInsulins);
-            ivCarbs = (ImageView) itemView.findViewById(R.id.imgCarbs);
-            ivFinger = (ImageView) itemView.findViewById(R.id.imgFinger);
-            line1 = itemView.findViewById(R.id.view);
-            line2 = itemView.findViewById(R.id.view2);
+            tvDate = itemView.findViewById(R.id.tv_date);
+            tvTime = itemView.findViewById(R.id.tv_time);
+            tvBloodGlucose = itemView.findViewById(R.id.tv_blood_glucose);
+            tvInsulin = itemView.findViewById(R.id.tv_insulin);
+            tvCarbohydrates = itemView.findViewById(R.id.tv_carbs);
+            ivInsulin = itemView.findViewById(R.id.imgInsulins);
+            ivCarbs = itemView.findViewById(R.id.imgCarbs);
+            ivFinger = itemView.findViewById(R.id.imgFinger);
+            line1 = itemView.findViewById(R.id.line1);
+            line2 = itemView.findViewById(R.id.line2);
 
             if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
                 ivFinger.setImageResource(R.drawable.ic_finger_dark);

@@ -21,6 +21,7 @@
         android:layout_marginTop="@dimen/fab_margin"
         android:orientation="vertical"
         android:padding="16dp">
+
         <!--Date and Time-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/new_entry_date_and_time_label"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/new_entry_date"
@@ -73,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/new_entry_blood_glucose_label"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/new_entry_blood_glucose_level"
@@ -84,14 +85,17 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:inputType="number"
-                android:maxLength="4" />
+                android:maxLength="4"
+                android:textSize="18sp" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="2dp"
                 android:labelFor="@+id/new_entry_blood_glucose_level"
                 android:text="@string/blood_glucose_measurement"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <!--Carbohydrates-->
@@ -105,25 +109,29 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/new_entry_carbohydrates_label"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
 
             <EditText
                 android:id="@+id/new_entry_carbohydrates_amount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="50dp"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:inputType="number"
-                android:maxLength="4" />
+                android:maxLength="4"
+                android:textSize="18sp" />
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="2dp"
                 android:labelFor="@+id/new_entry_carbohydrates_amount"
                 android:text="@string/carbs_measurement"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -138,27 +146,31 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/new_entry_insulin_label"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/new_entry_insulin_units"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="2dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="120dp"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:inputType="numberDecimal"
-                android:maxLength="4" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:labelFor="@+id/new_entry_insulin_units"
-                android:text="@string/insulin_measurement"
+                android:maxLength="4"
                 android:textSize="18sp" />
 
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="2dp"
+                android:labelFor="@+id/new_entry_insulin_units"
+                android:text="@string/insulin_measurement"
+                android:textSize="16sp" />
+
         </LinearLayout>
+
     </LinearLayout>
 
 

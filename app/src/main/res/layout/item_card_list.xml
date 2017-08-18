@@ -54,7 +54,7 @@
         <!-- Line view -->
 
         <View
-            android:id="@+id/view"
+            android:id="@+id/line1"
             android:layout_width="1dp"
             android:layout_height="80dp"
             android:layout_marginBottom="8dp"
@@ -72,7 +72,7 @@
         <!-- Line view -->
 
         <View
-            android:id="@+id/view2"
+            android:id="@+id/line2"
             android:layout_width="1dp"
             android:layout_height="80dp"
             android:layout_marginBottom="8dp"
@@ -94,7 +94,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_carbs"
             app:layout_constraintHorizontal_bias="0.578"
             app:layout_constraintLeft_toRightOf="@+id/imgFinger"
-            app:layout_constraintRight_toLeftOf="@+id/view"
+            app:layout_constraintRight_toLeftOf="@+id/line1"
             app:layout_goneMarginEnd="8dp" />
 
         <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
@@ -161,7 +161,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/carbs_measurement_label"
             app:layout_constraintHorizontal_bias="0.906"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/view" />
+            app:layout_constraintRight_toLeftOf="@+id/line1" />
 
         <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/tv_carbs"
@@ -172,7 +172,7 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_insulin"
             app:layout_constraintHorizontal_bias="0.545"
             app:layout_constraintLeft_toRightOf="@+id/imgCarbs"
-            app:layout_constraintRight_toLeftOf="@+id/view2"
+            app:layout_constraintRight_toLeftOf="@+id/line2"
             app:layout_goneMarginEnd="8dp" />
 
         <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
@@ -186,8 +186,8 @@
             android:layout_marginTop="8dp"
             android:text="@string/carbs_measurement"
             app:layout_constraintHorizontal_bias="0.795"
-            app:layout_constraintLeft_toRightOf="@+id/view"
-            app:layout_constraintRight_toLeftOf="@+id/view2"
+            app:layout_constraintLeft_toRightOf="@+id/line1"
+            app:layout_constraintRight_toLeftOf="@+id/line2"
             app:layout_constraintTop_toBottomOf="@+id/tv_blood_glucose" />
 
         <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
@@ -201,7 +201,7 @@
             android:text="@string/insulin_measurement"
             app:layout_constraintBaseline_toBaselineOf="@+id/carbs_measurement_label"
             app:layout_constraintHorizontal_bias="0.876"
-            app:layout_constraintLeft_toRightOf="@+id/view2"
+            app:layout_constraintLeft_toRightOf="@+id/line2"
             app:layout_constraintRight_toRightOf="parent" />
 
         <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
@@ -229,9 +229,9 @@
             app:layout_constraintBottom_toTopOf="@+id/insulin_measurement_label"
             app:layout_constraintEnd_toEndOf="@+id/insulin_measurement_label"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toRightOf="@+id/view2"
+            app:layout_constraintLeft_toRightOf="@+id/line2"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view2"
+            app:layout_constraintStart_toEndOf="@+id/line2"
             app:layout_constraintTop_toBottomOf="@+id/tv_time"
             app:layout_goneMarginEnd="8dp"
             app:layout_goneMarginStart="23dp"
@@ -246,8 +246,8 @@
             android:layout_marginTop="24dp"
             android:contentDescription="@string/carbs_image"
             app:layout_constraintHorizontal_bias="0.194"
-            app:layout_constraintLeft_toRightOf="@+id/view"
-            app:layout_constraintRight_toLeftOf="@+id/view2"
+            app:layout_constraintLeft_toRightOf="@+id/line1"
+            app:layout_constraintRight_toLeftOf="@+id/line2"
             app:layout_constraintTop_toBottomOf="@+id/tv_date"
             app:layout_goneMarginEnd="8dp"
             app:srcCompat="@drawable/ic_food" />

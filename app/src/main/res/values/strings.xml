@@ -4,12 +4,14 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- Navigation Drawer Items -->
     <string name="navigation_drawer_list">List</string>
     <string name="navigation_drawer_graph">Graph</string>
     <string name="navigation_drawer_statistics">Statistics</string>
     <string name="navigation_drawer_news">News</string>
     <string name="navigation_drawer_settings">Settings</string>
 
+    <!-- NewEntryActivity and EditEntryActivity strings -->
     <string name="new_entry_date_and_time_label">Date and Time:</string>
     <string name="new_entry_blood_glucose_label">Blood Glucose:</string>
     <string name="new_entry_carbohydrates_label">Carbohydrates:</string>
@@ -19,22 +21,25 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
 
+    <!-- List onOptions items -->
     <string name="sort">Sort</string>
     <string name="sort_from_newest">Newest to oldest</string>
     <string name="sort_from_oldest">Oldest to newest</string>
 
+    <!-- Misc -->
     <string name="blood_glucose">Blood Glucose</string>
     <string name="carbohydrates">Carbohydrates</string>
     <string name="insulin">Insulin</string>
+    <string name="dash">-</string>
+    <string name="create_entry">Create a new log entry!</string>
 
+    <!-- units of measurement-->
     <string name="blood_glucose_measurement">mg/dl</string>
     <string name="carbs_measurement">grams</string>
     <string name="insulin_measurement">units</string>
 
-    <string name="dash">-</string>
-
-    <string name="create_entry">Create a new log entry!</string>
-
+    <!-- Toast strings -->
+    <string name="list_item_short_click">Long click to edit entry!</string>
     <string name="no_glucose_toast">Please enter your current glucose.</string>
 
     <!--Settings Strings-->
@@ -47,19 +52,19 @@
     <string name="settings_delete_section">Reboot</string>
     <string name="settings_delete_entries">Delete all Entries?</string>
     <string name="delete">Delete</string>
+    <string name="bug_feedback">Report a bug or give feedback.</string>
 
     <!--Image descriptions -->
     <string name="blood_glucose_image">Blood Glucose Image</string>
     <string name="carbs_image">Carbohydrates image</string>
     <string name="insulin_image">Insulin Image</string>
 
+    <!-- Statistics fragments strings -->
     <string name="average">Average blood glucose:</string>
     <string name="highest_of_all">Highest blood glucose:</string>
     <string name="lowest_of_all">Lowest blood glucose:</string>
     <string name="no_data">No data to calculate</string>
-
-    <string name="bug_feedback">Report a bug or give feedback.</string>
-
     <string name="estimated_a1c">Estimated A1C:</string>
+
 
 </resources>

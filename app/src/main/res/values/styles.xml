@@ -5,9 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/almond</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:textColorSecondary">@color/darkThemeBackground</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>
         <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>
     </style>
@@ -20,7 +19,7 @@
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/darkThemeColorPrimary</item>
         <item name="colorPrimaryDark">@color/darkThemeColorPrimaryDark</item>
-        <item name="colorAccent">@color/light_grey</item>
+        <item name="colorAccent">@color/fabRippleColor</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:windowBackground">@color/darkThemeBackground</item>
         <item name="android:textColorPrimary">@color/textColorPrimaryInverse</item>
