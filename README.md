@@ -1,4 +1,4 @@
-# Material-Logbook
+# Material Logbook
 
 Material Logbook is a diabetic logbook that is aimed to be simple and easy to use, 
 but pack the features any user might need or want from their logbook. 
