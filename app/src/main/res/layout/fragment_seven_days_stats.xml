@@ -166,6 +166,4 @@
 
     </android.support.v7.widget.CardView>
 
-    <!--TODO Add pie image if no data present, else show actual data. -->
-
 </LinearLayout>

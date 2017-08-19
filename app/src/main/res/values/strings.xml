@@ -52,7 +52,7 @@
     <string name="settings_delete_section">Reboot</string>
     <string name="settings_delete_entries">Delete all Entries?</string>
     <string name="delete">Delete</string>
-    <string name="bug_feedback">Report a bug or give feedback.</string>
+    <string name="feedback">Feedback</string>
 
     <!--Image descriptions -->
     <string name="blood_glucose_image">Blood Glucose Image</string>

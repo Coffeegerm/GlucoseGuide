@@ -18,6 +18,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import com.instabug.library.Instabug;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,8 +43,6 @@ public class MainActivity extends AppCompatActivity
 
     public static SharedPreferences sharedPreferences;
     public static boolean isResumed = false;
-    @BindView(R.id.appBarLayout)
-    public AppBarLayout appBarLayout;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();
     Fragment graphFragment = new GraphFragment();
@@ -53,6 +55,10 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawerLayout;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.invoke_instabug)
+    Button instabug;
     private Realm realm;
     private boolean isCreated = false;
 
@@ -71,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         if (isCreated && !isResumed)
             fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
-//        lastSelectedTab = R.id.nav_list;
+        // lastSelectedTab = R.id.nav_list;
 
         int textColor;
         if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
@@ -92,6 +98,14 @@ public class MainActivity extends AppCompatActivity
                 new int[]{getResources().getColor(R.color.colorPrimary), getResources().getColor(textColor)});
         navigationView.setItemTextColor(csl);
         navigationView.setItemIconTintList(csl);
+
+        instabug.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Instabug.invoke();
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
     }
 
     @Override

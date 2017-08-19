@@ -92,6 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/delete_button"
         android:text="@string/delete"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView12"
         app:layout_constraintRight_toRightOf="parent" />
@@ -100,7 +101,6 @@
         android:id="@+id/ui_section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/ui"

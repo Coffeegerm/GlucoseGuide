@@ -19,6 +19,16 @@
         app:menu="@menu/activity_main_drawer"
         app:theme="@style/AppTheme.Drawer">
 
+        <Button
+            android:id="@+id/invoke_instabug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/feedback_button"
+            android:text="@string/feedback"
+            android:textSize="12sp" />
+
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
