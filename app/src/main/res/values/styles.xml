@@ -19,7 +19,7 @@
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/darkThemeColorPrimary</item>
         <item name="colorPrimaryDark">@color/darkThemeColorPrimaryDark</item>
-        <item name="colorAccent">@color/fabRippleColor</item>
+        <item name="colorAccent">@color/white</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:windowBackground">@color/darkThemeBackground</item>
         <item name="android:textColorPrimary">@color/textColorPrimaryInverse</item>

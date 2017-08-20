@@ -22,7 +22,6 @@
     <color name="darkThemeBackground">#7D7C84</color>
 
     <!-- Others -->
-    <color name="fabRippleColor">#5FD3D4D9</color>
     <color name="black">#000</color>
     <color name="white">#fff</color>
     <color name="deep_red">#FF0000</color>
