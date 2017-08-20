@@ -31,7 +31,6 @@ import io.realm.Realm;
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsActivity";
-
     private static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
     private static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     @BindView(R.id.btn_delete_all)

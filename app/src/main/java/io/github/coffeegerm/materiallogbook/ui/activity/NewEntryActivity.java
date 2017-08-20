@@ -156,8 +156,6 @@ public class NewEntryActivity extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-//        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        overridePendingTransition(R.anim.from_x_zero, R.anim.to_x_hundred);
         finish();
     }
 
@@ -198,6 +196,11 @@ public class NewEntryActivity extends AppCompatActivity {
         Typeface avenirMedium = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Medium.otf");
         cancelBtn.setTypeface(avenirMedium);
         saveBtn.setTypeface(avenirMedium);
+        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+            int white = getResources().getColor(R.color.white);
+            cancelBtn.setTextColor(white);
+            saveBtn.setTextColor(white);
+        }
         newEntryDate.setTypeface(avenirRegular);
         newEntryTime.setTypeface(avenirRegular);
         newEntryBloodGlucose.setTypeface(avenirRegular);

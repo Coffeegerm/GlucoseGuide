@@ -17,21 +17,30 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.instabug.library.Instabug;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.ui.fragment.GraphFragment;
 import io.github.coffeegerm.materiallogbook.ui.fragment.ListFragment;
 import io.github.coffeegerm.materiallogbook.ui.fragment.NewsFragment;
 import io.github.coffeegerm.materiallogbook.ui.fragment.StatisticsFragment;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Activity for controlling which fragment should be presented and containing
@@ -40,6 +49,8 @@ import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "MainActivity";
 
     public static SharedPreferences sharedPreferences;
     public static boolean isResumed = false;
@@ -211,5 +222,32 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        DisplayMetrics displayMetrics = MainActivity.this.getResources().getDisplayMetrics();
+        int fullWidth = displayMetrics.widthPixels;
+        int navViewWidth = Math.round(0.8f * fullWidth);
+        ViewGroup.LayoutParams sidebarParameters = navigationView.getLayoutParams();
+        sidebarParameters.width = navViewWidth;
+        View header = navigationView.getHeaderView(0);
+        TextView glucoseGrade = header.findViewById(R.id.navigation_view_grade);
+        getGlucoseGrade();
+        glucoseGrade.setText("A");
+    }
+
+    private String getGlucoseGrade() {
+        String grade = "";
+        int hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
+        Log.i(TAG, "getGlucoseGrade: " + hyperglycemicIndex);
+        int hypoglycemicIndex = sharedPreferences.getInt("hypoglycemicIndex", 0);
+        Log.i(TAG, "getGlucoseGrade: " + hypoglycemicIndex);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -3);
+        Date threeDaysAgo = calendar.getTime();
+        RealmResults<EntryItem> glucoseFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).findAll();
+        // TODO: 8/19/2017 logic for grading
+        for (int position = 0; position < glucoseFromLastThreeDays.size(); position++) {
+
+        }
+
+        return grade;
     }
 }

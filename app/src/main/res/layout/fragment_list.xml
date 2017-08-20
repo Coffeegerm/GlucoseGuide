@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <View android:layout_width="match_parent" android:layout_height="8dp"
-        android:background="@drawable/elevation" android:id="@+id/shadow" />
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/elevation" />
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/rec_view"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:clipToPadding="false" android:paddingTop="@dimen/appBarElevation"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/appBarElevation" />
 
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end" android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_blood_drop" app:elevation="@dimen/appBarElevation"
-        app:fabSize="normal" app:rippleColor="@color/fabRippleColor" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_blood_drop"
+        app:elevation="@dimen/appBarElevation"
+        app:fabSize="auto" />
 
 </android.support.design.widget.CoordinatorLayout>
