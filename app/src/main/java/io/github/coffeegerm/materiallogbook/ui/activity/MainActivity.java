@@ -117,6 +117,8 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
+
+        setGlucoseGrade();
     }
 
     @Override
@@ -227,27 +229,66 @@ public class MainActivity extends AppCompatActivity
         int navViewWidth = Math.round(0.8f * fullWidth);
         ViewGroup.LayoutParams sidebarParameters = navigationView.getLayoutParams();
         sidebarParameters.width = navViewWidth;
+
+    }
+
+    private void setGlucoseGrade() {
         View header = navigationView.getHeaderView(0);
         TextView glucoseGrade = header.findViewById(R.id.navigation_view_grade);
-        getGlucoseGrade();
-        glucoseGrade.setText("A");
+        glucoseGrade.setText(getGlucoseGrade());
     }
 
     private String getGlucoseGrade() {
         String grade = "";
+        int hyperglycemicCount = 0;
         int hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
         Log.i(TAG, "getGlucoseGrade: " + hyperglycemicIndex);
-        int hypoglycemicIndex = sharedPreferences.getInt("hypoglycemicIndex", 0);
-        Log.i(TAG, "getGlucoseGrade: " + hypoglycemicIndex);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -3);
         Date threeDaysAgo = calendar.getTime();
         RealmResults<EntryItem> glucoseFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).findAll();
-        // TODO: 8/19/2017 logic for grading
         for (int position = 0; position < glucoseFromLastThreeDays.size(); position++) {
-
+            /*
+            * Less than 3 hyperglycemic sugars and A+
+            * 4 = A
+            * 5 = A-
+            * 6 = B+
+            * 7 = B
+            * etc...
+            * */
+            hyperglycemicCount = 0;
+            EntryItem currentItem = glucoseFromLastThreeDays.get(position);
+            if (currentItem.getBloodGlucose() > hyperglycemicIndex) {
+                hyperglycemicCount++;
+            }
         }
-
+        if (hyperglycemicCount < 3) {
+            grade = "A+";
+        } else if (hyperglycemicCount == 4) {
+            grade = "A";
+        } else if (hyperglycemicCount == 5) {
+            grade = "A-";
+        } else if (hyperglycemicCount == 6) {
+            grade = "B+";
+        } else if (hyperglycemicCount == 7) {
+            grade = "B";
+        } else if (hyperglycemicCount == 8) {
+            grade = "B-";
+        } else if (hyperglycemicCount == 9) {
+            grade = "C+";
+        } else if (hyperglycemicCount == 10) {
+            grade = "C";
+        } else if (hyperglycemicCount == 11) {
+            grade = "C-";
+        } else if (hyperglycemicCount == 12) {
+            grade = "D+";
+        } else if (hyperglycemicCount == 13) {
+            grade = "D";
+        } else if (hyperglycemicCount == 14) {
+            grade = "D-";
+        } else {
+            grade = "F";
+        }
         return grade;
     }
 }
