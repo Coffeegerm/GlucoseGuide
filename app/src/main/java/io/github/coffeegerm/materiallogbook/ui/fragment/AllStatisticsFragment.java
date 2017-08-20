@@ -40,10 +40,9 @@ public class AllStatisticsFragment extends Fragment {
     ImageView ivUpArrow;
     @BindView(R.id.imgDownArrow)
     ImageView ivDownArrow;
-
-    Realm realm;
     String pageTitle;
     int pageNumber;
+    private Realm realm;
 
     public static AllStatisticsFragment newInstance(int pageNumber, String pageTitle) {
         AllStatisticsFragment allStatisticsFragment = new AllStatisticsFragment();
@@ -132,5 +131,11 @@ public class AllStatisticsFragment extends Fragment {
             ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        realm.close();
+        super.onDestroy();
     }
 }

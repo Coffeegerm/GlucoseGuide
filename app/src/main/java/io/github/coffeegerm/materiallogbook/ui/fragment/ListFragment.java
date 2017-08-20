@@ -119,4 +119,10 @@ public class ListFragment extends Fragment {
         RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("date", Sort.ASCENDING);
         return new ArrayList<>(entryItems);
     }
+
+    @Override
+    public void onDestroy() {
+        realm.close();
+        super.onDestroy();
+    }
 }

@@ -94,4 +94,10 @@ public class OneMonthStatisticsFragment extends Fragment {
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        realm.close();
+        super.onDestroy();
+    }
 }

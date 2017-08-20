@@ -111,4 +111,10 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        realm.close();
+        super.onDestroy();
+    }
+
 }

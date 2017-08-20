@@ -48,12 +48,14 @@ public class GraphFragment extends Fragment {
     @BindView(R.id.graph_rec_view)
     RecyclerView recyclerView;
     GraphAdapter graphAdapter;
+    private Realm realm;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View graphView = inflater.inflate(R.layout.fragment_graph, container, false);
         ButterKnife.bind(this, graphView);
+        realm = Realm.getDefaultInstance();
         setupRecView();
         setupGraph();
         return graphView;
@@ -124,7 +126,6 @@ public class GraphFragment extends Fragment {
 
     // Method to get List of Realm Entries in timeline from newest to oldest
     private List<EntryItem> getDescendingDataList() {
-        Realm realm = Realm.getDefaultInstance();
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
                 .greaterThan("bloodGlucose", 0) // Only accounts for glucose levels higher than zero
                 .findAllSorted("date", Sort.DESCENDING); // Finds all entries with Blood Glucose higher than zero order from newest to oldest
@@ -133,10 +134,15 @@ public class GraphFragment extends Fragment {
 
     // Method to get List of Realm Entries for LineChart so that they are from the oldest to the newest
     private List<EntryItem> getAscendingDataList() {
-        Realm realm = Realm.getDefaultInstance();
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class)
                 .greaterThan("bloodGlucose", 0) // Only accounts for glucose levels higher than zero
                 .findAllSorted("date", Sort.ASCENDING); // Finds all entries with Blood Glucose higher than zero order from oldest to newest
         return new ArrayList<>(entryItems);
+    }
+
+    @Override
+    public void onDestroy() {
+        realm.close();
+        super.onDestroy();
     }
 }

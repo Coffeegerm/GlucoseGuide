@@ -43,6 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
     Switch toggleDarkMode;
     @BindView(R.id.setting_toolbar)
     Toolbar settingsToolbar;
+    private Realm realm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        final Realm realm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         setupToolbar();
         checkRangeStatus();
         setHints();
@@ -170,5 +171,11 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onDestroy() {
+        realm.close();
+        super.onDestroy();
     }
 }

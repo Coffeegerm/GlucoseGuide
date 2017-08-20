@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
-
     public static SharedPreferences sharedPreferences;
     public static boolean isResumed = false;
     public int lastSelectedTab;
@@ -114,7 +113,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-                Instabug.invoke();
+                instabug.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Instabug.invoke();
+                    }
+                }, 300);
             }
         });
 

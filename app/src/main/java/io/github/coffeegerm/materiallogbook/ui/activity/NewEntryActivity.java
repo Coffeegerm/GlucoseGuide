@@ -213,4 +213,10 @@ public class NewEntryActivity extends AppCompatActivity {
         return new StringBuilder().append(month).append("/").append(day).append("/")
                 .append(year);
     }
+
+    @Override
+    public void onDestroy() {
+        realm.close();
+        super.onDestroy();
+    }
 }
