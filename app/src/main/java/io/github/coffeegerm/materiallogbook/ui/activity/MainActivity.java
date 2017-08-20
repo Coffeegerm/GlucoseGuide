@@ -113,8 +113,8 @@ public class MainActivity extends AppCompatActivity
         instabug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Instabug.invoke();
                 drawerLayout.closeDrawer(GravityCompat.START);
+                Instabug.invoke();
             }
         });
 
@@ -239,15 +239,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private String getGlucoseGrade() {
-        String grade = "";
+        String grade;
         int hyperglycemicCount = 0;
         int hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
         Log.i(TAG, "getGlucoseGrade: " + hyperglycemicIndex);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -3);
         Date threeDaysAgo = calendar.getTime();
-        RealmResults<EntryItem> glucoseFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).findAll();
-        for (int position = 0; position < glucoseFromLastThreeDays.size(); position++) {
+        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
+        Log.i(TAG, "getGlucoseGrade - glucoseFromLastThreeDays: " + entriesFromLastThreeDays.toString());
+        for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
             /*
             * Less than 3 hyperglycemic sugars and A+
             * 4 = A
@@ -256,13 +257,15 @@ public class MainActivity extends AppCompatActivity
             * 7 = B
             * etc...
             * */
-            hyperglycemicCount = 0;
-            EntryItem currentItem = glucoseFromLastThreeDays.get(position);
+            EntryItem currentItem = entriesFromLastThreeDays.get(position);
             if (currentItem.getBloodGlucose() > hyperglycemicIndex) {
                 hyperglycemicCount++;
+                Log.i(TAG, "getGlucoseGrade - hyperglycemicCount: " + hyperglycemicCount);
             }
         }
-        if (hyperglycemicCount < 3) {
+        if (hyperglycemicCount == 0) {
+            grade = "-";
+        } else if (hyperglycemicCount <= 3) {
             grade = "A+";
         } else if (hyperglycemicCount == 4) {
             grade = "A";
@@ -289,6 +292,8 @@ public class MainActivity extends AppCompatActivity
         } else {
             grade = "F";
         }
+        Log.i(TAG, "getGlucoseGrade - grade: " + grade);
         return grade;
+
     }
 }
