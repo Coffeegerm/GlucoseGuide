@@ -1,6 +1,7 @@
 package io.github.coffeegerm.materiallogbook.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 import io.realm.RealmObject;
 
@@ -16,8 +17,10 @@ public class EntryItem extends RealmObject {
     private int bloodGlucose;
     private int carbohydrates;
     private double insulin;
+    private String id;
 
     public EntryItem() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public Date getDate() {
@@ -50,5 +53,9 @@ public class EntryItem extends RealmObject {
 
     public void setInsulin(double insulin) {
         this.insulin = insulin;
+    }
+
+    public String getId() {
+        return id;
     }
 }

@@ -1,7 +1,9 @@
 package io.github.coffeegerm.materiallogbook.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import java.util.Locale;
 
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.activity.EditEntryActivity;
 import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 
 /**
@@ -25,12 +28,15 @@ import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
+    private static final String TAG = "ListAdapter";
     private static int shortClickHintCount = 0;
+    private static String itemId = "itemId";
     private List<EntryItem> entryItems;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
     private LayoutInflater inflater;
     private Context context;
+    private EntryItem item;
 
     public ListAdapter(List<EntryItem> entryItemList, Context c) {
         this.inflater = LayoutInflater.from(c);
@@ -46,7 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
     @Override
     public void onBindViewHolder(viewHolder holder, int position) {
-        EntryItem item = entryItems.get(position);
+        item = entryItems.get(position);
         String formattedDate = dateFormat.format(item.getDate());
         String formattedTime = timeFormat.format(item.getDate());
         holder.tvDate.setText(formattedDate);
@@ -68,8 +74,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         holder.view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                return false;
-                // TODO pass date from selected item to EditEntryActivity and start activity
+                Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
+                editEntryActivity.putExtra(itemId, item.getId());
+                context.startActivity(editEntryActivity);
+                return true;
             }
         });
 
@@ -87,6 +95,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             holder.tvInsulin.setText(R.string.dash);
         else
             holder.tvInsulin.setText(String.valueOf(item.getInsulin()));
+
+        String id = item.getId();
+        Log.i(TAG, "item id:" + id);
     }
 
     @Override
