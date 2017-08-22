@@ -21,6 +21,7 @@
     <string name="date">Date</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="edit_entry_toolbar">Edit entry</string>
 
     <!-- List onOptions items -->
     <string name="sort">Sort</string>

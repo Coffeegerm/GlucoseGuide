@@ -74,10 +74,8 @@ public class NewEntryActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
         setFonts();
-
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.create_entry);
-
         final Calendar cal = Calendar.getInstance();
         // Calendar for saving entered Date and Time
         calendarForDb = Calendar.getInstance();
@@ -143,7 +141,7 @@ public class NewEntryActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startMainActivity();
+                finish();
             }
         });
 
@@ -153,10 +151,6 @@ public class NewEntryActivity extends AppCompatActivity {
                 saveEntry();
             }
         });
-    }
-
-    private void startMainActivity() {
-        finish();
     }
 
     private void saveEntry() {
@@ -186,7 +180,7 @@ public class NewEntryActivity extends AppCompatActivity {
             });
 
             // After save returns to MainActivity ListFragment
-            startMainActivity();
+            finish();
         }
     }
 

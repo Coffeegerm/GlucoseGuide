@@ -216,8 +216,10 @@ public class MainActivity extends AppCompatActivity
 
     private void realmSetup() {
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .deleteRealmIfMigrationNeeded().build();
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(config);
         realm = Realm.getInstance(config);
     }
