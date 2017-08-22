@@ -100,12 +100,7 @@ public class ListFragment extends Fragment {
         * Starts NewEntryActivity, which allows the user
         * to define a new entry
         * */
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), NewEntryActivity.class));
-            }
-        });
+        fab.setOnClickListener(v -> startActivity(new Intent(getContext(), NewEntryActivity.class)));
     }
 
     private List<EntryItem> getDescendingList() {

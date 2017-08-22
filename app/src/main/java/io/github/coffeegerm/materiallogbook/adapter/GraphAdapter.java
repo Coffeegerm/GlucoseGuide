@@ -66,9 +66,9 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
 
         holder(View itemView) {
             super(itemView);
-            tvGraphDate = (TextView) itemView.findViewById(R.id.graph_item_date_tv);
-            tvGraphTime = (TextView) itemView.findViewById(R.id.graph_item_time_tv);
-            tvGraphBloodGlucose = (TextView) itemView.findViewById(R.id.graph_item_glucose_level_tv);
+            tvGraphDate = itemView.findViewById(R.id.graph_item_date_tv);
+            tvGraphTime = itemView.findViewById(R.id.graph_item_time_tv);
+            tvGraphBloodGlucose = itemView.findViewById(R.id.graph_item_glucose_level_tv);
         }
     }
 }

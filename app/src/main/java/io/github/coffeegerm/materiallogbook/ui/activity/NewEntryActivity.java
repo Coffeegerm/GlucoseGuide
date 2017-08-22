@@ -8,14 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -74,7 +70,7 @@ public class NewEntryActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
         setFonts();
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar(findViewById(R.id.toolbar));
         if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.create_entry);
         final Calendar cal = Calendar.getInstance();
         // Calendar for saving entered Date and Time
@@ -91,66 +87,44 @@ public class NewEntryActivity extends AppCompatActivity {
         newEntryDate.setText(dateFix(month, day, year));
         newEntryTime.setText(checkTimeString(hour, minute));
 
-        newEntryDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
-                        (Build.VERSION.SDK_INT >= 21 ? android.R.style.Theme_Material_Dialog_Alert
-                                : android.R.style.Theme_Holo_Light_Dialog),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                month++;
-                                newEntryDate.setText(dateFix(month, dayOfMonth, year));
-                                month--;
-                                calendarForDb.set(year, month, dayOfMonth);
-                            }
-                        }, cal.get(Calendar.YEAR), // year
-                        cal.get(Calendar.MONTH), // month
-                        cal.get(Calendar.DAY_OF_MONTH)); // day
+        newEntryDate.setOnClickListener(v -> {
+            DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
+                    (Build.VERSION.SDK_INT >= 21 ? android.R.style.Theme_Material_Dialog_Alert
+                            : android.R.style.Theme_Holo_Light_Dialog),
+                    (view, year1, month1, dayOfMonth) -> {
+                        month1++;
+                        newEntryDate.setText(dateFix(month1, dayOfMonth, year1));
+                        month1--;
+                        calendarForDb.set(year1, month1, dayOfMonth);
+                    }, cal.get(Calendar.YEAR), // year
+                    cal.get(Calendar.MONTH), // month
+                    cal.get(Calendar.DAY_OF_MONTH)); // day
 
-                if (Build.VERSION.SDK_INT < 21)
-                    if (dialog.getWindow() != null)
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            if (Build.VERSION.SDK_INT < 21)
+                if (dialog.getWindow() != null)
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
-                dialog.show();
-            }
+            dialog.show();
         });
 
-        newEntryTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
+        newEntryTime.setOnClickListener(v -> {
+            Calendar cal1 = Calendar.getInstance();
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(NewEntryActivity.this,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                newEntryTime.setText(checkTimeString(hourOfDay, minute));
-                                calendarForDb.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                calendarForDb.set(Calendar.MINUTE, minute);
-                            }
-                        },
-                        cal.get(Calendar.HOUR_OF_DAY), // current hour
-                        cal.get(Calendar.MINUTE), // current minute
-                        false); //no 24 hour view
-                timePickerDialog.show();
-            }
+            TimePickerDialog timePickerDialog = new TimePickerDialog(NewEntryActivity.this,
+                    (view, hourOfDay, minute1) -> {
+                        newEntryTime.setText(checkTimeString(hourOfDay, minute1));
+                        calendarForDb.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendarForDb.set(Calendar.MINUTE, minute1);
+                    },
+                    cal1.get(Calendar.HOUR_OF_DAY), // current hour
+                    cal1.get(Calendar.MINUTE), // current minute
+                    false); //no 24 hour view
+            timePickerDialog.show();
         });
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        cancelBtn.setOnClickListener(v -> finish());
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveEntry();
-            }
-        });
+        saveBtn.setOnClickListener(v -> saveEntry());
     }
 
     private void saveEntry() {
@@ -159,23 +133,20 @@ public class NewEntryActivity extends AppCompatActivity {
             Snackbar.make(getWindow().getDecorView().getRootView(),
                     R.string.no_glucose_toast, Snackbar.LENGTH_SHORT).show();
         else {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    // Save Entry to database
-                    EntryItem entryItem = NewEntryActivity.this.realm.createObject(EntryItem.class);
-                    // Creates Date object made from the DatePicker and TimePicker
-                    Date date = calendarForDb.getTime();
-                    entryItem.setDate(date);
-                    entryItem.setBloodGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
-                    // Prevention of NullPointerException
-                    if (!newEntryCarbohydrates.getText().toString().equals("")) {
-                        entryItem.setCarbohydrates(Integer.parseInt(newEntryCarbohydrates.getText().toString()));
-                    }
-                    // Prevention of NullPointerException
-                    if (!newEntryInsulin.getText().toString().equals("")) {
-                        entryItem.setInsulin(Double.parseDouble(newEntryInsulin.getText().toString()));
-                    }
+            realm.executeTransaction(realm1 -> {
+                // Save Entry to database
+                EntryItem entryItem = NewEntryActivity.this.realm.createObject(EntryItem.class);
+                // Creates Date object made from the DatePicker and TimePicker
+                Date date = calendarForDb.getTime();
+                entryItem.setDate(date);
+                entryItem.setBloodGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
+                // Prevention of NullPointerException
+                if (!newEntryCarbohydrates.getText().toString().equals("")) {
+                    entryItem.setCarbohydrates(Integer.parseInt(newEntryCarbohydrates.getText().toString()));
+                }
+                // Prevention of NullPointerException
+                if (!newEntryInsulin.getText().toString().equals("")) {
+                    entryItem.setInsulin(Double.parseDouble(newEntryInsulin.getText().toString()));
                 }
             });
 

@@ -25,8 +25,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.instabug.library.Instabug;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -41,6 +39,8 @@ import io.github.coffeegerm.materiallogbook.ui.fragment.StatisticsFragment;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+
+import static com.instabug.library.Instabug.invoke;
 
 /**
  * Activity for controlling which fragment should be presented and containing
@@ -109,16 +109,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setItemTextColor(csl);
         navigationView.setItemIconTintList(csl);
 
-        instabug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        instabug.setOnClickListener(v -> {
+            {
                 drawerLayout.closeDrawer(GravityCompat.START);
-                instabug.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Instabug.invoke();
-                    }
-                }, 300);
+                instabug.postDelayed(() -> invoke(), 300);
             }
         });
 

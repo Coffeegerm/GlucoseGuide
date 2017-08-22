@@ -1,7 +1,6 @@
 package io.github.coffeegerm.materiallogbook.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,28 +54,21 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
         holder.articlePubDate.setText(pubDate);
 
         // Opens desired article onClick
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WebView articleView = new WebView(mContext);
-                articleView.getSettings().setLoadWithOverviewMode(true);
-                String articleLink = articleList.get(position).getLink();
+        holder.itemView.setOnClickListener(v -> {
+            WebView articleView = new WebView(mContext);
+            articleView.getSettings().setLoadWithOverviewMode(true);
+            String articleLink = articleList.get(position).getLink();
 
-                articleView.getSettings().setJavaScriptEnabled(true);
-                articleView.setHorizontalScrollBarEnabled(false);
-                articleView.setWebChromeClient(new WebChromeClient());
-                articleView.loadUrl(articleLink);
+            articleView.getSettings().setJavaScriptEnabled(true);
+            articleView.setHorizontalScrollBarEnabled(false);
+            articleView.setWebChromeClient(new WebChromeClient());
+            articleView.loadUrl(articleLink);
 
-                android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(mContext).create();
-                alertDialog.setView(articleView);
-                alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL, "Close",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-            }
+            android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(mContext).create();
+            alertDialog.setView(articleView);
+            alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL, "Close",
+                    (dialog, which) -> dialog.dismiss());
+            alertDialog.show();
         });
     }
 
@@ -92,9 +84,9 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
 
         holder(View itemView) {
             super(itemView);
-            articleTitle = (TextView) itemView.findViewById(R.id.articleTitleTextView);
-            articleDesc = (TextView) itemView.findViewById(R.id.articleDescriptionTextView);
-            articlePubDate = (TextView) itemView.findViewById(R.id.articlePubDateTextView);
+            articleTitle = itemView.findViewById(R.id.articleTitleTextView);
+            articleDesc = itemView.findViewById(R.id.articleDescriptionTextView);
+            articlePubDate = itemView.findViewById(R.id.articlePubDateTextView);
         }
     }
 

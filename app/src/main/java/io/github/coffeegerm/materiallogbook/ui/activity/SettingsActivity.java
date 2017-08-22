@@ -1,6 +1,5 @@
 package io.github.coffeegerm.materiallogbook.ui.activity;
 
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -64,12 +61,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false));
 
-        toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MainActivity.sharedPreferences.edit().putBoolean("pref_dark_mode", isChecked).apply();
-                recreate();
-            }
+        toggleDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            MainActivity.sharedPreferences.edit().putBoolean("pref_dark_mode", isChecked).apply();
+            recreate();
         });
 
         hypoglycemicEditText.addTextChangedListener(new TextWatcher() {
@@ -107,38 +101,26 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        deleteAllEntries.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder;
+        deleteAllEntries.setOnClickListener(v -> {
+            final AlertDialog.Builder builder;
 
-                // Sets theme based on VERSION_CODE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    builder = new AlertDialog.Builder(SettingsActivity.this, android.R.style.Theme_Material_Dialog_NoActionBar);
-                else builder = new AlertDialog.Builder(SettingsActivity.this);
+            // Sets theme based on VERSION_CODE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                builder = new AlertDialog.Builder(SettingsActivity.this, android.R.style.Theme_Material_Dialog_NoActionBar);
+            else builder = new AlertDialog.Builder(SettingsActivity.this);
 
-                builder.setTitle("Delete all entries")
-                        .setMessage("Are you sure you want to delete all entries?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                realm.executeTransaction(new Realm.Transaction() {
-                                    @Override
-                                    public void execute(Realm realm) {
-                                        realm.delete(EntryItem.class);
-                                    }
-                                });
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(R.drawable.ic_trash)
-                        .show();
-            }
+            builder.setTitle("Delete all entries")
+                    .setMessage("Are you sure you want to delete all entries?")
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        // continue with delete
+                        realm.executeTransaction(realm1 -> realm1.delete(EntryItem.class));
+                    })
+                    .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                        // do nothing
+                        dialog.dismiss();
+                    })
+                    .setIcon(R.drawable.ic_trash)
+                    .show();
         });
     }
 
