@@ -11,8 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -58,17 +59,17 @@ public class NewEntryActivity extends AppCompatActivity {
     @BindView(R.id.new_entry_insulin_label)
     TextView insulinLabel;
     @BindView(R.id.breakfast_status)
-    ImageButton breakfast;
+    RadioButton breakfast;
     @BindView(R.id.lunch_status)
-    ImageButton lunch;
+    RadioButton lunch;
     @BindView(R.id.dinner_status)
-    ImageButton dinner;
+    RadioButton dinner;
     @BindView(R.id.sick_status)
-    ImageButton sick;
+    RadioButton sick;
     @BindView(R.id.exercise_status)
-    ImageButton exercise;
+    RadioButton exercise;
     @BindView(R.id.sweets_status)
-    ImageButton sweets;
+    RadioButton sweets;
 
     private Realm realm;
     private Calendar calendarForDb;
@@ -134,6 +135,13 @@ public class NewEntryActivity extends AppCompatActivity {
                     false); //no 24 hour view
             timePickerDialog.show();
         });
+
+        breakfast.setOnClickListener(view -> Toast.makeText(this, "Breakfast", Toast.LENGTH_SHORT).show());
+        lunch.setOnClickListener(view -> Toast.makeText(this, "Lunch", Toast.LENGTH_SHORT).show());
+        dinner.setOnClickListener(view -> Toast.makeText(this, "Dinner", Toast.LENGTH_SHORT).show());
+        sick.setOnClickListener(view -> Toast.makeText(this, "Sick", Toast.LENGTH_SHORT).show());
+        exercise.setOnClickListener(view -> Toast.makeText(this, "Exercise", Toast.LENGTH_SHORT).show());
+        sweets.setOnClickListener(view -> Toast.makeText(this, "Sweets", Toast.LENGTH_SHORT).show());
 
         cancelBtn.setOnClickListener(v -> finish());
 

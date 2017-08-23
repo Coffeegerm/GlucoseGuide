@@ -22,6 +22,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="edit_entry_toolbar">Edit entry</string>
+    <string name="status">Status</string>
 
     <!-- List onOptions items -->
     <string name="sort">Sort</string>
@@ -55,9 +56,9 @@
     <string name="settings_delete_entries">Delete all Entries?</string>
     <string name="delete">Delete</string>
     <string name="feedback">Feedback</string>
-    <string name="settings_donate_section">Support</string>
     <string name="donate_para">Support the development of Material Logbook.</string>
-    <string name="donate">$</string>
+    <string name="donate">Donate</string>
+    <string name="support">Support Material Logbook</string>
 
     <!--Image descriptions -->
     <string name="blood_glucose_image">Blood Glucose Image</string>

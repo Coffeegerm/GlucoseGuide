@@ -13,6 +13,6 @@
     <dimen name="stats_textview_margin_top">16dp</dimen>
     <dimen name="stats_view_seperator_margin_top_bottom">8dp</dimen>
 
-    <dimen name="status_button_start_end_marign">8dp</dimen>
+    <dimen name="status_button_start_end_margin">8dp</dimen>
     <dimen name="status_button_height_width">45dp</dimen>
 </resources>
