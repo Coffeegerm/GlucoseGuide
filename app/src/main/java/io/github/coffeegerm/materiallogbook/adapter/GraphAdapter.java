@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 
@@ -51,9 +53,9 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
         EntryItem item = entryItemList.get(position);
         String formattedDate = dateFormat.format(item.getDate());
         String formattedTime = timeFormat.format(item.getDate());
-        holder.tvGraphDate.setText(formattedDate);
-        holder.tvGraphTime.setText(formattedTime);
-        holder.tvGraphBloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
+        holder.date.setText(formattedDate);
+        holder.time.setText(formattedTime);
+        holder.bloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
     }
 
     @Override
@@ -62,13 +64,16 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
     }
 
     class holder extends RecyclerView.ViewHolder {
-        private TextView tvGraphDate, tvGraphBloodGlucose, tvGraphTime;
+        @BindView(R.id.graph_item_date_tv)
+        TextView date;
+        @BindView(R.id.graph_item_glucose_level_tv)
+        TextView bloodGlucose;
+        @BindView(R.id.graph_item_time_tv)
+        TextView time;
 
         holder(View itemView) {
             super(itemView);
-            tvGraphDate = itemView.findViewById(R.id.graph_item_date_tv);
-            tvGraphTime = itemView.findViewById(R.id.graph_item_time_tv);
-            tvGraphBloodGlucose = itemView.findViewById(R.id.graph_item_glucose_level_tv);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

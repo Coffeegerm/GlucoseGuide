@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -56,6 +57,18 @@ public class NewEntryActivity extends AppCompatActivity {
     TextView carbsLabel;
     @BindView(R.id.new_entry_insulin_label)
     TextView insulinLabel;
+    @BindView(R.id.breakfast_status)
+    ImageButton breakfast;
+    @BindView(R.id.lunch_status)
+    ImageButton lunch;
+    @BindView(R.id.dinner_status)
+    ImageButton dinner;
+    @BindView(R.id.sick_status)
+    ImageButton sick;
+    @BindView(R.id.exercise_status)
+    ImageButton exercise;
+    @BindView(R.id.sweets_status)
+    ImageButton sweets;
 
     private Realm realm;
     private Calendar calendarForDb;

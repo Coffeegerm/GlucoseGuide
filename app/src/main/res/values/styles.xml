@@ -32,6 +32,10 @@
         <item name="android:windowBackground">@color/darkThemeBackground</item>
     </style>
 
+    <style name="StatusButton" parent="android:style/Widget.Holo.Button">
+        <item name="android:background">@drawable/status_button</item>
+    </style>
+
     <style name="AppTheme.DialogAlert" parent="Theme.AppCompat.Dialog.Alert" />
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">

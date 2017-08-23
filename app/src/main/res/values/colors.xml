@@ -25,4 +25,6 @@
     <color name="black">#000</color>
     <color name="white">#fff</color>
     <color name="deep_red">#FF0000</color>
+    <color name="light_grey">#D3D3D3</color>
+    <color name="dark_light_grey">#9A9A9A</color>
 </resources>

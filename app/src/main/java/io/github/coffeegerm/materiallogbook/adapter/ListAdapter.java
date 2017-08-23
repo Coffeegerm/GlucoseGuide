@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.ui.activity.EditEntryActivity;
@@ -55,8 +57,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         item = entryItems.get(position);
         String formattedDate = dateFormat.format(item.getDate());
         String formattedTime = timeFormat.format(item.getDate());
-        holder.tvDate.setText(formattedDate);
-        holder.tvTime.setText(formattedTime);
+        holder.date.setText(formattedDate);
+        holder.time.setText(formattedTime);
         /*
         * Handle item clicks on List Fragment
         * Long click will start EditEntryActivity
@@ -76,19 +78,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         });
 
         if (String.valueOf(item.getBloodGlucose()).equals("0"))
-            holder.tvBloodGlucose.setText(R.string.dash);
+            holder.bloodGlucose.setText(R.string.dash);
         else
-            holder.tvBloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
+            holder.bloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
 
         if (String.valueOf(item.getCarbohydrates()).equals("0"))
-            holder.tvCarbohydrates.setText(R.string.dash);
+            holder.carbohydrates.setText(R.string.dash);
         else
-            holder.tvCarbohydrates.setText(String.valueOf(item.getCarbohydrates()));
+            holder.carbohydrates.setText(String.valueOf(item.getCarbohydrates()));
 
         if (String.valueOf(item.getInsulin()).equals("0.0"))
-            holder.tvInsulin.setText(R.string.dash);
+            holder.insulin.setText(R.string.dash);
         else
-            holder.tvInsulin.setText(String.valueOf(item.getInsulin()));
+            holder.insulin.setText(String.valueOf(item.getInsulin()));
 
         String id = item.getId();
         Log.i(TAG, "item id:" + id);
@@ -100,26 +102,32 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
-        public View view;
-        private TextView tvDate, tvTime, tvBloodGlucose, tvInsulin, tvCarbohydrates;
-        private ImageView ivInsulin, ivCarbs, ivFinger;
-        private View line1, line2;
+        @BindView(R.id.tv_date)
+        TextView date;
+        @BindView(R.id.tv_time)
+        TextView time;
+        @BindView(R.id.tv_blood_glucose)
+        TextView bloodGlucose;
+        @BindView(R.id.tv_insulin)
+        TextView insulin;
+        @BindView(R.id.tv_carbs)
+        TextView carbohydrates;
+        @BindView(R.id.imgInsulins)
+        ImageView ivInsulin;
+        @BindView(R.id.imgCarbs)
+        ImageView ivCarbs;
+        @BindView(R.id.imgFinger)
+        ImageView ivFinger;
+        @BindView(R.id.line1)
+        View line1;
+        @BindView(R.id.line2)
+        View line2;
+        private View view;
 
         viewHolder(View itemView) {
             super(itemView);
             this.view = itemView;
-
-            // Find item's views
-            tvDate = itemView.findViewById(R.id.tv_date);
-            tvTime = itemView.findViewById(R.id.tv_time);
-            tvBloodGlucose = itemView.findViewById(R.id.tv_blood_glucose);
-            tvInsulin = itemView.findViewById(R.id.tv_insulin);
-            tvCarbohydrates = itemView.findViewById(R.id.tv_carbs);
-            ivInsulin = itemView.findViewById(R.id.imgInsulins);
-            ivCarbs = itemView.findViewById(R.id.imgCarbs);
-            ivFinger = itemView.findViewById(R.id.imgFinger);
-            line1 = itemView.findViewById(R.id.line1);
-            line2 = itemView.findViewById(R.id.line2);
+            ButterKnife.bind(this, itemView);
 
             if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
                 ivFinger.setImageResource(R.drawable.ic_finger_dark);

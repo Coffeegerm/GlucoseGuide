@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 
 /**
@@ -26,7 +28,7 @@ import io.github.coffeegerm.materiallogbook.R;
 
 public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
 
-    private final static String NON_THIN = "[^iIl1\\.,']";
+    private final static String NON_THIN = "[^iIl1.,']";
     private LayoutInflater inflater;
     private ArrayList<Article> articleList;
     private Context mContext;
@@ -41,7 +43,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
         return (str.length() - str.replaceAll(NON_THIN, "").length() / 2);
     }
 
-    public static String ellipsize(String text, int max) {
+    private static String ellipsize(String text, int max) {
 
         if (textWidth(text) <= max)
             return text;
@@ -108,15 +110,16 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
     }
 
     class holder extends RecyclerView.ViewHolder {
-        private TextView articleTitle;
-        private TextView articleDesc;
-        private TextView articlePubDate;
+        @BindView(R.id.articleTitleTextView)
+        TextView articleTitle;
+        @BindView(R.id.articleDescriptionTextView)
+        TextView articleDesc;
+        @BindView(R.id.articlePubDateTextView)
+        TextView articlePubDate;
 
         holder(View itemView) {
             super(itemView);
-            articleTitle = itemView.findViewById(R.id.articleTitleTextView);
-            articleDesc = itemView.findViewById(R.id.articleDescriptionTextView);
-            articlePubDate = itemView.findViewById(R.id.articlePubDateTextView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

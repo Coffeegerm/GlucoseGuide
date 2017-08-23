@@ -10,6 +10,16 @@ import io.realm.RealmObject;
  * <p>
  * <p>
  * EntryItem POJO for setting and retrieving data for layouts
+ * <p>
+ * for Status
+ * <p>
+ * case 0: null
+ * 1: breakfast
+ * 2: lunch
+ * 3: dinner
+ * 4: sick
+ * 5: exercise
+ * 6: sweets
  */
 
 public class EntryItem extends RealmObject {
@@ -18,6 +28,7 @@ public class EntryItem extends RealmObject {
     private int carbohydrates;
     private double insulin;
     private String id;
+    private int status;
 
     public EntryItem() {
         this.id = UUID.randomUUID().toString();
@@ -57,5 +68,13 @@ public class EntryItem extends RealmObject {
 
     public String getId() {
         return id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

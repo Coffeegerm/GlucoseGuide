@@ -1,5 +1,7 @@
 package io.github.coffeegerm.materiallogbook.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,6 +42,8 @@ public class SettingsActivity extends AppCompatActivity {
     Switch toggleDarkMode;
     @BindView(R.id.setting_toolbar)
     Toolbar settingsToolbar;
+    @BindView(R.id.donate_button)
+    Button donate;
     private Realm realm;
 
     @Override
@@ -121,6 +125,15 @@ public class SettingsActivity extends AppCompatActivity {
                     })
                     .setIcon(R.drawable.ic_trash)
                     .show();
+        });
+
+        donate.setOnClickListener(v -> {
+            Log.i(TAG, "donate button pressed");
+            String paypal = "paypal.me/DavidYarzebinski";
+            Intent donate = new Intent(Intent.ACTION_VIEW, Uri.parse(paypal));
+            if (donate.resolveActivity(getPackageManager()) != null) {
+                startActivity(donate);
+            }
         });
     }
 

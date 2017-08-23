@@ -46,7 +46,7 @@
 
     <!--Settings Strings-->
     <string name="ui">UI</string>
-    <string name="data">Data</string>
+    <string name="data">Danger Zone</string>
     <string name="settings_dark_mode">Use dark mode:</string>
     <string name="settings_glucose_goal_section">Target range of glucose</string>
     <string name="settings_hypoglycemic">Below this your sugar is low:</string>
@@ -55,6 +55,9 @@
     <string name="settings_delete_entries">Delete all Entries?</string>
     <string name="delete">Delete</string>
     <string name="feedback">Feedback</string>
+    <string name="settings_donate_section">Support</string>
+    <string name="donate_para">Support the development of Material Logbook.</string>
+    <string name="donate">$</string>
 
     <!--Image descriptions -->
     <string name="blood_glucose_image">Blood Glucose Image</string>
