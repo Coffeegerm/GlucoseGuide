@@ -26,6 +26,7 @@ import io.github.coffeegerm.materiallogbook.R;
 
 public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
 
+    private final static String NON_THIN = "[^iIl1\\.,']";
     private LayoutInflater inflater;
     private ArrayList<Article> articleList;
     private Context mContext;
@@ -34,6 +35,38 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
         this.inflater = LayoutInflater.from(c);
         this.articleList = articleList;
         this.mContext = c;
+    }
+
+    private static int textWidth(String str) {
+        return (str.length() - str.replaceAll(NON_THIN, "").length() / 2);
+    }
+
+    public static String ellipsize(String text, int max) {
+
+        if (textWidth(text) <= max)
+            return text;
+
+        // Start by chopping off at the word before max
+        // This is an over-approximation due to thin-characters...
+        int end = text.lastIndexOf(' ', max - 3);
+
+        // Just one long word. Chop it off.
+        if (end == -1)
+            return text.substring(0, max - 3) + "...";
+
+        // Step forward as long as textWidth allows.
+        int newEnd = end;
+        do {
+            end = newEnd;
+            newEnd = text.indexOf(' ', end + 1);
+
+            // No more spaces.
+            if (newEnd == -1)
+                newEnd = text.length();
+
+        } while (textWidth(text.substring(0, newEnd) + "...") < max);
+
+        return text.substring(0, end) + "...";
     }
 
     @Override
@@ -50,7 +83,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
         final String pubDate = sdf.format(date);
 
         holder.articleTitle.setText(currentArticle.getTitle());
-        holder.articleDesc.setText(currentArticle.getDescription());
+        holder.articleDesc.setText(ellipsize(currentArticle.getDescription(), 250));
         holder.articlePubDate.setText(pubDate);
 
         // Opens desired article onClick
@@ -58,12 +91,9 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
             WebView articleView = new WebView(mContext);
             articleView.getSettings().setLoadWithOverviewMode(true);
             String articleLink = articleList.get(position).getLink();
-
-            articleView.getSettings().setJavaScriptEnabled(true);
             articleView.setHorizontalScrollBarEnabled(false);
             articleView.setWebChromeClient(new WebChromeClient());
             articleView.loadUrl(articleLink);
-
             android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(mContext).create();
             alertDialog.setView(articleView);
             alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL, "Close",
