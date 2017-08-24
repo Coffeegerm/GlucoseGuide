@@ -29,70 +29,69 @@
             android:layout_marginBottom="8dp"
             android:text="@string/status" />
 
-        <RadioGroup
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <RadioButton
-
+            <ImageButton
                 android:id="@+id/breakfast_status"
                 android:layout_width="@dimen/status_button_height_width"
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
                 android:background="@drawable/status_button"
-                android:button="@drawable/ic_breakfast"
-                android:gravity="center" />
+                android:gravity="center"
+                android:src="@drawable/ic_breakfast" />
 
-            <RadioButton
+            <ImageButton
                 android:id="@+id/lunch_status"
                 android:layout_width="@dimen/status_button_height_width"
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
                 android:background="@drawable/status_button"
-                android:button="@drawable/ic_lunch" />
+                android:src="@drawable/ic_lunch" />
 
-            <RadioButton
+            <ImageButton
                 android:id="@+id/dinner_status"
                 android:layout_width="@dimen/status_button_height_width"
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
                 android:background="@drawable/status_button"
-                android:button="@drawable/ic_dinner" />
+                android:src="@drawable/ic_dinner" />
 
-            <RadioButton
+            <ImageButton
                 android:id="@+id/sick_status"
                 android:layout_width="@dimen/status_button_height_width"
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
                 android:background="@drawable/status_button"
-                android:button="@drawable/ic_sick" />
+                android:src="@drawable/ic_sick" />
 
-            <RadioButton
+            <ImageButton
                 android:id="@+id/exercise_status"
                 android:layout_width="@dimen/status_button_height_width"
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
                 android:background="@drawable/status_button"
-                android:button="@drawable/ic_excercise" />
+                android:src="@drawable/ic_excercise" />
 
-            <RadioButton
+            <ImageButton
                 android:id="@+id/sweets_status"
                 android:layout_width="@dimen/status_button_height_width"
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
                 android:background="@drawable/status_button"
-                android:button="@drawable/ic_sweets" />
+                android:src="@drawable/ic_sweets" />
 
-        </RadioGroup>
+        </LinearLayout>
 
         <!--Date and Time-->
         <LinearLayout

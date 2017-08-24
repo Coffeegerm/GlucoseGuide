@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,20 +59,21 @@ public class NewEntryActivity extends AppCompatActivity {
     @BindView(R.id.new_entry_insulin_label)
     TextView insulinLabel;
     @BindView(R.id.breakfast_status)
-    RadioButton breakfast;
+    ImageButton breakfast;
     @BindView(R.id.lunch_status)
-    RadioButton lunch;
+    ImageButton lunch;
     @BindView(R.id.dinner_status)
-    RadioButton dinner;
+    ImageButton dinner;
     @BindView(R.id.sick_status)
-    RadioButton sick;
+    ImageButton sick;
     @BindView(R.id.exercise_status)
-    RadioButton exercise;
+    ImageButton exercise;
     @BindView(R.id.sweets_status)
-    RadioButton sweets;
+    ImageButton sweets;
 
     private Realm realm;
     private Calendar calendarForDb;
+    private int status = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,15 +137,38 @@ public class NewEntryActivity extends AppCompatActivity {
             timePickerDialog.show();
         });
 
-        breakfast.setOnClickListener(view -> Toast.makeText(this, "Breakfast", Toast.LENGTH_SHORT).show());
-        lunch.setOnClickListener(view -> Toast.makeText(this, "Lunch", Toast.LENGTH_SHORT).show());
-        dinner.setOnClickListener(view -> Toast.makeText(this, "Dinner", Toast.LENGTH_SHORT).show());
-        sick.setOnClickListener(view -> Toast.makeText(this, "Sick", Toast.LENGTH_SHORT).show());
-        exercise.setOnClickListener(view -> Toast.makeText(this, "Exercise", Toast.LENGTH_SHORT).show());
-        sweets.setOnClickListener(view -> Toast.makeText(this, "Sweets", Toast.LENGTH_SHORT).show());
+        breakfast.setOnClickListener(view -> {
+            status = 1;
+            Log.i(TAG, "status: " + status);
+            Toast.makeText(NewEntryActivity.this, "Breakfast", Toast.LENGTH_SHORT).show();
+        });
+        lunch.setOnClickListener(view -> {
+            status = 2;
+            Log.i(TAG, "status: " + status);
+            Toast.makeText(this, "Lunch", Toast.LENGTH_SHORT).show();
+        });
+        dinner.setOnClickListener(view -> {
+            status = 3;
+            Log.i(TAG, "status: " + status);
+            Toast.makeText(this, "Dinner", Toast.LENGTH_SHORT).show();
+        });
+        sick.setOnClickListener(view -> {
+            status = 4;
+            Log.i(TAG, "status: " + status);
+            Toast.makeText(this, "Sick", Toast.LENGTH_SHORT).show();
+        });
+        exercise.setOnClickListener(view -> {
+            status = 5;
+            Log.i(TAG, "status: " + status);
+            Toast.makeText(this, "Exercise", Toast.LENGTH_SHORT).show();
+        });
+        sweets.setOnClickListener(view -> {
+            status = 6;
+            Log.i(TAG, "status: " + status);
+            Toast.makeText(this, "Sweets", Toast.LENGTH_SHORT).show();
+        });
 
         cancelBtn.setOnClickListener(v -> finish());
-
         saveBtn.setOnClickListener(v -> saveEntry());
     }
 
@@ -160,6 +184,7 @@ public class NewEntryActivity extends AppCompatActivity {
                 // Creates Date object made from the DatePicker and TimePicker
                 Date date = calendarForDb.getTime();
                 entryItem.setDate(date);
+                entryItem.setStatus(status);
                 entryItem.setBloodGlucose(Integer.parseInt(newEntryBloodGlucose.getText().toString()));
                 // Prevention of NullPointerException
                 if (!newEntryCarbohydrates.getText().toString().equals("")) {
@@ -196,8 +221,7 @@ public class NewEntryActivity extends AppCompatActivity {
 
     // dateFix
     StringBuilder dateFix(int month, int day, int year) {
-        return new StringBuilder().append(month).append("/").append(day).append("/")
-                .append(year);
+        return new StringBuilder().append(month).append("/").append(day).append("/").append(year);
     }
 
     @Override
