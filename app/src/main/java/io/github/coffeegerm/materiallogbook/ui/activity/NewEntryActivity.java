@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -182,8 +181,7 @@ public class NewEntryActivity extends AppCompatActivity {
     private void saveEntry() {
         // Checks to make sure there is a blood glucose given.
         if (newEntryBloodGlucose.getText().toString().equals(""))
-            Snackbar.make(getWindow().getDecorView().getRootView(),
-                    R.string.no_glucose_toast, Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_glucose_toast, Toast.LENGTH_SHORT).show();
         else {
             realm.executeTransaction(realm1 -> {
                 // Save Entry to database
