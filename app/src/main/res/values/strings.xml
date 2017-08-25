@@ -23,6 +23,13 @@
     <string name="cancel">Cancel</string>
     <string name="edit_entry_toolbar">Edit entry</string>
     <string name="status">Status</string>
+    <!-- Image Descriptions for NewEntryActivity and EditEntryActivity -->
+    <string name="breakfast_description">Breakfast</string>
+    <string name="lunch_description">Lunch</string>
+    <string name="dinner_description">Dinner</string>
+    <string name="sick_description">Sick</string>
+    <string name="exercise_description">Exercise</string>
+    <string name="sweets_description">Sweets</string>
 
     <!-- List onOptions items -->
     <string name="sort">Sort</string>

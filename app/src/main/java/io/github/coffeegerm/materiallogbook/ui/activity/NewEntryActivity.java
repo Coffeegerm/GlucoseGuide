@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -140,31 +141,37 @@ public class NewEntryActivity extends AppCompatActivity {
         breakfast.setOnClickListener(view -> {
             status = 1;
             Log.i(TAG, "status: " + status);
+            statusButtonCheck(status);
             Toast.makeText(NewEntryActivity.this, "Breakfast", Toast.LENGTH_SHORT).show();
         });
         lunch.setOnClickListener(view -> {
             status = 2;
             Log.i(TAG, "status: " + status);
+            statusButtonCheck(status);
             Toast.makeText(this, "Lunch", Toast.LENGTH_SHORT).show();
         });
         dinner.setOnClickListener(view -> {
             status = 3;
             Log.i(TAG, "status: " + status);
+            statusButtonCheck(status);
             Toast.makeText(this, "Dinner", Toast.LENGTH_SHORT).show();
         });
         sick.setOnClickListener(view -> {
             status = 4;
             Log.i(TAG, "status: " + status);
+            statusButtonCheck(status);
             Toast.makeText(this, "Sick", Toast.LENGTH_SHORT).show();
         });
         exercise.setOnClickListener(view -> {
             status = 5;
             Log.i(TAG, "status: " + status);
+            statusButtonCheck(status);
             Toast.makeText(this, "Exercise", Toast.LENGTH_SHORT).show();
         });
         sweets.setOnClickListener(view -> {
             status = 6;
             Log.i(TAG, "status: " + status);
+            statusButtonCheck(status);
             Toast.makeText(this, "Sweets", Toast.LENGTH_SHORT).show();
         });
 
@@ -222,6 +229,63 @@ public class NewEntryActivity extends AppCompatActivity {
     // dateFix
     StringBuilder dateFix(int month, int day, int year) {
         return new StringBuilder().append(month).append("/").append(day).append("/").append(year);
+    }
+
+    private void statusButtonCheck(int status) {
+        Drawable status_checked = getResources().getDrawable(R.drawable.status_checked);
+        Drawable status_unchecked = getResources().getDrawable(R.drawable.status_unchecked);
+        switch (status) {
+            case 1:
+                breakfast.setBackground(status_checked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 2:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_checked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 3:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_checked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 4:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_checked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 5:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_checked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 6:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_checked);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

@@ -42,7 +42,8 @@
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
-                android:background="@drawable/status_button"
+                android:background="@drawable/status_unchecked"
+                android:contentDescription="@string/breakfast_description"
                 android:gravity="center"
                 android:src="@drawable/ic_breakfast" />
 
@@ -52,7 +53,8 @@
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
-                android:background="@drawable/status_button"
+                android:background="@drawable/status_unchecked"
+                android:contentDescription="@string/lunch_description"
                 android:src="@drawable/ic_lunch" />
 
             <ImageButton
@@ -61,7 +63,8 @@
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
-                android:background="@drawable/status_button"
+                android:background="@drawable/status_unchecked"
+                android:contentDescription="@string/dinner_description"
                 android:src="@drawable/ic_dinner" />
 
             <ImageButton
@@ -70,7 +73,8 @@
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
-                android:background="@drawable/status_button"
+                android:background="@drawable/status_unchecked"
+                android:contentDescription="@string/sick_description"
                 android:src="@drawable/ic_sick" />
 
             <ImageButton
@@ -79,7 +83,8 @@
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
-                android:background="@drawable/status_button"
+                android:background="@drawable/status_unchecked"
+                android:contentDescription="@string/exercise_description"
                 android:src="@drawable/ic_excercise" />
 
             <ImageButton
@@ -88,7 +93,8 @@
                 android:layout_height="@dimen/status_button_height_width"
                 android:layout_marginEnd="@dimen/status_button_start_end_margin"
                 android:layout_marginStart="@dimen/status_button_start_end_margin"
-                android:background="@drawable/status_button"
+                android:background="@drawable/status_unchecked"
+                android:contentDescription="@string/sweets_description"
                 android:src="@drawable/ic_sweets" />
 
         </LinearLayout>
