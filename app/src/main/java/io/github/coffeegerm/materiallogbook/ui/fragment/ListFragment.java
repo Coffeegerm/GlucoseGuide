@@ -26,7 +26,6 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.ui.activity.NewEntryActivity;
 import io.github.coffeegerm.materiallogbook.utils.FabBehavior;
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -100,18 +99,21 @@ public class ListFragment extends Fragment {
         * Starts NewEntryActivity, which allows the user
         * to define a new entry
         * */
-        fab.setOnClickListener(v -> startActivity(new Intent(getContext(), NewEntryActivity.class)));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), NewEntryActivity.class));
+            }
+        });
     }
 
     private List<EntryItem> getDescendingList() {
-        RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
-        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("date", Sort.DESCENDING);
+        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).findAllSorted("date", Sort.DESCENDING);
         return new ArrayList<>(entryItems);
     }
 
     private List<EntryItem> getAscendingList() {
-        RealmQuery<EntryItem> entryQuery = realm.where(EntryItem.class);
-        RealmResults<EntryItem> entryItems = entryQuery.findAllSorted("date", Sort.ASCENDING);
+        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).findAllSorted("date", Sort.ASCENDING);
         return new ArrayList<>(entryItems);
     }
 

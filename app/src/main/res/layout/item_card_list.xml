@@ -22,7 +22,7 @@
 
         <!-- Set programmatically -->
 
-        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 
         <!-- Set programmatically -->
 
-        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

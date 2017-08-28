@@ -78,6 +78,11 @@ public class NewsFragment extends Fragment {
     private void swipeRefreshSetup() {
         newsSwipeRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimaryDark));
         newsSwipeRefresh.canChildScrollUp();
-        newsSwipeRefresh.setOnRefreshListener(() -> loadNews());
+        newsSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadNews();
+            }
+        });
     }
 }

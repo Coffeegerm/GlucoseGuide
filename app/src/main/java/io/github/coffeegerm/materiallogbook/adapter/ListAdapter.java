@@ -63,18 +63,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         * Handle item clicks on List Fragment
         * Long click will start EditEntryActivity
         * */
-        holder.view.setOnClickListener(view -> {
-            if (shortClickHintCount <= 5) {
-                Toast.makeText(context, R.string.list_item_short_click, Toast.LENGTH_SHORT).show();
-                shortClickHintCount++;
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (shortClickHintCount <= 5) {
+                    Toast.makeText(context, R.string.list_item_short_click, Toast.LENGTH_SHORT).show();
+                    shortClickHintCount++;
+                }
             }
         });
 
-        holder.view.setOnLongClickListener(view -> {
-            Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
-            editEntryActivity.putExtra(itemId, item.getId());
-            context.startActivity(editEntryActivity);
-            return true;
+        holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
+                editEntryActivity.putExtra(itemId, item.getId());
+                context.startActivity(editEntryActivity);
+                return true;
+            }
         });
 
         if (String.valueOf(item.getBloodGlucose()).equals("0"))
