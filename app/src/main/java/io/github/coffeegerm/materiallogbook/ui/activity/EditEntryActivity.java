@@ -44,8 +44,8 @@ public class EditEntryActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.cancel)
     Button cancel;
-    @BindView(R.id.save)
-    Button save;
+    @BindView(R.id.update)
+    Button update;
     @BindView(R.id.new_entry_date)
     EditText date;
     @BindView(R.id.new_entry_time)
@@ -68,12 +68,12 @@ public class EditEntryActivity extends AppCompatActivity {
     ImageButton exercise;
     @BindView(R.id.sweets_status)
     ImageButton sweets;
+    Date itemDate;
     private Realm realm;
     private String itemIdString;
     private EntryItem item;
     private Calendar calendar;
     private Calendar calendarToBeSaved;
-    private Date itemDate;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
 
@@ -148,7 +148,7 @@ public class EditEntryActivity extends AppCompatActivity {
                 finish();
             }
         });
-        save.setOnClickListener(new View.OnClickListener() {
+        update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateEntry();
@@ -178,6 +178,7 @@ public class EditEntryActivity extends AppCompatActivity {
 
     private void updateEntry() {
         // TODO: 8/27/2017 Check if anything the user put is different and update as needed.
+        finish();
     }
 
     StringBuilder dateFix(int month, int day, int year) {

@@ -20,9 +20,11 @@
     <string name="time">Time</string>
     <string name="date">Date</string>
     <string name="save">Save</string>
+    <string name="update">Update</string>
     <string name="cancel">Cancel</string>
     <string name="edit_entry_toolbar">Edit entry</string>
     <string name="status">Status</string>
+
     <!-- Image Descriptions for NewEntryActivity and EditEntryActivity -->
     <string name="breakfast_description">Breakfast</string>
     <string name="lunch_description">Lunch</string>
