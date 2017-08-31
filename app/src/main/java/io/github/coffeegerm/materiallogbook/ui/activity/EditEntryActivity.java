@@ -72,14 +72,24 @@ public class EditEntryActivity extends AppCompatActivity {
     ImageButton exercise;
     @BindView(R.id.sweets_status)
     ImageButton sweets;
-    Date itemDate;
     Handler handler;
-    int status;
+    /* Original values from item. Compare to possible updated values to find what needs to be updated in database */
+    Date originalDate;
+    int originalStatus;
+    int originalBloodGlucose;
+    int originalCarbohydrates;
+    double originalInsulin;
+    /* items to be used to altered to show that the item has been updated */
+    int updatedStatus;
+    Date updatedDate;
+    int updatedBloodGlucose;
+    int updatedCarbohydrates;
+    int updatedInsulin;
+    private Calendar originalCalendar;
+    private Calendar updatedCalendar;
     private Realm realm;
     private String itemIdString;
     private EntryItem item;
-    private Calendar calendar;
-    private Calendar calendarToBeSaved;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
 
@@ -97,9 +107,8 @@ public class EditEntryActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         itemIdString = getIntent().getStringExtra(itemId);
         item = getItem();
-        calendarToBeSaved = Calendar.getInstance();
-        calendar = Calendar.getInstance();
-        calendar.setTime(item.getDate());
+        updatedCalendar = Calendar.getInstance();
+        getOriginalValues(); // must call before hints are set
         setHints();
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -114,11 +123,11 @@ public class EditEntryActivity extends AppCompatActivity {
                                 month++;
                                 date.setText(dateFix(month, dayOfMonth, year));
                                 month--;
-                                calendarToBeSaved.set(year, month, dayOfMonth);
+                                updatedCalendar.set(year, month, dayOfMonth);
                             }
-                        }, calendar.get(Calendar.YEAR), // year
-                        calendar.get(Calendar.MONTH), // month
-                        calendar.get(Calendar.DAY_OF_MONTH)); // day
+                        }, originalCalendar.get(Calendar.YEAR), // year
+                        originalCalendar.get(Calendar.MONTH), // month
+                        originalCalendar.get(Calendar.DAY_OF_MONTH)); // day
 
                 if (Build.VERSION.SDK_INT < 21)
                     if (dialog.getWindow() != null)
@@ -136,12 +145,12 @@ public class EditEntryActivity extends AppCompatActivity {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 time.setText(checkTimeString(hourOfDay, minute));
-                                calendarToBeSaved.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                                calendarToBeSaved.set(Calendar.MINUTE, minute);
+                                updatedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                updatedCalendar.set(Calendar.MINUTE, minute);
                             }
                         },
-                        calendar.get(Calendar.HOUR_OF_DAY), // current hour
-                        calendar.get(Calendar.MINUTE), // current minute
+                        originalCalendar.get(Calendar.HOUR_OF_DAY), // current hour
+                        originalCalendar.get(Calendar.MINUTE), // current minute
                         false); //no 24 hour view
                 timePickerDialog.show();
             }
@@ -152,9 +161,9 @@ public class EditEntryActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                status = 1;
-                Log.i(TAG, "status: " + status);
-                setStatus(status);
+                updatedStatus = 1;
+                Log.i(TAG, "status: " + updatedStatus);
+                setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Breakfast", Toast.LENGTH_SHORT);
                 toast.show();
                 handler.postDelayed(new Runnable() {
@@ -171,9 +180,9 @@ public class EditEntryActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                status = 2;
-                Log.i(TAG, "status: " + status);
-                setStatus(status);
+                updatedStatus = 2;
+                Log.i(TAG, "status: " + updatedStatus);
+                setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT);
                 toast.show();
                 handler.postDelayed(new Runnable() {
@@ -190,9 +199,9 @@ public class EditEntryActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                status = 3;
-                Log.i(TAG, "status: " + status);
-                setStatus(status);
+                updatedStatus = 3;
+                Log.i(TAG, "status: " + updatedStatus);
+                setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Dinner", Toast.LENGTH_SHORT);
                 toast.show();
                 handler.postDelayed(new Runnable() {
@@ -209,9 +218,9 @@ public class EditEntryActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                status = 4;
-                Log.i(TAG, "status: " + status);
-                setStatus(status);
+                updatedStatus = 4;
+                Log.i(TAG, "status: " + updatedStatus);
+                setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Sick", Toast.LENGTH_SHORT);
                 toast.show();
                 handler.postDelayed(new Runnable() {
@@ -228,9 +237,9 @@ public class EditEntryActivity extends AppCompatActivity {
         {
             @Override
             public void onClick(View view) {
-                status = 5;
-                Log.i(TAG, "status: " + status);
-                setStatus(status);
+                updatedStatus = 5;
+                Log.i(TAG, "status: " + updatedStatus);
+                setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Exercise", Toast.LENGTH_SHORT);
                 toast.show();
                 handler.postDelayed(new Runnable() {
@@ -245,9 +254,9 @@ public class EditEntryActivity extends AppCompatActivity {
         sweets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                status = 6;
-                Log.i(TAG, "status: " + status);
-                setStatus(status);
+                updatedStatus = 6;
+                Log.i(TAG, "status: " + updatedStatus);
+                setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Sweets", Toast.LENGTH_SHORT);
                 toast.show();
                 handler.postDelayed(new Runnable() {
@@ -279,20 +288,29 @@ public class EditEntryActivity extends AppCompatActivity {
         return itemRealmResults.get(0);
     }
 
+    private void getOriginalValues() {
+        originalStatus = item.getStatus();
+        originalCalendar = Calendar.getInstance();
+        originalCalendar.setTime(item.getDate());
+        originalDate = originalCalendar.getTime();
+        originalBloodGlucose = item.getBloodGlucose();
+        originalCarbohydrates = item.getCarbohydrates();
+        originalInsulin = item.getInsulin();
+    }
+
     private void setHints() {
-        itemDate = calendar.getTime();
-        String formattedDate = dateFormat.format(itemDate);
-        String formattedTime = timeFormat.format(itemDate);
+        String formattedDate = dateFormat.format(originalDate);
+        String formattedTime = timeFormat.format(originalDate);
         date.setHint(formattedDate);
         time.setHint(formattedTime);
-        bloodGlucose.setHint(String.valueOf(item.getBloodGlucose()));
-        if (item.getCarbohydrates() != 0)
-            carbohydrates.setHint(String.valueOf(item.getCarbohydrates()));
+        bloodGlucose.setHint(String.valueOf(originalBloodGlucose));
+        if (originalCarbohydrates != 0)
+            carbohydrates.setHint(String.valueOf(originalCarbohydrates));
         else carbohydrates.setHint(R.string.dash);
-        if (item.getInsulin() != 0.0)
-            insulin.setHint(String.valueOf(item.getInsulin()));
+        if (originalInsulin != 0.0)
+            insulin.setHint(String.valueOf(originalInsulin));
         else insulin.setHint(R.string.dash);
-        setStatus(item.getStatus());
+        setStatus(originalStatus);
     }
 
     private void setStatus(int status) {
