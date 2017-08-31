@@ -11,10 +11,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
     private static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     @BindView(R.id.btn_delete_all)
-    Button deleteAllEntries;
+    TextView deleteAllEntries;
     @BindView(R.id.hyperglycemic_edit_text)
     EditText hyperglycemicEditText;
     @BindView(R.id.hypoglycemic_edit_text)
@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.setting_toolbar)
     Toolbar settingsToolbar;
     @BindView(R.id.donate_button)
-    Button donate;
+    TextView donate;
     private Realm realm;
 
     @Override
