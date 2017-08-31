@@ -173,6 +173,7 @@ public class NewEntryActivity extends AppCompatActivity {
                 }, 700);
             }
         });
+
         lunch.setOnClickListener(new View.OnClickListener()
 
         {
@@ -191,6 +192,7 @@ public class NewEntryActivity extends AppCompatActivity {
                 }, 700);
             }
         });
+
         dinner.setOnClickListener(new View.OnClickListener()
 
         {
@@ -209,6 +211,7 @@ public class NewEntryActivity extends AppCompatActivity {
                 }, 700);
             }
         });
+
         sick.setOnClickListener(new View.OnClickListener()
 
         {
@@ -227,6 +230,7 @@ public class NewEntryActivity extends AppCompatActivity {
                 }, 700);
             }
         });
+
         exercise.setOnClickListener(new View.OnClickListener()
 
         {
@@ -245,6 +249,7 @@ public class NewEntryActivity extends AppCompatActivity {
                 }, 700);
             }
         });
+
         sweets.setOnClickListener(new View.OnClickListener()
 
         {

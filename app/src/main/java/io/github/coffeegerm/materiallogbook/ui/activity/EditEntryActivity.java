@@ -3,17 +3,21 @@ package io.github.coffeegerm.materiallogbook.ui.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,6 +73,8 @@ public class EditEntryActivity extends AppCompatActivity {
     @BindView(R.id.sweets_status)
     ImageButton sweets;
     Date itemDate;
+    Handler handler;
+    int status;
     private Realm realm;
     private String itemIdString;
     private EntryItem item;
@@ -141,6 +147,118 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
+        breakfast.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View view) {
+                status = 1;
+                Log.i(TAG, "status: " + status);
+                setStatus(status);
+                final Toast toast = Toast.makeText(getApplicationContext(), "Breakfast", Toast.LENGTH_SHORT);
+                toast.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 700);
+            }
+        });
+
+        lunch.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View view) {
+                status = 2;
+                Log.i(TAG, "status: " + status);
+                setStatus(status);
+                final Toast toast = Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT);
+                toast.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 700);
+            }
+        });
+
+        dinner.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View view) {
+                status = 3;
+                Log.i(TAG, "status: " + status);
+                setStatus(status);
+                final Toast toast = Toast.makeText(getApplicationContext(), "Dinner", Toast.LENGTH_SHORT);
+                toast.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 700);
+            }
+        });
+
+        sick.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View view) {
+                status = 4;
+                Log.i(TAG, "status: " + status);
+                setStatus(status);
+                final Toast toast = Toast.makeText(getApplicationContext(), "Sick", Toast.LENGTH_SHORT);
+                toast.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 700);
+            }
+        });
+
+        exercise.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View view) {
+                status = 5;
+                Log.i(TAG, "status: " + status);
+                setStatus(status);
+                final Toast toast = Toast.makeText(getApplicationContext(), "Exercise", Toast.LENGTH_SHORT);
+                toast.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 700);
+            }
+        });
+
+        sweets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                status = 6;
+                Log.i(TAG, "status: " + status);
+                setStatus(status);
+                final Toast toast = Toast.makeText(getApplicationContext(), "Sweets", Toast.LENGTH_SHORT);
+                toast.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast.cancel();
+                    }
+                }, 700);
+            }
+        });
+
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,15 +292,73 @@ public class EditEntryActivity extends AppCompatActivity {
         if (item.getInsulin() != 0.0)
             insulin.setHint(String.valueOf(item.getInsulin()));
         else insulin.setHint(R.string.dash);
+        setStatus(item.getStatus());
+    }
+
+    private void setStatus(int status) {
+        Drawable status_checked = getResources().getDrawable(R.drawable.status_checked);
+        Drawable status_unchecked = getResources().getDrawable(R.drawable.status_unchecked);
+        switch (status) {
+            case 1:
+                breakfast.setBackground(status_checked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 2:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_checked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 3:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_checked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 4:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_checked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 5:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_checked);
+                sweets.setBackground(status_unchecked);
+                break;
+            case 6:
+                breakfast.setBackground(status_unchecked);
+                lunch.setBackground(status_unchecked);
+                dinner.setBackground(status_unchecked);
+                sick.setBackground(status_unchecked);
+                exercise.setBackground(status_unchecked);
+                sweets.setBackground(status_checked);
+                break;
+            default:
+                break;
+        }
+    }
+
+    StringBuilder dateFix(int month, int day, int year) {
+        return new StringBuilder().append(month).append("/").append(day).append("/").append(year);
     }
 
     private void updateEntry() {
         // TODO: 8/27/2017 Check if anything the user put is different and update as needed.
         finish();
-    }
-
-    StringBuilder dateFix(int month, int day, int year) {
-        return new StringBuilder().append(month).append("/").append(day).append("/").append(year);
     }
 
     @Override

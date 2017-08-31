@@ -250,6 +250,35 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/linearView"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/delete_single_entry"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/delete"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/linearView"
         style="?attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
