@@ -2,20 +2,25 @@ package io.github.coffeegerm.materiallogbook.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -60,6 +65,8 @@ public class EditEntryActivity extends AppCompatActivity {
     EditText carbohydrates;
     @BindView(R.id.new_entry_insulin_units)
     EditText insulin;
+    @BindView(R.id.delete_entry)
+    TextView deleteEntry;
     @BindView(R.id.breakfast_status)
     ImageButton breakfast;
     @BindView(R.id.lunch_status)
@@ -84,7 +91,7 @@ public class EditEntryActivity extends AppCompatActivity {
     Date updatedDate;
     int updatedBloodGlucose;
     int updatedCarbohydrates;
-    int updatedInsulin;
+    double updatedInsulin;
     private Calendar originalCalendar;
     private Calendar updatedCalendar;
     private Realm realm;
@@ -153,6 +160,60 @@ public class EditEntryActivity extends AppCompatActivity {
                         originalCalendar.get(Calendar.MINUTE), // current minute
                         false); //no 24 hour view
                 timePickerDialog.show();
+            }
+        });
+
+        bloodGlucose.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                updatedBloodGlucose = Integer.parseInt(editable.toString());
+                Log.i(TAG, "afterTextChanged bloodGlucose: " + editable);
+            }
+        });
+
+        carbohydrates.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                updatedCarbohydrates = Integer.parseInt(editable.toString());
+                Log.i(TAG, "afterTextChanged carbohydrates: " + editable);
+            }
+        });
+
+        insulin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                updatedInsulin = Double.parseDouble(editable.toString());
+                Log.i(TAG, "afterTextChanged insulin: " + editable);
             }
         });
 
@@ -268,6 +329,40 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
+        deleteEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder builder;
+
+                // Sets theme based on VERSION_CODE
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    builder = new AlertDialog.Builder(EditEntryActivity.this, android.R.style.Theme_Material_Dialog_NoActionBar);
+                else builder = new AlertDialog.Builder(EditEntryActivity.this);
+
+                builder.setTitle("Delete this entry?")
+                        .setMessage("Are you sure you want to delete this entry?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                realm.executeTransaction(new Realm.Transaction() {
+                                    @Override
+                                    public void execute(Realm realm) {
+                                        item.deleteFromRealm();
+                                        finish();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(R.drawable.ic_trash)
+                        .show();
+            }
+        });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

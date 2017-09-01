@@ -269,6 +269,7 @@
             android:layout_weight="1" />
 
         <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+            android:id="@+id/delete_entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
