@@ -19,15 +19,14 @@
         app:menu="@menu/activity_main_drawer"
         app:theme="@style/AppTheme.Drawer">
 
-        <Button
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
             android:id="@+id/invoke_instabug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/feedback_button"
+            android:layout_marginBottom="8dp"
             android:text="@string/feedback"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
     </android.support.design.widget.NavigationView>
 
