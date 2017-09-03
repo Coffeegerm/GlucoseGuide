@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,9 +52,23 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
     @Override
     public void onBindViewHolder(holder holder, int position) {
         EntryItem item = entryItemList.get(position);
-        String formattedDate = dateFormat.format(item.getDate());
+        Calendar today = Calendar.getInstance();
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DATE, -1);
+        Calendar itemCalendar = Calendar.getInstance();
+        itemCalendar.setTime(item.getDate());
+        int itemDay = itemCalendar.get(Calendar.DAY_OF_MONTH);
+        int yesterdayDay = yesterday.get(Calendar.DAY_OF_MONTH);
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
+        if (itemDay == todayDay) {
+            holder.date.setText(R.string.today);
+        } else if (itemDay == yesterdayDay) {
+            holder.date.setText(R.string.yesterday);
+        } else {
+            String formattedDate = dateFormat.format(item.getDate());
+            holder.date.setText(formattedDate);
+        }
         String formattedTime = timeFormat.format(item.getDate());
-        holder.date.setText(formattedDate);
         holder.time.setText(formattedTime);
         holder.bloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
     }
@@ -64,7 +79,7 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
     }
 
     class holder extends RecyclerView.ViewHolder {
-        @BindView(R.id.graph_item_date_tv)
+        @BindView(R.id.graph_item_header_date)
         TextView date;
         @BindView(R.id.graph_item_glucose_level_tv)
         TextView bloodGlucose;

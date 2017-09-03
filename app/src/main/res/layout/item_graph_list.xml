@@ -5,30 +5,23 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <include layout="@layout/item_graph_header" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <LinearLayout
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/graph_item_date_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
                 android:id="@+id/graph_item_time_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
                 android:textSize="20sp"/>
@@ -40,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
                 android:id="@+id/graph_item_glucose_level_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +41,8 @@
                 android:layout_marginEnd="60dp"
                 android:textSize="22sp"/>
 
-            <TextView
+            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+                android:id="@+id/graph_item_glucose_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/graph_item_glucose_level_tv"
@@ -62,12 +56,5 @@
 
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@color/colorPrimary"/>
 
 </LinearLayout>

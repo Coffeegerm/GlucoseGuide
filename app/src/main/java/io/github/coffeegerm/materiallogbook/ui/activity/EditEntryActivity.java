@@ -339,8 +339,8 @@ public class EditEntryActivity extends AppCompatActivity {
                     builder = new AlertDialog.Builder(EditEntryActivity.this, android.R.style.Theme_Material_Dialog_NoActionBar);
                 else builder = new AlertDialog.Builder(EditEntryActivity.this);
 
-                builder.setTitle("Delete this entry?")
-                        .setMessage("Are you sure you want to delete this entry?")
+                builder.setTitle(R.string.delete_single_entry)
+                        .setMessage(R.string.delete_single_entry_message)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete
