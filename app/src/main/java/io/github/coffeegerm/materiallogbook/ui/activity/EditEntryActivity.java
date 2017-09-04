@@ -217,9 +217,7 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
-        breakfast.setOnClickListener(new View.OnClickListener()
-
-        {
+        breakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updatedStatus = 1;
@@ -236,9 +234,7 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
-        lunch.setOnClickListener(new View.OnClickListener()
-
-        {
+        lunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updatedStatus = 2;
@@ -255,9 +251,7 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
-        dinner.setOnClickListener(new View.OnClickListener()
-
-        {
+        dinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updatedStatus = 3;
@@ -274,9 +268,7 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
-        sick.setOnClickListener(new View.OnClickListener()
-
-        {
+        sick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updatedStatus = 4;
@@ -293,9 +285,7 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
-        exercise.setOnClickListener(new View.OnClickListener()
-
-        {
+        exercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updatedStatus = 5;
