@@ -12,6 +12,7 @@ If an error is apparent in the app, please feel free to make an issue and to let
 
 Patches are encouraged, and may be submitted by forking this project and submitting a pull request. 
 I aim to create a very open app for people to help make better.
+
 License
 =======
 Copyright 2017 David Yarzebinski
