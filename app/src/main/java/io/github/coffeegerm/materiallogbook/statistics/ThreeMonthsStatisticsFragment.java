@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.fragment;
+package io.github.coffeegerm.materiallogbook.statistics;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,20 +25,21 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.getHighestGlu
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGlucose;
 
 /**
- * Created by David Yarzebinski on 7/28/2017.
+ * Created by dyarz on 8/15/2017.
  * <p>
- * Fragment used with Statistics ViewPager to show
- * the last three days of statistics
+ * Three Month stats fragment to show users their data
+ * for that time
  */
 
-public class ThreeDayStatisticsFragment extends Fragment {
-    private static final String TAG = "ThreeDaysStatistics";
-
-    @BindView(R.id.three_days_average)
+public class ThreeMonthsStatisticsFragment extends Fragment {
+    private static final String TAG = "ThreeMonthsStatistics";
+    @BindView(R.id.a_one_c)
+    TextView a1c;
+    @BindView(R.id.average)
     TextView average;
-    @BindView(R.id.three_days_highest)
+    @BindView(R.id.highest)
     TextView highest;
-    @BindView(R.id.three_days_lowest)
+    @BindView(R.id.lowest)
     TextView lowest;
     @BindView(R.id.imgAvg)
     ImageView ivAvg;
@@ -46,56 +47,59 @@ public class ThreeDayStatisticsFragment extends Fragment {
     ImageView ivUpArrow;
     @BindView(R.id.imgDownArrow)
     ImageView ivDownArrow;
-
+    @BindView(R.id.ivA1C)
+    ImageView ivA1C;
     Realm realm;
-    String pageTitle;
-    int pageNumber;
 
-    public static ThreeDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
-        ThreeDayStatisticsFragment threeDayStatisticsFragment = new ThreeDayStatisticsFragment();
+    public static ThreeMonthsStatisticsFragment newInstance(int pageNumber, String pageTitle) {
+        ThreeMonthsStatisticsFragment threeMonthsStatisticsFragment = new ThreeMonthsStatisticsFragment();
         Bundle args = new Bundle();
         args.putInt("pageNumber", pageNumber);
         args.putString("pageTitle", pageTitle);
-        threeDayStatisticsFragment.setArguments(args);
-        return threeDayStatisticsFragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        pageTitle = getArguments().getString("pageTitle");
-        pageNumber = getArguments().getInt("pageNumber");
+        threeMonthsStatisticsFragment.setArguments(args);
+        return threeMonthsStatisticsFragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View threeDaysStatisticsView = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
-        ButterKnife.bind(this, threeDaysStatisticsView);
+        View threeMonths = inflater.inflate(R.layout.fragment_three_months_statistics, container, false);
+        ButterKnife.bind(this, threeMonths);
         realm = Realm.getDefaultInstance();
-        setValues();
         setImages();
-        return threeDaysStatisticsView;
+        setValues();
+        return threeMonths;
     }
 
     private void setValues() {
-        Date threeDaysAgo = getDateThreeDaysAgo();
-        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        if (entriesFromLastThreeDays.size() == 0) {
+        Date threeMonthsAgo = getThreeMonthsAgo();
+        RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", threeMonthsAgo).greaterThan("bloodGlucose", 0).findAll();
+        if (entriesFromLastThreeMonths.size() == 0) {
             average.setText(R.string.dash);
             highest.setText(R.string.dash);
             lowest.setText(R.string.dash);
         } else {
-            average.setText(String.valueOf(getAverageGlucose(threeDaysAgo)));
-            highest.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
-            lowest.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
+            average.setText(String.valueOf(getAverageGlucose(threeMonthsAgo)));
+            highest.setText(String.valueOf(getHighestGlucose(threeMonthsAgo)));
+            lowest.setText(String.valueOf(getLowestGlucose(threeMonthsAgo)));
+        }
+
+        if (entriesFromLastThreeMonths.size() < 300) {
+            a1c.setText(R.string.dash);
+        } else {
+            a1c.setText(String.valueOf(getA1C(getAverageGlucose(threeMonthsAgo))));
         }
     }
 
-    public Date getDateThreeDaysAgo() {
+    public Date getThreeMonthsAgo() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -3);
+        calendar.add(Calendar.DATE, -90);
         return calendar.getTime();
+    }
+
+    public double getA1C(int average) {
+        return (46.7 + average) / 28.7;
+        // A1c = (46.7 + average_blood_glucose) / 28.7
     }
 
     private void setImages() {
@@ -103,6 +107,7 @@ public class ThreeDayStatisticsFragment extends Fragment {
             ivAvg.setImageResource(R.drawable.ic_average_dark);
             ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
+            ivA1C.setImageResource(R.drawable.ic_a1c_dark);
         }
     }
 
@@ -111,4 +116,5 @@ public class ThreeDayStatisticsFragment extends Fragment {
         realm.close();
         super.onDestroy();
     }
+
 }

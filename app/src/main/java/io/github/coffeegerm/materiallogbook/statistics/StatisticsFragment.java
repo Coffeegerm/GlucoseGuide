@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.fragment;
+package io.github.coffeegerm.materiallogbook.statistics;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.adapter.StatisticsPagerAdapter;
 
 /**
  * Created by David Yarzebinski on 7/28/2017.

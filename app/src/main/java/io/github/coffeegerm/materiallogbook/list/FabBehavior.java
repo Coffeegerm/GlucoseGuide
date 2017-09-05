@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.utils;
+package io.github.coffeegerm.materiallogbook.list;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;

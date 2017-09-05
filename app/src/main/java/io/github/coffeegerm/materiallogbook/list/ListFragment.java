@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.fragment;
+package io.github.coffeegerm.materiallogbook.list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,10 +21,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.adapter.ListAdapter;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.ui.activity.NewEntryActivity;
-import io.github.coffeegerm.materiallogbook.utils.FabBehavior;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;

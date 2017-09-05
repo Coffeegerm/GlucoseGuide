@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.adapter;
+package io.github.coffeegerm.materiallogbook.rss;
 
 import android.content.Context;
 import android.content.DialogInterface;

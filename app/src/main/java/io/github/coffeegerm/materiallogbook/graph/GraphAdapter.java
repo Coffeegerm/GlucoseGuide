@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.adapter;
+package io.github.coffeegerm.materiallogbook.graph;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

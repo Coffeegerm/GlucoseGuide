@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.utils;
+package io.github.coffeegerm.materiallogbook.graph;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;

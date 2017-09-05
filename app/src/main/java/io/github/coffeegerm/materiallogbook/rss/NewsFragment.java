@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.fragment;
+package io.github.coffeegerm.materiallogbook.rss;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.adapter.RssAdapter;
 
 /*
 * News Fragment

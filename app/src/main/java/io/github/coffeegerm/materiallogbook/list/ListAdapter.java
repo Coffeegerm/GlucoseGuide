@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.adapter;
+package io.github.coffeegerm.materiallogbook.list;
 
 import android.content.Context;
 import android.content.Intent;
