@@ -221,7 +221,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updatedStatus = 1;
-                Log.i(TAG, "status: " + updatedStatus);
                 setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Breakfast", Toast.LENGTH_SHORT);
                 toast.show();
