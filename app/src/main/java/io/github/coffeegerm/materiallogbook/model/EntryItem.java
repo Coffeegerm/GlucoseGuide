@@ -23,12 +23,13 @@ import io.realm.RealmObject;
  */
 
 public class EntryItem extends RealmObject {
+    private String id;
+    private int status;
     private Date date;
     private int bloodGlucose;
     private int carbohydrates;
     private double insulin;
-    private String id;
-    private int status;
+
 
     public EntryItem() {
         this.id = UUID.randomUUID().toString();
