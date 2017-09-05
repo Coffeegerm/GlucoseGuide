@@ -460,7 +460,29 @@ public class EditEntryActivity extends AppCompatActivity {
     }
 
     private void updateEntry() {
-        // TODO: 8/27/2017 Check if anything the user put is different and update as needed.
+        Date dateToSave = new Date();
+        realm.beginTransaction();
+        item.deleteFromRealm();
+        EntryItem itemToSave = new EntryItem();
+        itemToSave.setStatus(updatedStatus);
+        if (updatedCalendar.getTimeInMillis() != originalCalendar.getTimeInMillis()) {
+            dateToSave.setTime(updatedCalendar.getTimeInMillis());
+            itemToSave.setDate(dateToSave);
+        } else {
+            dateToSave.setTime(originalCalendar.getTimeInMillis());
+            itemToSave.setDate(dateToSave);
+        }
+        if (!bloodGlucose.getText().toString().equals("")) {
+            itemToSave.setBloodGlucose(Integer.parseInt(bloodGlucose.getText().toString()));
+        }
+        if (!carbohydrates.getText().toString().equals("")) {
+            itemToSave.setCarbohydrates(Integer.parseInt(carbohydrates.getText().toString()));
+        }
+        if (!insulin.getText().toString().equals("")) {
+            itemToSave.setInsulin(Double.parseDouble(insulin.getText().toString()));
+        }
+        realm.copyToRealm(itemToSave);
+        realm.commitTransaction();
         finish();
     }
 
