@@ -43,8 +43,6 @@ public class SettingsActivity extends AppCompatActivity {
     Switch toggleDarkMode;
     @BindView(R.id.setting_toolbar)
     Toolbar settingsToolbar;
-    @BindView(R.id.donate_button)
-    TextView donate;
     private Realm realm;
 
     @Override

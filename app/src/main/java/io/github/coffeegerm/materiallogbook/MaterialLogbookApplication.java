@@ -17,6 +17,7 @@ public class MaterialLogbookApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // Build instabug for reporting bugs.
         new Instabug.Builder(this, "0d278e5f5680024d7c487884873c0509")
                 .setInvocationEvent(InstabugInvocationEvent.NONE)
                 .setShouldShowIntroDialog(false)

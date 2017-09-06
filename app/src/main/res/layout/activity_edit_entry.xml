@@ -123,6 +123,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:focusable="false"
+                android:gravity="end"
                 android:hint="@string/date"
                 android:inputType="date"
                 android:textSize="16sp" />
@@ -135,6 +136,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:focusable="false"
+                android:gravity="end"
                 android:hint="@string/time"
                 android:inputType="datetime"
                 android:textSize="16sp" />

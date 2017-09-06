@@ -122,6 +122,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:focusable="false"
+                android:gravity="end"
                 android:hint="@string/date"
                 android:inputType="date"
                 android:textSize="16sp" />
@@ -134,6 +135,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:focusable="false"
+                android:gravity="end"
                 android:hint="@string/time"
                 android:inputType="datetime"
                 android:textSize="16sp" />
@@ -249,9 +251,40 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonBar"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            android:id="@+id/reminder_tv"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/reminder" />
+
+        <EditText
+            android:id="@+id/reminder_alarm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:gravity="end"
+            android:hint="@string/alarm_reminder"
+            android:inputType="datetime"
+            android:labelFor="@id/reminder_tv" />
+
+    </LinearLayout>
+
 
     <LinearLayout
-        android:id="@+id/linearView"
+        android:id="@+id/buttonBar"
         style="?attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

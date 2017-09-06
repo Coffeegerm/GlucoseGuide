@@ -76,10 +76,14 @@ public class NewEntryActivity extends AppCompatActivity {
     ImageButton exercise;
     @BindView(R.id.sweets_status)
     ImageButton sweets;
+    @BindView(R.id.reminder_alarm)
+    EditText reminder;
     Handler handler;
+    String alarmDateTime = "";
     private Realm realm;
     private Calendar calendarToBeSaved;
     private Calendar calendar;
+    private Calendar alarmCalendar;
     private int status = 0;
 
     @Override
@@ -269,6 +273,13 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
+        reminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alarmTimePicker();
+            }
+        });
+
         cancelBtn.setOnClickListener(new View.OnClickListener()
 
         {
@@ -283,6 +294,7 @@ public class NewEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveEntry();
+                Log.i(TAG, "time chosen for notification " + reminder.getText().toString());
             }
         });
     }
@@ -396,6 +408,31 @@ public class NewEntryActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    private void alarmTimePicker() {
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        alarmCalendar = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        alarmCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        alarmCalendar.set(Calendar.MINUTE, minute);
+                        reminder.setText(checkTimeString(hourOfDay, minute));
+                    }
+                }, hour, minute, false);
+        timePickerDialog.show();
+    }
+
+    private void createReminder() {
+
+    }
+
 
     @Override
     public void onDestroy() {

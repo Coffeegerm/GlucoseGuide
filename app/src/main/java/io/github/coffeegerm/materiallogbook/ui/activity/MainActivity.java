@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
-        realmSetup();
+        initRealm();
         setDrawerLayout();
         fragmentManager = getSupportFragmentManager();
         if (isCreated && !isResumed)
@@ -173,14 +173,14 @@ public class MainActivity extends AppCompatActivity
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
         else
-            new AlertDialog.Builder(this).setTitle("Close Material Logbook?")
-                    .setMessage("Do you really want to close Material Logbook?")
-                    .setPositiveButton("Get me out of here!", new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(this).setTitle(R.string.close_app)
+                    .setMessage(R.string.close_confirmation)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
                         }
-                    }).setNegativeButton("No", null).show();
+                    }).setNegativeButton(R.string.no, null).show();
     }
 
     @Override
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void realmSetup() {
+    private void initRealm() {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
