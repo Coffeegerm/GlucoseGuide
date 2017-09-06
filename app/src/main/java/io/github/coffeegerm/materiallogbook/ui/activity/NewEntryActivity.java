@@ -1,7 +1,12 @@
 package io.github.coffeegerm.materiallogbook.ui.activity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -27,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
 import io.realm.Realm;
 
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
@@ -294,7 +300,6 @@ public class NewEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveEntry();
-                Log.i(TAG, "time chosen for notification " + reminder.getText().toString());
             }
         });
     }
@@ -324,6 +329,7 @@ public class NewEntryActivity extends AppCompatActivity {
                     }
                 }
             });
+            createReminder(getNotification());
             // After save returns to MainActivity ListFragment
             finish();
         }
@@ -429,8 +435,21 @@ public class NewEntryActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    private void createReminder() {
+    private void createReminder(Notification notification) {
+        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
+    }
 
+    private Notification getNotification() {
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("Material Logbook");
+        builder.setContentText("Time to check your sugar!");
+        builder.setSmallIcon(R.drawable.ic_launcher);
+        return builder.build();
     }
 
 
