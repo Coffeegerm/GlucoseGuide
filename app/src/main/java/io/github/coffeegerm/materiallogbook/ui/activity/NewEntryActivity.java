@@ -13,6 +13,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -440,15 +442,23 @@ public class NewEntryActivity extends AppCompatActivity {
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int delay = 5000;
+        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+//        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        manager.notify(1, notification);
+        Log.i(TAG, "createReminder: notification sent");
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }
 
     private Notification getNotification() {
-        Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Material Logbook");
+        String channelId = "channel-id";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId);
+        builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText("Time to check your sugar!");
-        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setTicker(getString(R.string.app_name));
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        Log.i(TAG, "getNotification: notification built");
         return builder.build();
     }
 

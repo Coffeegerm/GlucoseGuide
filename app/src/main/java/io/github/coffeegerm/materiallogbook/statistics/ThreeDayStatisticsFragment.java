@@ -3,12 +3,17 @@ package io.github.coffeegerm.materiallogbook.statistics;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -46,10 +51,15 @@ public class ThreeDayStatisticsFragment extends Fragment {
     ImageView ivUpArrow;
     @BindView(R.id.imgDownArrow)
     ImageView ivDownArrow;
+    @BindView(R.id.pieChart)
+    PieChart pieChart;
 
     Realm realm;
     String pageTitle;
     int pageNumber;
+
+    int hyperglycemicIndex;
+    int hypoglycemicIndex;
 
     public static ThreeDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
         ThreeDayStatisticsFragment threeDayStatisticsFragment = new ThreeDayStatisticsFragment();
@@ -75,20 +85,22 @@ public class ThreeDayStatisticsFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setValues();
         setImages();
+        hyperglycemicIndex = MainActivity.sharedPreferences.getInt("hyperglycemicIndex", 0);
+        Log.i(TAG, "hyperglycemicIndex: " + hyperglycemicIndex);
+        hypoglycemicIndex = MainActivity.sharedPreferences.getInt("hypoglycemicIndex", 0);
+        Log.i(TAG, "hypoglycemicIndex: " + hypoglycemicIndex);
         return threeDaysStatisticsView;
     }
 
     private void setValues() {
-        Date threeDaysAgo = getDateThreeDaysAgo();
-        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        if (entriesFromLastThreeDays.size() == 0) {
+        if (getValues().size() == 0) {
             average.setText(R.string.dash);
             highest.setText(R.string.dash);
             lowest.setText(R.string.dash);
         } else {
-            average.setText(String.valueOf(getAverageGlucose(threeDaysAgo)));
-            highest.setText(String.valueOf(getHighestGlucose(threeDaysAgo)));
-            lowest.setText(String.valueOf(getLowestGlucose(threeDaysAgo)));
+            average.setText(String.valueOf(getAverageGlucose(getDateThreeDaysAgo())));
+            highest.setText(String.valueOf(getHighestGlucose(getDateThreeDaysAgo())));
+            lowest.setText(String.valueOf(getLowestGlucose(getDateThreeDaysAgo())));
         }
     }
 
@@ -98,12 +110,40 @@ public class ThreeDayStatisticsFragment extends Fragment {
         return calendar.getTime();
     }
 
+    private RealmResults<EntryItem> getValues() {
+        return realm.where(EntryItem.class).greaterThan("date", getDateThreeDaysAgo()).greaterThan("bloodGlucose", 0).findAll();
+    }
+
     private void setImages() {
         if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
             ivAvg.setImageResource(R.drawable.ic_average_dark);
             ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
         }
+    }
+
+    private void initPieChart() {
+        float hyperglycemicCount = 0;
+        float hypoglycemicCount = 0;
+        float withinRangeCount = 0;
+
+        ArrayList<Entry> pieEntries = new ArrayList<>();
+        ArrayList<EntryItem> data = new ArrayList<>(getValues());
+        for (int positionInList = 0; positionInList < data.size(); positionInList++) {
+            EntryItem currentItem = data.get(positionInList);
+            if (currentItem.getBloodGlucose() > hyperglycemicIndex) {
+                hyperglycemicCount++;
+            } else if (currentItem.getBloodGlucose() <= hyperglycemicIndex && currentItem.getBloodGlucose() >= hypoglycemicIndex) {
+                withinRangeCount++;
+            } else {
+                hypoglycemicCount++;
+            }
+        }
+
+        ArrayList<Entry> yvalues = new ArrayList<>();
+        yvalues.add(new Entry(hyperglycemicCount, 0));
+        yvalues.add(new Entry(withinRangeCount, 1));
+        yvalues.add(new Entry(hypoglycemicCount, 3));
     }
 
     @Override

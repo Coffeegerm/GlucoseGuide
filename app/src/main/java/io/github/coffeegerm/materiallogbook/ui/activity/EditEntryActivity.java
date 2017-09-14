@@ -47,8 +47,8 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeStri
 
 public class EditEntryActivity extends AppCompatActivity {
 
+    public static final String ITEM_ID = "itemId";
     private static final String TAG = "EditEntryActivity";
-    static String itemId = "itemId";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.cancel)
@@ -112,7 +112,7 @@ public class EditEntryActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(R.string.edit_entry_toolbar);
         realm = Realm.getDefaultInstance();
-        itemIdString = getIntent().getStringExtra(itemId);
+        itemIdString = getIntent().getStringExtra(ITEM_ID);
         item = getItem();
         updatedCalendar = Calendar.getInstance();
         getOriginalValues(); // must call before hints are set
