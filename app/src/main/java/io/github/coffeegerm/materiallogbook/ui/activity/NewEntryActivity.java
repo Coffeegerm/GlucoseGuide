@@ -93,6 +93,7 @@ public class NewEntryActivity extends AppCompatActivity {
     private Calendar calendar;
     private Calendar alarmCalendar;
     private int status = 0;
+    private boolean wantsReminder = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -331,7 +332,8 @@ public class NewEntryActivity extends AppCompatActivity {
                     }
                 }
             });
-            createReminder(getNotification());
+            // If the user chooses to have a reminder at certain time.
+            if (wantsReminder) createReminder(getNotification());
             // After save returns to MainActivity ListFragment
             finish();
         }
@@ -432,6 +434,7 @@ public class NewEntryActivity extends AppCompatActivity {
                         alarmCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         alarmCalendar.set(Calendar.MINUTE, minute);
                         reminder.setText(checkTimeString(hourOfDay, minute));
+                        wantsReminder = true;
                     }
                 }, hour, minute, false);
         timePickerDialog.show();
@@ -457,7 +460,9 @@ public class NewEntryActivity extends AppCompatActivity {
         builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText("Time to check your sugar!");
         builder.setTicker(getString(R.string.app_name));
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setDefaults(Notification.DEFAULT_ALL);
+        builder.setAutoCancel(false);
         Log.i(TAG, "getNotification: notification built");
         return builder.build();
     }
