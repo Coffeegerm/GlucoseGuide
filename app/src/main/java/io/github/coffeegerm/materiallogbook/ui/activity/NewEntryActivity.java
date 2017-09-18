@@ -453,8 +453,7 @@ public class NewEntryActivity extends AppCompatActivity {
 
     private Notification getNotification() {
         String channelId = getString(R.string.app_name);
-        Intent newEntryActivityIntent = new Intent(this, NewEntryActivity.class);
-        PendingIntent newEntryActivityPendingIntent = PendingIntent.getActivity(this, 0, newEntryActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent newEntryActivityPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, NewEntryActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId);
         builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText(getString(R.string.reminder_content));
