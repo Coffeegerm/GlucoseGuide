@@ -445,25 +445,25 @@ public class NewEntryActivity extends AppCompatActivity {
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        int delay = 5000;
+        long delay = alarmCalendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
         long futureInMillis = SystemClock.elapsedRealtime() + delay;
-//        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        manager.notify(1, notification);
-        Log.i(TAG, "createReminder: notification sent");
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }
 
     private Notification getNotification() {
-        String channelId = "channel-id";
+        String channelId = getString(R.string.app_name);
+        Intent newEntryActivityIntent = new Intent(this, NewEntryActivity.class);
+        PendingIntent newEntryActivityPendingIntent = PendingIntent.getActivity(this, 0, newEntryActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId);
         builder.setContentTitle(getString(R.string.app_name));
-        builder.setContentText("Time to check your sugar!");
+        builder.setContentText(getString(R.string.reminder_content));
         builder.setTicker(getString(R.string.app_name));
-        builder.setSmallIcon(R.drawable.ic_launcher);
-        builder.setDefaults(Notification.DEFAULT_ALL);
-        builder.setAutoCancel(false);
-        Log.i(TAG, "getNotification: notification built");
+        builder.setSmallIcon(R.drawable.notebook_notification_white);
+        builder.setDefaults(Notification.DEFAULT_SOUND);
+        builder.setAutoCancel(true);
+        builder.setContentIntent(newEntryActivityPendingIntent);
+        Log.i(TAG, "notification built");
         return builder.build();
     }
 

@@ -33,6 +33,7 @@
     <string name="delete_single_entry_message">Are you sure you want to delete this entry?</string>
     <string name="reminder">Want us to remind you to check your sugar?</string>
     <string name="alarm_reminder">Reminder Time</string>
+    <string name="reminder_content">Time to check your sugar!</string>
 
     <!-- Image Descriptions for NewEntryActivity and EditEntryActivity -->
     <string name="breakfast_description">Breakfast</string>

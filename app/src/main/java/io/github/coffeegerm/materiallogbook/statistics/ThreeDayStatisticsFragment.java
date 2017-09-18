@@ -10,10 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -51,8 +47,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
     ImageView ivUpArrow;
     @BindView(R.id.imgDownArrow)
     ImageView ivDownArrow;
-    @BindView(R.id.pieChart)
-    PieChart pieChart;
 
     Realm realm;
     String pageTitle;
@@ -120,30 +114,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
             ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
         }
-    }
-
-    private void initPieChart() {
-        float hyperglycemicCount = 0;
-        float hypoglycemicCount = 0;
-        float withinRangeCount = 0;
-
-        ArrayList<Entry> pieEntries = new ArrayList<>();
-        ArrayList<EntryItem> data = new ArrayList<>(getValues());
-        for (int positionInList = 0; positionInList < data.size(); positionInList++) {
-            EntryItem currentItem = data.get(positionInList);
-            if (currentItem.getBloodGlucose() > hyperglycemicIndex) {
-                hyperglycemicCount++;
-            } else if (currentItem.getBloodGlucose() <= hyperglycemicIndex && currentItem.getBloodGlucose() >= hypoglycemicIndex) {
-                withinRangeCount++;
-            } else {
-                hypoglycemicCount++;
-            }
-        }
-
-        ArrayList<Entry> yvalues = new ArrayList<>();
-        yvalues.add(new Entry(hyperglycemicCount, 0));
-        yvalues.add(new Entry(withinRangeCount, 1));
-        yvalues.add(new Entry(hypoglycemicCount, 3));
     }
 
     @Override
