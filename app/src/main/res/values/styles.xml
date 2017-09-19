@@ -28,7 +28,8 @@
         <item name="android:textColorSecondaryInverse">@color/textColorSecondary</item>
     </style>
 
-    <style name="AppTheme.Dark.Drawer">
+    <style name="AppTheme.Dark.Drawer">\
+        <item name="android:textSize">18sp</item>
         <item name="android:windowBackground">@color/darkThemeBackground</item>
     </style>
 

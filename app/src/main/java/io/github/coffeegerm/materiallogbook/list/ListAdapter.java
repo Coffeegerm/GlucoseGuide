@@ -3,7 +3,6 @@ package io.github.coffeegerm.materiallogbook.list;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +48,49 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_card_list, parent, false);
         return new viewHolder(view);
+    }
+
+    class viewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_date)
+        TextView date;
+        @BindView(R.id.tv_time)
+        TextView time;
+        @BindView(R.id.tv_blood_glucose)
+        TextView bloodGlucose;
+        @BindView(R.id.tv_insulin)
+        TextView insulin;
+        @BindView(R.id.tv_carbs)
+        TextView carbohydrates;
+        @BindView(R.id.imgInsulins)
+        ImageView ivInsulin;
+        @BindView(R.id.imgCarbs)
+        ImageView ivCarbs;
+        @BindView(R.id.imgFinger)
+        ImageView ivFinger;
+        @BindView(R.id.line1)
+        View line1;
+        @BindView(R.id.line2)
+        View line2;
+        private View view;
+
+        viewHolder(View itemView) {
+            super(itemView);
+            this.view = itemView;
+            ButterKnife.bind(this, itemView);
+
+            if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+                ivFinger.setImageResource(R.drawable.ic_finger_dark);
+                ivCarbs.setImageResource(R.drawable.ic_food_dark);
+                ivInsulin.setImageResource(R.drawable.ic_syringe_dark);
+                int white = context.getResources().getColor(R.color.white);
+                line1.setBackgroundColor(white);
+                line2.setBackgroundColor(white);
+            } else {
+                ivFinger.setImageResource(R.drawable.ic_finger);
+                ivCarbs.setImageResource(R.drawable.ic_food);
+                ivInsulin.setImageResource(R.drawable.ic_syringe);
+            }
+        }
     }
 
     @Override
@@ -97,9 +139,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             holder.insulin.setText(R.string.dash);
         else
             holder.insulin.setText(String.valueOf(item.getInsulin()));
-
-        String id = item.getId();
-        Log.i(TAG, "item id:" + id);
     }
 
     @Override
@@ -107,46 +146,5 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         return entryItems.size();
     }
 
-    class viewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_date)
-        TextView date;
-        @BindView(R.id.tv_time)
-        TextView time;
-        @BindView(R.id.tv_blood_glucose)
-        TextView bloodGlucose;
-        @BindView(R.id.tv_insulin)
-        TextView insulin;
-        @BindView(R.id.tv_carbs)
-        TextView carbohydrates;
-        @BindView(R.id.imgInsulins)
-        ImageView ivInsulin;
-        @BindView(R.id.imgCarbs)
-        ImageView ivCarbs;
-        @BindView(R.id.imgFinger)
-        ImageView ivFinger;
-        @BindView(R.id.line1)
-        View line1;
-        @BindView(R.id.line2)
-        View line2;
-        private View view;
 
-        viewHolder(View itemView) {
-            super(itemView);
-            this.view = itemView;
-            ButterKnife.bind(this, itemView);
-
-            if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
-                ivFinger.setImageResource(R.drawable.ic_finger_dark);
-                ivCarbs.setImageResource(R.drawable.ic_food_dark);
-                ivInsulin.setImageResource(R.drawable.ic_syringe_dark);
-                int white = context.getResources().getColor(R.color.white);
-                line1.setBackgroundColor(white);
-                line2.setBackgroundColor(white);
-            } else {
-                ivFinger.setImageResource(R.drawable.ic_finger);
-                ivCarbs.setImageResource(R.drawable.ic_food);
-                ivInsulin.setImageResource(R.drawable.ic_syringe);
-            }
-        }
-    }
 }
