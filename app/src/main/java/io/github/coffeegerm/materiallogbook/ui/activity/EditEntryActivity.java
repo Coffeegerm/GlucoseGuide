@@ -337,6 +337,7 @@ public class EditEntryActivity extends AppCompatActivity {
                                     @Override
                                     public void execute(Realm realm) {
                                         item.deleteFromRealm();
+                                        Toast.makeText(EditEntryActivity.this, R.string.entry_deleted, Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
                                 });

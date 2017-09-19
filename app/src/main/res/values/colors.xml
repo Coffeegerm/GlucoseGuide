@@ -19,7 +19,7 @@
     <!-- Dark theme -->
     <color name="darkThemeColorPrimary">#00877F</color>
     <color name="darkThemeColorPrimaryDark">#00655F</color>
-    <color name="darkThemeBackground">#7D7C84</color>
+    <color name="darkThemeBackground">#232224</color>
 
     <!-- Others -->
     <color name="black">#000</color>
