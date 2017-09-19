@@ -1,6 +1,7 @@
 package io.github.coffeegerm.materiallogbook.list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.activity.EditEntryActivity;
 import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 
 /**
@@ -50,7 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(viewHolder holder, int position) {
+    public void onBindViewHolder(viewHolder holder, final int position) {
         item = entryItems.get(position);
         String formattedDate = dateFormat.format(item.getDate());
         String formattedTime = timeFormat.format(item.getDate());
@@ -73,11 +75,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         holder.view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-//                Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
-//                editEntryActivity.putExtra(EditEntryActivity.ITEM_ID, item.getId());
-//                context.startActivity(editEntryActivity);
-                String itemId = "Item ID = " + item.getId();
-                Toast.makeText(context, itemId, Toast.LENGTH_SHORT).show();
+                Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
+                EntryItem selectedItem = entryItems.get(position);
+                editEntryActivity.putExtra(EditEntryActivity.ITEM_ID, selectedItem.getId());
+                context.startActivity(editEntryActivity);
                 return true;
             }
         });

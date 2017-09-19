@@ -47,7 +47,6 @@ public class NewsFragment extends Fragment {
         ButterKnife.bind(this, newsView);
         swipeRefreshSetup();
         loadNews();
-
         return newsView;
     }
 

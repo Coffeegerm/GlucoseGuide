@@ -78,6 +78,7 @@
     <string name="donate_para">Support the development of Material Logbook.</string>
     <string name="donate">Donate</string>
     <string name="support">Support Material Logbook</string>
+    <string name="all_deleted">All entries deleted</string>
 
     <!--Image descriptions -->
     <string name="blood_glucose_image">Blood Glucose Image</string>

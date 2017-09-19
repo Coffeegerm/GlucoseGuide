@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,6 +129,7 @@ public class SettingsActivity extends AppCompatActivity {
                                         realm.delete(EntryItem.class);
                                     }
                                 });
+                                Toast.makeText(SettingsActivity.this, R.string.all_deleted, Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
