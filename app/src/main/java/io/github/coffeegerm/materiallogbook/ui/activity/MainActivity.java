@@ -237,16 +237,17 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        // Navigation Drawer should be 80% of screen width when open
         DisplayMetrics displayMetrics = MainActivity.this.getResources().getDisplayMetrics();
         int fullWidth = displayMetrics.widthPixels;
         int navViewWidth = Math.round(0.8f * fullWidth);
         ViewGroup.LayoutParams sidebarParameters = navigationView.getLayoutParams();
         sidebarParameters.width = navViewWidth;
+
+        // Changes fonts within drawer layout
         Menu m = navigationView.getMenu();
         for (int i = 0; i < m.size(); i++) {
             MenuItem mi = m.getItem(i);
-
-            //for applying a font to subMenu ...
             SubMenu subMenu = mi.getSubMenu();
             if (subMenu != null && subMenu.size() > 0) {
                 for (int j = 0; j < subMenu.size(); j++) {
@@ -254,12 +255,11 @@ public class MainActivity extends AppCompatActivity
                     setMenuTypeface(subMenuItem);
                 }
             }
-
-            //the method we have create in activity
             setMenuTypeface(mi);
         }
     }
 
+    // Method used to set the typeface of items within menu
     private void setMenuTypeface(MenuItem menuItem) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Regular.otf");
         SpannableString newTitle = new SpannableString(menuItem.getTitle());
@@ -267,12 +267,15 @@ public class MainActivity extends AppCompatActivity
         menuItem.setTitle(newTitle);
     }
 
+    // Set grade in Navigation Menu
     private void setGlucoseGrade() {
         View header = navigationView.getHeaderView(0);
         TextView glucoseGrade = header.findViewById(R.id.navigation_view_grade);
         glucoseGrade.setText(getGlucoseGrade());
     }
 
+    // Calculates the glucose grade based on user
+    // sugar from last three days
     private String getGlucoseGrade() {
         String grade;
         int hyperglycemicCount = 0;
@@ -329,6 +332,5 @@ public class MainActivity extends AppCompatActivity
         }
         Log.i(TAG, "getGlucoseGrade - grade: " + grade);
         return grade;
-
     }
 }
