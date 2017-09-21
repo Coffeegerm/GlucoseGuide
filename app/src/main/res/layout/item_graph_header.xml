@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,12 +12,20 @@
     android:orientation="horizontal"
     android:padding="4dp">
 
-    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
-        android:id="@+id/graph_item_header_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:textSize="16sp" />
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+            android:id="@+id/graph_item_header_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/elevation" />
 
 </LinearLayout>
