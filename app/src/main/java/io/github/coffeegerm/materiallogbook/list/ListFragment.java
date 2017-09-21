@@ -1,5 +1,6 @@
 package io.github.coffeegerm.materiallogbook.list;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.ui.activity.NewEntryActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -51,6 +54,8 @@ public class ListFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
+        if (!MainActivity.sharedPreferences.getBoolean("firstListOpen", false))
+            fabAnimate();
         return listView;
     }
 
@@ -103,6 +108,15 @@ public class ListFragment extends Fragment {
                 startActivity(new Intent(getContext(), NewEntryActivity.class));
             }
         });
+    }
+
+    private void fabAnimate() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(fab, "translationY", 0f, -80f, 0f);
+        animator.setDuration(1500);
+        animator.setInterpolator(new BounceInterpolator());
+        animator.setRepeatCount(3);
+        animator.start();
+        MainActivity.sharedPreferences.edit().putBoolean("firstListOpen", true).apply();
     }
 
     private List<EntryItem> getDescendingList() {
