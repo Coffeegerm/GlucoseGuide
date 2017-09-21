@@ -63,11 +63,9 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.holder> {
         } else if (itemDay == yesterdayDay) {
             holder.date.setText(R.string.yesterday);
         } else {
-            String formattedDate = dateFormat.format(item.getDate());
-            holder.date.setText(formattedDate);
+            holder.date.setText(dateFormat.format(item.getDate()));
         }
-        String formattedTime = timeFormat.format(item.getDate());
-        holder.time.setText(formattedTime);
+        holder.time.setText(timeFormat.format(item.getDate()));
         holder.bloodGlucose.setText(String.valueOf(item.getBloodGlucose()));
     }
 
