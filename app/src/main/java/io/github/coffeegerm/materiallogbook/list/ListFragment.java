@@ -43,6 +43,7 @@ public class ListFragment extends Fragment {
     RecyclerView recView;
     private int SORT_ORDER = 0; // 0 = Descending, 1 = Ascending
     private Realm realm;
+    private static boolean hasShownAnimation = false;
 
     @Nullable
     @Override
@@ -53,7 +54,7 @@ public class ListFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
-        fabAnimate();
+        if (!hasShownAnimation) fabAnimate();
         return listView;
     }
 
@@ -112,6 +113,7 @@ public class ListFragment extends Fragment {
         Animation fab_wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.fab_wiggle);
         fab_wiggle.setRepeatCount(5);
         fab.startAnimation(fab_wiggle);
+        hasShownAnimation = true;
     }
 
     private List<EntryItem> getDescendingList() {

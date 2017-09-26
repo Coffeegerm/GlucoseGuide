@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<translate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="70"
-    android:fromYDelta="-15"
-    android:interpolator="@android:anim/linear_interpolator"
-    android:repeatCount="7"
-    android:repeatMode="reverse"
-    android:toYDelta="15" />
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false">
+    <translate
+        android:duration="150"
+        android:fromYDelta="-15"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:repeatCount="5"
+        android:repeatMode="restart"
+        android:toYDelta="15" />
+</set>
