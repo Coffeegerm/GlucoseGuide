@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.ui.activity.NewEntryActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -43,7 +44,6 @@ public class ListFragment extends Fragment {
     RecyclerView recView;
     private int SORT_ORDER = 0; // 0 = Descending, 1 = Ascending
     private Realm realm;
-    private static boolean hasShownAnimation = false;
 
     @Nullable
     @Override
@@ -54,7 +54,8 @@ public class ListFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
-        if (!hasShownAnimation) fabAnimate();
+        if (MainActivity.sharedPreferences.getBoolean(MainActivity.hasShownFabAnimation, false))
+            fabAnimate();
         return listView;
     }
 
@@ -112,7 +113,7 @@ public class ListFragment extends Fragment {
     private void fabAnimate() {
         Animation fab_wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.fab_wiggle);
         fab.startAnimation(fab_wiggle);
-        hasShownAnimation = true;
+        MainActivity.sharedPreferences.edit().putBoolean(MainActivity.hasShownFabAnimation, true).apply();
     }
 
     private List<EntryItem> getDescendingList() {

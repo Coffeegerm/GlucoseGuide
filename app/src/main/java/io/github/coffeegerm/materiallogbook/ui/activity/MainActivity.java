@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     public static SharedPreferences sharedPreferences;
+    public static String hasShownFabAnimation = "HAS_SHOWN_ANIMATION";
     public static boolean isResumed = false;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();
