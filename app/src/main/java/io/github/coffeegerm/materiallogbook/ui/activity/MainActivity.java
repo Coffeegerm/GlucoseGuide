@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     public static SharedPreferences sharedPreferences;
-    public static String hasShownFabAnimation = "HAS_SHOWN_ANIMATION";
+    public static String HAS_SHOWN_FAB_ANIMATION = "HAS_SHOWN_ANIMATION";
+    public static String PREF_DARK_MODE = "pref_dark_mode";
     public static boolean isResumed = false;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("pref_dark_mode", false)) setTheme(R.style.AppTheme_Dark);
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         isCreated = true;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         // lastSelectedTab = R.id.nav_list;
 
         int textColor;
-        if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
             // DARK MODE
             navigationView.getHeaderView(0).setBackground(getResources()
                     .getDrawable(R.drawable.header_dark));
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         isResumed = true;
-        if (sharedPreferences.getBoolean("pref_dark_mode", false))
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         else setTheme(R.style.AppTheme);
 

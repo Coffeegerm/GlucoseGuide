@@ -54,7 +54,7 @@ public class ListFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
-        if (MainActivity.sharedPreferences.getBoolean(MainActivity.hasShownFabAnimation, false))
+        if (MainActivity.sharedPreferences.getBoolean(MainActivity.HAS_SHOWN_FAB_ANIMATION, false))
             fabAnimate();
         return listView;
     }
@@ -113,7 +113,7 @@ public class ListFragment extends Fragment {
     private void fabAnimate() {
         Animation fab_wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.fab_wiggle);
         fab.startAnimation(fab_wiggle);
-        MainActivity.sharedPreferences.edit().putBoolean(MainActivity.hasShownFabAnimation, true).apply();
+        MainActivity.sharedPreferences.edit().putBoolean(MainActivity.HAS_SHOWN_FAB_ANIMATION, true).apply();
     }
 
     private List<EntryItem> getDescendingList() {

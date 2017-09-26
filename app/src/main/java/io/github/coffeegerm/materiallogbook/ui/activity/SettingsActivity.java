@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+        if (MainActivity.sharedPreferences.getBoolean(MainActivity.PREF_DARK_MODE, false)) {
             setTheme(R.style.AppTheme_Dark);
         }
         setContentView(R.layout.activity_settings);
@@ -63,12 +63,12 @@ public class SettingsActivity extends AppCompatActivity {
         checkRangeStatus();
         setHints();
 
-        toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false));
+        toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean(MainActivity.PREF_DARK_MODE, false));
 
         toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MainActivity.sharedPreferences.edit().putBoolean("pref_dark_mode", isChecked).apply();
+                MainActivity.sharedPreferences.edit().putBoolean(MainActivity.PREF_DARK_MODE, isChecked).apply();
                 recreate();
             }
         });
