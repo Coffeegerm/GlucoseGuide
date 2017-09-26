@@ -111,7 +111,6 @@ public class ListFragment extends Fragment {
 
     private void fabAnimate() {
         Animation fab_wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.fab_wiggle);
-        fab_wiggle.setRepeatCount(5);
         fab.startAnimation(fab_wiggle);
         hasShownAnimation = true;
     }
