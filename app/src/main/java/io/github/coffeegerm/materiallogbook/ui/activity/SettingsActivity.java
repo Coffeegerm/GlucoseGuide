@@ -32,8 +32,6 @@ import io.realm.Realm;
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsActivity";
-    private static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
-    private static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     @BindView(R.id.btn_delete_all)
     TextView deleteAllEntries;
     @BindView(R.id.hyperglycemic_edit_text)
@@ -87,7 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
                 if (!s.toString().equals(""))
                     MainActivity.sharedPreferences.edit()
-                            .putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
+                            .putInt(MainActivity.HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
             }
         });
 
@@ -104,7 +102,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
                 if (!s.toString().equals("")) MainActivity.sharedPreferences.edit()
-                        .putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
+                        .putInt(MainActivity.HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
             }
         });
 
@@ -145,20 +143,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void checkRangeStatus() {
-        int hyperglycemicIndex = MainActivity.sharedPreferences.getInt("hyperglycemicIndex", 0);
-        int hypoglycemicIndex = MainActivity.sharedPreferences.getInt("hypoglycemicIndex", 0);
+        int hyperglycemicIndex = MainActivity.sharedPreferences.getInt(MainActivity.HYPERGLYCEMIC_INDEX, 0);
+        int hypoglycemicIndex = MainActivity.sharedPreferences.getInt(MainActivity.HYPOGLYCEMIC_INDEX, 0);
         if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
-            MainActivity.sharedPreferences.edit().putInt("hypoglycemicIndex", 80).apply();
-            MainActivity.sharedPreferences.edit().putInt("hyperglycemicIndex", 140).apply();
+            MainActivity.sharedPreferences.edit().putInt(MainActivity.HYPOGLYCEMIC_INDEX, 80).apply();
+            MainActivity.sharedPreferences.edit().putInt(MainActivity.HYPERGLYCEMIC_INDEX, 140).apply();
         }
     }
 
     public void setHints() {
-        String hyperString = String.valueOf(MainActivity.sharedPreferences.getInt("hyperglycemicIndex", 0));
-        hyperglycemicEditText.setHint(hyperString);
-
-        String hypoString = String.valueOf(MainActivity.sharedPreferences.getInt("hypoglycemicIndex", 0));
-        hypoglycemicEditText.setHint(hypoString);
+        hyperglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.HYPERGLYCEMIC_INDEX, 0)));
+        hypoglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.HYPOGLYCEMIC_INDEX, 0)));
     }
 
     public void setupToolbar() {

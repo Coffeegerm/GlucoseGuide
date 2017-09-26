@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity
     public static SharedPreferences sharedPreferences;
     public static String HAS_SHOWN_FAB_ANIMATION = "HAS_SHOWN_ANIMATION";
     public static String PREF_DARK_MODE = "pref_dark_mode";
+    public static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
+    public static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     public static boolean isResumed = false;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();
