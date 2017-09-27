@@ -423,7 +423,7 @@ public class NewEntryActivity extends AppCompatActivity {
         // Get Current Time
         final Calendar c = Calendar.getInstance();
         alarmCalendar = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int hour = c.get(Calendar.HOUR_OF_DAY) + 2;
         int minute = c.get(Calendar.MINUTE);
 
         // Launch Time Picker Dialog
