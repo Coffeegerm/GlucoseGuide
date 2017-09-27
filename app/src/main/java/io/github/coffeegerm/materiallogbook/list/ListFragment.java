@@ -2,6 +2,7 @@ package io.github.coffeegerm.materiallogbook.list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -111,8 +112,13 @@ public class ListFragment extends Fragment {
     }
 
     private void fabAnimate() {
-        Animation fab_wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.fab_wiggle);
-        fab.startAnimation(fab_wiggle);
+        final Animation fab_wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.fab_wiggle);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fab.startAnimation(fab_wiggle);
+            }
+        }, 2000);
         MainActivity.sharedPreferences.edit().putBoolean(MainActivity.HAS_SHOWN_FAB_ANIMATION, true).apply();
     }
 
