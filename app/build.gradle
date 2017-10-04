@@ -30,5 +30,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.prof.rssparser:rssparser:1.0'
-    compile 'com.instabug.library:instabug:4.2.9'
+    compile 'com.instabug.library:instabug:4.3.0'
 }
