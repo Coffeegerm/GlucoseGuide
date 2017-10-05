@@ -42,7 +42,7 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeStri
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
- * Activity for a new Entry into the Database
+ * Activity used to create a new Entry added the Database
  */
 
 public class NewEntryActivity extends AppCompatActivity {
@@ -452,16 +452,16 @@ public class NewEntryActivity extends AppCompatActivity {
     }
 
     private Notification getNotification() {
-        String channelId = getString(R.string.app_name);
-        PendingIntent newEntryActivityPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, NewEntryActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId);
-        builder.setContentTitle(getString(R.string.app_name));
-        builder.setContentText(getString(R.string.reminder_content));
-        builder.setTicker(getString(R.string.app_name));
-        builder.setSmallIcon(R.drawable.notebook_notification_white);
-        builder.setDefaults(Notification.DEFAULT_SOUND);
-        builder.setAutoCancel(true);
-        builder.setContentIntent(newEntryActivityPendingIntent);
+        String channelId = "Reminders";
+        PendingIntent newEntryActivityPendingIntent = PendingIntent.getActivity(this, 1, new Intent(this, NewEntryActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.reminder_content))
+                .setTicker(getString(R.string.app_name))
+                .setSmallIcon(R.drawable.notebook_notification_white)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setAutoCancel(true)
+                .setContentIntent(newEntryActivityPendingIntent);
         Log.i(TAG, "notification built");
         return builder.build();
     }
