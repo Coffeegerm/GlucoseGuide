@@ -37,7 +37,6 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.graph.GraphFragment;
 import io.github.coffeegerm.materiallogbook.list.ListFragment;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.rss.NewsFragment;
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity
     public static boolean isResumed = false;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();
-    Fragment graphFragment = new GraphFragment();
     Fragment newsFragment = new NewsFragment();
     Fragment statsFragment = new StatisticsFragment();
     FragmentManager fragmentManager;
@@ -151,9 +149,6 @@ public class MainActivity extends AppCompatActivity
                 case R.id.nav_list:
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
                     break;
-                case R.id.nav_graph:
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, graphFragment).commit();
-                    break;
                 case R.id.nav_stats:
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, statsFragment).commit();
                     break;
@@ -194,12 +189,6 @@ public class MainActivity extends AppCompatActivity
                 // Swaps fragment to list fragment
                 fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
                 lastSelectedTab = R.id.nav_list;
-                break;
-
-            case R.id.nav_graph:
-                // Swaps fragment to graph fragment
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, graphFragment).commit();
-                lastSelectedTab = R.id.nav_graph;
                 break;
 
             case R.id.nav_stats:
