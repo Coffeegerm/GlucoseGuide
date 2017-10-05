@@ -108,6 +108,7 @@ public class EditEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_entry);
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
+        handler = new Handler();
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(R.string.edit_entry_toolbar);

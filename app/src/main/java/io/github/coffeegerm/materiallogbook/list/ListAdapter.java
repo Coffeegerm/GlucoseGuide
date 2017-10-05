@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -96,10 +97,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     @Override
     public void onBindViewHolder(viewHolder holder, final int position) {
         item = entryItems.get(position);
-        String formattedDate = dateFormat.format(item.getDate());
-        String formattedTime = timeFormat.format(item.getDate());
-        holder.date.setText(formattedDate);
-        holder.time.setText(formattedTime);
+        Calendar today = Calendar.getInstance();
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DATE, -1);
+        int yesterdayDay = yesterday.get(Calendar.DAY_OF_MONTH);
+        Calendar itemCalendar = Calendar.getInstance();
+        itemCalendar.setTime(item.getDate());
+        int itemDay = itemCalendar.get(Calendar.DAY_OF_MONTH);
+        if (itemDay == todayDay) holder.date.setText(R.string.today);
+        else if (itemDay == yesterdayDay) holder.date.setText(R.string.yesterday);
+        else {
+            holder.date.setText(dateFormat.format(item.getDate()));
+        }
+        holder.time.setText(timeFormat.format(item.getDate()));
         /*
         * Handle item clicks on List Fragment
         * Long click will start EditEntryActivity

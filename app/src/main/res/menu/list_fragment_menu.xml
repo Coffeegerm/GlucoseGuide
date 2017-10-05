@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/sort_list" android:orderInCategory="100" app:showAsAction="never"
-        android:title="@string/sort">
+    <item
+        android:id="@+id/sort_list"
+        android:orderInCategory="100"
+        android:title="@string/sort"
+        app:showAsAction="never">
         <menu>
-            <item android:id="@+id/list_sort_from_newest" android:title="@string/sort_from_newest"/>
-            <item android:id="@+id/list_sort_from_oldest" android:title="@string/sort_from_oldest"/>
+            <item
+                android:id="@+id/list_sort_from_newest"
+                android:title="@string/sort_from_newest" />
+            <item
+                android:id="@+id/list_sort_from_oldest"
+                android:title="@string/sort_from_oldest" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/status_selection"
+        android:orderInCategory="200"
+        android:title="@string/status"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/list_status_breakfast"
+                android:title="@string/show_breakfast_only" />
+            <item
+                android:id="@+id/list_status_lunch"
+                android:title="@string/show_lunch_only" />
+            <item
+                android:id="@+id/list_status_dinner"
+                android:title="@string/show_dinner_only" />
+            <item
+                android:id="@+id/list_status_sick"
+                android:title="@string/show_sick_only" />
+            <item
+                android:id="@+id/list_status_exercise"
+                android:title="@string/show_exercise_only" />
+            <item
+                android:id="@+id/list_status_sweets"
+                android:title="@string/show_sweets_only" />
         </menu>
     </item>
 </menu>

@@ -48,6 +48,12 @@
     <string name="sort">Sort</string>
     <string name="sort_from_newest">Newest to oldest</string>
     <string name="sort_from_oldest">Oldest to newest</string>
+    <string name="show_breakfast_only">Show Breakfast Only</string>
+    <string name="show_lunch_only">Show Lunch Only</string>
+    <string name="show_dinner_only">Show Dinner Only</string>
+    <string name="show_sick_only">Show Sick Only</string>
+    <string name="show_exercise_only">Show Exercise Only</string>
+    <string name="show_sweets_only">Show Sweets Only</string>
 
     <!-- Misc -->
     <string name="blood_glucose">Blood Glucose</string>
