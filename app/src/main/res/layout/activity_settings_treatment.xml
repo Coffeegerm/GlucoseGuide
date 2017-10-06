@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Toolbar -->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/treatment_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/treatment_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+        android:id="@+id/target_range_section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/settings_glucose_goal_section" />
+
+    <!-- Hypoglycemic Range -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/settings_hypoglycemic"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/hypoglycemic_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:gravity="end"
+            android:inputType="number"
+            android:labelFor="@id/hypoglycemic_edit_text"
+            android:maxLength="3" />
+
+    </LinearLayout>
+
+    <!--Hyperglycemic Range-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            android:id="@+id/hypo_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/settings_hyperglycemic"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/hyperglycemic_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:gravity="end"
+            android:inputType="number"
+            android:labelFor="@+id/hyperglycemic_edit_text"
+            android:maxLength="3" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/treatment_line1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark" />
+
+    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/bolus_ratio_label" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/bolus_ratio_description"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/bolus_ratio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:ems="4"
+            android:gravity="end"
+            android:inputType="number"
+            android:maxLength="3" />
+
+    </LinearLayout>
+
+</LinearLayout>

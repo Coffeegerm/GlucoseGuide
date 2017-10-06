@@ -1,18 +1,16 @@
 package io.github.coffeegerm.materiallogbook.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,14 +32,12 @@ public class SettingsActivity extends AppCompatActivity {
     private static final String TAG = "SettingsActivity";
     @BindView(R.id.btn_delete_all)
     TextView deleteAllEntries;
-    @BindView(R.id.hyperglycemic_edit_text)
-    EditText hyperglycemicEditText;
-    @BindView(R.id.hypoglycemic_edit_text)
-    EditText hypoglycemicEditText;
     @BindView(R.id.toggle_dark_mode)
     Switch toggleDarkMode;
     @BindView(R.id.setting_toolbar)
     Toolbar settingsToolbar;
+    @BindView(R.id.treatment_section)
+    LinearLayout treatmentSection;
     private Realm realm;
 
     @Override
@@ -58,11 +54,8 @@ public class SettingsActivity extends AppCompatActivity {
     public void initView() {
         realm = Realm.getDefaultInstance();
         setupToolbar();
-        checkRangeStatus();
-        setHints();
 
         toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean(MainActivity.PREF_DARK_MODE, false));
-
         toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -71,38 +64,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        hypoglycemicEditText.addTextChangedListener(new TextWatcher() {
+        treatmentSection.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.i(TAG, "afterTextChanged: " + s.toString());
-                if (!s.toString().equals(""))
-                    MainActivity.sharedPreferences.edit()
-                            .putInt(MainActivity.HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
-            }
-        });
-
-        hyperglycemicEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.i(TAG, "afterTextChanged: " + s.toString());
-                if (!s.toString().equals("")) MainActivity.sharedPreferences.edit()
-                        .putInt(MainActivity.HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SettingsTreatmentActivity.class));
             }
         });
 
@@ -142,26 +107,12 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    public void checkRangeStatus() {
-        int hyperglycemicIndex = MainActivity.sharedPreferences.getInt(MainActivity.HYPERGLYCEMIC_INDEX, 0);
-        int hypoglycemicIndex = MainActivity.sharedPreferences.getInt(MainActivity.HYPOGLYCEMIC_INDEX, 0);
-        if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
-            MainActivity.sharedPreferences.edit().putInt(MainActivity.HYPOGLYCEMIC_INDEX, 80).apply();
-            MainActivity.sharedPreferences.edit().putInt(MainActivity.HYPERGLYCEMIC_INDEX, 140).apply();
-        }
-    }
-
-    public void setHints() {
-        hyperglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.HYPERGLYCEMIC_INDEX, 0)));
-        hypoglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.HYPOGLYCEMIC_INDEX, 0)));
-    }
-
     public void setupToolbar() {
         setSupportActionBar(settingsToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("Settings");
+            getSupportActionBar().setTitle(R.string.settings);
         }
     }
 

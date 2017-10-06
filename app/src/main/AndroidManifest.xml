@@ -29,7 +29,7 @@
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
-                android:label="@string/app_name"
+            android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -38,6 +38,7 @@
         <activity android:name=".ui.activity.NewEntryActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.EditEntryActivity" />
+        <activity android:name=".ui.activity.SettingsTreatmentActivity" />
 
         <receiver android:name=".utils.NotificationPublisher" />
     </application>

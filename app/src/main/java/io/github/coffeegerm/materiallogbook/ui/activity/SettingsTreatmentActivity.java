@@ -1,0 +1,138 @@
+package io.github.coffeegerm.materiallogbook.ui.activity;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.widget.EditText;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.github.coffeegerm.materiallogbook.R;
+
+/**
+ * Created by dyarz on 10/6/2017.
+ * <p>
+ * Sub menu of SettingsActivity for Treatment section
+ */
+
+public class SettingsTreatmentActivity extends AppCompatActivity {
+
+    private static final String TAG = "TreatmentActivity";
+
+    @BindView(R.id.hyperglycemic_edit_text)
+    EditText hyperglycemicEditText;
+    @BindView(R.id.hypoglycemic_edit_text)
+    EditText hypoglycemicEditText;
+    @BindView(R.id.bolus_ratio)
+    EditText bolusRatio;
+    @BindView(R.id.treatment_toolbar)
+    Toolbar treatmentToolbar;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (MainActivity.sharedPreferences.getBoolean(MainActivity.PREF_DARK_MODE, false)) {
+            setTheme(R.style.AppTheme_Dark);
+        }
+        setContentView(R.layout.activity_settings_treatment);
+        ButterKnife.bind(this);
+        init();
+    }
+
+    private void init() {
+        setupToolbar();
+        checkRangeStatus();
+        setHints();
+        hypoglycemicEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.i(TAG, "afterTextChanged: " + s.toString());
+                if (!s.toString().equals(""))
+                    MainActivity.sharedPreferences.edit()
+                            .putInt(MainActivity.HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
+            }
+        });
+
+        hyperglycemicEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.i(TAG, "afterTextChanged: " + s.toString());
+                if (!s.toString().equals("")) MainActivity.sharedPreferences.edit()
+                        .putInt(MainActivity.HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
+            }
+        });
+
+        bolusRatio.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Log.i(TAG, "afterTextChanged: " + editable.toString());
+                if (!editable.toString().equals("")) MainActivity.sharedPreferences.edit()
+                        .putInt(MainActivity.BOLUS_RATIO, Integer.parseInt(editable.toString())).apply();
+            }
+        });
+    }
+
+    public void checkRangeStatus() {
+        int hyperglycemicIndex = MainActivity.sharedPreferences.getInt(MainActivity.HYPERGLYCEMIC_INDEX, 0);
+        int hypoglycemicIndex = MainActivity.sharedPreferences.getInt(MainActivity.HYPOGLYCEMIC_INDEX, 0);
+        int bolusRatio = MainActivity.sharedPreferences.getInt(MainActivity.BOLUS_RATIO, 0);
+        if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
+            MainActivity.sharedPreferences.edit().putInt(MainActivity.HYPOGLYCEMIC_INDEX, 80).apply();
+            MainActivity.sharedPreferences.edit().putInt(MainActivity.HYPERGLYCEMIC_INDEX, 140).apply();
+        }
+        if (bolusRatio == 0) {
+            MainActivity.sharedPreferences.edit().putInt(MainActivity.BOLUS_RATIO, 10).apply();
+        }
+    }
+
+    public void setHints() {
+        hyperglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.HYPERGLYCEMIC_INDEX, 0)));
+        hypoglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.HYPOGLYCEMIC_INDEX, 0)));
+        bolusRatio.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.BOLUS_RATIO, 0)));
+    }
+
+    public void setupToolbar() {
+        setSupportActionBar(treatmentToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(R.string.treatment);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+}

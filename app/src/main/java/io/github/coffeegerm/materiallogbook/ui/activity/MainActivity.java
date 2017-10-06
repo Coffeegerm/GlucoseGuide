@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     public static String PREF_DARK_MODE = "pref_dark_mode";
     public static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
     public static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
+    public static final String BOLUS_RATIO = "BOLUS_RATIO";
     public static boolean isResumed = false;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();

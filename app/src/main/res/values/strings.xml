@@ -86,6 +86,10 @@
     <string name="donate">Donate</string>
     <string name="support">Support Material Logbook</string>
     <string name="all_deleted">All entries deleted</string>
+    <string name="treatment">Treatment</string>
+    <string name="settings">Settings</string>
+    <string name="bolus_ratio_label">Bolus Ratio</string>
+    <string name="bolus_ratio_description">How many carbs = 1 unit of insulin?</string>
 
     <!--Image descriptions -->
     <string name="blood_glucose_image">Blood Glucose Image</string>
