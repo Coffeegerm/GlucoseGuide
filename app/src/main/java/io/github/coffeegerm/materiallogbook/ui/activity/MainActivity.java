@@ -46,6 +46,8 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
+
 /**
  * Activity for controlling which fragment should be presented and containing
  * the main activity for holding Fragments
@@ -56,11 +58,6 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     public static SharedPreferences sharedPreferences;
-    public static String HAS_SHOWN_FAB_ANIMATION = "HAS_SHOWN_ANIMATION";
-    public static String PREF_DARK_MODE = "pref_dark_mode";
-    public static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
-    public static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
-    public static final String BOLUS_RATIO = "BOLUS_RATIO";
     public static boolean isResumed = false;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();

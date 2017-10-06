@@ -13,6 +13,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.HYPERGLYCEMIC_INDEX;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.HYPOGLYCEMIC_INDEX;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
+
 /**
  * Created by dyarz on 10/6/2017.
  * <p>
@@ -35,7 +40,7 @@ public class SettingsTreatmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (MainActivity.sharedPreferences.getBoolean(MainActivity.PREF_DARK_MODE, false)) {
+        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
             setTheme(R.style.AppTheme_Dark);
         }
         setContentView(R.layout.activity_settings_treatment);
@@ -61,7 +66,7 @@ public class SettingsTreatmentActivity extends AppCompatActivity {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
                 if (!s.toString().equals(""))
                     MainActivity.sharedPreferences.edit()
-                            .putInt(MainActivity.HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
+                            .putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
             }
         });
 
@@ -78,7 +83,7 @@ public class SettingsTreatmentActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 Log.i(TAG, "afterTextChanged: " + s.toString());
                 if (!s.toString().equals("")) MainActivity.sharedPreferences.edit()
-                        .putInt(MainActivity.HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
+                        .putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
             }
         });
 
@@ -97,28 +102,28 @@ public class SettingsTreatmentActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 Log.i(TAG, "afterTextChanged: " + editable.toString());
                 if (!editable.toString().equals("")) MainActivity.sharedPreferences.edit()
-                        .putInt(MainActivity.BOLUS_RATIO, Integer.parseInt(editable.toString())).apply();
+                        .putInt(BOLUS_RATIO, Integer.parseInt(editable.toString())).apply();
             }
         });
     }
 
     public void checkRangeStatus() {
-        int hyperglycemicIndex = MainActivity.sharedPreferences.getInt(MainActivity.HYPERGLYCEMIC_INDEX, 0);
-        int hypoglycemicIndex = MainActivity.sharedPreferences.getInt(MainActivity.HYPOGLYCEMIC_INDEX, 0);
-        int bolusRatio = MainActivity.sharedPreferences.getInt(MainActivity.BOLUS_RATIO, 0);
+        int hyperglycemicIndex = MainActivity.sharedPreferences.getInt(HYPERGLYCEMIC_INDEX, 0);
+        int hypoglycemicIndex = MainActivity.sharedPreferences.getInt(HYPOGLYCEMIC_INDEX, 0);
+        int bolusRatio = MainActivity.sharedPreferences.getInt(BOLUS_RATIO, 0);
         if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
-            MainActivity.sharedPreferences.edit().putInt(MainActivity.HYPOGLYCEMIC_INDEX, 80).apply();
-            MainActivity.sharedPreferences.edit().putInt(MainActivity.HYPERGLYCEMIC_INDEX, 140).apply();
+            MainActivity.sharedPreferences.edit().putInt(HYPOGLYCEMIC_INDEX, 80).apply();
+            MainActivity.sharedPreferences.edit().putInt(HYPERGLYCEMIC_INDEX, 140).apply();
         }
         if (bolusRatio == 0) {
-            MainActivity.sharedPreferences.edit().putInt(MainActivity.BOLUS_RATIO, 10).apply();
+            MainActivity.sharedPreferences.edit().putInt(BOLUS_RATIO, 10).apply();
         }
     }
 
     public void setHints() {
-        hyperglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.HYPERGLYCEMIC_INDEX, 0)));
-        hypoglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.HYPOGLYCEMIC_INDEX, 0)));
-        bolusRatio.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(MainActivity.BOLUS_RATIO, 0)));
+        hyperglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(HYPERGLYCEMIC_INDEX, 0)));
+        hypoglycemicEditText.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(HYPOGLYCEMIC_INDEX, 0)));
+        bolusRatio.setHint(String.valueOf(MainActivity.sharedPreferences.getInt(BOLUS_RATIO, 0)));
     }
 
     public void setupToolbar() {

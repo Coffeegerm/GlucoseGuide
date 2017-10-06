@@ -36,6 +36,7 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
 
 /**
@@ -103,7 +104,7 @@ public class EditEntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false))
+        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_edit_entry);
         ButterKnife.bind(this);

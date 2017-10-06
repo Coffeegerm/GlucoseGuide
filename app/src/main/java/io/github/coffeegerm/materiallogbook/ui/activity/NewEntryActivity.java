@@ -37,6 +37,7 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
 import io.realm.Realm;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
 
 /**
@@ -99,7 +100,7 @@ public class NewEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate: NewEntryActivity started");
-        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false))
+        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_new_entry);
         ButterKnife.bind(this);
@@ -345,7 +346,7 @@ public class NewEntryActivity extends AppCompatActivity {
         Typeface avenirMedium = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Medium.otf");
         cancelBtn.setTypeface(avenirMedium);
         saveBtn.setTypeface(avenirMedium);
-        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
             int white = getResources().getColor(R.color.white);
             cancelBtn.setTextColor(white);
             saveBtn.setTextColor(white);

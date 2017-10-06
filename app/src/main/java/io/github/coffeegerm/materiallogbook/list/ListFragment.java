@@ -31,6 +31,8 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.HAS_SHOWN_FAB_ANIMATION;
+
 /**
  * Created by David Yarzebinski on 6/7/17.
  * <p>
@@ -55,7 +57,7 @@ public class ListFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
-        if (MainActivity.sharedPreferences.getBoolean(MainActivity.HAS_SHOWN_FAB_ANIMATION, false))
+        if (MainActivity.sharedPreferences.getBoolean(HAS_SHOWN_FAB_ANIMATION, false))
             fabAnimate();
         return listView;
     }
@@ -186,7 +188,7 @@ public class ListFragment extends Fragment {
                 fab.startAnimation(fab_wiggle);
             }
         }, 2000);
-        MainActivity.sharedPreferences.edit().putBoolean(MainActivity.HAS_SHOWN_FAB_ANIMATION, true).apply();
+        MainActivity.sharedPreferences.edit().putBoolean(HAS_SHOWN_FAB_ANIMATION, true).apply();
     }
 
     @Override

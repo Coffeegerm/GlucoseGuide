@@ -21,6 +21,8 @@ import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
+
 /**
  * Created by David Yarzebinski on 6/25/2017.
  * <p>
@@ -43,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (MainActivity.sharedPreferences.getBoolean(MainActivity.PREF_DARK_MODE, false)) {
+        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
             setTheme(R.style.AppTheme_Dark);
         }
         setContentView(R.layout.activity_settings);
@@ -55,11 +57,11 @@ public class SettingsActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         setupToolbar();
 
-        toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean(MainActivity.PREF_DARK_MODE, false));
+        toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false));
         toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MainActivity.sharedPreferences.edit().putBoolean(MainActivity.PREF_DARK_MODE, isChecked).apply();
+                MainActivity.sharedPreferences.edit().putBoolean(PREF_DARK_MODE, isChecked).apply();
                 recreate();
             }
         });
