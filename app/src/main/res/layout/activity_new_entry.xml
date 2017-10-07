@@ -251,7 +251,48 @@
 
     </LinearLayout>
 
+    <!-- Suggested insulin: hidden until carbs are entered.-->
     <LinearLayout
+        android:id="@+id/insulin_suggestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/reminder_section"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+            android:id="@+id/insulin_suggestion_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/suggested_insulin"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+            android:id="@+id/insulin_suggestion_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="5"
+            android:textSize="18sp" />
+
+        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            android:id="@+id/insulin_suggestion_value_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/insulin_measurement"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/reminder_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonBar"
@@ -281,7 +322,6 @@
             android:labelFor="@id/reminder_tv" />
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/buttonBar"

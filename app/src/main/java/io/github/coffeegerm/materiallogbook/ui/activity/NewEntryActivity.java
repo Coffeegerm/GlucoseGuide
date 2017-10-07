@@ -17,12 +17,15 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -37,6 +40,8 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
 import io.realm.Realm;
 
+import static io.github.coffeegerm.materiallogbook.ui.activity.MainActivity.sharedPreferences;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
 
@@ -87,6 +92,14 @@ public class NewEntryActivity extends AppCompatActivity {
     ImageButton sweets;
     @BindView(R.id.reminder_alarm)
     EditText reminder;
+    @BindView(R.id.insulin_suggestion)
+    LinearLayout insulinSuggestionLinearLayout;
+    @BindView(R.id.insulin_suggestion_label)
+    TextView insulinSuggestionLabel;
+    @BindView(R.id.insulin_suggestion_value)
+    TextView insulinSuggestionValue;
+    @BindView(R.id.insulin_suggestion_value_label)
+    TextView insulinSuggestionValueLabel;
     Handler handler;
     String alarmDateTime = "";
     private Realm realm;
@@ -100,7 +113,7 @@ public class NewEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate: NewEntryActivity started");
-        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_new_entry);
         ButterKnife.bind(this);
@@ -123,6 +136,28 @@ public class NewEntryActivity extends AppCompatActivity {
 
         date.setText(dateFix(month, day, year));
         time.setText(checkTimeString(hour, minute));
+
+        carbohydrates.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable carbValue) {
+                if (!carbValue.toString().equals("")) {
+                    insulinSuggestionLinearLayout.setVisibility(View.VISIBLE);
+                    calculateInsulin(Float.parseFloat(carbValue.toString()));
+                } else {
+                    insulinSuggestionLinearLayout.setVisibility(View.GONE);
+                }
+            }
+        });
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -346,7 +381,7 @@ public class NewEntryActivity extends AppCompatActivity {
         Typeface avenirMedium = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Medium.otf");
         cancelBtn.setTypeface(avenirMedium);
         saveBtn.setTypeface(avenirMedium);
-        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
             int white = getResources().getColor(R.color.white);
             cancelBtn.setTextColor(white);
             saveBtn.setTextColor(white);
@@ -420,6 +455,12 @@ public class NewEntryActivity extends AppCompatActivity {
         }
     }
 
+    private void calculateInsulin(float carbValue) {
+        float bolusRatio = (float) sharedPreferences.getInt(BOLUS_RATIO, 0);
+        float suggestionInsulin = carbValue / bolusRatio;
+        insulinSuggestionValue.setText(String.valueOf(suggestionInsulin));
+    }
+
     private void alarmTimePicker() {
         // Get Current Time
         final Calendar c = Calendar.getInstance();
@@ -466,7 +507,6 @@ public class NewEntryActivity extends AppCompatActivity {
         Log.i(TAG, "notification built");
         return builder.build();
     }
-
 
     @Override
     public void onDestroy() {
