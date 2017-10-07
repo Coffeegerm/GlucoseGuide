@@ -8,8 +8,8 @@ android {
         applicationId "io.github.coffeegerm.materiallogbook"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 2
-        versionName "2.0"
+        versionCode 3
+        versionName "2.1"
     }
     buildTypes {
         release {
@@ -28,7 +28,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.0.1'
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.prof.rssparser:rssparser:1.0'
     compile 'com.instabug.library:instabug:4.3.0'
 }
