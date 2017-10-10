@@ -21,6 +21,9 @@ import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.ui.activity.EditEntryActivity;
 import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
+import io.github.coffeegerm.materiallogbook.utils.Constants;
+
+import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -34,7 +37,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     private static int shortClickHintCount = 0;
     private List<EntryItem> entryItems;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
+    private SimpleDateFormat twelveHourTimeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
+    private SimpleDateFormat twentyFourHourTimeFormat = new SimpleDateFormat("HH:mm", Locale.US);
     private LayoutInflater inflater;
     private Context context;
     private EntryItem item;
@@ -79,7 +83,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             this.view = itemView;
             ButterKnife.bind(this, itemView);
 
-            if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+            if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
                 ivFinger.setImageResource(R.drawable.ic_finger_dark);
                 ivCarbs.setImageResource(R.drawable.ic_food_dark);
                 ivInsulin.setImageResource(R.drawable.ic_syringe_dark);
@@ -97,6 +101,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     @Override
     public void onBindViewHolder(viewHolder holder, final int position) {
         item = entryItems.get(position);
+
+        // Check if today or yesterday and set date accordingly
         Calendar today = Calendar.getInstance();
         int todayDay = today.get(Calendar.DAY_OF_MONTH);
         Calendar yesterday = Calendar.getInstance();
@@ -110,7 +116,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         else {
             holder.date.setText(dateFormat.format(item.getDate()));
         }
-        holder.time.setText(timeFormat.format(item.getDate()));
+
+        // Set time based on user preference
+        if (MainActivity.sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
+            holder.time.setText(twentyFourHourTimeFormat.format(item.getDate()));
+        } else {
+            holder.time.setText(twelveHourTimeFormat.format(item.getDate()));
+        }
+
         /*
         * Handle item clicks on List Fragment
         * Long click will start EditEntryActivity
@@ -156,6 +169,4 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     public int getItemCount() {
         return entryItems.size();
     }
-
-
 }

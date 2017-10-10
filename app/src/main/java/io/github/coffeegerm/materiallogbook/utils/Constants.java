@@ -2,6 +2,8 @@ package io.github.coffeegerm.materiallogbook.utils;
 
 /**
  * Created by dyarz on 10/6/2017.
+ *
+ * Constants used throughout application. 
  */
 
 public class Constants {
@@ -10,4 +12,5 @@ public class Constants {
     public static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
     public static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     public static final String BOLUS_RATIO = "BOLUS_RATIO";
+    public static final String MILITARY_TIME = "MILITARY_TIME";
 }

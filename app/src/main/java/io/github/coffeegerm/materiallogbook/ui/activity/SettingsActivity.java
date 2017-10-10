@@ -21,6 +21,7 @@ import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.MILITARY_TIME;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
 /**
@@ -36,6 +37,8 @@ public class SettingsActivity extends AppCompatActivity {
     TextView deleteAllEntries;
     @BindView(R.id.toggle_dark_mode)
     Switch toggleDarkMode;
+    @BindView(R.id.military_time_switch)
+    Switch militaryTimeSwitch;
     @BindView(R.id.setting_toolbar)
     Toolbar settingsToolbar;
     @BindView(R.id.treatment_section)
@@ -63,6 +66,14 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 MainActivity.sharedPreferences.edit().putBoolean(PREF_DARK_MODE, isChecked).apply();
                 recreate();
+            }
+        });
+
+        militaryTimeSwitch.setChecked(MainActivity.sharedPreferences.getBoolean(MILITARY_TIME, false));
+        militaryTimeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                MainActivity.sharedPreferences.edit().putBoolean(MILITARY_TIME, isChecked).apply();
             }
         });
 

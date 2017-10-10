@@ -101,7 +101,6 @@ public class NewEntryActivity extends AppCompatActivity {
     @BindView(R.id.insulin_suggestion_value_label)
     TextView insulinSuggestionValueLabel;
     Handler handler;
-    String alarmDateTime = "";
     private Realm realm;
     private Calendar calendarToBeSaved;
     private Calendar calendar;
