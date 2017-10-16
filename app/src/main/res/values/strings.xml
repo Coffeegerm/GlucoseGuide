@@ -92,6 +92,10 @@
     <string name="bolus_ratio_label">Bolus Ratio</string>
     <string name="bolus_ratio_description">How many carbs = 1 unit of insulin?</string>
     <string name="military_time_description">Use 24 hour format:</string>
+    <string name="tipjar_header">Buy me a cup of coffee</string>
+    <string name="tipjar_description">Help myself stay awake and create Material Logbook by buying me a cup of coffee!</string>
+    <string name="no_tipjar">No thanks</string>
+    <string name="tipjar_price">$1.99</string>
 
     <!--Image descriptions -->
     <string name="blood_glucose_image">Blood Glucose Image</string>

@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -19,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium;
 import io.realm.Realm;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.MILITARY_TIME;
@@ -54,6 +57,22 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         initView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.tipjar:
+                showTipjar();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void initView() {
@@ -127,6 +146,30 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle(R.string.settings);
         }
+    }
+
+    private void showTipjar() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View tipjarView = getLayoutInflater().inflate(R.layout.tipjar_prompt, null);
+        final AvenirRegularMedium no = tipjarView.findViewById(R.id.tipjar_no);
+        final AvenirRegularMedium yes = tipjarView.findViewById(R.id.tipjar_yes);
+        builder.setView(tipjarView);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(SettingsActivity.this, "They clicked YES!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
