@@ -32,6 +32,7 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.HAS_SHOWN_FAB_ANIMATION;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
 /**
  * Created by David Yarzebinski on 6/7/17.
@@ -59,6 +60,8 @@ public class ListFragment extends Fragment {
         setFab();
         if (MainActivity.sharedPreferences.getBoolean(HAS_SHOWN_FAB_ANIMATION, false))
             fabAnimate();
+        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
+            fab.setImageResource(R.drawable.add_dark);
         return listView;
     }
 
@@ -192,8 +195,8 @@ public class ListFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         realm.close();
-        super.onDestroy();
+        super.onDestroyView();
     }
 }

@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -36,6 +37,7 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsActivity";
+    private String PAYPAL_URL = "https://paypal.me/DavidYarzebinski";
     @BindView(R.id.btn_delete_all)
     TextView deleteAllEntries;
     @BindView(R.id.toggle_dark_mode)
@@ -46,14 +48,15 @@ public class SettingsActivity extends AppCompatActivity {
     Toolbar settingsToolbar;
     @BindView(R.id.treatment_section)
     LinearLayout treatmentSection;
+    @BindView(R.id.paypal_webview)
+    WebView paypalWebview;
     private Realm realm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
+        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
-        }
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         initView();
@@ -167,9 +170,21 @@ public class SettingsActivity extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(SettingsActivity.this, "They clicked YES!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                setupWebView();
             }
         });
+    }
+
+    private void setupWebView() {
+        paypalWebview.getSettings().setLoadsImagesAutomatically(true);
+        paypalWebview.getSettings().setJavaScriptEnabled(true);
+        paypalWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        loadPaypal();
+    }
+
+    private void loadPaypal() {
+        paypalWebview.loadUrl(PAYPAL_URL);
     }
 
     @Override
