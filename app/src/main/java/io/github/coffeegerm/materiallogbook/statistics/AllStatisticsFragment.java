@@ -13,8 +13,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 

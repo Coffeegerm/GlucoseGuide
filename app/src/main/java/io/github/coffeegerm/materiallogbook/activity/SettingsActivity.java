@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.activity;
+package io.github.coffeegerm.materiallogbook.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +38,7 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsActivity";
-    private String PAYPAL_URL = "https://paypal.me/DavidYarzebinski";
+    String PAYPAL_URL = "https://paypal.me/DavidYarzebinski/1.99";
     @BindView(R.id.btn_delete_all)
     TextView deleteAllEntries;
     @BindView(R.id.toggle_dark_mode)
@@ -125,6 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     @Override
                                     public void execute(Realm realm) {
                                         realm.delete(EntryItem.class);
+                                        Log.i(TAG, "All Entry items deleted");
                                     }
                                 });
                                 Toast.makeText(SettingsActivity.this, R.string.all_deleted, Toast.LENGTH_SHORT).show();
@@ -185,6 +187,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void loadPaypal() {
         paypalWebview.loadUrl(PAYPAL_URL);
+        Log.i(TAG, "Loading PayPal URL");
     }
 
     @Override

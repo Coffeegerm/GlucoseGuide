@@ -1,9 +1,11 @@
-package io.github.coffeegerm.materiallogbook.ui.activity;
+package io.github.coffeegerm.materiallogbook.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 
 /**
  * Created by dyarz on 8/15/2017.

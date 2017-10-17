@@ -13,4 +13,6 @@ public class Constants {
     public static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     public static final String BOLUS_RATIO = "BOLUS_RATIO";
     public static final String MILITARY_TIME = "MILITARY_TIME";
+
+    public static final String INSTABUG_KEY = "0d278e5f5680024d7c487884873c0509";
 }

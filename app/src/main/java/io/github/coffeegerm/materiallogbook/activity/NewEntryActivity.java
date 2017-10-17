@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.activity;
+package io.github.coffeegerm.materiallogbook.activity;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -40,7 +40,7 @@ import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
 import io.realm.Realm;
 
-import static io.github.coffeegerm.materiallogbook.ui.activity.MainActivity.sharedPreferences;
+import static io.github.coffeegerm.materiallogbook.activity.MainActivity.sharedPreferences;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;

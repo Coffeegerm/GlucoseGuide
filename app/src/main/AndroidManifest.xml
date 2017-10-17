@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -28,17 +28,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.NewEntryActivity" />
-        <activity android:name=".ui.activity.SettingsActivity" />
-        <activity android:name=".ui.activity.EditEntryActivity" />
-        <activity android:name=".ui.activity.SettingsTreatmentActivity" />
+        <activity android:name=".activity.NewEntryActivity" />
+        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.EditEntryActivity" />
+        <activity android:name=".activity.SettingsTreatmentActivity" />
 
         <receiver android:name=".utils.NotificationPublisher" />
     </application>

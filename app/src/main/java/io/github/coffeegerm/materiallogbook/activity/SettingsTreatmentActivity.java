@@ -1,4 +1,4 @@
-package io.github.coffeegerm.materiallogbook.ui.activity;
+package io.github.coffeegerm.materiallogbook.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.HYPERGLYCEMIC_INDEX;

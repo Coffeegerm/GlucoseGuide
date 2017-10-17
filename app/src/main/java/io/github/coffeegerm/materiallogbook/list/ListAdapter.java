@@ -19,8 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.ui.activity.EditEntryActivity;
-import io.github.coffeegerm.materiallogbook.ui.activity.MainActivity;
+import io.github.coffeegerm.materiallogbook.activity.EditEntryActivity;
+import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.utils.Constants;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
