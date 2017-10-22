@@ -2,9 +2,7 @@ package io.github.coffeegerm.materiallogbook.list;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +27,6 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-import static io.github.coffeegerm.materiallogbook.utils.Constants.HAS_SHOWN_FAB_ANIMATION;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
 /**
@@ -58,8 +53,6 @@ public class ListFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
-        if (MainActivity.sharedPreferences.getBoolean(HAS_SHOWN_FAB_ANIMATION, false))
-            fabAnimate();
         if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             fab.setImageResource(R.drawable.add_dark);
         return listView;
@@ -150,6 +143,18 @@ public class ListFragment extends Fragment {
                 recView.setAdapter(new ListAdapter(sweetEntries, getActivity()));
                 break;
         }
+
+        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 & fab.getVisibility() == View.VISIBLE) {
+                    fab.hide();
+                } else if (dy < 0 && fab.getVisibility() != View.VISIBLE) {
+                    fab.show();
+                }
+            }
+        });
     }
 
     private List<EntryItem> getDescendingList() {
@@ -164,14 +169,6 @@ public class ListFragment extends Fragment {
 
     private void setFab() {
         /*
-        * Creates new fabBehavior for animation of fab onScroll
-        * */
-        FloatingActionButton.Behavior fabBehavior = new FabBehavior();
-        CoordinatorLayout.LayoutParams fabLayout = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-        fabLayout.setBehavior(fabBehavior);
-        fab.setLayoutParams(fabLayout);
-
-        /*
         * Starts NewEntryActivity, which allows the user
         * to define a new entry
         * */
@@ -181,17 +178,6 @@ public class ListFragment extends Fragment {
                 startActivity(new Intent(getContext(), NewEntryActivity.class));
             }
         });
-    }
-
-    private void fabAnimate() {
-        final Animation fab_wiggle = AnimationUtils.loadAnimation(getContext(), R.anim.fab_wiggle);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                fab.startAnimation(fab_wiggle);
-            }
-        }, 2000);
-        MainActivity.sharedPreferences.edit().putBoolean(HAS_SHOWN_FAB_ANIMATION, true).apply();
     }
 
     @Override
