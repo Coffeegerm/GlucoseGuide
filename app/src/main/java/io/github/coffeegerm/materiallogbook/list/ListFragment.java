@@ -20,13 +20,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.activity.NewEntryActivity;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
+import static io.github.coffeegerm.materiallogbook.activity.MainActivity.sharedPreferences;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
 /**
@@ -53,8 +53,6 @@ public class ListFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setUpRecyclerView();
         setFab();
-        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
-            fab.setImageResource(R.drawable.add_dark);
         return listView;
     }
 
@@ -168,10 +166,8 @@ public class ListFragment extends Fragment {
     }
 
     private void setFab() {
-        /*
-        * Starts NewEntryActivity, which allows the user
-        * to define a new entry
-        * */
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
+            fab.setImageResource(R.drawable.add_dark);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
