@@ -1,5 +1,6 @@
 package io.github.coffeegerm.materiallogbook.rss;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +13,14 @@ import android.widget.TextView;
 
 import com.prof.rssparser.Article;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+
+import static io.github.coffeegerm.materiallogbook.utils.Constants.ARTICLE_DATE_FORMAT;
 
 /**
  * Created by David Yarzebinski on 6/30/2017.
@@ -27,80 +28,45 @@ import io.github.coffeegerm.materiallogbook.R;
  * Adapter used to fill newsFragment
  */
 
-public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
+public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> {
 
     private final static String NON_THIN = "[^iIl1.,']";
     private LayoutInflater inflater;
     private ArrayList<Article> articleList;
-    private Context mContext;
+    private Context context;
 
-    public RssAdapter(ArrayList<Article> articleList, Context c) {
+    RssAdapter(ArrayList<Article> articleList, Context c) {
         this.inflater = LayoutInflater.from(c);
         this.articleList = articleList;
-        this.mContext = c;
-    }
-
-    private static int textWidth(String str) {
-        return (str.length() - str.replaceAll(NON_THIN, "").length() / 2);
-    }
-
-    private static String ellipsize(String text, int max) {
-
-        if (textWidth(text) <= max)
-            return text;
-
-        // Start by chopping off at the word before max
-        // This is an over-approximation due to thin-characters...
-        int end = text.lastIndexOf(' ', max - 3);
-
-        // Just one long word. Chop it off.
-        if (end == -1)
-            return text.substring(0, max - 3) + "...";
-
-        // Step forward as long as textWidth allows.
-        int newEnd = end;
-        do {
-            end = newEnd;
-            newEnd = text.indexOf(' ', end + 1);
-
-            // No more spaces.
-            if (newEnd == -1)
-                newEnd = text.length();
-
-        } while (textWidth(text.substring(0, newEnd) + "...") < max);
-
-        return text.substring(0, end) + "...";
+        this.context = c;
     }
 
     @Override
-    public holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_rss_list, parent, false);
-        return new holder(view);
+    public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new NewsViewHolder(inflater.inflate(R.layout.item_rss_list, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(holder holder, final int position) {
+    public void onBindViewHolder(final NewsViewHolder holder, int position) {
         Article currentArticle = articleList.get(position);
         Date date = currentArticle.getPubDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-        final String pubDate = sdf.format(date);
+        final String pubDate = ARTICLE_DATE_FORMAT.format(date);
 
         holder.articleTitle.setText(currentArticle.getTitle());
-        holder.articleDesc.setText(ellipsize(currentArticle.getDescription(), 250));
+        holder.articleDesc.setText(ellipsize(currentArticle.getDescription()));
         holder.articlePubDate.setText(pubDate);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetJavaScriptEnabled")
             @Override
             public void onClick(View view) {
-                WebView articleView = new WebView(mContext);
+                WebView articleView = new WebView(context);
                 articleView.getSettings().setLoadWithOverviewMode(true);
-                String articleLink = articleList.get(position).getLink();
-
+                String articleLink = articleList.get(holder.getAdapterPosition()).getLink();
                 articleView.getSettings().setJavaScriptEnabled(true);
                 articleView.setHorizontalScrollBarEnabled(false);
                 articleView.setWebChromeClient(new WebChromeClient());
                 articleView.loadUrl(articleLink);
-
-                android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(mContext).create();
+                android.support.v7.app.AlertDialog alertDialog = new android.support.v7.app.AlertDialog.Builder(context).create();
                 alertDialog.setView(articleView);
                 alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEUTRAL, "Close",
                         new DialogInterface.OnClickListener() {
@@ -118,7 +84,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
         return articleList.size();
     }
 
-    class holder extends RecyclerView.ViewHolder {
+    class NewsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.articleTitleTextView)
         TextView articleTitle;
         @BindView(R.id.articleDescriptionTextView)
@@ -126,10 +92,42 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.holder> {
         @BindView(R.id.articlePubDateTextView)
         TextView articlePubDate;
 
-        holder(View itemView) {
+        NewsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    private static int textWidth(String str) {
+        return (str.length() - str.replaceAll(NON_THIN, "").length() / 2);
+    }
+
+    private static String ellipsize(String text) {
+        int maxLength = 250;
+        if (textWidth(text) <= maxLength)
+            return text;
+
+        // Start by chopping off at the word before max
+        // This is an over-approximation due to thin-characters...
+        int end = text.lastIndexOf(' ', maxLength - 3);
+
+        // Just one long word. Chop it off.
+        if (end == -1)
+            return text.substring(0, maxLength - 3) + "...";
+
+        // Step forward as long as textWidth allows.
+        int newEnd = end;
+        do {
+            end = newEnd;
+            newEnd = text.indexOf(' ', end++);
+
+            // No more spaces.
+            if (newEnd == -1)
+                newEnd = text.length();
+
+        } while (textWidth(text.substring(0, newEnd) + "...") < maxLength);
+
+        return text.substring(0, end) + "...";
     }
 
 }

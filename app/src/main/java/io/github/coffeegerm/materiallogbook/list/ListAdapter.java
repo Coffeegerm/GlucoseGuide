@@ -3,6 +3,7 @@ package io.github.coffeegerm.materiallogbook.list;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +11,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.activity.EditEntryActivity;
 import io.github.coffeegerm.materiallogbook.activity.MainActivity;
+import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Constants;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.LIST_DATE_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.TWELVE_HOUR_TIME_FORMAT;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_HOUR_TIME_FORMAT;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -31,31 +33,28 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
  * Adapter used for filling RecyclerView within ListFragment
  */
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
     private static final String TAG = "ListAdapter";
     private static int shortClickHintCount = 0;
     private List<EntryItem> entryItems;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-    private SimpleDateFormat twelveHourTimeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
-    private SimpleDateFormat twentyFourHourTimeFormat = new SimpleDateFormat("HH:mm", Locale.US);
     private LayoutInflater inflater;
     private Context context;
-    private EntryItem item;
+    public EntryItem item;
 
-    public ListAdapter(List<EntryItem> entryItemList, Context c) {
+    ListAdapter(List<EntryItem> entryItemList, Context c) {
         this.inflater = LayoutInflater.from(c);
         this.entryItems = entryItemList;
         this.context = c;
     }
 
     @Override
-    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_card_list, parent, false);
-        return new viewHolder(view);
+    public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i(TAG, "View Created");
+        return new ListViewHolder(inflater.inflate(R.layout.item_card_list, parent, false));
     }
 
-    class viewHolder extends RecyclerView.ViewHolder {
+    class ListViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_date)
         TextView date;
         @BindView(R.id.tv_time)
@@ -78,7 +77,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         View line2;
         private View view;
 
-        viewHolder(View itemView) {
+        ListViewHolder(View itemView) {
             super(itemView);
             this.view = itemView;
             ButterKnife.bind(this, itemView);
@@ -99,8 +98,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(viewHolder holder, final int position) {
-        item = entryItems.get(position);
+    public void onBindViewHolder(final ListViewHolder holder, int position) {
+        item = entryItems.get(holder.getAdapterPosition());
 
         // Check if today or yesterday and set date accordingly
         Calendar today = Calendar.getInstance();
@@ -114,14 +113,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         if (itemDay == todayDay) holder.date.setText(R.string.today);
         else if (itemDay == yesterdayDay) holder.date.setText(R.string.yesterday);
         else {
-            holder.date.setText(dateFormat.format(item.getDate()));
+            holder.date.setText(LIST_DATE_FORMAT.format(item.getDate()));
         }
 
         // Set time based on user preference
         if (MainActivity.sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
-            holder.time.setText(twentyFourHourTimeFormat.format(item.getDate()));
+            holder.time.setText(TWENTY_FOUR_HOUR_TIME_FORMAT.format(item.getDate()));
         } else {
-            holder.time.setText(twelveHourTimeFormat.format(item.getDate()));
+            holder.time.setText(TWELVE_HOUR_TIME_FORMAT.format(item.getDate()));
         }
 
         /*
@@ -142,7 +141,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             @Override
             public boolean onLongClick(View view) {
                 Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
-                EntryItem selectedItem = entryItems.get(position);
+                EntryItem selectedItem = entryItems.get(holder.getAdapterPosition());
                 editEntryActivity.putExtra(EditEntryActivity.ITEM_ID, selectedItem.getId());
                 context.startActivity(editEntryActivity);
                 return true;

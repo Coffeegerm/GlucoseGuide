@@ -1,9 +1,12 @@
 package io.github.coffeegerm.materiallogbook.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * Created by dyarz on 10/6/2017.
- *
- * Constants used throughout application. 
+ * <p>
+ * Constants used throughout application.
  */
 
 public class Constants {
@@ -12,6 +15,10 @@ public class Constants {
     public static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
     public static final String BOLUS_RATIO = "BOLUS_RATIO";
     public static final String MILITARY_TIME = "MILITARY_TIME";
+    public static final SimpleDateFormat ARTICLE_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    public static final SimpleDateFormat LIST_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    public static final SimpleDateFormat TWELVE_HOUR_TIME_FORMAT = new SimpleDateFormat("hh:mm aa", Locale.US);
+    public static final SimpleDateFormat TWENTY_FOUR_HOUR_TIME_FORMAT = new SimpleDateFormat("HH:mm", Locale.US);
 
     public static final String INSTABUG_KEY = "0d278e5f5680024d7c487884873c0509";
 }
