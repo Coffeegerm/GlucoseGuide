@@ -26,11 +26,13 @@ public class NotificationPublisher extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= 26) {
             NotificationChannel channel = new NotificationChannel("Reminders", "Reminders", NotificationManager.IMPORTANCE_DEFAULT);
+            assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
         }
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
         Log.i(TAG, "notification sent");
+        assert notificationManager != null;
         notificationManager.notify(id, notification);
     }
 }
