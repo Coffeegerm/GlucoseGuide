@@ -1,5 +1,6 @@
 package io.github.coffeegerm.materiallogbook.activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -27,6 +28,7 @@ import io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium;
 import io.realm.Realm;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.MILITARY_TIME;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.PAYPAL_URL;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
 /**
@@ -38,7 +40,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsActivity";
-    String PAYPAL_URL = "https://paypal.me/DavidYarzebinski/1.99";
     @BindView(R.id.btn_delete_all)
     TextView deleteAllEntries;
     @BindView(R.id.toggle_dark_mode)
@@ -155,7 +156,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void showTipjar() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final View tipjarView = getLayoutInflater().inflate(R.layout.tipjar_prompt, null);
+        @SuppressLint("InflateParams") final View tipjarView = getLayoutInflater().inflate(R.layout.tipjar_prompt, null);
         final AvenirRegularMedium no = tipjarView.findViewById(R.id.tipjar_no);
         final AvenirRegularMedium yes = tipjarView.findViewById(R.id.tipjar_yes);
         builder.setView(tipjarView);
@@ -178,6 +179,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         paypalWebview.getSettings().setLoadsImagesAutomatically(true);
         paypalWebview.getSettings().setJavaScriptEnabled(true);

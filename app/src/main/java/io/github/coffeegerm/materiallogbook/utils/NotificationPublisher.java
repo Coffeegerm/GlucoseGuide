@@ -9,17 +9,18 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;
+
 /**
  * Created by dyarz on 9/6/2017.
- *
+ * <p>
  * Class used to deliver notifications to the user.
  */
 
 public class NotificationPublisher extends BroadcastReceiver {
 
     private static final String TAG = "NotificationPublisher";
-    public static String NOTIFICATION_ID = "notification-id";
-    public static String NOTIFICATION = "notification";
 
     @Override
     public void onReceive(Context context, Intent intent) {

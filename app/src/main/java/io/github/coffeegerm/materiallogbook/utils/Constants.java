@@ -19,6 +19,10 @@ public class Constants {
     public static final SimpleDateFormat LIST_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     public static final SimpleDateFormat TWELVE_HOUR_TIME_FORMAT = new SimpleDateFormat("hh:mm aa", Locale.US);
     public static final SimpleDateFormat TWENTY_FOUR_HOUR_TIME_FORMAT = new SimpleDateFormat("HH:mm", Locale.US);
+    public static final String NOTIFICATION_ID = "notification-id";
+    public static final String NOTIFICATION = "notification";
+
+    public static final String PAYPAL_URL = "https://paypal.me/DavidYarzebinski/1.99";
 
     public static final String INSTABUG_KEY = "0d278e5f5680024d7c487884873c0509";
 }

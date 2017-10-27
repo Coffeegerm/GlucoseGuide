@@ -42,6 +42,8 @@ import io.realm.Realm;
 
 import static io.github.coffeegerm.materiallogbook.activity.MainActivity.sharedPreferences;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
 
@@ -483,12 +485,13 @@ public class NewEntryActivity extends AppCompatActivity {
 
     private void createReminder(Notification notification) {
         Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
+        notificationIntent.putExtra(NOTIFICATION_ID, 1);
+        notificationIntent.putExtra(NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         long delay = alarmCalendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
         long futureInMillis = SystemClock.elapsedRealtime() + delay;
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        assert alarmManager != null;
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
     }
 
