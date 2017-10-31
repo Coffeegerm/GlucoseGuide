@@ -5,6 +5,9 @@ import android.app.Application;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 import static io.github.coffeegerm.materiallogbook.utils.Constants.INSTABUG_KEY;
 
 /**
@@ -18,7 +21,20 @@ public class MaterialLogbookApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // Build instabug for reporting bugs.
+        buildInstabug();
+        initRealm();
+    }
+
+    private void initRealm() {
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
+    }
+
+    private void buildInstabug() {
         new Instabug.Builder(this, INSTABUG_KEY)
                 .setInvocationEvent(InstabugInvocationEvent.NONE)
                 .setShouldShowIntroDialog(false)

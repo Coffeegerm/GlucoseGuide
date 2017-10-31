@@ -43,7 +43,6 @@ import io.github.coffeegerm.materiallogbook.rss.NewsFragment;
 import io.github.coffeegerm.materiallogbook.statistics.StatisticsFragment;
 import io.github.coffeegerm.materiallogbook.utils.CustomTypeFaceSpan;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
-        initRealm();
+        realm = Realm.getDefaultInstance();
         setDrawerLayout();
         fragmentManager = getSupportFragmentManager();
         if (isCreated && !isResumed)
@@ -210,16 +209,6 @@ public class MainActivity extends AppCompatActivity
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void initRealm() {
-        Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration
-                .Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm.setDefaultConfiguration(config);
-        realm = Realm.getInstance(config);
     }
 
     private void setDrawerLayout() {
