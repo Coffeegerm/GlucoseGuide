@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Libro de Materiales</string>
+
+    <string name="navigation_drawer_open">Abrir el cajón de navegación</string>
+    <string name="navigation_drawer_close">Cerrar el cajón de navegación</string>
+
+    <string name="close_app">Cerrar material Logbook</string>
+    <string name="close_confirmation">¿Realmente quieres cerrar Material Logbook?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+
+    <!-- Navigation Drawer Items -->
+    <string name="navigation_drawer_list">Lista</string>
+    <string name="navigation_drawer_graph">Grafico</string>
+    <string name="navigation_drawer_statistics">Estadística</string>
+    <string name="navigation_drawer_news">Noticias</string>
+    <string name="navigation_drawer_settings">Configuraciones</string>
+    <string name="grade_detail">Este es un grado de sus niveles de glucosa en sangre durante los últimos tres días.</string>
+
+    <!-- NewEntryActivity and EditEntryActivity strings -->
+    <string name="new_entry_date_and_time_label">Fecha y hora:</string>
+    <string name="new_entry_blood_glucose_label">Glucosa en sangre:</string>
+    <string name="new_entry_carbohydrates_label">Carbohidratos:</string>
+    <string name="new_entry_insulin_label">Insulina:</string>
+    <string name="time">Hora</string>
+    <string name="date">Fecha</string>
+    <string name="save">Salvar</string>
+    <string name="update">Actualizar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="edit_entry_toolbar">Editar entrada</string>
+    <string name="status">Estado</string>
+    <string name="delete_single_entry">Eliminar esta entrada?</string>
+    <string name="delete_single_entry_message">¿Seguro que quieres eliminar esta entrada?</string>
+    <string name="reminder">¿Quieres que te recordemos que revises tu azúcar?</string>
+    <string name="alarm_reminder">Tiempo de Recordatorio</string>
+    <string name="reminder_content">¡Hora de controlar tu azúcar!</string>
+    <string name="entry_deleted">Entrada eliminada</string>
+    <string name="suggested_insulin">Dosis sugerida de insulina:</string>
+
+    <!-- Image Descriptions for NewEntryActivity and EditEntryActivity -->
+    <string name="breakfast_description">Desayuno</string>
+    <string name="lunch_description">Almuerzo</string>
+    <string name="dinner_description">Cena</string>
+    <string name="sick_description">Enfermos</string>
+    <string name="exercise_description">Ejercicio</string>
+    <string name="sweets_description">Dulces</string>
+
+    <!-- List onOptions items -->
+    <string name="sort">Ordenar</string>
+    <string name="sort_from_newest">Del más nuevo al más viejo</string>
+    <string name="sort_from_oldest">De más viejo a más nuevo</string>
+    <string name="show_breakfast_only">Mostrar solo desayuno</string>
+    <string name="show_lunch_only">Mostrar solo almuerzo</string>
+    <string name="show_dinner_only">Monstrar solo cena</string>
+    <string name="show_sick_only">Monstrar solo enfermos</string>
+    <string name="show_exercise_only">Monstrar solo ejercicic</string>
+    <string name="show_sweets_only">Monstrar solo dulces</string>
+
+    <!-- Misc -->
+    <string name="blood_glucose">Glucosa en sangre</string>
+    <string name="carbohydrates">Carbohidratos</string>
+    <string name="insulin">Insulina</string>
+    <string name="dash">-</string>
+    <string name="create_entry">¡Crea una nueva entrada de registro!</string>
+
+    <!-- units of measurement-->
+    <string name="blood_glucose_measurement">mg/dl</string>
+    <string name="carbs_measurement">grams</string>
+    <string name="insulin_measurement">units</string>
+
+    <!-- Toast strings -->
+    <string name="list_item_short_click">Largo clic para editar la entrada!</string>
+    <string name="no_glucose_toast">Por favor ingrese su glucosa actual.</string>
+
+    <!--Settings Strings-->
+    <string name="ui">UI</string>
+    <string name="data">Zona peligrosa</string>
+    <string name="settings_dark_mode">Use el modo oscuro:</string>
+    <string name="settings_glucose_goal_section">Rango objetivo de glucosa</string>
+    <string name="settings_hypoglycemic">Debajo de esto, tu nivel de azúcar es bajo:</string>
+    <string name="settings_hyperglycemic">Por encima de esto, tu azúcar es alta:</string>
+    <string name="settings_delete_section">Reiniciar</string>
+    <string name="settings_delete_entries">Eliminar todas las entradas?</string>
+    <string name="delete">Borrar</string>
+    <string name="feedback">Realimentación</string>
+    <string name="donate_para">Apoye el desarrollo de Material Logbook.</string>
+    <string name="donate">Donar</string>
+    <string name="support">Material de apoyo Logbook</string>
+    <string name="all_deleted">Todas las entradas borradas</string>
+    <string name="treatment">Tratamiento</string>
+    <string name="settings">Configuraciones</string>
+    <string name="bolus_ratio_label">Proporción del bolo</string>
+    <string name="bolus_ratio_description">¿Cuántos carbohidratos = 1 unidad de insulina?</string>
+    <string name="military_time_description">Usar el formato de 24 horas:</string>
+    <string name="tipjar_header">Cómprame una taza de café</string>
+    <string name="tipjar_description">¡Ayúdeme a mí mismo a permanecer despierto y crear material Logbook comprándome una taza de café!</string>
+    <string name="no_tipjar">No, gracias</string>
+    <string name="tipjar_price">$1.99</string>
+
+    <!--Image descriptions -->
+    <string name="blood_glucose_image">Imagen de glucosa en sangre</string>
+    <string name="carbs_image">Imagen de carbohidratos</string>
+    <string name="insulin_image">Imagen de insulina</string>
+
+    <!-- Graph Fragment strings-->
+    <string name="today">Hoy</string>
+    <string name="yesterday">Ayer</string>
+
+    <!-- Statistics fragments strings -->
+    <string name="average">Promedio de glucosa en sangre:</string>
+    <string name="highest_of_all">La glucosa en sangre más alta:</string>
+    <string name="lowest_of_all">Glucosa en la sangre más baja</string>
+    <string name="no_data">Sin datos para calcular</string>
+    <string name="estimated_a1c">Estimación de A1C:</string>
+</resources>
