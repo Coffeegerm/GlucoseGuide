@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,15 +31,16 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.ARTICLE_DATE_
 
 public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> {
 
+    private static final String TAG = "RssAdapter";
     private final static String NON_THIN = "[^iIl1.,']";
     private LayoutInflater inflater;
     private ArrayList<Article> articleList;
     private Context context;
 
-    RssAdapter(ArrayList<Article> articleList, Context c) {
-        this.inflater = LayoutInflater.from(c);
+    RssAdapter(ArrayList<Article> articleList, Context context) {
+        this.inflater = LayoutInflater.from(context);
         this.articleList = articleList;
-        this.context = c;
+        this.context = context;
     }
 
     @Override
@@ -77,6 +79,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> 
                 alertDialog.show();
             }
         });
+        Log.i(TAG, "Item Bound");
     }
 
     @Override

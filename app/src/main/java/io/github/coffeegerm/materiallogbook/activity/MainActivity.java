@@ -125,9 +125,6 @@ public class MainActivity extends AppCompatActivity
                 }, 300);
             }
         });
-
-        // TODO: 8/27/2017 Notification if it's been over 8 hours since last entry
-
         setGlucoseGrade();
     }
 

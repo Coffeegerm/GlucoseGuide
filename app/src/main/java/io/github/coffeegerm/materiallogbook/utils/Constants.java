@@ -24,5 +24,7 @@ public class Constants {
 
     public static final String PAYPAL_URL = "https://paypal.me/DavidYarzebinski/1.99";
 
+    public static final String ARTICLE_LINK = "http://www.diabetes.co.uk/News/rss/newsindex.xml";
+
     public static final String INSTABUG_KEY = "0d278e5f5680024d7c487884873c0509";
 }
