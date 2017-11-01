@@ -41,6 +41,7 @@ public class NewsFragment extends Fragment {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     private ArrayList<Article> list = new ArrayList<>();
+    private RssAdapter rssAdapter;
 
     @Nullable
     @Override
@@ -54,7 +55,8 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        newsRecyclerView.setAdapter(new RssAdapter(list, getActivity()));
+        rssAdapter = new RssAdapter(getActivity());
+        newsRecyclerView.setAdapter(rssAdapter);
         swipeRefreshSetup();
         loadNews();
     }
@@ -68,7 +70,8 @@ public class NewsFragment extends Fragment {
             public void onTaskCompleted(ArrayList<Article> list) {
                 Log.i(TAG, "News successfully loaded");
                 progressBar.setVisibility(View.GONE);
-                newsRecyclerView.setAdapter(new RssAdapter(list, getActivity()));
+                rssAdapter.setNewsList(list);
+                rssAdapter.notifyDataSetChanged();
                 newsSwipeRefresh.setRefreshing(false);
             }
 

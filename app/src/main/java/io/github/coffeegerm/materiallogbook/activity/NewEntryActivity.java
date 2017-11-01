@@ -72,14 +72,6 @@ public class NewEntryActivity extends AppCompatActivity {
     EditText carbohydrates;
     @BindView(R.id.new_entry_insulin_units)
     EditText insulin;
-    @BindView(R.id.new_entry_date_time_label)
-    TextView dateTimeLabel;
-    @BindView(R.id.new_entry_glucose_label)
-    TextView glucoseLabel;
-    @BindView(R.id.new_entry_carbs_label)
-    TextView carbsLabel;
-    @BindView(R.id.new_entry_insulin_label)
-    TextView insulinLabel;
     @BindView(R.id.breakfast_status)
     ImageButton breakfast;
     @BindView(R.id.lunch_status)
@@ -96,12 +88,8 @@ public class NewEntryActivity extends AppCompatActivity {
     EditText reminder;
     @BindView(R.id.insulin_suggestion)
     LinearLayout insulinSuggestionLinearLayout;
-    @BindView(R.id.insulin_suggestion_label)
-    TextView insulinSuggestionLabel;
     @BindView(R.id.insulin_suggestion_value)
     TextView insulinSuggestionValue;
-    @BindView(R.id.insulin_suggestion_value_label)
-    TextView insulinSuggestionValueLabel;
     Handler handler;
     private Realm realm;
     private Calendar calendarToBeSaved;

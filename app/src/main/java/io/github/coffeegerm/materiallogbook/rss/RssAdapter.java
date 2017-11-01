@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.prof.rssparser.Article;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -37,10 +38,14 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> 
     private ArrayList<Article> articleList;
     private Context context;
 
-    RssAdapter(ArrayList<Article> articleList, Context context) {
+    RssAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
-        this.articleList = articleList;
+        this.articleList = new ArrayList<>();
         this.context = context;
+    }
+
+    void setNewsList(ArrayList<Article> articles) {
+        this.articleList = articles;
     }
 
     @Override
