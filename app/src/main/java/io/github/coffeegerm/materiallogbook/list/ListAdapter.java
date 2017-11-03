@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,15 +38,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     private static final String TAG = "ListAdapter";
     private static int shortClickHintCount = 0;
-    private List<EntryItem> entryItems;
     private LayoutInflater inflater;
     private Context context;
     public EntryItem item;
+    private List<EntryItem> entryItemList;
 
-    ListAdapter(List<EntryItem> entryItemList, Context c) {
-        this.inflater = LayoutInflater.from(c);
-        this.entryItems = entryItemList;
-        this.context = c;
+    ListAdapter(Context context) {
+        this.inflater = LayoutInflater.from(context);
+        this.context = context;
+    }
+
+    public void setListItems(List<EntryItem> providedList) {
+        this.entryItemList = providedList;
     }
 
     @Override
@@ -99,7 +103,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     @Override
     public void onBindViewHolder(final ListViewHolder holder, int position) {
-        item = entryItems.get(holder.getAdapterPosition());
+        item = entryItemList.get(holder.getAdapterPosition());
 
         // Check if today or yesterday and set date accordingly
         Calendar today = Calendar.getInstance();
@@ -141,7 +145,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             @Override
             public boolean onLongClick(View view) {
                 Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
-                EntryItem selectedItem = entryItems.get(holder.getAdapterPosition());
+                EntryItem selectedItem = entryItemList.get(holder.getAdapterPosition());
                 editEntryActivity.putExtra(EditEntryActivity.ITEM_ID, selectedItem.getId());
                 context.startActivity(editEntryActivity);
                 return true;
@@ -166,6 +170,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     @Override
     public int getItemCount() {
-        return entryItems.size();
+        return entryItemList.size();
     }
 }

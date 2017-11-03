@@ -43,6 +43,7 @@ public class ListFragment extends Fragment {
     RecyclerView recView;
     private int SORT_ORDER = 0; // 0 = Descending, 1 = Ascending
     private Realm realm;
+    private ListAdapter listAdapter;
 
     @Nullable
     @Override
@@ -51,6 +52,8 @@ public class ListFragment extends Fragment {
         ButterKnife.bind(this, listView);
         setHasOptionsMenu(true);
         realm = Realm.getDefaultInstance();
+        listAdapter = new ListAdapter(getContext());
+        recView.setAdapter(listAdapter);
         setUpRecyclerView();
         setFab();
         return listView;
@@ -111,34 +114,44 @@ public class ListFragment extends Fragment {
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
         switch (SORT_ORDER) {
             case 0: // newest to older
-                recView.setAdapter(new ListAdapter(getDescendingList(), getActivity()));
+                List<EntryItem> descendingList = getDescendingList();
+                listAdapter.setListItems(descendingList);
+                listAdapter.notifyDataSetChanged();
                 break;
             case 1: // oldest to newest
-                recView.setAdapter(new ListAdapter(getAscendingList(), getActivity()));
+                List<EntryItem> ascendingList = getAscendingList();
+                listAdapter.setListItems(ascendingList);
+                listAdapter.notifyDataSetChanged();
                 break;
             case 2: // breakfast only, status of item = 1
                 RealmResults<EntryItem> breakfastEntries = realm.where(EntryItem.class).equalTo("status", 1).findAllSorted("date", Sort.DESCENDING);
-                recView.setAdapter(new ListAdapter(breakfastEntries, getActivity()));
+                listAdapter.setListItems(breakfastEntries);
+                listAdapter.notifyDataSetChanged();
                 break;
             case 3: // lunch only, status of item = 2
                 RealmResults<EntryItem> lunchEntries = realm.where(EntryItem.class).equalTo("status", 2).findAllSorted("date", Sort.DESCENDING);
-                recView.setAdapter(new ListAdapter(lunchEntries, getActivity()));
+                listAdapter.setListItems(lunchEntries);
+                listAdapter.notifyDataSetChanged();
                 break;
             case 4: // dinner only, status of item = 3
                 RealmResults<EntryItem> dinnerEntries = realm.where(EntryItem.class).equalTo("status", 3).findAllSorted("date", Sort.DESCENDING);
-                recView.setAdapter(new ListAdapter(dinnerEntries, getActivity()));
+                listAdapter.setListItems(dinnerEntries);
+                listAdapter.notifyDataSetChanged();
                 break;
             case 5: // exercise only, status of item = 5
                 RealmResults<EntryItem> exerciseEntries = realm.where(EntryItem.class).equalTo("status", 5).findAllSorted("date", Sort.DESCENDING);
-                recView.setAdapter(new ListAdapter(exerciseEntries, getActivity()));
+                listAdapter.setListItems(exerciseEntries);
+                listAdapter.notifyDataSetChanged();
                 break;
             case 6: // sick only, status of item = 4
                 RealmResults<EntryItem> sickEntries = realm.where(EntryItem.class).equalTo("status", 4).findAllSorted("date", Sort.DESCENDING);
-                recView.setAdapter(new ListAdapter(sickEntries, getActivity()));
+                listAdapter.setListItems(sickEntries);
+                listAdapter.notifyDataSetChanged();
                 break;
             case 7: // sweets only, status of item = 6
                 RealmResults<EntryItem> sweetEntries = realm.where(EntryItem.class).equalTo("status", 6).findAllSorted("date", Sort.DESCENDING);
-                recView.setAdapter(new ListAdapter(sweetEntries, getActivity()));
+                listAdapter.setListItems(sweetEntries);
+                listAdapter.notifyDataSetChanged();
                 break;
         }
 
