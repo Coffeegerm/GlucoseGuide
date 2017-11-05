@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
