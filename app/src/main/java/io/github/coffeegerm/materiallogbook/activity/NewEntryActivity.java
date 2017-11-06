@@ -480,7 +480,11 @@ public class NewEntryActivity extends AppCompatActivity {
         long futureInMillis = SystemClock.elapsedRealtime() + delay;
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         assert alarmManager != null;
+        String alarmHour = String.valueOf(alarmCalendar.get(Calendar.HOUR_OF_DAY));
+        String alarmMinute = String.valueOf(alarmCalendar.get(Calendar.MINUTE));
+        StringBuilder alarmString = new StringBuilder().append("Alarm set for ").append(alarmHour).append(":").append(alarmMinute);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        Toast.makeText(this, alarmString, Toast.LENGTH_SHORT).show();
     }
 
     private Notification getNotification() {
