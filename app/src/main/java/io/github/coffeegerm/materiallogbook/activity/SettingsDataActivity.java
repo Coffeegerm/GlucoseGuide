@@ -98,7 +98,7 @@ public class SettingsDataActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle(R.string.treatment);
+            getSupportActionBar().setTitle(R.string.data);
             Log.i(TAG, "Toolbar set");
         }
     }
