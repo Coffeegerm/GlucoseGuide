@@ -40,8 +40,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingsActivity";
-    @BindView(R.id.btn_delete_all)
-    TextView deleteAllEntries;
     @BindView(R.id.toggle_dark_mode)
     Switch toggleDarkMode;
     @BindView(R.id.military_time_switch)
@@ -50,6 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
     Toolbar settingsToolbar;
     @BindView(R.id.treatment_section)
     LinearLayout treatmentSection;
+    @BindView(R.id.data_section)
+    LinearLayout dataSection;
     @BindView(R.id.paypal_webview)
     WebView paypalWebview;
     private Realm realm;
@@ -108,39 +108,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        deleteAllEntries.setOnClickListener(new View.OnClickListener() {
+        dataSection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder builder;
-
-                // Sets theme based on VERSION_CODE
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                    builder = new AlertDialog.Builder(SettingsActivity.this, android.R.style.Theme_Material_Dialog_NoActionBar);
-                else builder = new AlertDialog.Builder(SettingsActivity.this);
-
-                builder.setTitle("Delete all entries")
-                        .setMessage("Are you sure you want to delete all entries?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                realm.executeTransaction(new Realm.Transaction() {
-                                    @Override
-                                    public void execute(Realm realm) {
-                                        realm.delete(EntryItem.class);
-                                        Log.i(TAG, "All Entry items deleted");
-                                    }
-                                });
-                                Toast.makeText(SettingsActivity.this, R.string.all_deleted, Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(R.drawable.ic_trash)
-                        .show();
+                startActivity(new Intent(getApplicationContext(), SettingsDataActivity.class));
             }
         });
     }

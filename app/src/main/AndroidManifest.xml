@@ -39,6 +39,7 @@
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.EditEntryActivity" />
         <activity android:name=".activity.SettingsTreatmentActivity" />
+        <activity android:name=".activity.SettingsDataActivity" />
 
         <receiver android:name=".utils.NotificationPublisher" />
     </application>
