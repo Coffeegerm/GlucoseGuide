@@ -33,10 +33,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.Constants;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.TWELVE_HOUR_TIME_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
 
 /**
@@ -89,7 +92,6 @@ public class EditEntryActivity extends AppCompatActivity {
     double originalInsulin;
     /* items to be used to altered to show that the item has been updated */
     int updatedStatus;
-    Date updatedDate;
     int updatedBloodGlucose;
     int updatedCarbohydrates;
     double updatedInsulin;
@@ -98,8 +100,6 @@ public class EditEntryActivity extends AppCompatActivity {
     private Realm realm;
     private String itemIdString;
     private EntryItem item;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.US);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,7 +113,6 @@ public class EditEntryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(R.string.edit_entry_toolbar);
-        realm = Realm.getDefaultInstance();
         itemIdString = getIntent().getStringExtra(ITEM_ID);
         item = getItem();
         updatedCalendar = Calendar.getInstance();
@@ -362,6 +361,7 @@ public class EditEntryActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -371,8 +371,7 @@ public class EditEntryActivity extends AppCompatActivity {
     }
 
     private EntryItem getItem() {
-        RealmResults<EntryItem> itemRealmResults = realm.where(EntryItem.class).equalTo("id", itemIdString).findAll();
-        return itemRealmResults.get(0);
+        return realm.where(EntryItem.class).equalTo("id", itemIdString).findAll().get(0);
     }
 
     private void getOriginalValues() {
@@ -386,8 +385,8 @@ public class EditEntryActivity extends AppCompatActivity {
     }
 
     private void setHints() {
-        String formattedDate = dateFormat.format(originalDate);
-        String formattedTime = timeFormat.format(originalDate);
+        String formattedDate = DATE_FORMAT.format(originalDate);
+        String formattedTime = TWELVE_HOUR_TIME_FORMAT.format(originalDate);
         date.setHint(formattedDate);
         time.setHint(formattedTime);
         bloodGlucose.setHint(String.valueOf(originalBloodGlucose));
@@ -462,30 +461,34 @@ public class EditEntryActivity extends AppCompatActivity {
     }
 
     private void updateEntry() {
-        Date dateToSave = new Date();
-        realm.beginTransaction();
-        item.deleteFromRealm();
-        EntryItem itemToSave = new EntryItem();
-        itemToSave.setStatus(updatedStatus);
-        if (updatedCalendar.getTimeInMillis() != originalCalendar.getTimeInMillis()) {
-            dateToSave.setTime(updatedCalendar.getTimeInMillis());
-            itemToSave.setDate(dateToSave);
-        } else {
-            dateToSave.setTime(originalCalendar.getTimeInMillis());
-            itemToSave.setDate(dateToSave);
+        try {
+            Date dateToSave = new Date();
+            realm.beginTransaction();
+            item.deleteFromRealm();
+            EntryItem itemToSave = new EntryItem();
+            itemToSave.setStatus(updatedStatus);
+            if (updatedCalendar.getTimeInMillis() != originalCalendar.getTimeInMillis()) {
+                dateToSave.setTime(updatedCalendar.getTimeInMillis());
+                itemToSave.setDate(dateToSave);
+            } else {
+                dateToSave.setTime(originalCalendar.getTimeInMillis());
+                itemToSave.setDate(dateToSave);
+            }
+            if (!bloodGlucose.getText().toString().equals("")) {
+                itemToSave.setBloodGlucose(Integer.parseInt(bloodGlucose.getText().toString()));
+            }
+            if (!carbohydrates.getText().toString().equals("")) {
+                itemToSave.setCarbohydrates(Integer.parseInt(carbohydrates.getText().toString()));
+            }
+            if (!insulin.getText().toString().equals("")) {
+                itemToSave.setInsulin(Double.parseDouble(insulin.getText().toString()));
+            }
+            realm.copyToRealm(itemToSave);
+            realm.commitTransaction();
+        } finally {
+            realm.close();
+            finish();
         }
-        if (!bloodGlucose.getText().toString().equals("")) {
-            itemToSave.setBloodGlucose(Integer.parseInt(bloodGlucose.getText().toString()));
-        }
-        if (!carbohydrates.getText().toString().equals("")) {
-            itemToSave.setCarbohydrates(Integer.parseInt(carbohydrates.getText().toString()));
-        }
-        if (!insulin.getText().toString().equals("")) {
-            itemToSave.setInsulin(Double.parseDouble(insulin.getText().toString()));
-        }
-        realm.copyToRealm(itemToSave);
-        realm.commitTransaction();
-        finish();
     }
 
     @Override

@@ -188,10 +188,4 @@ public class ListFragment extends Fragment {
             }
         });
     }
-
-    @Override
-    public void onDestroyView() {
-        realm.close();
-        super.onDestroyView();
-    }
 }

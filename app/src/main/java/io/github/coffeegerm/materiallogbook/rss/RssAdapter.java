@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 
-import static io.github.coffeegerm.materiallogbook.utils.Constants.ARTICLE_DATE_FORMAT;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 
 /**
  * Created by David Yarzebinski on 6/30/2017.
@@ -57,7 +57,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> 
     public void onBindViewHolder(final NewsViewHolder holder, int position) {
         Article currentArticle = articleList.get(position);
         Date date = currentArticle.getPubDate();
-        final String pubDate = ARTICLE_DATE_FORMAT.format(date);
+        final String pubDate = DATE_FORMAT.format(date);
 
         holder.articleTitle.setText(currentArticle.getTitle());
         holder.articleDesc.setText(ellipsize(currentArticle.getDescription()));

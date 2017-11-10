@@ -110,11 +110,4 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
             ivA1C.setImageResource(R.drawable.ic_a1c_dark);
         }
     }
-
-    @Override
-    public void onDestroy() {
-        realm.close();
-        super.onDestroy();
-    }
-
 }

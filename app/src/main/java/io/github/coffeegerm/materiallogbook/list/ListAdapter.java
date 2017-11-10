@@ -22,7 +22,7 @@ import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Constants;
 
-import static io.github.coffeegerm.materiallogbook.utils.Constants.LIST_DATE_FORMAT;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.TWELVE_HOUR_TIME_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_HOUR_TIME_FORMAT;
@@ -116,7 +116,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         if (itemDay == todayDay) holder.date.setText(R.string.today);
         else if (itemDay == yesterdayDay) holder.date.setText(R.string.yesterday);
         else {
-            holder.date.setText(LIST_DATE_FORMAT.format(item.getDate()));
+            holder.date.setText(DATE_FORMAT.format(item.getDate()));
         }
 
         // Set time based on user preference

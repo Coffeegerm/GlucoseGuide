@@ -3,7 +3,6 @@ package io.github.coffeegerm.materiallogbook.activity;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +34,8 @@ public class SettingsDataActivity extends AppCompatActivity {
 
     @BindView(R.id.data_toolbar)
     Toolbar toolbar;
+    @BindView(R.id.export_entries)
+    TextView exportEntries;
     @BindView(R.id.delete_all)
     TextView deleteAllEntries;
 
@@ -52,12 +53,22 @@ public class SettingsDataActivity extends AppCompatActivity {
     public void init() {
         setupToolbar();
         realm = Realm.getDefaultInstance();
+        exportEntries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exportEntries();
+            }
+        });
         deleteAllEntries.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteAllEntries();
             }
         });
+    }
+
+    public void exportEntries() {
+        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
     }
 
     public void deleteAllEntries() {
@@ -73,13 +84,17 @@ public class SettingsDataActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                realm.delete(EntryItem.class);
-                                Log.i(TAG, "All Entry items deleted");
-                            }
-                        });
+                        try {
+                            realm.executeTransaction(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    realm.delete(EntryItem.class);
+                                    Log.i(TAG, "All Entry items deleted");
+                                }
+                            });
+                        } finally {
+                            realm.close();
+                        }
                         Toast.makeText(SettingsDataActivity.this, R.string.all_deleted, Toast.LENGTH_SHORT).show();
                     }
                 })

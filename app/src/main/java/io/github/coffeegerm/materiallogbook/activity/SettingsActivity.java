@@ -52,7 +52,6 @@ public class SettingsActivity extends AppCompatActivity {
     LinearLayout dataSection;
     @BindView(R.id.paypal_webview)
     WebView paypalWebview;
-    private Realm realm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +80,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        realm = Realm.getDefaultInstance();
         setupToolbar();
 
         toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false));
@@ -167,11 +165,5 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
-    }
-
-    @Override
-    public void onDestroy() {
-        realm.close();
-        super.onDestroy();
     }
 }

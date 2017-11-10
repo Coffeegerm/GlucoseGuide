@@ -19,6 +19,10 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
+import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.TWELVE_HOUR_TIME_FORMAT;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_HOUR_TIME_FORMAT;
+
 /**
  * Created by david_yarz on 11/7/17.
  * <p>
@@ -32,9 +36,9 @@ public final class ConvertToCSV {
 
     private final Context context;
     private final Realm realm;
-    private final SimpleDateFormat dateFormat = Constants.ARTICLE_DATE_FORMAT;
-    private final SimpleDateFormat twelveHourTimeFormat = Constants.TWELVE_HOUR_TIME_FORMAT;
-    private final SimpleDateFormat twentyFourHourTimeFormat = Constants.TWENTY_FOUR_HOUR_TIME_FORMAT;
+    private final SimpleDateFormat dateFormat = DATE_FORMAT;
+    private final SimpleDateFormat twelveHourTimeFormat = TWELVE_HOUR_TIME_FORMAT;
+    private final SimpleDateFormat twentyFourHourTimeFormat = TWENTY_FOUR_HOUR_TIME_FORMAT;
 
     public ConvertToCSV(Context context) {
         this.context = context;
