@@ -113,4 +113,7 @@
     <string name="lowest_of_all">Glucosa en la sangre más baja</string>
     <string name="no_data">Sin datos para calcular</string>
     <string name="estimated_a1c">Estimación de A1C:</string>
+    <string name="danger_zone">Zona peligrosa</string>
+    <string name="export">Exportar</string>
+    <string name="export_description">Exportar entradas a la hoja de cálculo en Google Drive</string>
 </resources>
