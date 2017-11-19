@@ -32,7 +32,8 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 
 public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> {
 
-    private static final String TAG = "RssAdapter";
+    private static final String TAG = "NewsFragmentAdapter";
+
     private final static String NON_THIN = "[^iIl1.,']";
     private LayoutInflater inflater;
     private ArrayList<Article> articleList;
@@ -46,10 +47,12 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> 
 
     void setNewsList(ArrayList<Article> articles) {
         this.articleList = articles;
+        Log.i(TAG, "articles set");
     }
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i(TAG, "View inflated");
         return new NewsViewHolder(inflater.inflate(R.layout.item_rss_list, parent, false));
     }
 

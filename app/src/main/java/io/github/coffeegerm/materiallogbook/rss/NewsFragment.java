@@ -1,6 +1,7 @@
 package io.github.coffeegerm.materiallogbook.rss;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -40,12 +41,11 @@ public class NewsFragment extends Fragment {
     SwipeRefreshLayout newsSwipeRefresh;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    private ArrayList<Article> list = new ArrayList<>();
     private RssAdapter rssAdapter;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View newsView = inflater.inflate(R.layout.fragment_news, container, false);
         ButterKnife.bind(this, newsView);
         return newsView;
@@ -71,7 +71,9 @@ public class NewsFragment extends Fragment {
                 Log.i(TAG, "News successfully loaded");
                 progressBar.setVisibility(View.GONE);
                 rssAdapter.setNewsList(list);
+                Log.i(TAG, "News List Set");
                 rssAdapter.notifyDataSetChanged();
+                Log.i(TAG, "notifyDataSetChanged");
                 newsSwipeRefresh.setRefreshing(false);
             }
 
@@ -86,8 +88,6 @@ public class NewsFragment extends Fragment {
     }
 
     private void swipeRefreshSetup() {
-        newsSwipeRefresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimaryDark));
-        newsSwipeRefresh.canChildScrollUp();
         newsSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

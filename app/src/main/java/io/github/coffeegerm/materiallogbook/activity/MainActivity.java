@@ -141,13 +141,13 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(lastSelectedTab);
             switch (lastSelectedTab) {
                 case R.id.nav_list:
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
+                    setFragment(listFragment);
                     break;
                 case R.id.nav_stats:
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, statsFragment).commit();
+                    setFragment(statsFragment);
                     break;
                 case R.id.nav_news:
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+                    setFragment(newsFragment);
                     break;
             }
         }
@@ -175,19 +175,19 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.nav_list:
                 // Swaps fragment to list fragment
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
+                setFragment(listFragment);
                 lastSelectedTab = R.id.nav_list;
                 break;
 
             case R.id.nav_stats:
                 // Swaps fragment to statistics fragment
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, statsFragment).commit();
+                setFragment(statsFragment);
                 lastSelectedTab = R.id.nav_stats;
                 break;
 
             case R.id.nav_news:
                 //Swaps fragment to news fragment
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+                setFragment(newsFragment);
                 lastSelectedTab = R.id.nav_news;
                 break;
 
@@ -236,6 +236,10 @@ public class MainActivity extends AppCompatActivity
         SpannableString newTitle = new SpannableString(menuItem.getTitle());
         newTitle.setSpan(new CustomTypeFaceSpan("", font), 0, newTitle.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         menuItem.setTitle(newTitle);
+    }
+
+    private void setFragment(Fragment fragment) {
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     // Set grade in Navigation Menu
