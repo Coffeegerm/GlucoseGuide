@@ -6,13 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.HYPERGLYCEMIC_INDEX;
@@ -64,7 +62,6 @@ public class SettingsTreatmentActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.i(TAG, "afterTextChanged: " + s.toString());
                 if (!s.toString().equals(""))
                     MainActivity.sharedPreferences.edit()
                             .putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
@@ -82,7 +79,6 @@ public class SettingsTreatmentActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.i(TAG, "afterTextChanged: " + s.toString());
                 if (!s.toString().equals("")) MainActivity.sharedPreferences.edit()
                         .putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply();
             }
@@ -101,7 +97,6 @@ public class SettingsTreatmentActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                Log.i(TAG, "afterTextChanged: " + editable.toString());
                 if (!editable.toString().equals("")) MainActivity.sharedPreferences.edit()
                         .putInt(BOLUS_RATIO, Integer.parseInt(editable.toString())).apply();
             }

@@ -6,14 +6,9 @@ import java.util.*
 /**
  * Created by David Yarzebinski on 6/25/2017.
  *
- *
- *
- *
  * EntryItem POJO for setting and retrieving data for layouts
  *
- *
- * for Status
- *
+ * For Status
  *
  * case 0: null
  * 1: breakfast
