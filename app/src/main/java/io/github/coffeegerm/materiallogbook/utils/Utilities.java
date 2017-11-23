@@ -46,6 +46,7 @@ public final class Utilities {
         RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll();
         for (int position = 0; position < entriesFromLastThreeMonths.size(); position++) {
             EntryItem currentItem = entriesFromLastThreeMonths.get(position);
+            assert currentItem != null;
             if (currentItem.getBloodGlucose() > highest) {
                 highest = currentItem.getBloodGlucose();
             }
@@ -59,6 +60,7 @@ public final class Utilities {
         RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll();
         for (int position = 0; position < entriesFromLastThreeMonths.size(); position++) {
             EntryItem currentItem = entriesFromLastThreeMonths.get(position);
+            assert currentItem != null;
             total += currentItem.getBloodGlucose();
         }
         return total / entriesFromLastThreeMonths.size();
@@ -70,6 +72,7 @@ public final class Utilities {
         RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll();
         for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
             EntryItem currentItem = entriesFromLastThreeDays.get(position);
+            assert currentItem != null;
             if (currentItem.getBloodGlucose() < lowest) {
                 lowest = currentItem.getBloodGlucose();
             }

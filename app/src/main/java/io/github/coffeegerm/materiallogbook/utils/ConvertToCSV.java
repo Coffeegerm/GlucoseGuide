@@ -3,7 +3,6 @@ package io.github.coffeegerm.materiallogbook.utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Environment;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,8 +30,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_H
  */
 
 public final class ConvertToCSV {
-
-    private static final String TAG = "ConvertToCSV";
 
     private final Context context;
     private final Realm realm;
@@ -96,13 +93,11 @@ public final class ConvertToCSV {
                     }
 
                     outputStreamWriter.flush();
-                } catch (Exception e) {
-                    Log.e(TAG, "Error exporting entries", e);
+                } catch (Exception ignored) {
                 } finally {
                     if (outputStreamWriter != null) outputStreamWriter.close();
                     if (fileOutputStream != null) fileOutputStream.close();
                 }
-                Log.i(TAG, "Successfully exported entries");
             }
             realm.close();
             return file == null ? null : file.getPath();

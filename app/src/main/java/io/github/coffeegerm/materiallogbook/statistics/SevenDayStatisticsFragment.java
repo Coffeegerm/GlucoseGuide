@@ -1,6 +1,7 @@
 package io.github.coffeegerm.materiallogbook.statistics;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -52,11 +53,11 @@ public class SevenDayStatisticsFragment extends Fragment {
     String pageTitle;
     int pageNumber;
 
-    public static SevenDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
+    public static SevenDayStatisticsFragment newInstance() {
         SevenDayStatisticsFragment sevenDayStatisticsFragment = new SevenDayStatisticsFragment();
         Bundle args = new Bundle();
-        args.putInt("pageNumber", pageNumber);
-        args.putString("pageTitle", pageTitle);
+        args.putInt("pageNumber", 1);
+        args.putString("pageTitle", "Seven Days");
         sevenDayStatisticsFragment.setArguments(args);
         return sevenDayStatisticsFragment;
     }
@@ -70,7 +71,7 @@ public class SevenDayStatisticsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View sevenDaysView = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
         ButterKnife.bind(this, sevenDaysView);
         realm = Realm.getDefaultInstance();

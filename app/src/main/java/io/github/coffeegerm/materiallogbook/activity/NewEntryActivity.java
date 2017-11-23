@@ -14,12 +14,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -55,7 +55,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeStri
 
 public class NewEntryActivity extends AppCompatActivity {
 
-    private static final String TAG = "NewEntryActivity";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.cancelBtn)
@@ -101,7 +100,6 @@ public class NewEntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate: NewEntryActivity started");
         if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_new_entry);
@@ -193,13 +191,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        breakfast.setOnClickListener(new View.OnClickListener()
-
-        {
+        breakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 1;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Breakfast", Toast.LENGTH_SHORT);
                 toast.show();
@@ -212,13 +207,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        lunch.setOnClickListener(new View.OnClickListener()
-
-        {
+        lunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 2;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT);
                 toast.show();
@@ -231,13 +223,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        dinner.setOnClickListener(new View.OnClickListener()
-
-        {
+        dinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 3;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Dinner", Toast.LENGTH_SHORT);
                 toast.show();
@@ -250,13 +239,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        sick.setOnClickListener(new View.OnClickListener()
-
-        {
+        sick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 4;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Sick", Toast.LENGTH_SHORT);
                 toast.show();
@@ -269,13 +255,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        exercise.setOnClickListener(new View.OnClickListener()
-
-        {
+        exercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 5;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Exercise", Toast.LENGTH_SHORT);
                 toast.show();
@@ -294,7 +277,6 @@ public class NewEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 status = 6;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Sweets", Toast.LENGTH_SHORT);
                 toast.show();
@@ -339,7 +321,7 @@ public class NewEntryActivity extends AppCompatActivity {
         else {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
-                public void execute(Realm realm) {
+                public void execute(@NonNull Realm realm) {
                     // Save Entry to database
                     EntryItem entryItem = NewEntryActivity.this.realm.createObject(EntryItem.class);
                     // Creates Date object made from the DatePicker and TimePicker
@@ -498,7 +480,6 @@ public class NewEntryActivity extends AppCompatActivity {
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true)
                 .setContentIntent(newEntryActivityPendingIntent);
-        Log.i(TAG, "notification built");
         return builder.build();
     }
 

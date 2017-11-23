@@ -20,8 +20,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_
 
 public class NotificationPublisher extends BroadcastReceiver {
 
-    private static final String TAG = "NotificationPublisher";
-
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -32,7 +30,6 @@ public class NotificationPublisher extends BroadcastReceiver {
         }
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-        Log.i(TAG, "notification sent");
         assert notificationManager != null;
         notificationManager.notify(id, notification);
     }

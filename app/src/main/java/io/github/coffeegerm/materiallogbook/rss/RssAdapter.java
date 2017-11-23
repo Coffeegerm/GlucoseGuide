@@ -86,7 +86,6 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> 
                 alertDialog.show();
             }
         });
-        Log.i(TAG, "Item Bound");
     }
 
     @Override

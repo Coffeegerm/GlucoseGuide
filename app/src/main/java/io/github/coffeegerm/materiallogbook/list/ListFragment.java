@@ -2,6 +2,7 @@ package io.github.coffeegerm.materiallogbook.list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -47,7 +48,7 @@ public class ListFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View listView = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, listView);
         setHasOptionsMenu(true);

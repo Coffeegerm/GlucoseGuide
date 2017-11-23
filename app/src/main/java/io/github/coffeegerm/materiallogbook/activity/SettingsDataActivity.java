@@ -3,11 +3,11 @@ package io.github.coffeegerm.materiallogbook.activity;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +29,6 @@ import io.realm.Realm;
 
 public class SettingsDataActivity extends AppCompatActivity {
 
-    private static final String TAG = "SettingsDataActivity";
     private Realm realm;
 
     @BindView(R.id.data_toolbar)
@@ -45,7 +44,6 @@ public class SettingsDataActivity extends AppCompatActivity {
         if (MainActivity.sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_settings_data);
-        Log.i(TAG, "View set");
         ButterKnife.bind(this);
         init();
     }
@@ -87,9 +85,8 @@ public class SettingsDataActivity extends AppCompatActivity {
                         try {
                             realm.executeTransaction(new Realm.Transaction() {
                                 @Override
-                                public void execute(Realm realm) {
+                                public void execute(@NonNull Realm realm) {
                                     realm.delete(EntryItem.class);
-                                    Log.i(TAG, "All Entry items deleted");
                                 }
                             });
                         } finally {
@@ -114,7 +111,6 @@ public class SettingsDataActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle(R.string.data);
-            Log.i(TAG, "Toolbar set");
         }
     }
 

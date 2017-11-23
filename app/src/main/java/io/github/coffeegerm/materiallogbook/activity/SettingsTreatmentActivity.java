@@ -25,8 +25,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 
 public class SettingsTreatmentActivity extends AppCompatActivity {
 
-    private static final String TAG = "TreatmentActivity";
-
     @BindView(R.id.hyperglycemic_edit_text)
     EditText hyperglycemicEditText;
     @BindView(R.id.hypoglycemic_edit_text)

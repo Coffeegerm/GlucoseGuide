@@ -1,6 +1,7 @@
 package io.github.coffeegerm.materiallogbook.statistics;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -28,7 +29,7 @@ public class StatisticsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View statsView = inflater.inflate(R.layout.fragment_statistics, container, false);
         ButterKnife.bind(this, statsView);
         initViewPager();

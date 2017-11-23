@@ -1,9 +1,7 @@
 package io.github.coffeegerm.materiallogbook.activity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -17,15 +15,11 @@ import android.webkit.WebView;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium;
-import io.realm.Realm;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.MILITARY_TIME;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PAYPAL_URL;
@@ -158,7 +152,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void loadPaypal() {
         paypalWebview.loadUrl(PAYPAL_URL);
-        Log.i(TAG, "Loading PayPal URL");
     }
 
     @Override

@@ -21,7 +21,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -55,7 +54,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "MainActivity";
     public static SharedPreferences sharedPreferences;
     public static boolean isResumed = false;
     public int lastSelectedTab;
@@ -91,7 +89,6 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         if (isCreated && !isResumed)
             fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
-        // lastSelectedTab = R.id.nav_list;
 
         int textColor;
         if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
@@ -255,12 +252,10 @@ public class MainActivity extends AppCompatActivity
         String grade;
         int hyperglycemicCount = 0;
         int hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
-        Log.i(TAG, "getGlucoseGrade: " + hyperglycemicIndex);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -3);
         Date threeDaysAgo = calendar.getTime();
         RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        Log.i(TAG, "getGlucoseGrade - glucoseFromLastThreeDays: " + entriesFromLastThreeDays.toString());
         for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
             /*
             * Less than 3 hyperglycemic sugars and A+
@@ -271,9 +266,9 @@ public class MainActivity extends AppCompatActivity
             * etc...
             * */
             EntryItem currentItem = entriesFromLastThreeDays.get(position);
+            assert currentItem != null;
             if (currentItem.getBloodGlucose() > hyperglycemicIndex) {
                 hyperglycemicCount++;
-                Log.i(TAG, "getGlucoseGrade - hyperglycemicCount: " + hyperglycemicCount);
             }
         }
         if (hyperglycemicCount == 0) {
@@ -305,7 +300,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             grade = "F";
         }
-        Log.i(TAG, "getGlucoseGrade - grade: " + grade);
         return grade;
     }
 }

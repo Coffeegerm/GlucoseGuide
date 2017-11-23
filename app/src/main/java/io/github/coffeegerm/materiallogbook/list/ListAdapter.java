@@ -3,7 +3,6 @@ package io.github.coffeegerm.materiallogbook.list;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_H
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
-    private static final String TAG = "ListAdapter";
     private static int shortClickHintCount = 0;
     private LayoutInflater inflater;
     private Context context;
@@ -53,7 +51,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i(TAG, "View Created");
         return new ListViewHolder(inflater.inflate(R.layout.item_card_list, parent, false));
     }
 

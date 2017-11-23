@@ -1,6 +1,7 @@
 package io.github.coffeegerm.materiallogbook.statistics;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,7 +33,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGluc
  */
 
 public class ThreeMonthsStatisticsFragment extends Fragment {
-    private static final String TAG = "ThreeMonthsStatistics";
     @BindView(R.id.a_one_c)
     TextView a1c;
     @BindView(R.id.average)
@@ -51,18 +51,18 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
     ImageView ivA1C;
     Realm realm;
 
-    public static ThreeMonthsStatisticsFragment newInstance(int pageNumber, String pageTitle) {
+    public static ThreeMonthsStatisticsFragment newInstance() {
         ThreeMonthsStatisticsFragment threeMonthsStatisticsFragment = new ThreeMonthsStatisticsFragment();
         Bundle args = new Bundle();
-        args.putInt("pageNumber", pageNumber);
-        args.putString("pageTitle", pageTitle);
+        args.putInt("pageNumber", 3);
+        args.putString("pageTitle", "Three Months");
         threeMonthsStatisticsFragment.setArguments(args);
         return threeMonthsStatisticsFragment;
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View threeMonths = inflater.inflate(R.layout.fragment_three_months_statistics, container, false);
         ButterKnife.bind(this, threeMonths);
         realm = Realm.getDefaultInstance();

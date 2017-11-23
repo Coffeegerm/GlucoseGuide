@@ -12,10 +12,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class StatisticsPagerAdapter extends FragmentPagerAdapter {
 
-    private static int NUM_ITEMS = 5;
     private String tabTitles[] = new String[]{"3 Days", "7 Days", "One Month", "Three Months", "All"};
 
-    public StatisticsPagerAdapter(FragmentManager fm) {
+    StatisticsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -23,15 +22,15 @@ public class StatisticsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0: //  three days stats returned
-                return ThreeDayStatisticsFragment.newInstance(0, "Three Days");
+                return ThreeDayStatisticsFragment.newInstance();
             case 1: // 7 days stats returned
-                return SevenDayStatisticsFragment.newInstance(1, "Seven Days");
+                return SevenDayStatisticsFragment.newInstance();
             case 2:
-                return OneMonthStatisticsFragment.newInstance(2, "One Month");
+                return OneMonthStatisticsFragment.newInstance();
             case 3:
-                return ThreeMonthsStatisticsFragment.newInstance(3, "Three Months");
+                return ThreeMonthsStatisticsFragment.newInstance();
             case 4: // all stats returned
-                return AllStatisticsFragment.newInstance(4, "All");
+                return AllStatisticsFragment.newInstance();
             default:
                 return null;
         }
@@ -39,7 +38,7 @@ public class StatisticsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return NUM_ITEMS;
+        return 5;
     }
 
     @Override
