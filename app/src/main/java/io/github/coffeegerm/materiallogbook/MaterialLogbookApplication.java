@@ -7,6 +7,7 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import timber.log.Timber;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.INSTABUG_KEY;
 
@@ -23,6 +24,12 @@ public class MaterialLogbookApplication extends Application {
         super.onCreate();
         buildInstabug();
         initRealm();
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
+            // do stuff
+        }
     }
 
     private void initRealm() {
