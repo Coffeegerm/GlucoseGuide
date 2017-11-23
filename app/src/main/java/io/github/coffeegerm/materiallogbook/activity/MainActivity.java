@@ -86,29 +86,9 @@ public class MainActivity extends AppCompatActivity
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
         realm = Realm.getDefaultInstance();
         setDrawerLayout();
+        setNavigationView();
         fragmentManager = getSupportFragmentManager();
-        if (isCreated && !isResumed)
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
-
-        int textColor;
-        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
-            // DARK MODE
-            navigationView.getHeaderView(0).setBackground(getResources()
-                    .getDrawable(R.drawable.header_dark));
-            navigationView.setBackgroundColor(getResources().getColor(R.color.darkThemeBackground));
-            textColor = R.color.textColorPrimaryInverse;
-        } else {
-            // LIGHT MODE
-            navigationView.getHeaderView(0).setBackground(getResources()
-                    .getDrawable(R.drawable.header_light));
-            textColor = R.color.textColorPrimary;
-        }
-
-        ColorStateList csl = new ColorStateList(
-                new int[][]{new int[]{android.R.attr.state_checked}, new int[]{-android.R.attr.state_checked}},
-                new int[]{getResources().getColor(R.color.colorPrimary), getResources().getColor(textColor)});
-        navigationView.setItemTextColor(csl);
-        navigationView.setItemIconTintList(csl);
+        if (isCreated && !isResumed) setFragment(listFragment);
 
         instabug.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,6 +179,10 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void setFragment(Fragment fragment) {
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+    }
+
     private void setDrawerLayout() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -227,16 +211,34 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void setNavigationView() {
+        int textColor;
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
+            // DARK MODE
+            navigationView.getHeaderView(0).setBackground(getResources()
+                    .getDrawable(R.drawable.header_dark));
+            navigationView.setBackgroundColor(getResources().getColor(R.color.darkThemeBackground));
+            textColor = R.color.textColorPrimaryInverse;
+        } else {
+            // LIGHT MODE
+            navigationView.getHeaderView(0).setBackground(getResources()
+                    .getDrawable(R.drawable.header_light));
+            textColor = R.color.textColorPrimary;
+        }
+
+        ColorStateList csl = new ColorStateList(
+                new int[][]{new int[]{android.R.attr.state_checked}, new int[]{-android.R.attr.state_checked}},
+                new int[]{getResources().getColor(R.color.colorPrimary), getResources().getColor(textColor)});
+        navigationView.setItemTextColor(csl);
+        navigationView.setItemIconTintList(csl);
+    }
+
     // Method used to set the typeface of items within menu
     private void setMenuTypeface(MenuItem menuItem) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Regular.otf");
         SpannableString newTitle = new SpannableString(menuItem.getTitle());
         newTitle.setSpan(new CustomTypeFaceSpan("", font), 0, newTitle.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         menuItem.setTitle(newTitle);
-    }
-
-    private void setFragment(Fragment fragment) {
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     // Set grade in Navigation Menu
