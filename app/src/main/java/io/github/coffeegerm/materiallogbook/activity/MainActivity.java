@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity
     private void setDrawerLayout() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         // Navigation Drawer should be 80% of screen width when open
