@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017 Coffee and Cream Studios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.coffeegerm.materiallogbook.activity;
 
 import android.content.DialogInterface;
@@ -21,7 +37,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -55,7 +70,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG = "MainActivity";
     public static SharedPreferences sharedPreferences;
     public static boolean isResumed = false;
     public int lastSelectedTab;
@@ -88,30 +102,9 @@ public class MainActivity extends AppCompatActivity
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
         realm = Realm.getDefaultInstance();
         setDrawerLayout();
+        setNavigationView();
         fragmentManager = getSupportFragmentManager();
-        if (isCreated && !isResumed)
-            fragmentManager.beginTransaction().replace(R.id.fragment_container, listFragment).commit();
-        // lastSelectedTab = R.id.nav_list;
-
-        int textColor;
-        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
-            // DARK MODE
-            navigationView.getHeaderView(0).setBackground(getResources()
-                    .getDrawable(R.drawable.header_dark));
-            navigationView.setBackgroundColor(getResources().getColor(R.color.darkThemeBackground));
-            textColor = R.color.textColorPrimaryInverse;
-        } else {
-            // LIGHT MODE
-            navigationView.getHeaderView(0).setBackground(getResources()
-                    .getDrawable(R.drawable.header_light));
-            textColor = R.color.textColorPrimary;
-        }
-
-        ColorStateList csl = new ColorStateList(
-                new int[][]{new int[]{android.R.attr.state_checked}, new int[]{-android.R.attr.state_checked}},
-                new int[]{getResources().getColor(R.color.colorPrimary), getResources().getColor(textColor)});
-        navigationView.setItemTextColor(csl);
-        navigationView.setItemIconTintList(csl);
+        if (isCreated && !isResumed) setFragment(listFragment);
 
         instabug.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,10 +195,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void setFragment(Fragment fragment) {
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+    }
+
     private void setDrawerLayout() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.setDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         // Navigation Drawer should be 80% of screen width when open
@@ -230,16 +227,34 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void setNavigationView() {
+        int textColor;
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
+            // DARK MODE
+            navigationView.getHeaderView(0).setBackground(getResources()
+                    .getDrawable(R.drawable.header_dark));
+            navigationView.setBackgroundColor(getResources().getColor(R.color.darkThemeBackground));
+            textColor = R.color.textColorPrimaryInverse;
+        } else {
+            // LIGHT MODE
+            navigationView.getHeaderView(0).setBackground(getResources()
+                    .getDrawable(R.drawable.header_light));
+            textColor = R.color.textColorPrimary;
+        }
+
+        ColorStateList csl = new ColorStateList(
+                new int[][]{new int[]{android.R.attr.state_checked}, new int[]{-android.R.attr.state_checked}},
+                new int[]{getResources().getColor(R.color.colorPrimary), getResources().getColor(textColor)});
+        navigationView.setItemTextColor(csl);
+        navigationView.setItemIconTintList(csl);
+    }
+
     // Method used to set the typeface of items within menu
     private void setMenuTypeface(MenuItem menuItem) {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Regular.otf");
         SpannableString newTitle = new SpannableString(menuItem.getTitle());
         newTitle.setSpan(new CustomTypeFaceSpan("", font), 0, newTitle.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         menuItem.setTitle(newTitle);
-    }
-
-    private void setFragment(Fragment fragment) {
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     // Set grade in Navigation Menu
@@ -255,12 +270,10 @@ public class MainActivity extends AppCompatActivity
         String grade;
         int hyperglycemicCount = 0;
         int hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
-        Log.i(TAG, "getGlucoseGrade: " + hyperglycemicIndex);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -3);
         Date threeDaysAgo = calendar.getTime();
         RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        Log.i(TAG, "getGlucoseGrade - glucoseFromLastThreeDays: " + entriesFromLastThreeDays.toString());
         for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
             /*
             * Less than 3 hyperglycemic sugars and A+
@@ -271,9 +284,9 @@ public class MainActivity extends AppCompatActivity
             * etc...
             * */
             EntryItem currentItem = entriesFromLastThreeDays.get(position);
+            assert currentItem != null;
             if (currentItem.getBloodGlucose() > hyperglycemicIndex) {
                 hyperglycemicCount++;
-                Log.i(TAG, "getGlucoseGrade - hyperglycemicCount: " + hyperglycemicCount);
             }
         }
         if (hyperglycemicCount == 0) {
@@ -305,7 +318,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             grade = "F";
         }
-        Log.i(TAG, "getGlucoseGrade - grade: " + grade);
         return grade;
     }
 }

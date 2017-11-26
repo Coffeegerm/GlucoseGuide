@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017 Coffee and Cream Studios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.coffeegerm.materiallogbook.activity;
 
 import android.app.DatePickerDialog;
@@ -8,13 +24,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,18 +40,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.utils.Constants;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
@@ -52,7 +64,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeStri
 public class EditEntryActivity extends AppCompatActivity {
 
     public static final String ITEM_ID = "itemId";
-    private static final String TAG = "EditEntryActivity";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.cancel)
@@ -178,7 +189,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 updatedBloodGlucose = Integer.parseInt(editable.toString());
-                Log.i(TAG, "afterTextChanged bloodGlucose: " + editable);
             }
         });
 
@@ -196,7 +206,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 updatedCarbohydrates = Integer.parseInt(editable.toString());
-                Log.i(TAG, "afterTextChanged carbohydrates: " + editable);
             }
         });
 
@@ -214,7 +223,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 updatedInsulin = Double.parseDouble(editable.toString());
-                Log.i(TAG, "afterTextChanged insulin: " + editable);
             }
         });
 
@@ -238,7 +246,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updatedStatus = 2;
-                Log.i(TAG, "status: " + updatedStatus);
                 setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT);
                 toast.show();
@@ -255,7 +262,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updatedStatus = 3;
-                Log.i(TAG, "status: " + updatedStatus);
                 setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Dinner", Toast.LENGTH_SHORT);
                 toast.show();
@@ -272,7 +278,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updatedStatus = 4;
-                Log.i(TAG, "status: " + updatedStatus);
                 setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Sick", Toast.LENGTH_SHORT);
                 toast.show();
@@ -289,7 +294,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updatedStatus = 5;
-                Log.i(TAG, "status: " + updatedStatus);
                 setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Exercise", Toast.LENGTH_SHORT);
                 toast.show();
@@ -306,7 +310,6 @@ public class EditEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updatedStatus = 6;
-                Log.i(TAG, "status: " + updatedStatus);
                 setStatus(updatedStatus);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Sweets", Toast.LENGTH_SHORT);
                 toast.show();
@@ -336,7 +339,7 @@ public class EditEntryActivity extends AppCompatActivity {
                                 // continue with delete
                                 realm.executeTransaction(new Realm.Transaction() {
                                     @Override
-                                    public void execute(Realm realm) {
+                                    public void execute(@NonNull Realm realm) {
                                         item.deleteFromRealm();
                                         Toast.makeText(EditEntryActivity.this, R.string.entry_deleted, Toast.LENGTH_SHORT).show();
                                         finish();

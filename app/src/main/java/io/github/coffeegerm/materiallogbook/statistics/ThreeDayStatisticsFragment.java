@@ -1,9 +1,25 @@
+/*
+ * Copyright 2017 Coffee and Cream Studios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.coffeegerm.materiallogbook.statistics;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +49,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGluc
  */
 
 public class ThreeDayStatisticsFragment extends Fragment {
-    private static final String TAG = "ThreeDaysStatistics";
 
     @BindView(R.id.three_days_average)
     TextView average;
@@ -55,11 +70,11 @@ public class ThreeDayStatisticsFragment extends Fragment {
     int hyperglycemicIndex;
     int hypoglycemicIndex;
 
-    public static ThreeDayStatisticsFragment newInstance(int pageNumber, String pageTitle) {
+    public static ThreeDayStatisticsFragment newInstance() {
         ThreeDayStatisticsFragment threeDayStatisticsFragment = new ThreeDayStatisticsFragment();
         Bundle args = new Bundle();
-        args.putInt("pageNumber", pageNumber);
-        args.putString("pageTitle", pageTitle);
+        args.putInt("pageNumber", 0);
+        args.putString("pageTitle", "Three Days");
         threeDayStatisticsFragment.setArguments(args);
         return threeDayStatisticsFragment;
     }
@@ -73,16 +88,14 @@ public class ThreeDayStatisticsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View threeDaysStatisticsView = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
         ButterKnife.bind(this, threeDaysStatisticsView);
         realm = Realm.getDefaultInstance();
         setValues();
         setImages();
         hyperglycemicIndex = MainActivity.sharedPreferences.getInt("hyperglycemicIndex", 0);
-        Log.i(TAG, "hyperglycemicIndex: " + hyperglycemicIndex);
         hypoglycemicIndex = MainActivity.sharedPreferences.getInt("hypoglycemicIndex", 0);
-        Log.i(TAG, "hypoglycemicIndex: " + hypoglycemicIndex);
         return threeDaysStatisticsView;
     }
 

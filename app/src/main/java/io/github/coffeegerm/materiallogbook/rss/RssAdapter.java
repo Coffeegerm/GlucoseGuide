@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017 Coffee and Cream Studios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.coffeegerm.materiallogbook.rss;
 
 import android.annotation.SuppressLint;
@@ -14,13 +30,13 @@ import android.widget.TextView;
 
 import com.prof.rssparser.Article;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
+import timber.log.Timber;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 
@@ -47,12 +63,11 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> 
 
     void setNewsList(ArrayList<Article> articles) {
         this.articleList = articles;
-        Log.i(TAG, "articles set");
+        Timber.i("Articles set");
     }
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.i(TAG, "View inflated");
         return new NewsViewHolder(inflater.inflate(R.layout.item_rss_list, parent, false));
     }
 
@@ -87,7 +102,6 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> 
                 alertDialog.show();
             }
         });
-        Log.i(TAG, "Item Bound");
     }
 
     @Override

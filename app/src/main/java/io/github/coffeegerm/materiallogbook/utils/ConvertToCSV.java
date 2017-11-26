@@ -1,9 +1,24 @@
+/*
+ * Copyright 2017 Coffee and Cream Studios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.coffeegerm.materiallogbook.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Environment;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,8 +46,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_H
  */
 
 public final class ConvertToCSV {
-
-    private static final String TAG = "ConvertToCSV";
 
     private final Context context;
     private final Realm realm;
@@ -96,13 +109,11 @@ public final class ConvertToCSV {
                     }
 
                     outputStreamWriter.flush();
-                } catch (Exception e) {
-                    Log.e(TAG, "Error exporting entries", e);
+                } catch (Exception ignored) {
                 } finally {
                     if (outputStreamWriter != null) outputStreamWriter.close();
                     if (fileOutputStream != null) fileOutputStream.close();
                 }
-                Log.i(TAG, "Successfully exported entries");
             }
             realm.close();
             return file == null ? null : file.getPath();

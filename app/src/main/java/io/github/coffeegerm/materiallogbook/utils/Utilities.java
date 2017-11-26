@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017 Coffee and Cream Studios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.coffeegerm.materiallogbook.utils;
 
 import java.util.Date;
@@ -46,6 +62,7 @@ public final class Utilities {
         RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll();
         for (int position = 0; position < entriesFromLastThreeMonths.size(); position++) {
             EntryItem currentItem = entriesFromLastThreeMonths.get(position);
+            assert currentItem != null;
             if (currentItem.getBloodGlucose() > highest) {
                 highest = currentItem.getBloodGlucose();
             }
@@ -59,6 +76,7 @@ public final class Utilities {
         RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll();
         for (int position = 0; position < entriesFromLastThreeMonths.size(); position++) {
             EntryItem currentItem = entriesFromLastThreeMonths.get(position);
+            assert currentItem != null;
             total += currentItem.getBloodGlucose();
         }
         return total / entriesFromLastThreeMonths.size();
@@ -70,6 +88,7 @@ public final class Utilities {
         RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll();
         for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
             EntryItem currentItem = entriesFromLastThreeDays.get(position);
+            assert currentItem != null;
             if (currentItem.getBloodGlucose() < lowest) {
                 lowest = currentItem.getBloodGlucose();
             }

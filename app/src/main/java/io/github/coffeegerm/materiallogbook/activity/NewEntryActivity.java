@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017 Coffee and Cream Studios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.coffeegerm.materiallogbook.activity;
 
 import android.app.AlarmManager;
@@ -14,12 +30,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -55,7 +71,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeStri
 
 public class NewEntryActivity extends AppCompatActivity {
 
-    private static final String TAG = "NewEntryActivity";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.cancelBtn)
@@ -101,7 +116,6 @@ public class NewEntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate: NewEntryActivity started");
         if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_new_entry);
@@ -193,13 +207,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        breakfast.setOnClickListener(new View.OnClickListener()
-
-        {
+        breakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 1;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Breakfast", Toast.LENGTH_SHORT);
                 toast.show();
@@ -212,13 +223,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        lunch.setOnClickListener(new View.OnClickListener()
-
-        {
+        lunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 2;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT);
                 toast.show();
@@ -231,13 +239,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        dinner.setOnClickListener(new View.OnClickListener()
-
-        {
+        dinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 3;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Dinner", Toast.LENGTH_SHORT);
                 toast.show();
@@ -250,13 +255,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        sick.setOnClickListener(new View.OnClickListener()
-
-        {
+        sick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 4;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Sick", Toast.LENGTH_SHORT);
                 toast.show();
@@ -269,13 +271,10 @@ public class NewEntryActivity extends AppCompatActivity {
             }
         });
 
-        exercise.setOnClickListener(new View.OnClickListener()
-
-        {
+        exercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 status = 5;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Exercise", Toast.LENGTH_SHORT);
                 toast.show();
@@ -294,7 +293,6 @@ public class NewEntryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 status = 6;
-                Log.i(TAG, "status: " + status);
                 statusButtonCheck(status);
                 final Toast toast = Toast.makeText(getApplicationContext(), "Sweets", Toast.LENGTH_SHORT);
                 toast.show();
@@ -339,7 +337,7 @@ public class NewEntryActivity extends AppCompatActivity {
         else {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
-                public void execute(Realm realm) {
+                public void execute(@NonNull Realm realm) {
                     // Save Entry to database
                     EntryItem entryItem = NewEntryActivity.this.realm.createObject(EntryItem.class);
                     // Creates Date object made from the DatePicker and TimePicker
@@ -498,7 +496,6 @@ public class NewEntryActivity extends AppCompatActivity {
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true)
                 .setContentIntent(newEntryActivityPendingIntent);
-        Log.i(TAG, "notification built");
         return builder.build();
     }
 

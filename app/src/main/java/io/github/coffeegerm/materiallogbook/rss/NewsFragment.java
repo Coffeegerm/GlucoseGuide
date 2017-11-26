@@ -1,3 +1,19 @@
+/*
+ * Copyright 2017 Coffee and Cream Studios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.coffeegerm.materiallogbook.rss;
 
 import android.os.Bundle;
@@ -7,7 +23,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +48,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.ARTICLE_LINK;
 
 public class NewsFragment extends Fragment {
 
-    private static final String TAG = "NewsFragment";
-
     @BindView(R.id.newsRecView)
     RecyclerView newsRecyclerView;
     @BindView(R.id.newsSwipeRefresh)
@@ -52,7 +65,7 @@ public class NewsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rssAdapter = new RssAdapter(getActivity());
@@ -68,12 +81,9 @@ public class NewsFragment extends Fragment {
         parser.onFinish(new Parser.OnTaskCompleted() {
             @Override
             public void onTaskCompleted(ArrayList<Article> list) {
-                Log.i(TAG, "News successfully loaded");
                 progressBar.setVisibility(View.GONE);
                 rssAdapter.setNewsList(list);
-                Log.i(TAG, "News List Set");
                 rssAdapter.notifyDataSetChanged();
-                Log.i(TAG, "notifyDataSetChanged");
                 newsSwipeRefresh.setRefreshing(false);
             }
 
@@ -81,7 +91,6 @@ public class NewsFragment extends Fragment {
             public void onError() {
                 progressBar.setVisibility(View.GONE);
                 newsSwipeRefresh.setRefreshing(false);
-                Log.i(TAG, "Error loading news feed");
                 Toast.makeText(getContext(), "Error loading feed, swipe down to try again.", Toast.LENGTH_SHORT).show();
             }
         });
