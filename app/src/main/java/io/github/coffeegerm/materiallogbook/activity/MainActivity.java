@@ -213,17 +213,17 @@ public class MainActivity extends AppCompatActivity
         sidebarParameters.width = navViewWidth;
 
         // Changes fonts within drawer layout
-        Menu m = navigationView.getMenu();
-        for (int i = 0; i < m.size(); i++) {
-            MenuItem mi = m.getItem(i);
-            SubMenu subMenu = mi.getSubMenu();
+        Menu menu = navigationView.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            SubMenu subMenu = menuItem.getSubMenu();
             if (subMenu != null && subMenu.size() > 0) {
                 for (int j = 0; j < subMenu.size(); j++) {
                     MenuItem subMenuItem = subMenu.getItem(j);
                     setMenuTypeface(subMenuItem);
                 }
             }
-            setMenuTypeface(mi);
+            setMenuTypeface(menuItem);
         }
     }
 
