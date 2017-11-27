@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Coffee and Cream Studios
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +30,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorPrimary" />
+            android:background="@color/colorPrimary" />
 
     </android.support.design.widget.AppBarLayout>
 

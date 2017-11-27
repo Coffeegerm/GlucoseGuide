@@ -27,7 +27,6 @@
         android:layout_marginEnd="@dimen/stats_cardview_start_end_margins"
         android:layout_marginStart="@dimen/stats_cardview_start_end_margins"
         android:layout_marginTop="16dp"
-        android:elevation="@dimen/item_card_elevation"
         app:cardElevation="@dimen/item_card_elevation">
 
         <LinearLayout
@@ -86,7 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/stats_cardview_start_end_margins"
         android:layout_marginStart="@dimen/stats_cardview_start_end_margins"
-        android:elevation="@dimen/item_card_elevation"
         app:cardElevation="@dimen/item_card_elevation">
 
         <LinearLayout
@@ -145,7 +143,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/stats_cardview_start_end_margins"
         android:layout_marginStart="@dimen/stats_cardview_start_end_margins"
-        android:elevation="@dimen/item_card_elevation"
         app:cardElevation="@dimen/item_card_elevation">
 
         <LinearLayout
