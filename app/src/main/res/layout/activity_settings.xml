@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Coffee and Cream Studios
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,12 +43,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+    <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/avenir_regular"
         android:text="@string/settings_dark_mode"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -100,12 +100,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/data_section" />
 
-    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+    <TextView
         android:id="@+id/ui_section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/avenir_demi_bold"
         android:text="@string/ui"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_appbar" />
@@ -123,7 +124,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/line1">
 
-        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+        <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,6 +132,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/avenir_demi_bold"
             android:text="@string/treatment"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -141,11 +143,12 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/avenir_medium"
             android:text=">"
             android:textSize="20sp" />
 
@@ -161,13 +164,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line2">
 
-        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:fontFamily="@font/avenir_demi_bold"
             android:text="@string/data"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -178,21 +182,23 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/avenir_medium"
             android:text=">"
             android:textSize="20sp" />
 
     </LinearLayout>
 
-    <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:fontFamily="@font/avenir_regular"
         android:text="@string/military_time_description"
         android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/military_time_switch"
