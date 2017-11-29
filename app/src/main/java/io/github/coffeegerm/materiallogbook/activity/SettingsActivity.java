@@ -18,12 +18,12 @@ package io.github.coffeegerm.materiallogbook.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +32,11 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium;
 
@@ -49,7 +52,9 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private static final String TAG = "SettingsActivity";
+    @Inject
+    public SharedPreferences sharedPreferences;
+
     @BindView(R.id.toggle_dark_mode)
     Switch toggleDarkMode;
     @BindView(R.id.military_time_switch)
@@ -66,7 +71,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
+        MaterialLogbookApplication.syringe.inject(this);
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
@@ -92,20 +98,20 @@ public class SettingsActivity extends AppCompatActivity {
     public void initView() {
         setupToolbar();
 
-        toggleDarkMode.setChecked(MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false));
+        toggleDarkMode.setChecked(sharedPreferences.getBoolean(PREF_DARK_MODE, false));
         toggleDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MainActivity.sharedPreferences.edit().putBoolean(PREF_DARK_MODE, isChecked).apply();
+                sharedPreferences.edit().putBoolean(PREF_DARK_MODE, isChecked).apply();
                 recreate();
             }
         });
 
-        militaryTimeSwitch.setChecked(MainActivity.sharedPreferences.getBoolean(MILITARY_TIME, false));
+        militaryTimeSwitch.setChecked(sharedPreferences.getBoolean(MILITARY_TIME, false));
         militaryTimeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                MainActivity.sharedPreferences.edit().putBoolean(MILITARY_TIME, isChecked).apply();
+                sharedPreferences.edit().putBoolean(MILITARY_TIME, isChecked).apply();
             }
         });
 

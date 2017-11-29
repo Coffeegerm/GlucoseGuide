@@ -23,6 +23,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -49,14 +50,16 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
 import io.realm.Realm;
 
-import static io.github.coffeegerm.materiallogbook.activity.MainActivity.sharedPreferences;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;
@@ -70,6 +73,9 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeStri
  */
 
 public class NewEntryActivity extends AppCompatActivity {
+
+    @Inject
+    public SharedPreferences sharedPreferences;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -116,6 +122,7 @@ public class NewEntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MaterialLogbookApplication.syringe.inject(this);
         if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_new_entry);

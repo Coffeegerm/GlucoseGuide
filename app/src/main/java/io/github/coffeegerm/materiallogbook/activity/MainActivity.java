@@ -22,7 +22,6 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -49,6 +48,8 @@ import com.instabug.library.Instabug;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
@@ -60,6 +61,7 @@ import io.github.coffeegerm.materiallogbook.utils.CustomTypeFaceSpan;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+import static io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.syringe;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
 /**
@@ -70,7 +72,8 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static SharedPreferences sharedPreferences;
+    @Inject
+    public SharedPreferences sharedPreferences;
     public static boolean isResumed = false;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();
@@ -92,9 +95,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark);
         super.onCreate(savedInstanceState);
+        syringe.inject(this);
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_main);
         isCreated = true;
         ButterKnife.bind(this);

@@ -16,6 +16,7 @@
 
 package io.github.coffeegerm.materiallogbook.statistics;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,10 +30,12 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -49,6 +52,9 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGluc
  */
 
 public class ThreeDayStatisticsFragment extends Fragment {
+
+    @Inject
+    public SharedPreferences sharedPreferences;
 
     @BindView(R.id.three_days_average)
     TextView average;
@@ -82,6 +88,7 @@ public class ThreeDayStatisticsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MaterialLogbookApplication.syringe.inject(this);
         pageTitle = getArguments().getString("pageTitle");
         pageNumber = getArguments().getInt("pageNumber");
     }
@@ -94,8 +101,8 @@ public class ThreeDayStatisticsFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         setValues();
         setImages();
-        hyperglycemicIndex = MainActivity.sharedPreferences.getInt("hyperglycemicIndex", 0);
-        hypoglycemicIndex = MainActivity.sharedPreferences.getInt("hypoglycemicIndex", 0);
+        hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
+        hypoglycemicIndex = sharedPreferences.getInt("hypoglycemicIndex", 0);
         return threeDaysStatisticsView;
     }
 
@@ -122,7 +129,7 @@ public class ThreeDayStatisticsFragment extends Fragment {
     }
 
     private void setImages() {
-        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+        if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
             ivAvg.setImageResource(R.drawable.ic_average_dark);
             ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);

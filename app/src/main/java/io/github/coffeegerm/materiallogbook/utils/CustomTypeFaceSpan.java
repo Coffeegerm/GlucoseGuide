@@ -21,10 +21,6 @@ import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.TypefaceSpan;
 
-/**
- * Created by dyarz on 9/2/2017.
- */
-
 public class CustomTypeFaceSpan extends TypefaceSpan {
     private final Typeface newType;
 

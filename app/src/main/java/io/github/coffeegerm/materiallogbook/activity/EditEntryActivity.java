@@ -19,6 +19,7 @@ package io.github.coffeegerm.materiallogbook.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -43,8 +44,11 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
@@ -62,6 +66,9 @@ import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeStri
  */
 
 public class EditEntryActivity extends AppCompatActivity {
+
+    @Inject
+    public SharedPreferences sharedPreferences;
 
     public static final String ITEM_ID = "itemId";
     @BindView(R.id.toolbar)
@@ -115,7 +122,8 @@ public class EditEntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false))
+        MaterialLogbookApplication.syringe.inject(this);
+        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark);
         setContentView(R.layout.activity_edit_entry);
         ButterKnife.bind(this);

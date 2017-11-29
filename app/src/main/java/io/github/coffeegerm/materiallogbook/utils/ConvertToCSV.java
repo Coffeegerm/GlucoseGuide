@@ -17,6 +17,7 @@
 package io.github.coffeegerm.materiallogbook.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Environment;
 
@@ -27,8 +28,10 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -47,6 +50,9 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_H
 
 public final class ConvertToCSV {
 
+    @Inject
+    public SharedPreferences sharedPreferences;
+
     private final Context context;
     private final Realm realm;
     private final SimpleDateFormat dateFormat = DATE_FORMAT;
@@ -56,6 +62,7 @@ public final class ConvertToCSV {
     public ConvertToCSV(Context context) {
         this.context = context;
         realm = Realm.getDefaultInstance();
+        MaterialLogbookApplication.syringe.inject(this);
     }
 
     public String createCSVFile() {
@@ -91,7 +98,7 @@ public final class ConvertToCSV {
                     for (int i = 0; i < entryItems.size(); i++) {
                         EntryItem entry = entryItems.get(i);
                         String entryTime;
-                        if (MainActivity.sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
+                        if (sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
                             entryTime = twentyFourHourTimeFormat.format(entry.getDate());
                         } else {
                             entryTime = twelveHourTimeFormat.format(entry.getDate());

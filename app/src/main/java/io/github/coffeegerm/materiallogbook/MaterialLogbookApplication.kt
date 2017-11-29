@@ -19,6 +19,9 @@ package io.github.coffeegerm.materiallogbook
 import android.app.Application
 import com.instabug.library.Instabug
 import com.instabug.library.invocation.InstabugInvocationEvent
+import io.github.coffeegerm.materiallogbook.dagger.AppComponent
+import io.github.coffeegerm.materiallogbook.dagger.AppModule
+import io.github.coffeegerm.materiallogbook.dagger.DaggerAppComponent
 import io.github.coffeegerm.materiallogbook.utils.Constants.INSTABUG_KEY
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -34,10 +37,15 @@ import timber.log.Timber
 
 class MaterialLogbookApplication : Application() {
 
+    companion object {
+        lateinit var syringe: AppComponent
+    }
+
     override fun onCreate() {
         super.onCreate()
         buildInstabug()
         initRealm()
+        syringe = DaggerAppComponent.builder().appModule(AppModule(this)).build()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

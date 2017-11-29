@@ -20,7 +20,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +46,6 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
  */
 
 public class RssAdapter extends RecyclerView.Adapter<RssAdapter.NewsViewHolder> {
-
-    private static final String TAG = "NewsFragmentAdapter";
 
     private final static String NON_THIN = "[^iIl1.,']";
     private LayoutInflater inflater;

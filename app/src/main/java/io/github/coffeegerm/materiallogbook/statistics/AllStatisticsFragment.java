@@ -16,6 +16,7 @@
 
 package io.github.coffeegerm.materiallogbook.statistics;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,11 +26,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -42,6 +46,9 @@ import io.realm.RealmResults;
  */
 
 public class AllStatisticsFragment extends Fragment {
+
+    @Inject
+    public SharedPreferences sharedPreferences;
 
     @BindView(R.id.all_days_statistics_average)
     TextView averageBloodGlucose;
@@ -71,6 +78,7 @@ public class AllStatisticsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MaterialLogbookApplication.syringe.inject(this);
         pageTitle = getArguments().getString("pageTitle");
         pageNumber = getArguments().getInt("pageNumber");
     }
@@ -103,6 +111,7 @@ public class AllStatisticsFragment extends Fragment {
         int averageCalculated = 0;
         RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
         if (entryItems.size() == 0) {
+            Toast.makeText(getContext(), "Unable to show data at this time.", Toast.LENGTH_SHORT).show();
         } else {
             int total = 0;
             for (int position = 0; position < entryItems.size(); position++) {
@@ -143,7 +152,7 @@ public class AllStatisticsFragment extends Fragment {
     }
 
     private void setImages() {
-        if (MainActivity.sharedPreferences.getBoolean("pref_dark_mode", false)) {
+        if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
             ivAvg.setImageResource(R.drawable.ic_average_dark);
             ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
             ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);

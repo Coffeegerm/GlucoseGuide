@@ -16,15 +16,18 @@
 
 package io.github.coffeegerm.materiallogbook.activity
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication
 import io.github.coffeegerm.materiallogbook.R
 import io.github.coffeegerm.materiallogbook.model.EntryItem
 import io.github.coffeegerm.materiallogbook.utils.Constants
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_settings_data.*
+import javax.inject.Inject
 
 /**
  * Created by david_yarz on 11/8/17.
@@ -38,11 +41,15 @@ import kotlinx.android.synthetic.main.activity_settings_data.*
 
 class SettingsDataActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
     private var realm: Realm? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (MainActivity.sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
+        MaterialLogbookApplication.syringe.inject(this)
+        if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
             setTheme(R.style.AppTheme_Dark)
         setContentView(R.layout.activity_settings_data)
         init()

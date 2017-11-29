@@ -26,6 +26,7 @@ import java.util.Locale;
  */
 
 public class Constants {
+    public static final String SHARED_PREFERENCES = "SHARED_PREFERENCES";
     public static final String PREF_DARK_MODE = "pref_dark_mode";
     public static final String HYPERGLYCEMIC_INDEX = "hyperglycemicIndex";
     public static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";

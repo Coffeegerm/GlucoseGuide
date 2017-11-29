@@ -18,6 +18,7 @@ package io.github.coffeegerm.materiallogbook.list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,13 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.activity.EditEntryActivity;
-import io.github.coffeegerm.materiallogbook.activity.MainActivity;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Constants;
 
@@ -50,6 +53,9 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_H
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
 
+    @Inject
+    public SharedPreferences sharedPreferences;
+
     private static int shortClickHintCount = 0;
     private LayoutInflater inflater;
     private Context context;
@@ -59,6 +65,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     ListAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
         this.context = context;
+        MaterialLogbookApplication.syringe.inject(this);
     }
 
     public void setListItems(List<EntryItem> providedList) {
@@ -98,7 +105,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             this.view = itemView;
             ButterKnife.bind(this, itemView);
 
-            if (MainActivity.sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
+            if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
                 ivFinger.setImageResource(R.drawable.ic_finger_dark);
                 ivCarbs.setImageResource(R.drawable.ic_food_dark);
                 ivInsulin.setImageResource(R.drawable.ic_syringe_dark);
@@ -133,7 +140,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         }
 
         // Set time based on user preference
-        if (MainActivity.sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
+        if (sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
             holder.time.setText(TWENTY_FOUR_HOUR_TIME_FORMAT.format(item.getDate()));
         } else {
             holder.time.setText(TWELVE_HOUR_TIME_FORMAT.format(item.getDate()));
