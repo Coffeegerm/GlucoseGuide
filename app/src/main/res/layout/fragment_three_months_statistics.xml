@@ -41,7 +41,7 @@
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_average" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            <TextView
                 android:id="@+id/three_days_average_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,6 +49,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/avenir_regular"
                 android:text="@string/average"
                 android:textSize="18sp" />
 
@@ -57,12 +58,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+            <TextView
                 android:id="@+id/average"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/avenir_medium"
                 android:textSize="18sp" />
 
 
@@ -99,7 +101,7 @@
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_up_arrow" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            <TextView
                 android:id="@+id/three_days_highest_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -107,6 +109,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/avenir_regular"
                 android:text="@string/highest_of_all"
                 android:textSize="18sp" />
 
@@ -115,12 +118,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+            <TextView
                 android:id="@+id/highest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/avenir_medium"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -157,7 +161,7 @@
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_down_arrow" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            <TextView
                 android:id="@+id/three_days_lowest_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,6 +169,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/avenir_regular"
                 android:text="@string/lowest_of_all"
                 android:textSize="18sp" />
 
@@ -173,12 +178,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+            <TextView
                 android:id="@+id/lowest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/avenir_medium"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -214,13 +220,14 @@
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_a1c_light" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/avenir_regular"
                 android:text="@string/estimated_a1c"
                 android:textSize="18sp" />
 
@@ -229,12 +236,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium
+            <TextView
                 android:id="@+id/a_one_c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="16dp"
+                android:fontFamily="@font/avenir_medium"
                 android:textSize="18sp" />
 
         </LinearLayout>

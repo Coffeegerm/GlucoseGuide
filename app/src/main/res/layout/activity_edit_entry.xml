@@ -118,11 +118,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+            <TextView
                 android:id="@+id/new_entry_date_time_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/avenir_demi_bold"
                 android:text="@string/new_entry_date_and_time_label"
                 android:textSize="18sp" />
 
@@ -137,6 +138,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:focusable="false"
+                android:fontFamily="@font/avenir_regular"
                 android:gravity="end"
                 android:hint="@string/date"
                 android:inputType="date"
@@ -150,6 +152,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:focusable="false"
+                android:fontFamily="@font/avenir_regular"
                 android:gravity="end"
                 android:hint="@string/time"
                 android:inputType="datetime"
@@ -161,11 +164,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+            <TextView
                 android:id="@+id/new_entry_glucose_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/avenir_demi_bold"
                 android:text="@string/new_entry_blood_glucose_label"
                 android:textSize="18sp" />
 
@@ -176,16 +180,18 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="50dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/avenir_regular"
                 android:gravity="end"
                 android:inputType="number"
                 android:maxLength="4"
                 android:textSize="18sp" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="2dp"
+                android:fontFamily="@font/avenir_regular"
                 android:labelFor="@+id/new_entry_blood_glucose_level"
                 android:text="@string/blood_glucose_measurement"
                 android:textSize="16sp" />
@@ -196,11 +202,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+            <TextView
                 android:id="@+id/new_entry_carbs_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/avenir_demi_bold"
                 android:text="@string/new_entry_carbohydrates_label"
                 android:textSize="18sp" />
 
@@ -212,16 +219,18 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="50dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/avenir_regular"
                 android:gravity="end"
                 android:inputType="number"
                 android:maxLength="4"
                 android:textSize="18sp" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="2dp"
+                android:fontFamily="@font/avenir_regular"
                 android:labelFor="@+id/new_entry_carbohydrates_amount"
                 android:text="@string/carbs_measurement"
                 android:textSize="16sp" />
@@ -233,11 +242,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+            <TextView
                 android:id="@+id/new_entry_insulin_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/avenir_demi_bold"
                 android:text="@string/new_entry_insulin_label"
                 android:textSize="18sp" />
 
@@ -248,16 +258,18 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="120dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/avenir_regular"
                 android:gravity="end"
                 android:inputType="numberDecimal"
                 android:maxLength="4"
                 android:textSize="18sp" />
 
-            <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="2dp"
+                android:fontFamily="@font/avenir_regular"
                 android:labelFor="@+id/new_entry_insulin_units"
                 android:text="@string/insulin_measurement"
                 android:textSize="16sp" />
@@ -273,10 +285,11 @@
         android:layout_marginBottom="16dp"
         android:orientation="horizontal">
 
-        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/avenir_regular"
             android:text="@string/delete_single_entry"
             android:textSize="18sp" />
 
@@ -285,11 +298,12 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <io.github.coffeegerm.materiallogbook.utils.AvenirRegularDemiBold
+        <TextView
             android:id="@+id/delete_entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/avenir_demi_bold"
             android:text="@string/delete"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="18sp" />
@@ -310,6 +324,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/avenir_bold"
             android:text="@string/cancel" />
 
         <Button
@@ -318,16 +333,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/avenir_bold"
             android:text="@string/update" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/itemId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="" />
 
 </RelativeLayout>

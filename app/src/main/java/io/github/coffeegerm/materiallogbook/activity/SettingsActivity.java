@@ -31,6 +31,7 @@ import android.webkit.WebView;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -38,7 +39,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.utils.AvenirRegularMedium;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.MILITARY_TIME;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PAYPAL_URL;
@@ -142,8 +142,8 @@ public class SettingsActivity extends AppCompatActivity {
     private void showTipjar() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         @SuppressLint("InflateParams") final View tipjarView = getLayoutInflater().inflate(R.layout.tipjar_prompt, null);
-        final AvenirRegularMedium no = tipjarView.findViewById(R.id.tipjar_no);
-        final AvenirRegularMedium yes = tipjarView.findViewById(R.id.tipjar_yes);
+        final TextView no = tipjarView.findViewById(R.id.tipjar_no);
+        final TextView yes = tipjarView.findViewById(R.id.tipjar_yes);
         builder.setView(tipjarView);
         final AlertDialog dialog = builder.create();
         dialog.show();
