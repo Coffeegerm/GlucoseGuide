@@ -16,11 +16,13 @@
 
 package io.github.coffeegerm.materiallogbook.activity;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -42,8 +44,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.instabug.library.Instabug;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -88,8 +89,8 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
     @BindView(R.id.appBarLayout)
     AppBarLayout appBarLayout;
-    @BindView(R.id.invoke_instabug)
-    TextView instabug;
+    @BindView(R.id.feedback)
+    TextView feedback;
     private Realm realm;
     private boolean isCreated = false;
 
@@ -109,18 +110,13 @@ public class MainActivity extends AppCompatActivity
         fragmentManager = getSupportFragmentManager();
         if (isCreated && !isResumed) setFragment(listFragment);
 
-        instabug.setOnClickListener(new View.OnClickListener() {
+        feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                instabug.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Instabug.invoke();
-                    }
-                }, 300);
+                sendFeedbackEmail();
             }
         });
+
         setGlucoseGrade();
     }
 
@@ -322,5 +318,20 @@ public class MainActivity extends AppCompatActivity
             grade = "F";
         }
         return grade;
+    }
+
+    private void sendFeedbackEmail() {
+        String mailto = "mailto:coffeeandcreamstudios@gmail.com";
+
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse(mailto));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Material Logbook feedback");
+
+        try {
+            startActivity(emailIntent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "Unable to send email, please try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
