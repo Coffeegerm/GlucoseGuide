@@ -52,10 +52,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.NewEntryActivity" />
-        <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.EditEntryActivity" />
         <activity android:name=".activity.SettingsTreatmentActivity" />
         <activity android:name=".activity.SettingsDataActivity" />
+        <activity android:name=".activity.SettingsActivity" />
 
         <receiver android:name=".utils.NotificationPublisher" />
     </application>
