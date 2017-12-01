@@ -58,13 +58,13 @@ import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
+import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
 
 /**
  * Created by David Yarzebinski on 6/25/2017.
@@ -76,6 +76,9 @@ public class NewEntryActivity extends AppCompatActivity {
 
     @Inject
     public SharedPreferences sharedPreferences;
+
+    @Inject
+    public Utilities utilities;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -145,7 +148,7 @@ public class NewEntryActivity extends AppCompatActivity {
         int minute = calendar.get(Calendar.MINUTE);
 
         date.setText(dateFix(month, day, year));
-        time.setText(checkTimeString(hour, minute));
+        time.setText(utilities.checkTimeString(hour, minute));
 
         carbohydrates.addTextChangedListener(new TextWatcher() {
             @Override
@@ -202,7 +205,7 @@ public class NewEntryActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                time.setText(checkTimeString(hourOfDay, minute));
+                                time.setText(utilities.checkTimeString(hourOfDay, minute));
                                 calendarToBeSaved.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 calendarToBeSaved.set(Calendar.MINUTE, minute);
                             }
@@ -469,7 +472,7 @@ public class NewEntryActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         alarmCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         alarmCalendar.set(Calendar.MINUTE, minute);
-                        reminder.setText(checkTimeString(hourOfDay, minute));
+                        reminder.setText(utilities.checkTimeString(hourOfDay, minute));
                         wantsReminder = true;
                     }
                 }, hour, minute, false);

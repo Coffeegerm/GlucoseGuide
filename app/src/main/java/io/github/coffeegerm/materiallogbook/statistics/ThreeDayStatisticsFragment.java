@@ -37,12 +37,9 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 import io.realm.RealmResults;
-
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getAverageGlucose;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getHighestGlucose;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGlucose;
 
 /**
  * Created by David Yarzebinski on 7/28/2017.
@@ -55,6 +52,9 @@ public class ThreeDayStatisticsFragment extends Fragment {
 
     @Inject
     public SharedPreferences sharedPreferences;
+
+    @Inject
+    public Utilities utilities;
 
     @BindView(R.id.three_days_average)
     TextView average;
@@ -112,9 +112,9 @@ public class ThreeDayStatisticsFragment extends Fragment {
             highest.setText(R.string.dash);
             lowest.setText(R.string.dash);
         } else {
-            average.setText(String.valueOf(getAverageGlucose(getDateThreeDaysAgo())));
-            highest.setText(String.valueOf(getHighestGlucose(getDateThreeDaysAgo())));
-            lowest.setText(String.valueOf(getLowestGlucose(getDateThreeDaysAgo())));
+            average.setText(String.valueOf(utilities.getAverageGlucose(getDateThreeDaysAgo())));
+            highest.setText(String.valueOf(utilities.getHighestGlucose(getDateThreeDaysAgo())));
+            lowest.setText(String.valueOf(utilities.getLowestGlucose(getDateThreeDaysAgo())));
         }
     }
 

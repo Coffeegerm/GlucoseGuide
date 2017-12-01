@@ -37,12 +37,9 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 import io.realm.RealmResults;
-
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getAverageGlucose;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getHighestGlucose;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGlucose;
 
 /**
  * Created by dyarz on 8/15/2017.
@@ -55,6 +52,9 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
 
     @Inject
     public SharedPreferences sharedPreferences;
+
+    @Inject
+    public Utilities utilities;
 
     @BindView(R.id.a_one_c)
     TextView a1c;
@@ -103,15 +103,15 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
             highest.setText(R.string.dash);
             lowest.setText(R.string.dash);
         } else {
-            average.setText(String.valueOf(getAverageGlucose(threeMonthsAgo)));
-            highest.setText(String.valueOf(getHighestGlucose(threeMonthsAgo)));
-            lowest.setText(String.valueOf(getLowestGlucose(threeMonthsAgo)));
+            average.setText(String.valueOf(utilities.getAverageGlucose(threeMonthsAgo)));
+            highest.setText(String.valueOf(utilities.getHighestGlucose(threeMonthsAgo)));
+            lowest.setText(String.valueOf(utilities.getLowestGlucose(threeMonthsAgo)));
         }
 
         if (entriesFromLastThreeMonths.size() < 300) {
             a1c.setText(R.string.dash);
         } else {
-            a1c.setText(String.valueOf(getA1C(getAverageGlucose(threeMonthsAgo))));
+            a1c.setText(String.valueOf(getA1C(utilities.getAverageGlucose(threeMonthsAgo))));
         }
     }
 

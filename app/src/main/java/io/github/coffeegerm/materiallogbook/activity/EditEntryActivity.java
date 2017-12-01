@@ -51,12 +51,12 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.TWELVE_HOUR_TIME_FORMAT;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.checkTimeString;
 
 /**
  * Created by dyarz on 8/17/2017.
@@ -69,6 +69,9 @@ public class EditEntryActivity extends AppCompatActivity {
 
     @Inject
     public SharedPreferences sharedPreferences;
+
+    @Inject
+    public Utilities utilities;
 
     public static final String ITEM_ID = "itemId";
     @BindView(R.id.toolbar)
@@ -171,7 +174,7 @@ public class EditEntryActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                time.setText(checkTimeString(hourOfDay, minute));
+                                time.setText(utilities.checkTimeString(hourOfDay, minute));
                                 updatedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 updatedCalendar.set(Calendar.MINUTE, minute);
                             }

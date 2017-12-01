@@ -37,12 +37,9 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 import io.realm.RealmResults;
-
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getAverageGlucose;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getHighestGlucose;
-import static io.github.coffeegerm.materiallogbook.utils.Utilities.getLowestGlucose;
 
 /**
  * Created by dyarz on 8/15/2017.
@@ -55,6 +52,9 @@ public class OneMonthStatisticsFragment extends Fragment {
 
     @Inject
     public SharedPreferences sharedPreferences;
+
+    @Inject
+    public Utilities utilities;
 
     @BindView(R.id.average)
     TextView average;
@@ -99,9 +99,9 @@ public class OneMonthStatisticsFragment extends Fragment {
             highest.setText(R.string.dash);
             lowest.setText(R.string.dash);
         } else {
-            average.setText(String.valueOf(getAverageGlucose(oneMonthAgo)));
-            highest.setText(String.valueOf(getHighestGlucose(oneMonthAgo)));
-            lowest.setText(String.valueOf(getLowestGlucose(oneMonthAgo)));
+            average.setText(String.valueOf(utilities.getAverageGlucose(oneMonthAgo)));
+            highest.setText(String.valueOf(utilities.getHighestGlucose(oneMonthAgo)));
+            lowest.setText(String.valueOf(utilities.getLowestGlucose(oneMonthAgo)));
         }
     }
 

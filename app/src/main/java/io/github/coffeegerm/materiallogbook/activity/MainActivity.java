@@ -46,21 +46,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.list.ListFragment;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.rss.NewsFragment;
 import io.github.coffeegerm.materiallogbook.statistics.StatisticsFragment;
 import io.github.coffeegerm.materiallogbook.utils.CustomTypeFaceSpan;
+import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 import static io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.syringe;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
@@ -75,6 +71,10 @@ public class MainActivity extends AppCompatActivity
 
     @Inject
     public SharedPreferences sharedPreferences;
+
+    @Inject
+    public Utilities utilities;
+
     public static boolean isResumed = false;
     public int lastSelectedTab;
     Fragment listFragment = new ListFragment();
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity
     AppBarLayout appBarLayout;
     @BindView(R.id.feedback)
     TextView feedback;
-    private Realm realm;
     private boolean isCreated = false;
 
     @Override
@@ -104,7 +103,6 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
-        realm = Realm.getDefaultInstance();
         setDrawerLayout();
         setNavigationView();
         fragmentManager = getSupportFragmentManager();
@@ -166,25 +164,21 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_list:
-                // Swaps fragment to list fragment
                 setFragment(listFragment);
                 lastSelectedTab = R.id.nav_list;
                 break;
 
             case R.id.nav_stats:
-                // Swaps fragment to statistics fragment
                 setFragment(statsFragment);
                 lastSelectedTab = R.id.nav_stats;
                 break;
 
             case R.id.nav_news:
-                //Swaps fragment to news fragment
                 setFragment(newsFragment);
                 lastSelectedTab = R.id.nav_news;
                 break;
 
             case R.id.nav_settings:
-                // Opens up settings activity
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 navigationView.setCheckedItem(lastSelectedTab);
                 break;
@@ -229,13 +223,11 @@ public class MainActivity extends AppCompatActivity
     private void setNavigationView() {
         int textColor;
         if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
-            // DARK MODE
             navigationView.getHeaderView(0).setBackground(getResources()
                     .getDrawable(R.drawable.header_dark));
             navigationView.setBackgroundColor(getResources().getColor(R.color.darkThemeBackground));
             textColor = R.color.textColorPrimaryInverse;
         } else {
-            // LIGHT MODE
             navigationView.getHeaderView(0).setBackground(getResources()
                     .getDrawable(R.drawable.header_light));
             textColor = R.color.textColorPrimary;
@@ -260,69 +252,11 @@ public class MainActivity extends AppCompatActivity
     private void setGlucoseGrade() {
         View header = navigationView.getHeaderView(0);
         TextView glucoseGrade = header.findViewById(R.id.navigation_view_grade);
-        glucoseGrade.setText(getGlucoseGrade());
-    }
-
-    // Calculates the glucose grade based on user
-    // sugar from last three days
-    private String getGlucoseGrade() {
-        String grade;
-        int hyperglycemicCount = 0;
-        int hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -3);
-        Date threeDaysAgo = calendar.getTime();
-        RealmResults<EntryItem> entriesFromLastThreeDays = realm.where(EntryItem.class).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entriesFromLastThreeDays.size(); position++) {
-            /*
-            * Less than 3 hyperglycemic sugars and A+
-            * 4 = A
-            * 5 = A-
-            * 6 = B+
-            * 7 = B
-            * etc...
-            * */
-            EntryItem currentItem = entriesFromLastThreeDays.get(position);
-            assert currentItem != null;
-            if (currentItem.getBloodGlucose() > hyperglycemicIndex) {
-                hyperglycemicCount++;
-            }
-        }
-        if (hyperglycemicCount == 0) {
-            grade = "-";
-        } else if (hyperglycemicCount <= 3) {
-            grade = "A+";
-        } else if (hyperglycemicCount == 4) {
-            grade = "A";
-        } else if (hyperglycemicCount == 5) {
-            grade = "A-";
-        } else if (hyperglycemicCount == 6) {
-            grade = "B+";
-        } else if (hyperglycemicCount == 7) {
-            grade = "B";
-        } else if (hyperglycemicCount == 8) {
-            grade = "B-";
-        } else if (hyperglycemicCount == 9) {
-            grade = "C+";
-        } else if (hyperglycemicCount == 10) {
-            grade = "C";
-        } else if (hyperglycemicCount == 11) {
-            grade = "C-";
-        } else if (hyperglycemicCount == 12) {
-            grade = "D+";
-        } else if (hyperglycemicCount == 13) {
-            grade = "D";
-        } else if (hyperglycemicCount == 14) {
-            grade = "D-";
-        } else {
-            grade = "F";
-        }
-        return grade;
+        glucoseGrade.setText(utilities.getGlucoseGrade());
     }
 
     private void sendFeedbackEmail() {
         String mailto = "mailto:coffeeandcreamstudios@gmail.com";
-
 
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setData(Uri.parse(mailto));

@@ -22,6 +22,7 @@ import io.github.coffeegerm.materiallogbook.list.ListAdapter
 import io.github.coffeegerm.materiallogbook.list.ListFragment
 import io.github.coffeegerm.materiallogbook.statistics.*
 import io.github.coffeegerm.materiallogbook.utils.ConvertToCSV
+import io.github.coffeegerm.materiallogbook.utils.Utilities
 import javax.inject.Singleton
 
 @Singleton
@@ -41,4 +42,5 @@ interface AppComponent {
     fun inject(convertToCSV: ConvertToCSV)
     fun inject(settingsDataActivity: SettingsDataActivity)
     fun inject(settingsTreatmentActivity: SettingsTreatmentActivity)
+    fun inject(utilities: Utilities)
 }
