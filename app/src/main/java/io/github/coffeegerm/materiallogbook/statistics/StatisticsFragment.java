@@ -48,13 +48,9 @@ public class StatisticsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View statsView = inflater.inflate(R.layout.fragment_statistics, container, false);
         ButterKnife.bind(this, statsView);
-        initViewPager();
-        return statsView;
-    }
-
-    private void initViewPager() {
         StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(statisticsPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        return statsView;
     }
 }
