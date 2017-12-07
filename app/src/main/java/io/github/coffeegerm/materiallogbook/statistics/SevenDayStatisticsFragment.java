@@ -49,84 +49,84 @@ import io.realm.RealmResults;
  */
 
 public class SevenDayStatisticsFragment extends Fragment {
-
-    @Inject
-    public SharedPreferences sharedPreferences;
-
-    @Inject
-    public Utilities utilities;
-
-    @BindView(R.id.seven_days_average)
-    TextView average;
-    @BindView(R.id.seven_days_highest)
-    TextView highest;
-    @BindView(R.id.seven_days_lowest)
-    TextView lowest;
-
-    @BindView(R.id.imgAvg)
-    ImageView ivAvg;
-    @BindView(R.id.imgUpArrow)
-    ImageView ivUpArrow;
-    @BindView(R.id.imgDownArrow)
-    ImageView ivDownArrow;
-
-    Realm realm;
-    String pageTitle;
-    int pageNumber;
-
-    public static SevenDayStatisticsFragment newInstance() {
-        SevenDayStatisticsFragment sevenDayStatisticsFragment = new SevenDayStatisticsFragment();
-        Bundle args = new Bundle();
-        args.putInt("pageNumber", 1);
-        args.putString("pageTitle", "Seven Days");
-        sevenDayStatisticsFragment.setArguments(args);
-        return sevenDayStatisticsFragment;
+  
+  @Inject
+  public SharedPreferences sharedPreferences;
+  
+  @Inject
+  public Utilities utilities;
+  
+  @BindView(R.id.seven_days_average)
+  TextView average;
+  @BindView(R.id.seven_days_highest)
+  TextView highest;
+  @BindView(R.id.seven_days_lowest)
+  TextView lowest;
+  
+  @BindView(R.id.imgAvg)
+  ImageView ivAvg;
+  @BindView(R.id.imgUpArrow)
+  ImageView ivUpArrow;
+  @BindView(R.id.imgDownArrow)
+  ImageView ivDownArrow;
+  
+  Realm realm;
+  String pageTitle;
+  int pageNumber;
+  
+  public static SevenDayStatisticsFragment newInstance() {
+    SevenDayStatisticsFragment sevenDayStatisticsFragment = new SevenDayStatisticsFragment();
+    Bundle args = new Bundle();
+    args.putInt("pageNumber", 1);
+    args.putString("pageTitle", "Seven Days");
+    sevenDayStatisticsFragment.setArguments(args);
+    return sevenDayStatisticsFragment;
+  }
+  
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    MaterialLogbookApplication.syringe.inject(this);
+    pageTitle = getArguments().getString("pageTitle");
+    pageNumber = getArguments().getInt("pageNumber");
+  }
+  
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View sevenDaysView = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
+    ButterKnife.bind(this, sevenDaysView);
+    realm = Realm.getDefaultInstance();
+    setValues();
+    setImages();
+    return sevenDaysView;
+  }
+  
+  private void setValues() {
+    Date sevenDaysAgo = getSevenDaysAgo();
+    RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
+    if (entriesFromLastWeek.size() == 0) {
+      average.setText(R.string.dash);
+      highest.setText(R.string.dash);
+      lowest.setText(R.string.dash);
+    } else {
+      average.setText(String.valueOf(utilities.getAverageGlucose(sevenDaysAgo)));
+      highest.setText(String.valueOf(utilities.getHighestGlucose(sevenDaysAgo)));
+      lowest.setText(String.valueOf(utilities.getLowestGlucose(sevenDaysAgo)));
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        MaterialLogbookApplication.syringe.inject(this);
-        pageTitle = getArguments().getString("pageTitle");
-        pageNumber = getArguments().getInt("pageNumber");
+  }
+  
+  public Date getSevenDaysAgo() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(Calendar.DATE, -7);
+    return calendar.getTime();
+  }
+  
+  private void setImages() {
+    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
+      ivAvg.setImageResource(R.drawable.ic_average_dark);
+      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View sevenDaysView = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
-        ButterKnife.bind(this, sevenDaysView);
-        realm = Realm.getDefaultInstance();
-        setValues();
-        setImages();
-        return sevenDaysView;
-    }
-
-    private void setValues() {
-        Date sevenDaysAgo = getSevenDaysAgo();
-        RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-        if (entriesFromLastWeek.size() == 0) {
-            average.setText(R.string.dash);
-            highest.setText(R.string.dash);
-            lowest.setText(R.string.dash);
-        } else {
-            average.setText(String.valueOf(utilities.getAverageGlucose(sevenDaysAgo)));
-            highest.setText(String.valueOf(utilities.getHighestGlucose(sevenDaysAgo)));
-            lowest.setText(String.valueOf(utilities.getLowestGlucose(sevenDaysAgo)));
-        }
-    }
-
-    public Date getSevenDaysAgo() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -7);
-        return calendar.getTime();
-    }
-
-    private void setImages() {
-        if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-            ivAvg.setImageResource(R.drawable.ic_average_dark);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-        }
-    }
+  }
 }

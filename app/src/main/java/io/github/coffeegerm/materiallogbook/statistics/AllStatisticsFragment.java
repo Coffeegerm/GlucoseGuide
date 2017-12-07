@@ -46,116 +46,116 @@ import io.realm.RealmResults;
  */
 
 public class AllStatisticsFragment extends Fragment {
-
-    @Inject
-    public SharedPreferences sharedPreferences;
-
-    @BindView(R.id.all_days_statistics_average)
-    TextView averageBloodGlucose;
-    @BindView(R.id.highest_of_all_glucose)
-    TextView highestBloodGlucose;
-    @BindView(R.id.lowest_of_all_glucose)
-    TextView lowestBloodGlucose;
-    @BindView(R.id.imgAvg)
-    ImageView ivAvg;
-    @BindView(R.id.imgUpArrow)
-    ImageView ivUpArrow;
-    @BindView(R.id.imgDownArrow)
-    ImageView ivDownArrow;
-    String pageTitle;
-    int pageNumber;
-    private Realm realm;
-
-    public static AllStatisticsFragment newInstance() {
-        AllStatisticsFragment allStatisticsFragment = new AllStatisticsFragment();
-        Bundle args = new Bundle();
-        args.putInt("pageNumber", 4);
-        args.putString("pageTitle", "All");
-        allStatisticsFragment.setArguments(args);
-        return allStatisticsFragment;
+  
+  @Inject
+  public SharedPreferences sharedPreferences;
+  
+  @BindView(R.id.all_days_statistics_average)
+  TextView averageBloodGlucose;
+  @BindView(R.id.highest_of_all_glucose)
+  TextView highestBloodGlucose;
+  @BindView(R.id.lowest_of_all_glucose)
+  TextView lowestBloodGlucose;
+  @BindView(R.id.imgAvg)
+  ImageView ivAvg;
+  @BindView(R.id.imgUpArrow)
+  ImageView ivUpArrow;
+  @BindView(R.id.imgDownArrow)
+  ImageView ivDownArrow;
+  String pageTitle;
+  int pageNumber;
+  private Realm realm;
+  
+  public static AllStatisticsFragment newInstance() {
+    AllStatisticsFragment allStatisticsFragment = new AllStatisticsFragment();
+    Bundle args = new Bundle();
+    args.putInt("pageNumber", 4);
+    args.putString("pageTitle", "All");
+    allStatisticsFragment.setArguments(args);
+    return allStatisticsFragment;
+  }
+  
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    MaterialLogbookApplication.syringe.inject(this);
+    pageTitle = getArguments().getString("pageTitle");
+    pageNumber = getArguments().getInt("pageNumber");
+  }
+  
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View allStatsView = inflater.inflate(R.layout.fragment_all_stats, container, false);
+    ButterKnife.bind(this, allStatsView);
+    realm = Realm.getDefaultInstance();
+    setValues();
+    setImages();
+    return allStatsView;
+  }
+  
+  public void setValues() {
+    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
+    if (entryItems.size() == 0) {
+      averageBloodGlucose.setText(R.string.dash);
+      highestBloodGlucose.setText(R.string.dash);
+      lowestBloodGlucose.setText(R.string.dash);
+    } else {
+      averageBloodGlucose.setText(String.valueOf(getAverage()));
+      highestBloodGlucose.setText(String.valueOf(getHighestBloodGlucose()));
+      lowestBloodGlucose.setText(String.valueOf(getLowestBloodGlucose()));
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        MaterialLogbookApplication.syringe.inject(this);
-        pageTitle = getArguments().getString("pageTitle");
-        pageNumber = getArguments().getInt("pageNumber");
+  }
+  
+  public int getAverage() {
+    int averageCalculated = 0;
+    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
+    if (entryItems.size() == 0) {
+      Toast.makeText(getContext(), "Unable to show data at this time.", Toast.LENGTH_SHORT).show();
+    } else {
+      int total = 0;
+      for (int position = 0; position < entryItems.size(); position++) {
+        EntryItem item = entryItems.get(position);
+        assert item != null;
+        total += item.getBloodGlucose();
+      }
+      averageCalculated = total / entryItems.size();
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View allStatsView = inflater.inflate(R.layout.fragment_all_stats, container, false);
-        ButterKnife.bind(this, allStatsView);
-        realm = Realm.getDefaultInstance();
-        setValues();
-        setImages();
-        return allStatsView;
+    return averageCalculated;
+  }
+  
+  public int getHighestBloodGlucose() {
+    int highest = 0;
+    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
+    for (int position = 0; position < entryItems.size(); position++) {
+      EntryItem item = entryItems.get(position);
+      assert item != null;
+      if (item.getBloodGlucose() > highest) {
+        highest = item.getBloodGlucose();
+      }
     }
-
-    public void setValues() {
-        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
-        if (entryItems.size() == 0) {
-            averageBloodGlucose.setText(R.string.dash);
-            highestBloodGlucose.setText(R.string.dash);
-            lowestBloodGlucose.setText(R.string.dash);
-        } else {
-            averageBloodGlucose.setText(String.valueOf(getAverage()));
-            highestBloodGlucose.setText(String.valueOf(getHighestBloodGlucose()));
-            lowestBloodGlucose.setText(String.valueOf(getLowestBloodGlucose()));
-        }
+    return highest;
+  }
+  
+  
+  public int getLowestBloodGlucose() {
+    int lowest = 1000;
+    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
+    for (int position = 0; position < entryItems.size(); position++) {
+      EntryItem item = entryItems.get(position);
+      assert item != null;
+      if (item.getBloodGlucose() < lowest) {
+        lowest = item.getBloodGlucose();
+      }
     }
-
-    public int getAverage() {
-        int averageCalculated = 0;
-        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
-        if (entryItems.size() == 0) {
-            Toast.makeText(getContext(), "Unable to show data at this time.", Toast.LENGTH_SHORT).show();
-        } else {
-            int total = 0;
-            for (int position = 0; position < entryItems.size(); position++) {
-                EntryItem item = entryItems.get(position);
-                assert item != null;
-                total += item.getBloodGlucose();
-            }
-            averageCalculated = total / entryItems.size();
-        }
-        return averageCalculated;
+    return lowest;
+  }
+  
+  private void setImages() {
+    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
+      ivAvg.setImageResource(R.drawable.ic_average_dark);
+      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
     }
-
-    public int getHighestBloodGlucose() {
-        int highest = 0;
-        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entryItems.size(); position++) {
-            EntryItem item = entryItems.get(position);
-            assert item != null;
-            if (item.getBloodGlucose() > highest) {
-                highest = item.getBloodGlucose();
-            }
-        }
-        return highest;
-    }
-
-
-    public int getLowestBloodGlucose() {
-        int lowest = 1000;
-        RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
-        for (int position = 0; position < entryItems.size(); position++) {
-            EntryItem item = entryItems.get(position);
-            assert item != null;
-            if (item.getBloodGlucose() < lowest) {
-                lowest = item.getBloodGlucose();
-            }
-        }
-        return lowest;
-    }
-
-    private void setImages() {
-        if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-            ivAvg.setImageResource(R.drawable.ic_average_dark);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-        }
-    }
+  }
 }

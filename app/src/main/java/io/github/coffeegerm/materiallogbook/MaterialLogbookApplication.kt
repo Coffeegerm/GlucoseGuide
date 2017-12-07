@@ -25,28 +25,28 @@ import io.realm.RealmConfiguration
 import timber.log.Timber
 
 class MaterialLogbookApplication : Application() {
-
-    companion object {
-        lateinit var syringe: AppComponent
+  
+  companion object {
+    lateinit var syringe: AppComponent
+  }
+  
+  override fun onCreate() {
+    super.onCreate()
+    initRealm()
+    syringe = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+    
+    if (BuildConfig.DEBUG) {
+      Timber.plant(Timber.DebugTree())
+    } else {
+      // do stuff
     }
-
-    override fun onCreate() {
-        super.onCreate()
-        initRealm()
-        syringe = DaggerAppComponent.builder().appModule(AppModule(this)).build()
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        } else {
-            // do stuff
-        }
-    }
-
-    private fun initRealm() {
-        Realm.init(this)
-        val config = RealmConfiguration.Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build()
-        Realm.setDefaultConfiguration(config)
-    }
+  }
+  
+  private fun initRealm() {
+    Realm.init(this)
+    val config = RealmConfiguration.Builder()
+          .deleteRealmIfMigrationNeeded()
+          .build()
+    Realm.setDefaultConfiguration(config)
+  }
 }

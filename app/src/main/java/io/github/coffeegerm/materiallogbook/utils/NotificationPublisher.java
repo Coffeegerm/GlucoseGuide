@@ -23,7 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;
@@ -35,18 +34,18 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_
  */
 
 public class NotificationPublisher extends BroadcastReceiver {
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= 26) {
-            NotificationChannel channel = new NotificationChannel("Reminders", "Reminders", NotificationManager.IMPORTANCE_DEFAULT);
-            assert notificationManager != null;
-            notificationManager.createNotificationChannel(channel);
-        }
-        Notification notification = intent.getParcelableExtra(NOTIFICATION);
-        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-        assert notificationManager != null;
-        notificationManager.notify(id, notification);
+  
+  @Override
+  public void onReceive(Context context, Intent intent) {
+    NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    if (Build.VERSION.SDK_INT >= 26) {
+      NotificationChannel channel = new NotificationChannel("Reminders", "Reminders", NotificationManager.IMPORTANCE_DEFAULT);
+      assert notificationManager != null;
+      notificationManager.createNotificationChannel(channel);
     }
+    Notification notification = intent.getParcelableExtra(NOTIFICATION);
+    int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+    assert notificationManager != null;
+    notificationManager.notify(id, notification);
+  }
 }

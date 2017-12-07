@@ -40,65 +40,65 @@ import javax.inject.Inject
  */
 
 class SettingsDataActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
-
-    private var realm: Realm? = null
-
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        MaterialLogbookApplication.syringe.inject(this)
-        if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
-            setTheme(R.style.AppTheme_Dark)
-        setContentView(R.layout.activity_settings_data)
-        init()
+  
+  @Inject
+  lateinit var sharedPreferences: SharedPreferences
+  
+  private var realm: Realm? = null
+  
+  public override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    MaterialLogbookApplication.syringe.inject(this)
+    if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
+      setTheme(R.style.AppTheme_Dark)
+    setContentView(R.layout.activity_settings_data)
+    init()
+  }
+  
+  private fun init() {
+    setupToolbar()
+    realm = Realm.getDefaultInstance()
+    export_entries.setOnClickListener { exportEntries() }
+    delete_all.setOnClickListener { deleteAllEntries() }
+  }
+  
+  private fun exportEntries() {
+    Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
+  }
+  
+  private fun deleteAllEntries() {
+    val builder: AlertDialog.Builder = AlertDialog.Builder(this@SettingsDataActivity)
+    
+    builder.setTitle("Delete all entries")
+          .setMessage("Are you sure you want to delete all entries?")
+          .setPositiveButton(android.R.string.yes) { _, _ ->
+            // continue with delete
+            try {
+              realm?.executeTransaction { realm -> realm.delete(EntryItem::class.java) }
+            } finally {
+              realm?.close()
+            }
+            Toast.makeText(this@SettingsDataActivity, R.string.all_deleted, Toast.LENGTH_SHORT).show()
+          }
+          .setNegativeButton(android.R.string.no) { dialog, _ ->
+            // do nothing
+            dialog.dismiss()
+          }
+          .setIcon(R.drawable.ic_trash)
+          .show()
+  }
+  
+  private fun setupToolbar() {
+    setSupportActionBar(data_toolbar)
+    if (supportActionBar != null) {
+      supportActionBar?.setDisplayHomeAsUpEnabled(true)
+      supportActionBar?.setDisplayShowHomeEnabled(true)
+      supportActionBar?.setTitle(R.string.data)
     }
-
-    private fun init() {
-        setupToolbar()
-        realm = Realm.getDefaultInstance()
-        export_entries.setOnClickListener { exportEntries() }
-        delete_all.setOnClickListener { deleteAllEntries() }
-    }
-
-    private fun exportEntries() {
-        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun deleteAllEntries() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this@SettingsDataActivity)
-
-        builder.setTitle("Delete all entries")
-                .setMessage("Are you sure you want to delete all entries?")
-                .setPositiveButton(android.R.string.yes) { _, _ ->
-                    // continue with delete
-                    try {
-                        realm?.executeTransaction { realm -> realm.delete(EntryItem::class.java) }
-                    } finally {
-                        realm?.close()
-                    }
-                    Toast.makeText(this@SettingsDataActivity, R.string.all_deleted, Toast.LENGTH_SHORT).show()
-                }
-                .setNegativeButton(android.R.string.no) { dialog, _ ->
-                    // do nothing
-                    dialog.dismiss()
-                }
-                .setIcon(R.drawable.ic_trash)
-                .show()
-    }
-
-    private fun setupToolbar() {
-        setSupportActionBar(data_toolbar)
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setDisplayShowHomeEnabled(true)
-            supportActionBar?.setTitle(R.string.data)
-        }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
-    }
+  }
+  
+  override fun onSupportNavigateUp(): Boolean {
+    onBackPressed()
+    return super.onSupportNavigateUp()
+  }
 }

@@ -35,93 +35,93 @@ import javax.inject.Inject
  */
 
 class SettingsTreatmentActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        MaterialLogbookApplication.syringe.inject(this)
-        if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark)
-        setContentView(R.layout.activity_settings_treatment)
-        init()
+  
+  @Inject
+  lateinit var sharedPreferences: SharedPreferences
+  
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    MaterialLogbookApplication.syringe.inject(this)
+    if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark)
+    setContentView(R.layout.activity_settings_treatment)
+    init()
+  }
+  
+  private fun init() {
+    setupToolbar()
+    checkRangeStatus()
+    setHints()
+    hypoglycemic_edit_text.addTextChangedListener(object : TextWatcher {
+      override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+      
+      override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+      
+      override fun afterTextChanged(s: Editable) {
+        if (s.toString() != "")
+          sharedPreferences.edit()
+                .putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply()
+      }
+    })
+    
+    hyperglycemic_edit_text.addTextChangedListener(object : TextWatcher {
+      override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+      
+      override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+      
+      override fun afterTextChanged(s: Editable) {
+        if (s.toString() != "")
+          sharedPreferences.edit()
+                .putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply()
+      }
+    })
+    
+    bolus_ratio.addTextChangedListener(object : TextWatcher {
+      override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+      
+      }
+      
+      override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+      
+      }
+      
+      override fun afterTextChanged(editable: Editable) {
+        if (editable.toString() != "")
+          sharedPreferences.edit()
+                .putInt(BOLUS_RATIO, Integer.parseInt(editable.toString())).apply()
+      }
+    })
+  }
+  
+  private fun checkRangeStatus() {
+    val hyperglycemicIndex = sharedPreferences.getInt(HYPERGLYCEMIC_INDEX, 0)
+    val hypoglycemicIndex = sharedPreferences.getInt(HYPOGLYCEMIC_INDEX, 0)
+    val bolusRatio = sharedPreferences.getInt(BOLUS_RATIO, 0)
+    if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
+      sharedPreferences.edit().putInt(HYPOGLYCEMIC_INDEX, 80).apply()
+      sharedPreferences.edit().putInt(HYPERGLYCEMIC_INDEX, 140).apply()
     }
-
-    private fun init() {
-        setupToolbar()
-        checkRangeStatus()
-        setHints()
-        hypoglycemic_edit_text.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                if (s.toString() != "")
-                    sharedPreferences.edit()
-                            .putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply()
-            }
-        })
-
-        hyperglycemic_edit_text.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                if (s.toString() != "")
-                    sharedPreferences.edit()
-                            .putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString())).apply()
-            }
-        })
-
-        bolus_ratio.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-
-            }
-
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-
-            }
-
-            override fun afterTextChanged(editable: Editable) {
-                if (editable.toString() != "")
-                    sharedPreferences.edit()
-                            .putInt(BOLUS_RATIO, Integer.parseInt(editable.toString())).apply()
-            }
-        })
+    if (bolusRatio == 0) {
+      sharedPreferences.edit().putInt(BOLUS_RATIO, 10).apply()
     }
-
-    private fun checkRangeStatus() {
-        val hyperglycemicIndex = sharedPreferences.getInt(HYPERGLYCEMIC_INDEX, 0)
-        val hypoglycemicIndex = sharedPreferences.getInt(HYPOGLYCEMIC_INDEX, 0)
-        val bolusRatio = sharedPreferences.getInt(BOLUS_RATIO, 0)
-        if (hyperglycemicIndex == 0 && hypoglycemicIndex == 0) {
-            sharedPreferences.edit().putInt(HYPOGLYCEMIC_INDEX, 80).apply()
-            sharedPreferences.edit().putInt(HYPERGLYCEMIC_INDEX, 140).apply()
-        }
-        if (bolusRatio == 0) {
-            sharedPreferences.edit().putInt(BOLUS_RATIO, 10).apply()
-        }
+  }
+  
+  private fun setHints() {
+    hyperglycemic_edit_text.hint = sharedPreferences.getInt(HYPERGLYCEMIC_INDEX, 0).toString()
+    hypoglycemic_edit_text.hint = sharedPreferences.getInt(HYPOGLYCEMIC_INDEX, 0).toString()
+    bolus_ratio.hint = sharedPreferences.getInt(BOLUS_RATIO, 0).toString()
+  }
+  
+  private fun setupToolbar() {
+    setSupportActionBar(treatment_toolbar)
+    if (supportActionBar != null) {
+      supportActionBar?.setDisplayHomeAsUpEnabled(true)
+      supportActionBar?.setDisplayShowHomeEnabled(true)
+      supportActionBar?.setTitle(R.string.treatment)
     }
-
-    private fun setHints() {
-        hyperglycemic_edit_text.hint = sharedPreferences.getInt(HYPERGLYCEMIC_INDEX, 0).toString()
-        hypoglycemic_edit_text.hint = sharedPreferences.getInt(HYPOGLYCEMIC_INDEX, 0).toString()
-        bolus_ratio.hint = sharedPreferences.getInt(BOLUS_RATIO, 0).toString()
-    }
-
-    private fun setupToolbar() {
-        setSupportActionBar(treatment_toolbar)
-        if (supportActionBar != null) {
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setDisplayShowHomeEnabled(true)
-            supportActionBar?.setTitle(R.string.treatment)
-        }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
-    }
+  }
+  
+  override fun onSupportNavigateUp(): Boolean {
+    onBackPressed()
+    return super.onSupportNavigateUp()
+  }
 }

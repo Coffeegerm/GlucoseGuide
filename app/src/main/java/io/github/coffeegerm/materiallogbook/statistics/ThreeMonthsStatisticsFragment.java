@@ -49,89 +49,89 @@ import io.realm.RealmResults;
  */
 
 public class ThreeMonthsStatisticsFragment extends Fragment {
-
-    @Inject
-    public SharedPreferences sharedPreferences;
-
-    @Inject
-    public Utilities utilities;
-
-    @BindView(R.id.a_one_c)
-    TextView a1c;
-    @BindView(R.id.average)
-    TextView average;
-    @BindView(R.id.highest)
-    TextView highest;
-    @BindView(R.id.lowest)
-    TextView lowest;
-    @BindView(R.id.imgAvg)
-    ImageView ivAvg;
-    @BindView(R.id.imgUpArrow)
-    ImageView ivUpArrow;
-    @BindView(R.id.imgDownArrow)
-    ImageView ivDownArrow;
-    @BindView(R.id.ivA1C)
-    ImageView ivA1C;
-    Realm realm;
-
-    public static ThreeMonthsStatisticsFragment newInstance() {
-        ThreeMonthsStatisticsFragment threeMonthsStatisticsFragment = new ThreeMonthsStatisticsFragment();
-        Bundle args = new Bundle();
-        args.putInt("pageNumber", 3);
-        args.putString("pageTitle", "Three Months");
-        threeMonthsStatisticsFragment.setArguments(args);
-        return threeMonthsStatisticsFragment;
+  
+  @Inject
+  public SharedPreferences sharedPreferences;
+  
+  @Inject
+  public Utilities utilities;
+  
+  @BindView(R.id.a_one_c)
+  TextView a1c;
+  @BindView(R.id.average)
+  TextView average;
+  @BindView(R.id.highest)
+  TextView highest;
+  @BindView(R.id.lowest)
+  TextView lowest;
+  @BindView(R.id.imgAvg)
+  ImageView ivAvg;
+  @BindView(R.id.imgUpArrow)
+  ImageView ivUpArrow;
+  @BindView(R.id.imgDownArrow)
+  ImageView ivDownArrow;
+  @BindView(R.id.ivA1C)
+  ImageView ivA1C;
+  Realm realm;
+  
+  public static ThreeMonthsStatisticsFragment newInstance() {
+    ThreeMonthsStatisticsFragment threeMonthsStatisticsFragment = new ThreeMonthsStatisticsFragment();
+    Bundle args = new Bundle();
+    args.putInt("pageNumber", 3);
+    args.putString("pageTitle", "Three Months");
+    threeMonthsStatisticsFragment.setArguments(args);
+    return threeMonthsStatisticsFragment;
+  }
+  
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View threeMonths = inflater.inflate(R.layout.fragment_three_months_statistics, container, false);
+    ButterKnife.bind(this, threeMonths);
+    MaterialLogbookApplication.syringe.inject(this);
+    realm = Realm.getDefaultInstance();
+    setImages();
+    setValues();
+    return threeMonths;
+  }
+  
+  private void setValues() {
+    Date threeMonthsAgo = getThreeMonthsAgo();
+    RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", threeMonthsAgo).greaterThan("bloodGlucose", 0).findAll();
+    if (entriesFromLastThreeMonths.size() == 0) {
+      average.setText(R.string.dash);
+      highest.setText(R.string.dash);
+      lowest.setText(R.string.dash);
+    } else {
+      average.setText(String.valueOf(utilities.getAverageGlucose(threeMonthsAgo)));
+      highest.setText(String.valueOf(utilities.getHighestGlucose(threeMonthsAgo)));
+      lowest.setText(String.valueOf(utilities.getLowestGlucose(threeMonthsAgo)));
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View threeMonths = inflater.inflate(R.layout.fragment_three_months_statistics, container, false);
-        ButterKnife.bind(this, threeMonths);
-        MaterialLogbookApplication.syringe.inject(this);
-        realm = Realm.getDefaultInstance();
-        setImages();
-        setValues();
-        return threeMonths;
+    
+    if (entriesFromLastThreeMonths.size() < 300) {
+      a1c.setText(R.string.dash);
+    } else {
+      a1c.setText(String.valueOf(getA1C(utilities.getAverageGlucose(threeMonthsAgo))));
     }
-
-    private void setValues() {
-        Date threeMonthsAgo = getThreeMonthsAgo();
-        RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", threeMonthsAgo).greaterThan("bloodGlucose", 0).findAll();
-        if (entriesFromLastThreeMonths.size() == 0) {
-            average.setText(R.string.dash);
-            highest.setText(R.string.dash);
-            lowest.setText(R.string.dash);
-        } else {
-            average.setText(String.valueOf(utilities.getAverageGlucose(threeMonthsAgo)));
-            highest.setText(String.valueOf(utilities.getHighestGlucose(threeMonthsAgo)));
-            lowest.setText(String.valueOf(utilities.getLowestGlucose(threeMonthsAgo)));
-        }
-
-        if (entriesFromLastThreeMonths.size() < 300) {
-            a1c.setText(R.string.dash);
-        } else {
-            a1c.setText(String.valueOf(getA1C(utilities.getAverageGlucose(threeMonthsAgo))));
-        }
+  }
+  
+  public Date getThreeMonthsAgo() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(Calendar.DATE, -90);
+    return calendar.getTime();
+  }
+  
+  public double getA1C(int average) {
+    return (46.7 + average) / 28.7;
+    // A1c = (46.7 + average_blood_glucose) / 28.7
+  }
+  
+  private void setImages() {
+    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
+      ivAvg.setImageResource(R.drawable.ic_average_dark);
+      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
+      ivA1C.setImageResource(R.drawable.ic_a1c_dark);
     }
-
-    public Date getThreeMonthsAgo() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -90);
-        return calendar.getTime();
-    }
-
-    public double getA1C(int average) {
-        return (46.7 + average) / 28.7;
-        // A1c = (46.7 + average_blood_glucose) / 28.7
-    }
-
-    private void setImages() {
-        if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-            ivAvg.setImageResource(R.drawable.ic_average_dark);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-            ivA1C.setImageResource(R.drawable.ic_a1c_dark);
-        }
-    }
+  }
 }

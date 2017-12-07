@@ -24,102 +24,102 @@ import java.util.*
 import javax.inject.Inject
 
 class Utilities {
-
-    init {
-        MaterialLogbookApplication.syringe.inject(this)
+  
+  init {
+    MaterialLogbookApplication.syringe.inject(this)
+  }
+  
+  @Inject
+  lateinit var sharedPreferences: SharedPreferences
+  
+  // Static method to edit Time String in NewEntryActivity
+  fun checkTimeString(hourOfDay: Int, minute: Int): String {
+    var hour = hourOfDay
+    val timeSet: String
+    val min: String = if (minute < 10)
+      "0" + minute
+    else
+      minute.toString()
+    
+    when {
+      hour > 12 -> {
+        hour -= 12
+        timeSet = "PM"
+      }
+      hour == 0 -> {
+        hour += 12
+        timeSet = "AM"
+      }
+      hour == 12 -> timeSet = "PM"
+      else -> timeSet = "AM"
     }
-
-    @Inject
-    lateinit var sharedPreferences: SharedPreferences
-
-    // Static method to edit Time String in NewEntryActivity
-    fun checkTimeString(hourOfDay: Int, minute: Int): String {
-        var hour = hourOfDay
-        val timeSet: String
-        val min: String = if (minute < 10)
-            "0" + minute
-        else
-            minute.toString()
-
-        when {
-            hour > 12 -> {
-                hour -= 12
-                timeSet = "PM"
-            }
-            hour == 0 -> {
-                hour += 12
-                timeSet = "AM"
-            }
-            hour == 12 -> timeSet = "PM"
-            else -> timeSet = "AM"
-        }
-
-        return hour.toString() + ":" + min + " " + timeSet
+    
+    return hour.toString() + ":" + min + " " + timeSet
+  }
+  
+  fun getHighestGlucose(providedDate: Date): Int {
+    val realm = Realm.getDefaultInstance()
+    var highest = 0
+    val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    entriesFromLastThreeMonths.indices
+          .asSequence()
+          .map { entriesFromLastThreeMonths[it]!! }
+          .filter { it.bloodGlucose > highest }
+          .forEach { highest = it.bloodGlucose }
+    return highest
+  }
+  
+  fun getAverageGlucose(providedDate: Date): Int {
+    val realm = Realm.getDefaultInstance()
+    val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    val total = entriesFromLastThreeMonths.indices
+          .map { entriesFromLastThreeMonths[it]!! }
+          .sumBy { it.bloodGlucose }
+    return total / entriesFromLastThreeMonths.size
+  }
+  
+  fun getLowestGlucose(providedDate: Date): Int {
+    val realm = Realm.getDefaultInstance()
+    var lowest = 1000
+    val entriesFromLastThreeDays = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    entriesFromLastThreeDays.indices
+          .asSequence()
+          .map { entriesFromLastThreeDays[it]!! }
+          .filter { it.bloodGlucose < lowest }
+          .forEach { lowest = it.bloodGlucose }
+    return lowest
+  }
+  
+  // Calculates the glucose grade based on user
+  // sugar from last three days
+  fun getGlucoseGrade(): String {
+    val realm = Realm.getDefaultInstance()
+    val grade: String
+    val hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0)
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DATE, -3)
+    val threeDaysAgo = calendar.time
+    val entriesFromLastThreeDays = realm.where(EntryItem::class.java).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll()
+    val hyperglycemicCount = entriesFromLastThreeDays.indices
+          .map { entriesFromLastThreeDays[it]!! }
+          .count { it.bloodGlucose > hyperglycemicIndex }
+    when {
+      hyperglycemicCount == 0 -> grade = "-"
+      hyperglycemicCount <= 3 -> grade = "A+"
+      hyperglycemicCount == 4 -> grade = "A"
+      hyperglycemicCount == 5 -> grade = "A-"
+      hyperglycemicCount == 6 -> grade = "B+"
+      hyperglycemicCount == 7 -> grade = "B"
+      hyperglycemicCount == 8 -> grade = "B-"
+      hyperglycemicCount == 9 -> grade = "C+"
+      hyperglycemicCount == 10 -> grade = "C"
+      hyperglycemicCount == 11 -> grade = "C-"
+      hyperglycemicCount == 12 -> grade = "D+"
+      hyperglycemicCount == 13 -> grade = "D"
+      hyperglycemicCount == 14 -> grade = "D-"
+      else -> grade = "F"
     }
-
-    fun getHighestGlucose(providedDate: Date): Int {
-        val realm = Realm.getDefaultInstance()
-        var highest = 0
-        val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-        entriesFromLastThreeMonths.indices
-                .asSequence()
-                .map { entriesFromLastThreeMonths[it]!! }
-                .filter { it.bloodGlucose > highest }
-                .forEach { highest = it.bloodGlucose }
-        return highest
-    }
-
-    fun getAverageGlucose(providedDate: Date): Int {
-        val realm = Realm.getDefaultInstance()
-        val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-        val total = entriesFromLastThreeMonths.indices
-                .map { entriesFromLastThreeMonths[it]!! }
-                .sumBy { it.bloodGlucose }
-        return total / entriesFromLastThreeMonths.size
-    }
-
-    fun getLowestGlucose(providedDate: Date): Int {
-        val realm = Realm.getDefaultInstance()
-        var lowest = 1000
-        val entriesFromLastThreeDays = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-        entriesFromLastThreeDays.indices
-                .asSequence()
-                .map { entriesFromLastThreeDays[it]!! }
-                .filter { it.bloodGlucose < lowest }
-                .forEach { lowest = it.bloodGlucose }
-        return lowest
-    }
-
-    // Calculates the glucose grade based on user
-    // sugar from last three days
-    fun getGlucoseGrade(): String {
-        val realm = Realm.getDefaultInstance()
-        val grade: String
-        val hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0)
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DATE, -3)
-        val threeDaysAgo = calendar.time
-        val entriesFromLastThreeDays = realm.where(EntryItem::class.java).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll()
-        val hyperglycemicCount = entriesFromLastThreeDays.indices
-                .map { entriesFromLastThreeDays[it]!! }
-                .count { it.bloodGlucose > hyperglycemicIndex }
-        when {
-            hyperglycemicCount == 0 -> grade = "-"
-            hyperglycemicCount <= 3 -> grade = "A+"
-            hyperglycemicCount == 4 -> grade = "A"
-            hyperglycemicCount == 5 -> grade = "A-"
-            hyperglycemicCount == 6 -> grade = "B+"
-            hyperglycemicCount == 7 -> grade = "B"
-            hyperglycemicCount == 8 -> grade = "B-"
-            hyperglycemicCount == 9 -> grade = "C+"
-            hyperglycemicCount == 10 -> grade = "C"
-            hyperglycemicCount == 11 -> grade = "C-"
-            hyperglycemicCount == 12 -> grade = "D+"
-            hyperglycemicCount == 13 -> grade = "D"
-            hyperglycemicCount == 14 -> grade = "D-"
-            else -> grade = "F"
-        }
-        return grade
-    }
-
+    return grade
+  }
+  
 }

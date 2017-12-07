@@ -37,20 +37,20 @@ import io.github.coffeegerm.materiallogbook.R;
  */
 
 public class StatisticsFragment extends Fragment {
-
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View statsView = inflater.inflate(R.layout.fragment_statistics, container, false);
-        ButterKnife.bind(this, statsView);
-        StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getChildFragmentManager());
-        viewPager.setAdapter(statisticsPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-        return statsView;
-    }
+  
+  @BindView(R.id.tabLayout)
+  TabLayout tabLayout;
+  @BindView(R.id.viewPager)
+  ViewPager viewPager;
+  
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View statsView = inflater.inflate(R.layout.fragment_statistics, container, false);
+    ButterKnife.bind(this, statsView);
+    StatisticsPagerAdapter statisticsPagerAdapter = new StatisticsPagerAdapter(getChildFragmentManager());
+    viewPager.setAdapter(statisticsPagerAdapter);
+    tabLayout.setupWithViewPager(viewPager);
+    return statsView;
+  }
 }

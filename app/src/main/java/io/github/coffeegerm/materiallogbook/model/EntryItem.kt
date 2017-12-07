@@ -36,10 +36,10 @@ import java.util.*
  */
 
 open class EntryItem : RealmObject() {
-    var id: String = UUID.randomUUID().toString()
-    var status: Int = 0
-    var date: Date? = null
-    var bloodGlucose: Int = 0
-    var carbohydrates: Int = 0
-    var insulin: Double = 0.toDouble()
+  var id: String = UUID.randomUUID().toString()
+  var status: Int = 0
+  var date: Date? = null
+  var bloodGlucose: Int = 0
+  var carbohydrates: Int = 0
+  var insulin: Double = 0.toDouble()
 }

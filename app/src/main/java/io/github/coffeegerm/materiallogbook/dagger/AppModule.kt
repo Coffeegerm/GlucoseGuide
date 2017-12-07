@@ -32,21 +32,21 @@ import javax.inject.Singleton
 
 @Module
 class AppModule(application: MaterialLogbookApplication) {
-    var app: MaterialLogbookApplication = application
-
-    @Provides
-    @Singleton
-    fun provideApplicationContext(): Context = app.applicationContext
-
-    @Provides
-    @Singleton
-    fun provideActivityResources(app: Context): Resources = app.resources
-
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(context: Context): SharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE)
-
-    @Provides
-    @Singleton
-    fun provideUtilities(): Utilities = Utilities()
+  var app: MaterialLogbookApplication = application
+  
+  @Provides
+  @Singleton
+  fun provideApplicationContext(): Context = app.applicationContext
+  
+  @Provides
+  @Singleton
+  fun provideActivityResources(app: Context): Resources = app.resources
+  
+  @Provides
+  @Singleton
+  fun provideSharedPreferences(context: Context): SharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE)
+  
+  @Provides
+  @Singleton
+  fun provideUtilities(): Utilities = Utilities()
 }

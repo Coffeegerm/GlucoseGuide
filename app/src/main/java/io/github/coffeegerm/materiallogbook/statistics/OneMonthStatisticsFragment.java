@@ -49,73 +49,73 @@ import io.realm.RealmResults;
  */
 
 public class OneMonthStatisticsFragment extends Fragment {
-
-    @Inject
-    public SharedPreferences sharedPreferences;
-
-    @Inject
-    public Utilities utilities;
-
-    @BindView(R.id.average)
-    TextView average;
-    @BindView(R.id.highest)
-    TextView highest;
-    @BindView(R.id.lowest)
-    TextView lowest;
-    @BindView(R.id.imgAvg)
-    ImageView ivAvg;
-    @BindView(R.id.imgUpArrow)
-    ImageView ivUpArrow;
-    @BindView(R.id.imgDownArrow)
-    ImageView ivDownArrow;
-    private Realm realm;
-
-    public static OneMonthStatisticsFragment newInstance() {
-        OneMonthStatisticsFragment oneMonthStatisticsFragment = new OneMonthStatisticsFragment();
-        Bundle args = new Bundle();
-        args.putInt("pageNumber", 2);
-        args.putString("pageTitle", "One Month");
-        oneMonthStatisticsFragment.setArguments(args);
-        return oneMonthStatisticsFragment;
+  
+  @Inject
+  public SharedPreferences sharedPreferences;
+  
+  @Inject
+  public Utilities utilities;
+  
+  @BindView(R.id.average)
+  TextView average;
+  @BindView(R.id.highest)
+  TextView highest;
+  @BindView(R.id.lowest)
+  TextView lowest;
+  @BindView(R.id.imgAvg)
+  ImageView ivAvg;
+  @BindView(R.id.imgUpArrow)
+  ImageView ivUpArrow;
+  @BindView(R.id.imgDownArrow)
+  ImageView ivDownArrow;
+  private Realm realm;
+  
+  public static OneMonthStatisticsFragment newInstance() {
+    OneMonthStatisticsFragment oneMonthStatisticsFragment = new OneMonthStatisticsFragment();
+    Bundle args = new Bundle();
+    args.putInt("pageNumber", 2);
+    args.putString("pageTitle", "One Month");
+    oneMonthStatisticsFragment.setArguments(args);
+    return oneMonthStatisticsFragment;
+  }
+  
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View oneMonth = inflater.inflate(R.layout.fragment_one_month_statistics, container, false);
+    MaterialLogbookApplication.syringe.inject(this);
+    ButterKnife.bind(this, oneMonth);
+    realm = Realm.getDefaultInstance();
+    setImages();
+    setValues();
+    return oneMonth;
+  }
+  
+  private void setValues() {
+    Date oneMonthAgo = getOneMonthAgo();
+    RealmResults<EntryItem> entriesFromPastMonth = realm.where(EntryItem.class).greaterThan("date", oneMonthAgo).greaterThan("bloodGlucose", 0).findAll();
+    if (entriesFromPastMonth.size() == 0) {
+      average.setText(R.string.dash);
+      highest.setText(R.string.dash);
+      lowest.setText(R.string.dash);
+    } else {
+      average.setText(String.valueOf(utilities.getAverageGlucose(oneMonthAgo)));
+      highest.setText(String.valueOf(utilities.getHighestGlucose(oneMonthAgo)));
+      lowest.setText(String.valueOf(utilities.getLowestGlucose(oneMonthAgo)));
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View oneMonth = inflater.inflate(R.layout.fragment_one_month_statistics, container, false);
-        MaterialLogbookApplication.syringe.inject(this);
-        ButterKnife.bind(this, oneMonth);
-        realm = Realm.getDefaultInstance();
-        setImages();
-        setValues();
-        return oneMonth;
+  }
+  
+  private Date getOneMonthAgo() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(Calendar.DATE, -30);
+    return calendar.getTime();
+  }
+  
+  private void setImages() {
+    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
+      ivAvg.setImageResource(R.drawable.ic_average_dark);
+      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
+      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
     }
-
-    private void setValues() {
-        Date oneMonthAgo = getOneMonthAgo();
-        RealmResults<EntryItem> entriesFromPastMonth = realm.where(EntryItem.class).greaterThan("date", oneMonthAgo).greaterThan("bloodGlucose", 0).findAll();
-        if (entriesFromPastMonth.size() == 0) {
-            average.setText(R.string.dash);
-            highest.setText(R.string.dash);
-            lowest.setText(R.string.dash);
-        } else {
-            average.setText(String.valueOf(utilities.getAverageGlucose(oneMonthAgo)));
-            highest.setText(String.valueOf(utilities.getHighestGlucose(oneMonthAgo)));
-            lowest.setText(String.valueOf(utilities.getLowestGlucose(oneMonthAgo)));
-        }
-    }
-
-    private Date getOneMonthAgo() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -30);
-        return calendar.getTime();
-    }
-
-    private void setImages() {
-        if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-            ivAvg.setImageResource(R.drawable.ic_average_dark);
-            ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-            ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-        }
-    }
+  }
 }
