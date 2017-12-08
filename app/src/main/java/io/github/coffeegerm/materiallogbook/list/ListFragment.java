@@ -80,10 +80,12 @@ public class ListFragment extends Fragment {
     realm = Realm.getDefaultInstance();
     listAdapter = new ListAdapter(getContext());
     recView.setAdapter(listAdapter);
-    if (realm.where(EntryItem.class).findAll().isEmpty()) {
+    if (realm.where(EntryItem.class).findAll().size() == 0) {
       recView.setVisibility(View.GONE);
       emptyRecyclerViewExample.setVisibility(View.VISIBLE);
     } else {
+      recView.setVisibility(View.VISIBLE);
+      emptyRecyclerViewExample.setVisibility(View.GONE);
       setUpRecyclerView();
     }
     setFab();

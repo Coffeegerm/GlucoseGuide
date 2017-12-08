@@ -27,6 +27,7 @@
   android:layout_marginTop="8dp"
   android:clickable="true"
   android:focusable="true"
+  android:visibility="gone"
   app:cardCornerRadius="6dp"
   app:cardElevation="@dimen/item_card_elevation">
 
