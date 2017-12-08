@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Coffee and Cream Studios
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +14,12 @@
   ~ limitations under the License.
   -->
 
-<shape android:shape="rectangle"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient android:angle="90" android:startColor="#0fff" android:endColor="#3f000000"
-        android:type="linear" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="wrap_content"
+  android:shape="rectangle">
+  <gradient
+    android:angle="90"
+    android:endColor="#3f000000"
+    android:startColor="#0fff"
+    android:type="linear" />
 </shape>

@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,7 +33,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -64,6 +64,8 @@ public class ListFragment extends Fragment {
   FloatingActionButton fab;
   @BindView(R.id.rec_view)
   RecyclerView recView;
+  @BindView(R.id.empty_item_list)
+  CardView emptyRecyclerViewExample;
   private int SORT_ORDER = 0; // 0 = Descending, 1 = Ascending
   private Realm realm;
   private ListAdapter listAdapter;
@@ -78,7 +80,12 @@ public class ListFragment extends Fragment {
     realm = Realm.getDefaultInstance();
     listAdapter = new ListAdapter(getContext());
     recView.setAdapter(listAdapter);
-    setUpRecyclerView();
+    if (realm.where(EntryItem.class).findAll().isEmpty()) {
+      recView.setVisibility(View.GONE);
+      emptyRecyclerViewExample.setVisibility(View.VISIBLE);
+    } else {
+      setUpRecyclerView();
+    }
     setFab();
     return listView;
   }
@@ -138,42 +145,42 @@ public class ListFragment extends Fragment {
     recView.setLayoutManager(new LinearLayoutManager(getActivity()));
     switch (SORT_ORDER) {
       case 0: // newest to older
-        List<EntryItem> descendingList = getDescendingList();
+        List<EntryItem> descendingList = realm.where(EntryItem.class).sort("date", Sort.DESCENDING).findAll();
         listAdapter.setListItems(descendingList);
         listAdapter.notifyDataSetChanged();
         break;
       case 1: // oldest to newest
-        List<EntryItem> ascendingList = getAscendingList();
+        List<EntryItem> ascendingList = realm.where(EntryItem.class).sort("date", Sort.ASCENDING).findAll();
         listAdapter.setListItems(ascendingList);
         listAdapter.notifyDataSetChanged();
         break;
       case 2: // breakfast only, status of item = 1
-        RealmResults<EntryItem> breakfastEntries = realm.where(EntryItem.class).equalTo("status", 1).findAllSorted("date", Sort.DESCENDING);
+        RealmResults<EntryItem> breakfastEntries = realm.where(EntryItem.class).equalTo("status", 1).sort("date", Sort.DESCENDING).findAll();
         listAdapter.setListItems(breakfastEntries);
         listAdapter.notifyDataSetChanged();
         break;
       case 3: // lunch only, status of item = 2
-        RealmResults<EntryItem> lunchEntries = realm.where(EntryItem.class).equalTo("status", 2).findAllSorted("date", Sort.DESCENDING);
+        RealmResults<EntryItem> lunchEntries = realm.where(EntryItem.class).equalTo("status", 2).sort("date", Sort.DESCENDING).findAll();
         listAdapter.setListItems(lunchEntries);
         listAdapter.notifyDataSetChanged();
         break;
       case 4: // dinner only, status of item = 3
-        RealmResults<EntryItem> dinnerEntries = realm.where(EntryItem.class).equalTo("status", 3).findAllSorted("date", Sort.DESCENDING);
+        RealmResults<EntryItem> dinnerEntries = realm.where(EntryItem.class).equalTo("status", 3).sort("date", Sort.DESCENDING).findAll();
         listAdapter.setListItems(dinnerEntries);
         listAdapter.notifyDataSetChanged();
         break;
       case 5: // exercise only, status of item = 5
-        RealmResults<EntryItem> exerciseEntries = realm.where(EntryItem.class).equalTo("status", 5).findAllSorted("date", Sort.DESCENDING);
+        RealmResults<EntryItem> exerciseEntries = realm.where(EntryItem.class).equalTo("status", 5).sort("date", Sort.DESCENDING).findAll();
         listAdapter.setListItems(exerciseEntries);
         listAdapter.notifyDataSetChanged();
         break;
       case 6: // sick only, status of item = 4
-        RealmResults<EntryItem> sickEntries = realm.where(EntryItem.class).equalTo("status", 4).findAllSorted("date", Sort.DESCENDING);
+        RealmResults<EntryItem> sickEntries = realm.where(EntryItem.class).equalTo("status", 4).sort("date", Sort.DESCENDING).findAll();
         listAdapter.setListItems(sickEntries);
         listAdapter.notifyDataSetChanged();
         break;
       case 7: // sweets only, status of item = 6
-        RealmResults<EntryItem> sweetEntries = realm.where(EntryItem.class).equalTo("status", 6).findAllSorted("date", Sort.DESCENDING);
+        RealmResults<EntryItem> sweetEntries = realm.where(EntryItem.class).equalTo("status", 6).sort("date", Sort.DESCENDING).findAll();
         listAdapter.setListItems(sweetEntries);
         listAdapter.notifyDataSetChanged();
         break;
@@ -190,16 +197,6 @@ public class ListFragment extends Fragment {
         }
       }
     });
-  }
-  
-  private List<EntryItem> getDescendingList() {
-    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).findAllSorted("date", Sort.DESCENDING);
-    return new ArrayList<>(entryItems);
-  }
-  
-  private List<EntryItem> getAscendingList() {
-    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).findAllSorted("date", Sort.ASCENDING);
-    return new ArrayList<>(entryItems);
   }
   
   private void setFab() {

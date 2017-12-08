@@ -32,6 +32,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -241,6 +242,7 @@ public class EditEntryActivity extends AppCompatActivity {
         updatedStatus = 1;
         setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Breakfast", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -257,6 +259,7 @@ public class EditEntryActivity extends AppCompatActivity {
         updatedStatus = 2;
         setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -273,6 +276,7 @@ public class EditEntryActivity extends AppCompatActivity {
         updatedStatus = 3;
         setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Dinner", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -289,6 +293,7 @@ public class EditEntryActivity extends AppCompatActivity {
         updatedStatus = 4;
         setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Sick", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -305,6 +310,7 @@ public class EditEntryActivity extends AppCompatActivity {
         updatedStatus = 5;
         setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Exercise", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -321,6 +327,7 @@ public class EditEntryActivity extends AppCompatActivity {
         updatedStatus = 6;
         setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Sweets", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override

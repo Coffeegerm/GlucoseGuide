@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Coffee and Cream Studios
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,31 +15,31 @@
   -->
 
 <resources>
-    <!-- Main color: teal-->
-    <color name="colorPrimary">#00B9AE</color>
-    <color name="colorPrimaryDark">#00988F</color>
-    <color name="colorPrimaryLight">#2EC5BC</color>
+  <!-- Main color: teal-->
+  <color name="colorPrimary">#00B9AE</color>
+  <color name="colorPrimaryDark">#00988F</color>
+  <color name="colorPrimaryLight">#2EC5BC</color>
 
-    <!-- Accent color: dark grey -->
-    <color name="colorAccent">#484A47</color>
+  <!-- Accent color: dark grey -->
+  <color name="colorAccent">#484A47</color>
 
-    <!-- Text color primary: white -->
-    <color name="textColorPrimary">#0D160B</color>
-    <color name="textColorSecondary">#0D160B</color>
+  <!-- Text color primary: white -->
+  <color name="textColorPrimary">#0D160B</color>
+  <color name="textColorSecondary">#0D160B</color>
 
-    <!-- Text color inverse -->
-    <color name="textColorPrimaryInverse">#FFFFFF</color>
-    <color name="textColorSecondaryInverse">#D1D1D1</color>
+  <!-- Text color inverse -->
+  <color name="textColorPrimaryInverse">#FFFFFF</color>
+  <color name="textColorSecondaryInverse">#D1D1D1</color>
 
-    <!-- Dark theme -->
-    <color name="darkThemeColorPrimary">#00877F</color>
-    <color name="darkThemeColorPrimaryDark">#00655F</color>
-    <color name="darkThemeBackground">#232224</color>
+  <!-- Dark theme -->
+  <color name="darkThemeColorPrimary">#00877F</color>
+  <color name="darkThemeColorPrimaryDark">#00655F</color>
+  <color name="darkThemeBackground">#232224</color>
 
-    <!-- Others -->
-    <color name="black">#000</color>
-    <color name="white">#fff</color>
-    <color name="deep_red">#FF0000</color>
-    <color name="light_grey">#D3D3D3</color>
-    <color name="dark_light_grey">#9A9A9A</color>
+  <!-- Others -->
+  <color name="black">#000</color>
+  <color name="white">#fff</color>
+  <color name="deep_red">#FF0000</color>
+  <color name="light_grey">#D3D3D3</color>
+  <color name="dark_light_grey">#9A9A9A</color>
 </resources>

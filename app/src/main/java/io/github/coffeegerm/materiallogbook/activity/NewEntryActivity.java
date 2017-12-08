@@ -37,6 +37,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -223,6 +224,7 @@ public class NewEntryActivity extends AppCompatActivity {
         status = 1;
         statusButtonCheck(status);
         final Toast toast = Toast.makeText(getApplicationContext(), "Breakfast", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -239,6 +241,7 @@ public class NewEntryActivity extends AppCompatActivity {
         status = 2;
         statusButtonCheck(status);
         final Toast toast = Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -255,6 +258,7 @@ public class NewEntryActivity extends AppCompatActivity {
         status = 3;
         statusButtonCheck(status);
         final Toast toast = Toast.makeText(getApplicationContext(), "Dinner", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -271,6 +275,7 @@ public class NewEntryActivity extends AppCompatActivity {
         status = 4;
         statusButtonCheck(status);
         final Toast toast = Toast.makeText(getApplicationContext(), "Sick", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -287,6 +292,7 @@ public class NewEntryActivity extends AppCompatActivity {
         status = 5;
         statusButtonCheck(status);
         final Toast toast = Toast.makeText(getApplicationContext(), "Exercise", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override
@@ -305,6 +311,7 @@ public class NewEntryActivity extends AppCompatActivity {
         status = 6;
         statusButtonCheck(status);
         final Toast toast = Toast.makeText(getApplicationContext(), "Sweets", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
         handler.postDelayed(new Runnable() {
           @Override

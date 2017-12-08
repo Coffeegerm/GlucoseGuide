@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Coffee and Cream Studios
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,48 +15,48 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="io.github.coffeegerm.materiallogbook">
+  xmlns:tools="http://schemas.android.com/tools"
+  package="io.github.coffeegerm.materiallogbook">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Removes audio recording from instabug -->
-    <uses-permission
-        android:name="android.permission.RECORD_AUDIO"
-        tools:node="remove" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <!-- Removes audio recording from instabug -->
+  <uses-permission
+    android:name="android.permission.RECORD_AUDIO"
+    tools:node="remove" />
 
-    <application
-        android:name=".MaterialLogbookApplication"
-        android:allowBackup="true"
-        android:fullBackupContent="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_circle"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".activity.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.NewEntryActivity" />
-        <activity android:name=".activity.EditEntryActivity" />
-        <activity android:name=".activity.SettingsTreatmentActivity" />
-        <activity android:name=".activity.SettingsDataActivity" />
-        <activity android:name=".activity.SettingsActivity" />
+  <application
+    android:name=".MaterialLogbookApplication"
+    android:allowBackup="true"
+    android:fullBackupContent="false"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_circle"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme">
+    <activity
+      android:name=".activity.SplashActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/SplashTheme">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity
+      android:name=".activity.MainActivity"
+      android:label="@string/app_name"
+      android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+      </intent-filter>
+    </activity>
+    <activity android:name=".activity.NewEntryActivity" />
+    <activity android:name=".activity.EditEntryActivity" />
+    <activity android:name=".activity.SettingsTreatmentActivity" />
+    <activity android:name=".activity.SettingsDataActivity" />
+    <activity android:name=".activity.SettingsActivity" />
 
-        <receiver android:name=".utils.NotificationPublisher" />
-    </application>
+    <receiver android:name=".utils.NotificationPublisher" />
+  </application>
 
 </manifest>
