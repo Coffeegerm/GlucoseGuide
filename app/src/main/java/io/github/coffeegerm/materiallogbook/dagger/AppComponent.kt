@@ -26,7 +26,7 @@ import io.github.coffeegerm.materiallogbook.utils.Utilities
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class))
+@Component(modules = [(AppModule::class)])
 interface AppComponent {
   fun inject(mainActivity: MainActivity)
   fun inject(listFragment: ListFragment)

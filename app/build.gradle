@@ -27,8 +27,8 @@ android {
     applicationId "io.github.coffeegerm.materiallogbook"
     minSdkVersion 19
     targetSdkVersion 27
-    versionCode 8
-    versionName "2.6.1"
+    versionCode 9
+    versionName "2.6.2"
     multiDexEnabled true
   }
   buildTypes {
