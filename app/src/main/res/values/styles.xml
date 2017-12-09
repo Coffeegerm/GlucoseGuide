@@ -29,6 +29,7 @@
   <style name="AppTheme.Drawer">
     <item name="android:textSize">18sp</item>
     <item name="android:windowBackground">@color/white</item>
+    <item name="android:fontFamily">@font/avenir_regular</item>
   </style>
 
   <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -43,9 +44,10 @@
     <item name="android:textColorSecondaryInverse">@color/textColorSecondary</item>
   </style>
 
-  <style name="AppTheme.Dark.Drawer">\
+  <style name="AppTheme.Dark.Drawer">
     <item name="android:textSize">18sp</item>
     <item name="android:windowBackground">@color/darkThemeBackground</item>
+    <item name="android:fontFamily">@font/avenir_regular</item>
   </style>
 
   <style name="StatusButton" parent="android:style/Widget.Holo.Button">

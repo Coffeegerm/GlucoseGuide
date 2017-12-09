@@ -24,7 +24,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -132,7 +131,6 @@ public class NewEntryActivity extends AppCompatActivity {
     setContentView(R.layout.activity_new_entry);
     ButterKnife.bind(this);
     realm = Realm.getDefaultInstance();
-    setFonts();
     handler = new Handler();
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.create_entry);
@@ -377,24 +375,6 @@ public class NewEntryActivity extends AppCompatActivity {
       // After save returns to MainActivity ListFragment
       finish();
     }
-  }
-  
-  // Fonts used in Activity
-  private void setFonts() {
-    Typeface avenirRegular = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Regular.otf");
-    Typeface avenirMedium = Typeface.createFromAsset(getAssets(), "fonts/AvenirNext-Medium.otf");
-    cancelBtn.setTypeface(avenirMedium);
-    saveBtn.setTypeface(avenirMedium);
-    if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
-      int white = getResources().getColor(R.color.white);
-      cancelBtn.setTextColor(white);
-      saveBtn.setTextColor(white);
-    }
-    date.setTypeface(avenirRegular);
-    time.setTypeface(avenirRegular);
-    bloodGlucose.setTypeface(avenirRegular);
-    carbohydrates.setTypeface(avenirRegular);
-    insulin.setTypeface(avenirRegular);
   }
   
   // dateFix
