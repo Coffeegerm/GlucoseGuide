@@ -125,7 +125,7 @@
   <string name="no_data">No data to calculate</string>
   <string name="estimated_a1c">Estimated A1C:</string>
   
-  <string name="support">Support</string>
+  <string name="support" translatable="false">Support</string>
   <string name="support_development">Support development</string>
   <string name="support_development_desc">Help support the development of this application by donating a few dollars.</string>
   

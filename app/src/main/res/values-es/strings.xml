@@ -99,19 +99,12 @@
   <string name="settings_delete_entries">Eliminar todas las entradas?</string>
   <string name="delete">Borrar</string>
   <string name="feedback">Realimentación</string>
-  <string name="donate_para">Apoye el desarrollo de Material Logbook.</string>
-  <string name="donate">Donar</string>
-  <string name="support">Material de apoyo Logbook</string>
   <string name="all_deleted">Todas las entradas borradas</string>
   <string name="treatment">Tratamiento</string>
   <string name="settings">Configuraciones</string>
   <string name="bolus_ratio_label">Proporción del bolo</string>
   <string name="bolus_ratio_description">¿Cuántos carbohidratos = 1 unidad de insulina?</string>
   <string name="military_time_description">Usar el formato de 24 horas:</string>
-  <string name="tipjar_header">Cómprame una taza de café</string>
-  <string name="tipjar_description">¡Ayúdeme a mí mismo a permanecer despierto y crear material Logbook comprándome una taza de café!</string>
-  <string name="no_tipjar">No, gracias</string>
-  <string name="tipjar_price">$1.99</string>
 
   <!--Image descriptions -->
   <string name="blood_glucose_image">Imagen de glucosa en sangre</string>
@@ -131,4 +124,18 @@
   <string name="danger_zone">Zona peligrosa</string>
   <string name="export">Exportar</string>
   <string name="export_description">Exportar entradas a la hoja de cálculo en Google Drive</string>
+
+  <string name="support">Apoyo</string>
+  <string name="support_development">Desarrollo de soporte</string>
+  <string name="support_development_desc">Ayude a respaldar el desarrollo de esta aplicación donando unos pocos dólares.</string>
+
+  <string name="coffee">Coffee</string>
+  <string name="coffee_donation_price">$0.99</string>
+  <string name="coffee_donation_description">Trátame a una taza de café para mantenerme despierto haciendo esta aplicación!</string>
+  <string name="pizza">Pizza</string>
+  <string name="pizza_donation_price">$1.99</string>
+  <string name="pizza_donation_description">Cómprame un pedazo de pizza para el almuerzo</string>
+  <string name="dinner">Cena</string>
+  <string name="dinner_donation_price">$4.99</string>
+  <string name="dinner_donation_description">¿Me estás invitando a cenar ahora también? ¡Guauu!</string>
 </resources>
