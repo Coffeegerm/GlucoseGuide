@@ -25,7 +25,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -54,21 +53,16 @@ import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.list.ListFragment;
 import io.github.coffeegerm.materiallogbook.rss.NewsFragment;
 import io.github.coffeegerm.materiallogbook.statistics.StatisticsFragment;
+import io.github.coffeegerm.materiallogbook.support.SupportFragment;
 import io.github.coffeegerm.materiallogbook.utils.CustomTypeFaceSpan;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 
 import static io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.syringe;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
-/**
- * Activity for controlling which fragment should be presented and containing
- * the main activity for holding Fragments
- **/
-
 public class MainActivity extends AppCompatActivity
       implements NavigationView.OnNavigationItemSelectedListener {
   
-  public static boolean isResumed = false;
   @Inject
   public SharedPreferences sharedPreferences;
   @Inject
@@ -77,6 +71,7 @@ public class MainActivity extends AppCompatActivity
   Fragment listFragment = new ListFragment();
   Fragment newsFragment = new NewsFragment();
   Fragment statsFragment = new StatisticsFragment();
+  Fragment supportFragment = new SupportFragment();
   FragmentManager fragmentManager;
   @BindView(R.id.toolbar)
   Toolbar toolbar;
@@ -84,11 +79,10 @@ public class MainActivity extends AppCompatActivity
   DrawerLayout drawerLayout;
   @BindView(R.id.nav_view)
   NavigationView navigationView;
-  @BindView(R.id.appBarLayout)
-  AppBarLayout appBarLayout;
   @BindView(R.id.feedback)
   TextView feedback;
   private boolean isCreated = false;
+  public static boolean isResumed = false;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +130,9 @@ public class MainActivity extends AppCompatActivity
         case R.id.nav_news:
           setFragment(newsFragment);
           break;
+        case R.id.nav_support:
+          setFragment(supportFragment);
+          break;
       }
     }
     
@@ -174,6 +171,11 @@ public class MainActivity extends AppCompatActivity
         setFragment(newsFragment);
         lastSelectedTab = R.id.nav_news;
         break;
+  
+      case R.id.nav_support:
+        setFragment(supportFragment);
+        lastSelectedTab = R.id.nav_support;
+        break;
       
       case R.id.nav_settings:
         startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
@@ -204,8 +206,8 @@ public class MainActivity extends AppCompatActivity
     
     // Changes fonts within drawer layout
     Menu menu = navigationView.getMenu();
-    for (int i = 0; i < menu.size(); i++) {
-      MenuItem menuItem = menu.getItem(i);
+    for (int position = 0; position < menu.size(); position++) {
+      MenuItem menuItem = menu.getItem(position);
       SubMenu subMenu = menuItem.getSubMenu();
       if (subMenu != null && subMenu.size() > 0) {
         for (int j = 0; j < subMenu.size(); j++) {
@@ -254,11 +256,9 @@ public class MainActivity extends AppCompatActivity
   
   private void sendFeedbackEmail() {
     String mailto = "mailto:coffeeandcreamstudios@gmail.com";
-    
     Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
     emailIntent.setData(Uri.parse(mailto));
     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Material Logbook feedback");
-    
     try {
       startActivity(emailIntent);
     } catch (ActivityNotFoundException e) {
