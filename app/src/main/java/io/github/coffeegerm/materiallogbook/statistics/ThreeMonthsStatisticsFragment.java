@@ -36,6 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.model.DatabaseManager;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
@@ -55,6 +56,9 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
   
   @Inject
   public Utilities utilities;
+  
+  @Inject
+  public DatabaseManager databaseManager;
   
   @BindView(R.id.a_one_c)
   TextView a1c;
@@ -103,15 +107,15 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
     } else {
-      average.setText(String.valueOf(utilities.getAverageGlucose(threeMonthsAgo)));
-      highest.setText(String.valueOf(utilities.getHighestGlucose(threeMonthsAgo)));
-      lowest.setText(String.valueOf(utilities.getLowestGlucose(threeMonthsAgo)));
+      average.setText(String.valueOf(databaseManager.getAverageGlucose(threeMonthsAgo)));
+      highest.setText(String.valueOf(databaseManager.getHighestGlucose(threeMonthsAgo)));
+      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(threeMonthsAgo)));
     }
     
     if (entriesFromLastThreeMonths.size() < 300) {
       a1c.setText(R.string.dash);
     } else {
-      a1c.setText(String.valueOf(getA1C(utilities.getAverageGlucose(threeMonthsAgo))));
+      a1c.setText(String.valueOf(getA1C(databaseManager.getAverageGlucose(threeMonthsAgo))));
     }
   }
   
@@ -121,9 +125,9 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
     return calendar.getTime();
   }
   
+  // A1c = (46.7 + average_blood_glucose) / 28.7
   public double getA1C(int average) {
     return (46.7 + average) / 28.7;
-    // A1c = (46.7 + average_blood_glucose) / 28.7
   }
   
   private void setImages() {

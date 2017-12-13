@@ -36,6 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.model.DatabaseManager;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
@@ -55,6 +56,9 @@ public class OneMonthStatisticsFragment extends Fragment {
   
   @Inject
   public Utilities utilities;
+  
+  @Inject
+  public DatabaseManager databaseManager;
   
   @BindView(R.id.average)
   TextView average;
@@ -99,9 +103,9 @@ public class OneMonthStatisticsFragment extends Fragment {
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
     } else {
-      average.setText(String.valueOf(utilities.getAverageGlucose(oneMonthAgo)));
-      highest.setText(String.valueOf(utilities.getHighestGlucose(oneMonthAgo)));
-      lowest.setText(String.valueOf(utilities.getLowestGlucose(oneMonthAgo)));
+      average.setText(String.valueOf(databaseManager.getAverageGlucose(oneMonthAgo)));
+      highest.setText(String.valueOf(databaseManager.getHighestGlucose(oneMonthAgo)));
+      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(oneMonthAgo)));
     }
   }
   

@@ -36,6 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.model.DatabaseManager;
 import io.github.coffeegerm.materiallogbook.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
@@ -55,6 +56,9 @@ public class SevenDayStatisticsFragment extends Fragment {
   
   @Inject
   public Utilities utilities;
+  
+  @Inject
+  public DatabaseManager databaseManager;
   
   @BindView(R.id.seven_days_average)
   TextView average;
@@ -110,9 +114,9 @@ public class SevenDayStatisticsFragment extends Fragment {
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
     } else {
-      average.setText(String.valueOf(utilities.getAverageGlucose(sevenDaysAgo)));
-      highest.setText(String.valueOf(utilities.getHighestGlucose(sevenDaysAgo)));
-      lowest.setText(String.valueOf(utilities.getLowestGlucose(sevenDaysAgo)));
+      average.setText(String.valueOf(databaseManager.getAverageGlucose(sevenDaysAgo)));
+      highest.setText(String.valueOf(databaseManager.getHighestGlucose(sevenDaysAgo)));
+      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(sevenDaysAgo)));
     }
   }
   

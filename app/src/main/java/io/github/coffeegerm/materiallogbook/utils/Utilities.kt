@@ -57,39 +57,6 @@ class Utilities {
     return hour.toString() + ":" + min + " " + timeSet
   }
   
-  fun getHighestGlucose(providedDate: Date): Int {
-    val realm = Realm.getDefaultInstance()
-    var highest = 0
-    val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-    entriesFromLastThreeMonths.indices
-          .asSequence()
-          .map { entriesFromLastThreeMonths[it]!! }
-          .filter { it.bloodGlucose > highest }
-          .forEach { highest = it.bloodGlucose }
-    return highest
-  }
-  
-  fun getAverageGlucose(providedDate: Date): Int {
-    val realm = Realm.getDefaultInstance()
-    val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-    val total = entriesFromLastThreeMonths.indices
-          .map { entriesFromLastThreeMonths[it]!! }
-          .sumBy { it.bloodGlucose }
-    return total / entriesFromLastThreeMonths.size
-  }
-  
-  fun getLowestGlucose(providedDate: Date): Int {
-    val realm = Realm.getDefaultInstance()
-    var lowest = 1000
-    val entriesFromLastThreeDays = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-    entriesFromLastThreeDays.indices
-          .asSequence()
-          .map { entriesFromLastThreeDays[it]!! }
-          .filter { it.bloodGlucose < lowest }
-          .forEach { lowest = it.bloodGlucose }
-    return lowest
-  }
-  
   // Calculates the glucose grade based on user
   // sugar from last three days
   fun getGlucoseGrade(): String {
