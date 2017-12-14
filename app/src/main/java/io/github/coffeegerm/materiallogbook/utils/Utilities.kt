@@ -32,7 +32,6 @@ class Utilities {
   @Inject
   lateinit var sharedPreferences: SharedPreferences
   
-  // Static method to edit Time String in NewEntryActivity
   fun checkTimeString(hourOfDay: Int, minute: Int): String {
     var hour = hourOfDay
     val timeSet: String

@@ -42,13 +42,6 @@ import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-/**
- * Created by dyarz on 8/15/2017.
- * <p>
- * Three Month stats fragment to show users their data
- * for that time
- */
-
 public class ThreeMonthsStatisticsFragment extends Fragment {
   
   @Inject
@@ -76,14 +69,15 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
   ImageView ivDownArrow;
   @BindView(R.id.ivA1C)
   ImageView ivA1C;
+  
   Realm realm;
   
   public static ThreeMonthsStatisticsFragment newInstance() {
     ThreeMonthsStatisticsFragment threeMonthsStatisticsFragment = new ThreeMonthsStatisticsFragment();
-    Bundle args = new Bundle();
-    args.putInt("pageNumber", 3);
-    args.putString("pageTitle", "Three Months");
-    threeMonthsStatisticsFragment.setArguments(args);
+    Bundle bundle = new Bundle();
+    bundle.putInt("pageNumber", 3);
+    bundle.putString("pageTitle", "Three Months");
+    threeMonthsStatisticsFragment.setArguments(bundle);
     return threeMonthsStatisticsFragment;
   }
   
@@ -100,22 +94,21 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
   }
   
   private void setValues() {
-    Date threeMonthsAgo = getThreeMonthsAgo();
-    RealmResults<EntryItem> entriesFromLastThreeMonths = realm.where(EntryItem.class).greaterThan("date", threeMonthsAgo).greaterThan("bloodGlucose", 0).findAll();
-    if (entriesFromLastThreeMonths.size() == 0) {
+    RealmResults<EntryItem> entries = realm.where(EntryItem.class).greaterThan("date", getThreeMonthsAgo()).greaterThan("bloodGlucose", 0).findAll();
+    if (entries.size() == 0) {
       average.setText(R.string.dash);
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
     } else {
-      average.setText(String.valueOf(databaseManager.getAverageGlucose(threeMonthsAgo)));
-      highest.setText(String.valueOf(databaseManager.getHighestGlucose(threeMonthsAgo)));
-      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(threeMonthsAgo)));
+      average.setText(String.valueOf(databaseManager.getAverageGlucose(getThreeMonthsAgo())));
+      highest.setText(String.valueOf(databaseManager.getHighestGlucose(getThreeMonthsAgo())));
+      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(getThreeMonthsAgo())));
     }
     
-    if (entriesFromLastThreeMonths.size() < 300) {
+    if (entries.size() < 300) {
       a1c.setText(R.string.dash);
     } else {
-      a1c.setText(String.valueOf(getA1C(databaseManager.getAverageGlucose(threeMonthsAgo))));
+      a1c.setText(String.valueOf(getA1C(databaseManager.getAverageGlucose(getThreeMonthsAgo()))));
     }
   }
   
@@ -125,7 +118,6 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
     return calendar.getTime();
   }
   
-  // A1c = (46.7 + average_blood_glucose) / 28.7
   public double getA1C(int average) {
     return (46.7 + average) / 28.7;
   }
