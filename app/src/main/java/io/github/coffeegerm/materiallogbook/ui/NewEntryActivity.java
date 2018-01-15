@@ -54,13 +54,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 
+import static io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.syringe;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;
@@ -125,7 +125,7 @@ public class NewEntryActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    MaterialLogbookApplication.syringe.inject(this);
+    syringe.inject(this);
     if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
       setTheme(R.style.AppTheme_Dark);
     setContentView(R.layout.activity_new_entry);
@@ -145,19 +145,17 @@ public class NewEntryActivity extends AppCompatActivity {
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     int hour = calendar.get(Calendar.HOUR_OF_DAY);
     int minute = calendar.get(Calendar.MINUTE);
-    
-    date.setText(dateFix(month, day, year));
+  
+    date.setText(utilities.formatDate(month, day, year));
     time.setText(utilities.checkTimeString(hour, minute));
     
     carbohydrates.addTextChangedListener(new TextWatcher() {
       @Override
       public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-      
       }
       
       @Override
       public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-      
       }
       
       @Override
@@ -181,7 +179,7 @@ public class NewEntryActivity extends AppCompatActivity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                   month++;
-                  date.setText(dateFix(month, dayOfMonth, year));
+                  date.setText(utilities.formatDate(month, dayOfMonth, year));
                   month--;
                   calendarToBeSaved.set(year, month, dayOfMonth);
                 }
@@ -375,11 +373,6 @@ public class NewEntryActivity extends AppCompatActivity {
       // After save returns to MainActivity ListFragment
       finish();
     }
-  }
-  
-  // dateFix
-  StringBuilder dateFix(int month, int day, int year) {
-    return new StringBuilder().append(month).append("/").append(day).append("/").append(year);
   }
   
   private void statusButtonCheck(int status) {

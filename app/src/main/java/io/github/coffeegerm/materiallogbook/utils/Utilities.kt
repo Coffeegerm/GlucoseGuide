@@ -56,6 +56,10 @@ class Utilities {
     return hour.toString() + ":" + min + " " + timeSet
   }
   
+  fun formatDate(month: Int, day: Int, year: Int): StringBuilder {
+    return StringBuilder().append(month).append("/").append(day).append("/").append(year)
+  }
+  
   // Calculates the glucose grade based on user
   // sugar from last three days
   fun getGlucoseGrade(): String {

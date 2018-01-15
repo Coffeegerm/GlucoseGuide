@@ -69,10 +69,12 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.TWELVE_HOUR_T
 public class EditEntryActivity extends AppCompatActivity {
   
   public static final String ITEM_ID = "itemId";
+  
   @Inject
   public SharedPreferences sharedPreferences;
   @Inject
   public Utilities utilities;
+  
   @BindView(R.id.toolbar)
   Toolbar toolbar;
   @BindView(R.id.cancel)
@@ -103,6 +105,7 @@ public class EditEntryActivity extends AppCompatActivity {
   ImageButton exercise;
   @BindView(R.id.sweets_status)
   ImageButton sweets;
+  
   Handler handler;
   /* Original values from item. Compare to possible updated values to find what needs to be updated in database */
   Date originalDate;
@@ -150,7 +153,7 @@ public class EditEntryActivity extends AppCompatActivity {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                   month++;
-                  date.setText(dateFix(month, dayOfMonth, year));
+                  date.setText(utilities.formatDate(month, dayOfMonth, year));
                   month--;
                   updatedCalendar.set(year, month, dayOfMonth);
                 }
@@ -473,10 +476,6 @@ public class EditEntryActivity extends AppCompatActivity {
       default:
         break;
     }
-  }
-  
-  StringBuilder dateFix(int month, int day, int year) {
-    return new StringBuilder().append(month).append("/").append(day).append("/").append(year);
   }
   
   private void updateEntry() {
