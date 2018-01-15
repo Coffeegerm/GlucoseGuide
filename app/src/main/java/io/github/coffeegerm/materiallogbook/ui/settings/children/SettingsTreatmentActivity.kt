@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.activity
+package io.github.coffeegerm.materiallogbook.ui.settings.children
 
 import android.content.SharedPreferences
 import android.os.Bundle

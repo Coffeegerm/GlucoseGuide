@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Coffee and Cream Studios
+ * Copyright 2018 Coffee and Cream Studios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.activity;
+package io.github.coffeegerm.materiallogbook.ui;
 
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -45,10 +45,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.list.ListFragment;
-import io.github.coffeegerm.materiallogbook.rss.NewsFragment;
-import io.github.coffeegerm.materiallogbook.statistics.StatisticsFragment;
-import io.github.coffeegerm.materiallogbook.support.SupportFragment;
+import io.github.coffeegerm.materiallogbook.ui.list.ListFragment;
+import io.github.coffeegerm.materiallogbook.ui.rss.NewsFragment;
+import io.github.coffeegerm.materiallogbook.ui.settings.SettingsActivity;
+import io.github.coffeegerm.materiallogbook.ui.statistics.StatisticsFragment;
+import io.github.coffeegerm.materiallogbook.ui.support.SupportFragment;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 
 import static io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.syringe;

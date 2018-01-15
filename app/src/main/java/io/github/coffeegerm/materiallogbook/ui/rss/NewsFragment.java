@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.rss;
+package io.github.coffeegerm.materiallogbook.ui.rss;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

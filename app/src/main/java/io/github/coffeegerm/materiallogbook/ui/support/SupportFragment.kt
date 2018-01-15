@@ -14,32 +14,21 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.model
+package io.github.coffeegerm.materiallogbook.ui.support
 
-import io.realm.RealmObject
-import java.util.*
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import io.github.coffeegerm.materiallogbook.R
 
-/**
- * Created by David Yarzebinski on 6/25/2017.
- *
- * EntryItem POJO for setting and retrieving data for layouts
- *
- * For Status
- *
- * case 0: null
- * 1: breakfast
- * 2: lunch
- * 3: dinner
- * 4: sick
- * 5: exercise
- * 6: sweets
- */
-
-open class EntryItem : RealmObject() {
-  var id: String = UUID.randomUUID().toString()
-  var status: Int = 0
-  var date: Date? = null
-  var bloodGlucose: Int = 0
-  var carbohydrates: Int = 0
-  var insulin: Double = 0.toDouble()
+class SupportFragment : Fragment() {
+  
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = inflater.inflate(R.layout.fragment_support, container, false)
+  
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+  }
+  
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.activity
+package io.github.coffeegerm.materiallogbook.ui.settings.children
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -23,7 +23,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication
 import io.github.coffeegerm.materiallogbook.R
-import io.github.coffeegerm.materiallogbook.model.EntryItem
+import io.github.coffeegerm.materiallogbook.data.model.EntryItem
 import io.github.coffeegerm.materiallogbook.utils.Constants
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_settings_data.*

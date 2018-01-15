@@ -22,7 +22,7 @@ import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication
-import io.github.coffeegerm.materiallogbook.model.DatabaseManager
+import io.github.coffeegerm.materiallogbook.data.DatabaseManager
 import io.github.coffeegerm.materiallogbook.utils.Constants
 import io.github.coffeegerm.materiallogbook.utils.Utilities
 import javax.inject.Singleton

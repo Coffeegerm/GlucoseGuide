@@ -32,7 +32,7 @@ import javax.inject.Inject;
 
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;

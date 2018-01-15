@@ -17,10 +17,15 @@
 package io.github.coffeegerm.materiallogbook.dagger
 
 import dagger.Component
-import io.github.coffeegerm.materiallogbook.activity.*
-import io.github.coffeegerm.materiallogbook.list.ListAdapter
-import io.github.coffeegerm.materiallogbook.list.ListFragment
-import io.github.coffeegerm.materiallogbook.statistics.*
+import io.github.coffeegerm.materiallogbook.ui.EditEntryActivity
+import io.github.coffeegerm.materiallogbook.ui.MainActivity
+import io.github.coffeegerm.materiallogbook.ui.NewEntryActivity
+import io.github.coffeegerm.materiallogbook.ui.list.ListAdapter
+import io.github.coffeegerm.materiallogbook.ui.list.ListFragment
+import io.github.coffeegerm.materiallogbook.ui.settings.SettingsActivity
+import io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsDataActivity
+import io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsTreatmentActivity
+import io.github.coffeegerm.materiallogbook.ui.statistics.children.*
 import io.github.coffeegerm.materiallogbook.utils.ConvertToCSV
 import io.github.coffeegerm.materiallogbook.utils.Utilities
 import javax.inject.Singleton

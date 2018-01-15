@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.statistics
+package io.github.coffeegerm.materiallogbook.ui.statistics
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import io.github.coffeegerm.materiallogbook.ui.statistics.children.*
 
 /**
- * Created by David Yarzebinski on 7/28/2017.
- *
+ * Created by David Yarzebinski on 7/28/2017
  *
  * Adapter used for ViewPager within StatisticsFragment
  */
 
-class StatisticsPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class StatisticsPagerAdapter internal constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
   
   private val tabTitles = arrayOf("3 Days", "7 Days", "One Month", "Three Months", "All")
   
   override fun getItem(position: Int): Fragment? {
     return when (position) {
-      0 -> ThreeDayStatisticsFragment.newInstance()
-      1 -> SevenDayStatisticsFragment.newInstance()
-      2 -> OneMonthStatisticsFragment.newInstance()
-      3 -> ThreeMonthsStatisticsFragment.newInstance()
-      4 -> AllStatisticsFragment.newInstance()
+      0 -> ThreeDayStatisticsFragment()
+      1 -> SevenDayStatisticsFragment()
+      2 -> OneMonthStatisticsFragment()
+      3 -> ThreeMonthsStatisticsFragment()
+      4 -> AllStatisticsFragment()
       else -> null
     }
   }

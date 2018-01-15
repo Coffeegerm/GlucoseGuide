@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Coffee and Cream Studios
+ * Copyright 2018 Coffee and Cream Studios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.activity
+package io.github.coffeegerm.materiallogbook.ui.settings
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -22,6 +22,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.Companion.syringe
 import io.github.coffeegerm.materiallogbook.R
+import io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsDataActivity
+import io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsTreatmentActivity
 import io.github.coffeegerm.materiallogbook.utils.Constants
 import io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE
 import kotlinx.android.synthetic.main.activity_settings.*

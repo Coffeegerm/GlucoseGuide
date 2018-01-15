@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.list;
+package io.github.coffeegerm.materiallogbook.ui.list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,8 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.activity.EditEntryActivity;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.EditEntryActivity;
+import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Constants;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;

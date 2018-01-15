@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Coffee and Cream Studios
+ * Copyright 2018 Coffee and Cream Studios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.statistics;
+package io.github.coffeegerm.materiallogbook.ui.statistics.children;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,20 +36,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.model.DatabaseManager;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
+import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**
- * Created by David Yarzebinski on 7/28/2017.
+ * Created by dyarz on 8/15/2017.
  * <p>
- * Fragment used with Statistics ViewPager to show
- * the last seven days of statistics
+ * Fragment for Statistics ViewPager to show
+ * one month data for user.
  */
 
-public class SevenDayStatisticsFragment extends Fragment {
+public class OneMonthStatisticsFragment extends Fragment {
   
   @Inject
   public SharedPreferences sharedPreferences;
@@ -60,69 +60,49 @@ public class SevenDayStatisticsFragment extends Fragment {
   @Inject
   public DatabaseManager databaseManager;
   
-  @BindView(R.id.seven_days_average)
+  @BindView(R.id.average)
   TextView average;
-  @BindView(R.id.seven_days_highest)
+  @BindView(R.id.highest)
   TextView highest;
-  @BindView(R.id.seven_days_lowest)
+  @BindView(R.id.lowest)
   TextView lowest;
-  
   @BindView(R.id.imgAvg)
   ImageView ivAvg;
   @BindView(R.id.imgUpArrow)
   ImageView ivUpArrow;
   @BindView(R.id.imgDownArrow)
   ImageView ivDownArrow;
-  
-  Realm realm;
-  String pageTitle;
-  int pageNumber;
-  
-  public static SevenDayStatisticsFragment newInstance() {
-    SevenDayStatisticsFragment sevenDayStatisticsFragment = new SevenDayStatisticsFragment();
-    Bundle args = new Bundle();
-    args.putInt("pageNumber", 1);
-    args.putString("pageTitle", "Seven Days");
-    sevenDayStatisticsFragment.setArguments(args);
-    return sevenDayStatisticsFragment;
-  }
-  
-  @Override
-  public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    MaterialLogbookApplication.syringe.inject(this);
-    pageTitle = getArguments().getString("pageTitle");
-    pageNumber = getArguments().getInt("pageNumber");
-  }
+  private Realm realm;
   
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View sevenDaysView = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
-    ButterKnife.bind(this, sevenDaysView);
+    View oneMonth = inflater.inflate(R.layout.fragment_one_month_statistics, container, false);
+    MaterialLogbookApplication.syringe.inject(this);
+    ButterKnife.bind(this, oneMonth);
     realm = Realm.getDefaultInstance();
-    setValues();
     setImages();
-    return sevenDaysView;
+    setValues();
+    return oneMonth;
   }
   
   private void setValues() {
-    Date sevenDaysAgo = getSevenDaysAgo();
-    RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-    if (entriesFromLastWeek.size() == 0) {
+    Date oneMonthAgo = getOneMonthAgo();
+    RealmResults<EntryItem> entriesFromPastMonth = realm.where(EntryItem.class).greaterThan("date", oneMonthAgo).greaterThan("bloodGlucose", 0).findAll();
+    if (entriesFromPastMonth.size() == 0) {
       average.setText(R.string.dash);
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
     } else {
-      average.setText(String.valueOf(databaseManager.getAverageGlucose(sevenDaysAgo)));
-      highest.setText(String.valueOf(databaseManager.getHighestGlucose(sevenDaysAgo)));
-      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(sevenDaysAgo)));
+      average.setText(String.valueOf(databaseManager.getAverageGlucose(oneMonthAgo)));
+      highest.setText(String.valueOf(databaseManager.getHighestGlucose(oneMonthAgo)));
+      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(oneMonthAgo)));
     }
   }
   
-  public Date getSevenDaysAgo() {
+  private Date getOneMonthAgo() {
     Calendar calendar = Calendar.getInstance();
-    calendar.add(Calendar.DATE, -7);
+    calendar.add(Calendar.DATE, -30);
     return calendar.getTime();
   }
   

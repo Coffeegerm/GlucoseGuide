@@ -17,12 +17,14 @@
 package io.github.coffeegerm.materiallogbook
 
 import android.app.Application
+import io.github.coffeegerm.materiallogbook.BuildConfig.DEBUG
 import io.github.coffeegerm.materiallogbook.dagger.AppComponent
 import io.github.coffeegerm.materiallogbook.dagger.AppModule
 import io.github.coffeegerm.materiallogbook.dagger.DaggerAppComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import timber.log.Timber
+import timber.log.Timber.DebugTree
+import timber.log.Timber.plant
 
 class MaterialLogbookApplication : Application() {
   
@@ -34,10 +36,8 @@ class MaterialLogbookApplication : Application() {
     super.onCreate()
     initRealm()
     syringe = DaggerAppComponent.builder().appModule(AppModule(this)).build()
-    
-    if (BuildConfig.DEBUG) {
-      Timber.plant(Timber.DebugTree())
-    } else {
+  
+    if (DEBUG) plant(DebugTree()) else {
       // do stuff
     }
   }

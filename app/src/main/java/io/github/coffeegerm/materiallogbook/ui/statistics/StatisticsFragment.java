@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.statistics;
+package io.github.coffeegerm.materiallogbook.ui.statistics;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

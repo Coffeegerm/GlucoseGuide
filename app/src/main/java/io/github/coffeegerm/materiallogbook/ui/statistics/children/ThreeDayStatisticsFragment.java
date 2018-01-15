@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Coffee and Cream Studios
+ * Copyright 2018 Coffee and Cream Studios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.statistics;
+package io.github.coffeegerm.materiallogbook.ui.statistics.children;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,8 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.model.DatabaseManager;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
+import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -74,27 +74,14 @@ public class ThreeDayStatisticsFragment extends Fragment {
   ImageView ivDownArrow;
   
   Realm realm;
-  String pageTitle;
-  int pageNumber;
   
   int hyperglycemicIndex;
   int hypoglycemicIndex;
-  
-  public static ThreeDayStatisticsFragment newInstance() {
-    ThreeDayStatisticsFragment threeDayStatisticsFragment = new ThreeDayStatisticsFragment();
-    Bundle args = new Bundle();
-    args.putInt("pageNumber", 0);
-    args.putString("pageTitle", "Three Days");
-    threeDayStatisticsFragment.setArguments(args);
-    return threeDayStatisticsFragment;
-  }
   
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     MaterialLogbookApplication.syringe.inject(this);
-    pageTitle = getArguments().getString("pageTitle");
-    pageNumber = getArguments().getInt("pageNumber");
   }
   
   @Nullable

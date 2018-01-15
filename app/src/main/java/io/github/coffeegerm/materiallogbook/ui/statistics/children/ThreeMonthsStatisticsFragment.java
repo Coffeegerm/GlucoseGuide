@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Coffee and Cream Studios
+ * Copyright 2018 Coffee and Cream Studios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.statistics;
+package io.github.coffeegerm.materiallogbook.ui.statistics.children;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,20 +36,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.model.DatabaseManager;
-import io.github.coffeegerm.materiallogbook.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
+import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-/**
- * Created by dyarz on 8/15/2017.
- * <p>
- * Fragment for Statistics ViewPager to show
- * one month data for user.
- */
-
-public class OneMonthStatisticsFragment extends Fragment {
+public class ThreeMonthsStatisticsFragment extends Fragment {
   
   @Inject
   public SharedPreferences sharedPreferences;
@@ -60,6 +53,8 @@ public class OneMonthStatisticsFragment extends Fragment {
   @Inject
   public DatabaseManager databaseManager;
   
+  @BindView(R.id.a_one_c)
+  TextView a1c;
   @BindView(R.id.average)
   TextView average;
   @BindView(R.id.highest)
@@ -72,47 +67,50 @@ public class OneMonthStatisticsFragment extends Fragment {
   ImageView ivUpArrow;
   @BindView(R.id.imgDownArrow)
   ImageView ivDownArrow;
-  private Realm realm;
+  @BindView(R.id.ivA1C)
+  ImageView ivA1C;
   
-  public static OneMonthStatisticsFragment newInstance() {
-    OneMonthStatisticsFragment oneMonthStatisticsFragment = new OneMonthStatisticsFragment();
-    Bundle args = new Bundle();
-    args.putInt("pageNumber", 2);
-    args.putString("pageTitle", "One Month");
-    oneMonthStatisticsFragment.setArguments(args);
-    return oneMonthStatisticsFragment;
-  }
+  Realm realm;
   
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View oneMonth = inflater.inflate(R.layout.fragment_one_month_statistics, container, false);
+    View threeMonths = inflater.inflate(R.layout.fragment_three_months_statistics, container, false);
+    ButterKnife.bind(this, threeMonths);
     MaterialLogbookApplication.syringe.inject(this);
-    ButterKnife.bind(this, oneMonth);
     realm = Realm.getDefaultInstance();
     setImages();
     setValues();
-    return oneMonth;
+    return threeMonths;
   }
   
   private void setValues() {
-    Date oneMonthAgo = getOneMonthAgo();
-    RealmResults<EntryItem> entriesFromPastMonth = realm.where(EntryItem.class).greaterThan("date", oneMonthAgo).greaterThan("bloodGlucose", 0).findAll();
-    if (entriesFromPastMonth.size() == 0) {
+    RealmResults<EntryItem> entries = realm.where(EntryItem.class).greaterThan("date", getThreeMonthsAgo()).greaterThan("bloodGlucose", 0).findAll();
+    if (entries.size() == 0) {
       average.setText(R.string.dash);
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
     } else {
-      average.setText(String.valueOf(databaseManager.getAverageGlucose(oneMonthAgo)));
-      highest.setText(String.valueOf(databaseManager.getHighestGlucose(oneMonthAgo)));
-      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(oneMonthAgo)));
+      average.setText(String.valueOf(databaseManager.getAverageGlucose(getThreeMonthsAgo())));
+      highest.setText(String.valueOf(databaseManager.getHighestGlucose(getThreeMonthsAgo())));
+      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(getThreeMonthsAgo())));
+    }
+    
+    if (entries.size() < 300) {
+      a1c.setText(R.string.dash);
+    } else {
+      a1c.setText(String.valueOf(getA1C(databaseManager.getAverageGlucose(getThreeMonthsAgo()))));
     }
   }
   
-  private Date getOneMonthAgo() {
+  public Date getThreeMonthsAgo() {
     Calendar calendar = Calendar.getInstance();
-    calendar.add(Calendar.DATE, -30);
+    calendar.add(Calendar.DATE, -90);
     return calendar.getTime();
+  }
+  
+  public double getA1C(int average) {
+    return (46.7 + average) / 28.7;
   }
   
   private void setImages() {
@@ -120,6 +118,7 @@ public class OneMonthStatisticsFragment extends Fragment {
       ivAvg.setImageResource(R.drawable.ic_average_dark);
       ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
       ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
+      ivA1C.setImageResource(R.drawable.ic_a1c_dark);
     }
   }
 }
