@@ -60,7 +60,7 @@ import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 
-import static io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.syringe;
+import static io.github.coffeegerm.materiallogbook.MaterialLogbook.syringe;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;

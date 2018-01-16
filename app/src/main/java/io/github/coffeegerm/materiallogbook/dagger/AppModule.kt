@@ -21,7 +21,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication
+import io.github.coffeegerm.materiallogbook.MaterialLogbook
 import io.github.coffeegerm.materiallogbook.data.DatabaseManager
 import io.github.coffeegerm.materiallogbook.utils.Constants
 import io.github.coffeegerm.materiallogbook.utils.Utilities
@@ -32,8 +32,8 @@ import javax.inject.Singleton
  */
 
 @Module
-class AppModule(application: MaterialLogbookApplication) {
-  var app: MaterialLogbookApplication = application
+class AppModule(application: MaterialLogbook) {
+  var app: MaterialLogbook = application
   
   @Provides
   @Singleton

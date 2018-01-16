@@ -35,5 +35,4 @@ public class Constants {
   public static final String NOTIFICATION_ID = "notification-id";
   public static final String NOTIFICATION = "notification";
   
-  public static final String ARTICLE_LINK = "http://www.diabetes.co.uk/News/rss/newsindex.xml";
 }

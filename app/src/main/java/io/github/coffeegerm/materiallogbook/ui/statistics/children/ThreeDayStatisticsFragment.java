@@ -34,7 +34,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
+import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
@@ -81,7 +81,7 @@ public class ThreeDayStatisticsFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    MaterialLogbookApplication.syringe.inject(this);
+    MaterialLogbook.syringe.inject(this);
   }
   
   @Nullable

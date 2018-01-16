@@ -49,7 +49,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
+import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
@@ -127,7 +127,7 @@ public class EditEntryActivity extends AppCompatActivity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    MaterialLogbookApplication.syringe.inject(this);
+    MaterialLogbook.syringe.inject(this);
     if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
       setTheme(R.style.AppTheme_Dark);
     setContentView(R.layout.activity_edit_entry);

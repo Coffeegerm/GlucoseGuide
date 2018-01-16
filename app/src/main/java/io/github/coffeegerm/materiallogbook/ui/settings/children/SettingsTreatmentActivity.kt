@@ -21,7 +21,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication
+import io.github.coffeegerm.materiallogbook.MaterialLogbook
 import io.github.coffeegerm.materiallogbook.R
 import io.github.coffeegerm.materiallogbook.utils.Constants.*
 import kotlinx.android.synthetic.main.activity_settings_treatment.*
@@ -41,7 +41,7 @@ class SettingsTreatmentActivity : AppCompatActivity() {
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    MaterialLogbookApplication.syringe.inject(this)
+    MaterialLogbook.syringe.inject(this)
     if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_settings_treatment)
     init()

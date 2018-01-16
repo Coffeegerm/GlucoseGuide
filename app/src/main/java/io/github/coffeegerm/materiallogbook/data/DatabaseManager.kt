@@ -18,6 +18,8 @@ package io.github.coffeegerm.materiallogbook.data
 
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem
 import io.realm.Realm
+import io.realm.RealmResults
+import io.realm.Sort
 import java.util.*
 
 class DatabaseManager {
@@ -53,4 +55,7 @@ class DatabaseManager {
           .forEach { lowest = it.bloodGlucose }
     return lowest
   }
+  
+  fun getAllSortedAscending(): RealmResults<EntryItem> = realm.where(EntryItem::class.java).sort("date", Sort.ASCENDING).findAll()
+  
 }

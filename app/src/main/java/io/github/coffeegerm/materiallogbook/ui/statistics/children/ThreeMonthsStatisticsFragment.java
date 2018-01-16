@@ -34,7 +34,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
+import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
@@ -77,7 +77,7 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View threeMonths = inflater.inflate(R.layout.fragment_three_months_statistics, container, false);
     ButterKnife.bind(this, threeMonths);
-    MaterialLogbookApplication.syringe.inject(this);
+    MaterialLogbook.syringe.inject(this);
     realm = Realm.getDefaultInstance();
     setImages();
     setValues();

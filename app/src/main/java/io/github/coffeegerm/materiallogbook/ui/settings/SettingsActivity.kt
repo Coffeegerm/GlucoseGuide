@@ -20,7 +20,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.Companion.syringe
+import io.github.coffeegerm.materiallogbook.MaterialLogbook.Companion.syringe
 import io.github.coffeegerm.materiallogbook.R
 import io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsDataActivity
 import io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsTreatmentActivity

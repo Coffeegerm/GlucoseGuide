@@ -39,7 +39,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
+import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.ui.NewEntryActivity;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
@@ -75,7 +75,7 @@ public class ListFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     final View listView = inflater.inflate(R.layout.fragment_list, container, false);
     ButterKnife.bind(this, listView);
-    MaterialLogbookApplication.syringe.inject(this);
+    MaterialLogbook.syringe.inject(this);
     setHasOptionsMenu(true);
     realm = Realm.getDefaultInstance();
     listAdapter = new ListAdapter(getContext());

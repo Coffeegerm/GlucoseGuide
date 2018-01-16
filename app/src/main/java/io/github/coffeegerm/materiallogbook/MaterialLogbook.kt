@@ -26,7 +26,7 @@ import io.realm.RealmConfiguration
 import timber.log.Timber.DebugTree
 import timber.log.Timber.plant
 
-class MaterialLogbookApplication : Application() {
+class MaterialLogbook : Application() {
   
   companion object {
     lateinit var syringe: AppComponent

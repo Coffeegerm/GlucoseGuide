@@ -21,10 +21,11 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication
+import io.github.coffeegerm.materiallogbook.MaterialLogbook
 import io.github.coffeegerm.materiallogbook.R
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem
 import io.github.coffeegerm.materiallogbook.utils.Constants
+import io.github.coffeegerm.materiallogbook.utils.ConvertToCSV
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_settings_data.*
 import javax.inject.Inject
@@ -41,6 +42,8 @@ import javax.inject.Inject
 
 class SettingsDataActivity : AppCompatActivity() {
   
+  private val convertToCsv: ConvertToCSV by lazy { ConvertToCSV(this) }
+  
   @Inject
   lateinit var sharedPreferences: SharedPreferences
   
@@ -48,7 +51,7 @@ class SettingsDataActivity : AppCompatActivity() {
   
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    MaterialLogbookApplication.syringe.inject(this)
+    MaterialLogbook.syringe.inject(this)
     if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
       setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_settings_data)
@@ -63,7 +66,7 @@ class SettingsDataActivity : AppCompatActivity() {
   }
   
   private fun exportEntries() {
-    Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
+    convertToCsv.createCSVFile()
   }
   
   private fun deleteAllEntries() {

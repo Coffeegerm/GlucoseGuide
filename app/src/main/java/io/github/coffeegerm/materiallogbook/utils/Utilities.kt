@@ -17,7 +17,7 @@
 package io.github.coffeegerm.materiallogbook.utils
 
 import android.content.SharedPreferences
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication
+import io.github.coffeegerm.materiallogbook.MaterialLogbook
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem
 import io.realm.Realm
 import java.util.*
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class Utilities {
   
   init {
-    MaterialLogbookApplication.syringe.inject(this)
+    MaterialLogbook.syringe.inject(this)
   }
   
   @Inject

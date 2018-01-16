@@ -34,7 +34,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
+import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.ui.EditEntryActivity;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
@@ -64,7 +64,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
   ListAdapter(Context context) {
     this.inflater = LayoutInflater.from(context);
     this.context = context;
-    MaterialLogbookApplication.syringe.inject(this);
+    MaterialLogbook.syringe.inject(this);
   }
   
   public void setListItems(List<EntryItem> providedList) {

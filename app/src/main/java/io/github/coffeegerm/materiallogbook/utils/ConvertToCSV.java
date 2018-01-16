@@ -16,10 +16,15 @@
 
 package io.github.coffeegerm.materiallogbook.utils;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,13 +35,13 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import io.github.coffeegerm.materiallogbook.MaterialLogbookApplication;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.Sort;
 
+import static io.github.coffeegerm.materiallogbook.MaterialLogbook.syringe;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.TWELVE_HOUR_TIME_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_HOUR_TIME_FORMAT;
@@ -55,13 +60,20 @@ public final class ConvertToCSV {
   private final SimpleDateFormat dateFormat = DATE_FORMAT;
   private final SimpleDateFormat twelveHourTimeFormat = TWELVE_HOUR_TIME_FORMAT;
   private final SimpleDateFormat twentyFourHourTimeFormat = TWENTY_FOUR_HOUR_TIME_FORMAT;
+  
+  private File EXPORT_REALM_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+  
   @Inject
   public SharedPreferences sharedPreferences;
+  @Inject
+  public DatabaseManager databaseManager;
   
   public ConvertToCSV(Context context) {
     this.context = context;
     realm = Realm.getDefaultInstance();
-    MaterialLogbookApplication.syringe.inject(this);
+    syringe.inject(this);
+    Activity activity = (Activity) context;
+    checkStoragePermissions(activity);
   }
   
   public String createCSVFile() {
@@ -69,11 +81,12 @@ public final class ConvertToCSV {
       File file = null;
       final File sd = Environment.getExternalStorageDirectory();
       if (sd.canWrite()) {
-        file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/material_logbook", "material_logbook_export_" + System.currentTimeMillis() / 1000 + ".csv");
+        EXPORT_REALM_PATH.mkdirs();
+        file = new File(EXPORT_REALM_PATH, "material_logbook_export_" + System.currentTimeMillis() / 1000 + ".csv");
         
         FileOutputStream fileOutputStream = null;
         OutputStreamWriter outputStreamWriter = null;
-        RealmResults<EntryItem> realmResults = realm.where(EntryItem.class).findAllSorted("date", Sort.ASCENDING);
+        RealmResults<EntryItem> realmResults = databaseManager.getAllSortedAscending();
         ArrayList<EntryItem> entryItems = new ArrayList<>(realmResults);
         
         try {
@@ -119,6 +132,8 @@ public final class ConvertToCSV {
         } finally {
           if (outputStreamWriter != null) outputStreamWriter.close();
           if (fileOutputStream != null) fileOutputStream.close();
+          String toastMessage = "CSV created at " + EXPORT_REALM_PATH.toString();
+          Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
         }
       }
       realm.close();
@@ -135,6 +150,26 @@ public final class ConvertToCSV {
     for (int i = 0; i < values.length; i++) {
       osw.append(values[i]);
       osw.append(i == values.length - 1 ? '\n' : ',');
+    }
+  }
+  
+  // Storage Permissions
+  private static final int REQUEST_EXTERNAL_STORAGE = 1;
+  private static String[] PERMISSIONS_STORAGE = {
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+  };
+  
+  private void checkStoragePermissions(Activity activity) {
+    // Check if we have write permission
+    int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    
+    if (permission != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(
+            activity,
+            PERMISSIONS_STORAGE,
+            REQUEST_EXTERNAL_STORAGE
+      );
     }
   }
   

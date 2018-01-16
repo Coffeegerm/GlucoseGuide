@@ -46,13 +46,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.ui.list.ListFragment;
-import io.github.coffeegerm.materiallogbook.ui.rss.NewsFragment;
 import io.github.coffeegerm.materiallogbook.ui.settings.SettingsActivity;
 import io.github.coffeegerm.materiallogbook.ui.statistics.StatisticsFragment;
-import io.github.coffeegerm.materiallogbook.ui.support.SupportFragment;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 
-import static io.github.coffeegerm.materiallogbook.MaterialLogbookApplication.syringe;
+import static io.github.coffeegerm.materiallogbook.MaterialLogbook.syringe;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
 
 public class MainActivity extends AppCompatActivity
@@ -64,9 +62,7 @@ public class MainActivity extends AppCompatActivity
   public Utilities utilities;
   public int lastSelectedTab;
   Fragment listFragment = new ListFragment();
-  Fragment newsFragment = new NewsFragment();
   Fragment statsFragment = new StatisticsFragment();
-  Fragment supportFragment = new SupportFragment();
   FragmentManager fragmentManager;
   @BindView(R.id.toolbar)
   Toolbar toolbar;
@@ -122,12 +118,6 @@ public class MainActivity extends AppCompatActivity
         case R.id.nav_stats:
           setFragment(statsFragment);
           break;
-        case R.id.nav_news:
-          setFragment(newsFragment);
-          break;
-        case R.id.nav_support:
-          setFragment(supportFragment);
-          break;
       }
     }
     
@@ -160,16 +150,6 @@ public class MainActivity extends AppCompatActivity
       case R.id.nav_stats:
         setFragment(statsFragment);
         lastSelectedTab = R.id.nav_stats;
-        break;
-      
-      case R.id.nav_news:
-        setFragment(newsFragment);
-        lastSelectedTab = R.id.nav_news;
-        break;
-      
-      case R.id.nav_support:
-        setFragment(supportFragment);
-        lastSelectedTab = R.id.nav_support;
         break;
       
       case R.id.nav_settings:
