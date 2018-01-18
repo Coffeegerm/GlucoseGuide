@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import io.github.coffeegerm.materiallogbook.MaterialLogbook.Companion.syringe
 import io.github.coffeegerm.materiallogbook.R
+import io.github.coffeegerm.materiallogbook.R.layout.activity_settings
 import io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsDataActivity
 import io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsTreatmentActivity
 import io.github.coffeegerm.materiallogbook.utils.Constants
@@ -38,7 +39,7 @@ class SettingsActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     syringe.inject(this)
     if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark)
-    setContentView(R.layout.activity_settings)
+    setContentView(activity_settings)
     initView()
   }
   

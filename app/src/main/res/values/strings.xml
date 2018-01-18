@@ -92,7 +92,7 @@
   <string name="ui">UI</string>
   <string name="data">Data</string>
   <string name="danger_zone">Danger Zone</string>
-  <string name="export_description">Export entries to spreadsheet in Google Drive</string>
+  <string name="export_description">Export entries to spreadsheet in Downloads folder</string>
   <string name="export">Export</string>
   <string name="settings_dark_mode">Use dark mode:</string>
   <string name="settings_glucose_goal_section">Target range of glucose</string>
@@ -108,34 +108,20 @@
   <string name="bolus_ratio_label">Bolus Ratio</string>
   <string name="bolus_ratio_description">How many carbs = 1 unit of insulin?</string>
   <string name="military_time_description">Use 24 hour format:</string>
-  
+
   <!--Image descriptions -->
   <string name="blood_glucose_image">Blood Glucose Image</string>
   <string name="carbs_image">Carbohydrates image</string>
   <string name="insulin_image">Insulin Image</string>
-  
+
   <!-- Graph Fragment strings-->
   <string name="today">Today</string>
   <string name="yesterday">Yesterday</string>
-  
+
   <!-- Statistics fragments strings -->
   <string name="average">Average blood glucose:</string>
   <string name="highest_of_all">Highest blood glucose:</string>
   <string name="lowest_of_all">Lowest blood glucose:</string>
   <string name="no_data">No data to calculate</string>
   <string name="estimated_a1c">Estimated A1C:</string>
-  
-  <string name="support" translatable="false">Support</string>
-  <string name="support_development">Support development</string>
-  <string name="support_development_desc">Help support the development of this application by donating a few dollars.</string>
-  
-  <string name="coffee">Coffee</string>
-  <string name="coffee_donation_price">$0.99</string>
-  <string name="coffee_donation_description">Treat me to a cup of coffee to keep me awake making this app!</string>
-  <string name="pizza">Pizza</string>
-  <string name="pizza_donation_price">$1.99</string>
-  <string name="pizza_donation_description">Buy me a piece of pizza for lunch</string>
-  <string name="dinner">Dinner</string>
-  <string name="dinner_donation_price">$4.99</string>
-  <string name="dinner_donation_description">You\'re treating me to dinner now too? Wow!</string>
 </resources>

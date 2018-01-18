@@ -27,6 +27,7 @@ import android.os.Build;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;
 
+
 /**
  * Created by dyarz on 9/6/2017.
  * <p>

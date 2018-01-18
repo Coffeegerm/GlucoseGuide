@@ -36,8 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
-import io.github.coffeegerm.materiallogbook.ui.EditEntryActivity;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
+import io.github.coffeegerm.materiallogbook.ui.EditEntryActivity;
 import io.github.coffeegerm.materiallogbook.utils.Constants;
 
 import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;

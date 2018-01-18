@@ -45,6 +45,7 @@ class MaterialLogbook : Application() {
   private fun initRealm() {
     Realm.init(this)
     val config = RealmConfiguration.Builder()
+          .schemaVersion(4)
           .deleteRealmIfMigrationNeeded()
           .build()
     Realm.setDefaultConfiguration(config)

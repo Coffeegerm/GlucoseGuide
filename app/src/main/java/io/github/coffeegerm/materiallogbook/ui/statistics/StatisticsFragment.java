@@ -30,12 +30,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.R;
 
-/**
- * Created by David Yarzebinski on 7/28/2017.
- * <p>
- * Fragment to show the data over the past through a ViewPager
- */
-
 public class StatisticsFragment extends Fragment {
   
   @BindView(R.id.tabLayout)
