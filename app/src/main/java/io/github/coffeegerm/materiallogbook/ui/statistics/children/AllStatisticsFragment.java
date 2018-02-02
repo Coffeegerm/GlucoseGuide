@@ -39,10 +39,8 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**
- * Created by David Yarzebinski on 7/29/2017.
- * <p>
  * Fragment used with Statistics ViewPager to show
- * the all amount of statistics
+ * the amount of all statistics
  */
 
 public class AllStatisticsFragment extends Fragment {

@@ -55,18 +55,22 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_H
 
 public final class ConvertToCSV {
   
+  // Storage Permissions
+  private static final int REQUEST_EXTERNAL_STORAGE = 1;
+  private static String[] PERMISSIONS_STORAGE = {
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+  };
   private final Context context;
   private final Realm realm;
   private final SimpleDateFormat dateFormat = DATE_FORMAT;
   private final SimpleDateFormat twelveHourTimeFormat = TWELVE_HOUR_TIME_FORMAT;
   private final SimpleDateFormat twentyFourHourTimeFormat = TWENTY_FOUR_HOUR_TIME_FORMAT;
-  
-  private File EXPORT_REALM_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-  
   @Inject
   public SharedPreferences sharedPreferences;
   @Inject
   public DatabaseManager databaseManager;
+  private File EXPORT_REALM_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
   
   public ConvertToCSV(Context context) {
     this.context = context;
@@ -152,13 +156,6 @@ public final class ConvertToCSV {
       osw.append(i == values.length - 1 ? '\n' : ',');
     }
   }
-  
-  // Storage Permissions
-  private static final int REQUEST_EXTERNAL_STORAGE = 1;
-  private static String[] PERMISSIONS_STORAGE = {
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-  };
   
   private void checkStoragePermissions(Activity activity) {
     // Check if we have write permission

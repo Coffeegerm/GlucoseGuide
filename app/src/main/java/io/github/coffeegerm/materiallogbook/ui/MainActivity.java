@@ -56,6 +56,7 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class MainActivity extends AppCompatActivity
       implements NavigationView.OnNavigationItemSelectedListener {
   
+  public static boolean isResumed = false;
   @Inject
   public SharedPreferences sharedPreferences;
   @Inject
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity
   @BindView(R.id.feedback)
   TextView feedback;
   private boolean isCreated = false;
-  public static boolean isResumed = false;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {

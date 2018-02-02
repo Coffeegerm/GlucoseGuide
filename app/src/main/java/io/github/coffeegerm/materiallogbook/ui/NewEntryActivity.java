@@ -145,7 +145,7 @@ public class NewEntryActivity extends AppCompatActivity {
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     int hour = calendar.get(Calendar.HOUR_OF_DAY);
     int minute = calendar.get(Calendar.MINUTE);
-  
+    
     date.setText(utilities.formatDate(month, day, year));
     time.setText(utilities.checkTimeString(hour, minute));
     

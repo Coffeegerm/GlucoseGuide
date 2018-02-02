@@ -36,10 +36,8 @@ class MaterialLogbook : Application() {
     super.onCreate()
     initRealm()
     syringe = DaggerAppComponent.builder().appModule(AppModule(this)).build()
-  
-    if (DEBUG) plant(DebugTree()) else {
-      // do stuff
-    }
+    
+    if (DEBUG) plant(DebugTree())
   }
   
   private fun initRealm() {

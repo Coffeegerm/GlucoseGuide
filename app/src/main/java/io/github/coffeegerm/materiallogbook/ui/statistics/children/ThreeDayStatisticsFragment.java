@@ -43,8 +43,6 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**
- * Created by David Yarzebinski on 7/28/2017.
- * <p>
  * Fragment used with Statistics ViewPager to show
  * the last three days of statistics
  */
