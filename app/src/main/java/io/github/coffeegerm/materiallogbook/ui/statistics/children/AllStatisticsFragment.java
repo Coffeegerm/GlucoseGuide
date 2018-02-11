@@ -34,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
+import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -47,6 +48,8 @@ public class AllStatisticsFragment extends Fragment {
   
   @Inject
   public SharedPreferences sharedPreferences;
+  @Inject
+  public DatabaseManager databaseManager;
   
   @BindView(R.id.all_days_statistics_average)
   TextView averageBloodGlucose;
@@ -60,6 +63,7 @@ public class AllStatisticsFragment extends Fragment {
   ImageView ivUpArrow;
   @BindView(R.id.imgDownArrow)
   ImageView ivDownArrow;
+  
   private Realm realm;
   
   @Override
@@ -80,21 +84,20 @@ public class AllStatisticsFragment extends Fragment {
   }
   
   public void setValues() {
-    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
+    RealmResults<EntryItem> entryItems = databaseManager.getAllSortedAscending();
     if (entryItems.size() == 0) {
       averageBloodGlucose.setText(R.string.dash);
       highestBloodGlucose.setText(R.string.dash);
       lowestBloodGlucose.setText(R.string.dash);
     } else {
-      averageBloodGlucose.setText(String.valueOf(getAverage()));
-      highestBloodGlucose.setText(String.valueOf(getHighestBloodGlucose()));
-      lowestBloodGlucose.setText(String.valueOf(getLowestBloodGlucose()));
+      averageBloodGlucose.setText(String.valueOf(getAverage(entryItems)));
+      highestBloodGlucose.setText(String.valueOf(getHighestBloodGlucose(entryItems)));
+      lowestBloodGlucose.setText(String.valueOf(getLowestBloodGlucose(entryItems)));
     }
   }
   
-  public int getAverage() {
+  public int getAverage(RealmResults<EntryItem> entryItems) {
     int averageCalculated = 0;
-    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
     if (entryItems.size() == 0) {
       Toast.makeText(getContext(), "Unable to show data at this time.", Toast.LENGTH_SHORT).show();
     } else {
@@ -109,9 +112,8 @@ public class AllStatisticsFragment extends Fragment {
     return averageCalculated;
   }
   
-  public int getHighestBloodGlucose() {
+  public int getHighestBloodGlucose(RealmResults<EntryItem> entryItems) {
     int highest = 0;
-    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
     for (int position = 0; position < entryItems.size(); position++) {
       EntryItem item = entryItems.get(position);
       assert item != null;
@@ -123,9 +125,8 @@ public class AllStatisticsFragment extends Fragment {
   }
   
   
-  public int getLowestBloodGlucose() {
+  public int getLowestBloodGlucose(RealmResults<EntryItem> entryItems) {
     int lowest = 1000;
-    RealmResults<EntryItem> entryItems = realm.where(EntryItem.class).greaterThan("bloodGlucose", 0).findAll();
     for (int position = 0; position < entryItems.size(); position++) {
       EntryItem item = entryItems.get(position);
       assert item != null;

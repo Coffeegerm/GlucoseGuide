@@ -37,19 +37,14 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
-import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class ThreeMonthsStatisticsFragment extends Fragment {
   
   @Inject
   public SharedPreferences sharedPreferences;
-  
   @Inject
   public Utilities utilities;
-  
   @Inject
   public DatabaseManager databaseManager;
   
@@ -70,23 +65,19 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
   @BindView(R.id.ivA1C)
   ImageView ivA1C;
   
-  Realm realm;
-  
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View threeMonths = inflater.inflate(R.layout.fragment_three_months_statistics, container, false);
     ButterKnife.bind(this, threeMonths);
     MaterialLogbook.syringe.inject(this);
-    realm = Realm.getDefaultInstance();
     setImages();
     setValues();
     return threeMonths;
   }
   
   private void setValues() {
-    RealmResults<EntryItem> entries = realm.where(EntryItem.class).greaterThan("date", getThreeMonthsAgo()).greaterThan("bloodGlucose", 0).findAll();
-    if (entries.size() == 0) {
+    if (databaseManager.getAllFromDate(getThreeMonthsAgo()).size() == 0) {
       average.setText(R.string.dash);
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
@@ -96,7 +87,7 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
       lowest.setText(String.valueOf(databaseManager.getLowestGlucose(getThreeMonthsAgo())));
     }
     
-    if (entries.size() < 300) {
+    if (databaseManager.getAllFromDate(getThreeMonthsAgo()).size() < 300) {
       a1c.setText(R.string.dash);
     } else {
       a1c.setText(String.valueOf(getA1C(databaseManager.getAverageGlucose(getThreeMonthsAgo()))));

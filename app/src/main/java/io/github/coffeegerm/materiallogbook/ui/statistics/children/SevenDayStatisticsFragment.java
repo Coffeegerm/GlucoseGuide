@@ -37,9 +37,6 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
-import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Fragment used with Statistics ViewPager to show
@@ -68,8 +65,6 @@ public class SevenDayStatisticsFragment extends Fragment {
   @BindView(R.id.imgDownArrow)
   ImageView ivDownArrow;
   
-  Realm realm;
-  
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -81,23 +76,20 @@ public class SevenDayStatisticsFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View sevenDaysView = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
     ButterKnife.bind(this, sevenDaysView);
-    realm = Realm.getDefaultInstance();
     setValues();
     setImages();
     return sevenDaysView;
   }
   
   private void setValues() {
-    Date sevenDaysAgo = getSevenDaysAgo();
-    RealmResults<EntryItem> entriesFromLastWeek = realm.where(EntryItem.class).greaterThan("date", sevenDaysAgo).greaterThan("bloodGlucose", 0).findAll();
-    if (entriesFromLastWeek.size() == 0) {
+    if (databaseManager.getAllFromDate(getSevenDaysAgo()).size() == 0) {
       average.setText(R.string.dash);
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
     } else {
-      average.setText(String.valueOf(databaseManager.getAverageGlucose(sevenDaysAgo)));
-      highest.setText(String.valueOf(databaseManager.getHighestGlucose(sevenDaysAgo)));
-      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(sevenDaysAgo)));
+      average.setText(String.valueOf(databaseManager.getAverageGlucose(getSevenDaysAgo())));
+      highest.setText(String.valueOf(databaseManager.getHighestGlucose(getSevenDaysAgo())));
+      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(getSevenDaysAgo())));
     }
   }
   

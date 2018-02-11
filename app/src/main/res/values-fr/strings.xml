@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Material Logbook</string>
+
+  <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
+  <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
+
+  <string name="close_app">Fermer le carnet de matériel</string>
+  <string name="close_confirmation">Voulez-vous vraiment fermer Material Logbook?</string>
+  <string name="yes">Oui</string>
+  <string name="no">Non</string>
+
+  <!-- Navigation Drawer Items -->
+  <string name="navigation_drawer_list">Liste</string>
+  <string name="navigation_drawer_statistics">Statistiques</string>
+  <string name="navigation_drawer_settings">Paramètres</string>
+  <string name="grade_detail">Ceci est une note de votre glycémie pour les trois derniers jours.</string>
+
+  <!-- NewEntryActivity and EditEntryActivity strings -->
+  <string name="new_entry_date_and_time_label">Date et l\'heure:</string>
+  <string name="new_entry_blood_glucose_label">Glucose sanguin:</string>
+  <string name="new_entry_carbohydrates_label">Les glucides:</string>
+  <string name="new_entry_insulin_label">Insuline:</string>
+  <string name="time">Temps</string>
+  <string name="date">Date</string>
+  <string name="save">Save</string>
+  <string name="update">Update</string>
+  <string name="cancel">Cancel</string>
+  <string name="edit_entry_toolbar">Modifier l\'entrée</string>
+  <string name="status">Statut</string>
+  <string name="delete_single_entry">Supprimer cette entrée?</string>
+  <string name="delete_single_entry_message">Êtes-vous sûr de vouloir supprimer cette entrée?</string>
+  <string name="reminder">Voulez-vous que nous vous rappelions de vérifier votre sucre?</string>
+  <string name="alarm_reminder">Heure de rappel</string>
+  <string name="reminder_content">Il est temps de vérifier votre sucre!</string>
+  <string name="entry_deleted">Entrée supprimée</string>
+  <string name="suggested_insulin">Dosage suggéré d\'insuline:</string>
+
+  <!-- Image Descriptions for NewEntryActivity and EditEntryActivity -->
+  <string name="breakfast_description">Déjeuner</string>
+  <string name="lunch_description">Le déjeuner</string>
+  <string name="dinner_description">Dîner</string>
+  <string name="sick_description">Malade</string>
+  <string name="exercise_description">Exercice</string>
+  <string name="sweets_description">Bonbons</string>
+
+  <!-- List onOptions items -->
+  <string name="sort">Trier</string>
+  <string name="sort_from_newest">Du plus récent au plus ancien</string>
+  <string name="sort_from_oldest">Du plus ancien au plus récent</string>
+  <string name="show_breakfast_only">Afficher le petit-déjeuner seulement</string>
+  <string name="show_lunch_only">Afficher le déjeuner seulement</string>
+  <string name="show_dinner_only">Montrer le dîner seulement</string>
+  <string name="show_sick_only">Montrer les malades seulement</string>
+  <string name="show_exercise_only">Montrer l\'exercice seulement</string>
+  <string name="show_sweets_only">Afficher les bonbons seulement</string>
+
+  <!-- Misc -->
+  <string name="blood_glucose">Glucose sanguin</string>
+  <string name="carbohydrates">Les glucides</string>
+  <string name="insulin">Insuline</string>
+  <string name="dash">-</string>
+  <string name="create_entry">Créez une nouvelle entrée de journal!</string>
+
+  <!-- units of measurement-->
+  <string name="blood_glucose_measurement">mg/dl</string>
+  <string name="carbs_measurement">grams</string>
+  <string name="insulin_measurement">units</string>
+
+  <!-- Toast strings -->
+  <string name="list_item_short_click">Long clic pour éditer l\'entrée!</string>
+  <string name="no_glucose_toast">Veuillez entrer votre glucose actuel.</string>
+
+  <!--Settings Strings-->
+  <string name="ui">UI</string>
+  <string name="data">Data</string>
+  <string name="danger_zone">Zone dangereuse</string>
+  <string name="export_description">Exporter les entrées vers la feuille de calcul dans le dossier Téléchargements</string>
+  <string name="export">Exporter</string>
+  <string name="settings_dark_mode">Utilisez le mode sombre:</string>
+  <string name="settings_glucose_goal_section">Gamme cible de glucose</string>
+  <string name="settings_hypoglycemic">En dessous, votre sucre est bas:</string>
+  <string name="settings_hyperglycemic">Au-dessus, votre sucre est haut:</string>
+  <string name="settings_delete_section">Redémarrer</string>
+  <string name="settings_delete_entries">Supprimer toutes les entrées?</string>
+  <string name="delete">Effacer</string>
+  <string name="feedback">La réaction</string>
+  <string name="all_deleted">Toutes les entrées supprimées</string>
+  <string name="treatment">Traitement</string>
+  <string name="settings">Paramètres</string>
+  <string name="bolus_ratio_label">Rapport de bolus</string>
+  <string name="bolus_ratio_description">Combien de glucides = 1 unité d\'insuline?</string>
+  <string name="military_time_description">Utilisez le format 24 heures:</string>
+
+  <!--Image descriptions -->
+  <string name="blood_glucose_image">Image de glucose sanguin</string>
+  <string name="carbs_image">Image de glucides</string>
+  <string name="insulin_image">Image de l\'insuline</string>
+
+  <!-- Graph Fragment strings-->
+  <string name="today">Aujourd\'hui</string>
+  <string name="yesterday">Hier</string>
+
+  <!-- Statistics fragments strings -->
+  <string name="average">Glucose sanguin moyen:</string>
+  <string name="highest_of_all">La glycémie la plus élevée:</string>
+  <string name="lowest_of_all">La glycémie la plus basse:</string>
+  <string name="no_data">Aucune donnée à calculer</string>
+  <string name="estimated_a1c">A1C estimé:</string>
+</resources>

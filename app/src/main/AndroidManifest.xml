@@ -48,8 +48,8 @@
         <action android:name="android.intent.action.VIEW" />
       </intent-filter>
     </activity>
-    <activity android:name="io.github.coffeegerm.materiallogbook.ui.NewEntryActivity" />
-    <activity android:name="io.github.coffeegerm.materiallogbook.ui.EditEntryActivity" />
+    <activity android:name="io.github.coffeegerm.materiallogbook.ui.entry.NewEntryActivity" />
+    <activity android:name="io.github.coffeegerm.materiallogbook.ui.entry.EditEntryActivity" />
     <activity android:name="io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsTreatmentActivity" />
     <activity android:name="io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsDataActivity" />
     <activity android:name="io.github.coffeegerm.materiallogbook.ui.settings.SettingsActivity" />

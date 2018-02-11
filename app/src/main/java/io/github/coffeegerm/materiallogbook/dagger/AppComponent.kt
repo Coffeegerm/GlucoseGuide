@@ -17,9 +17,9 @@
 package io.github.coffeegerm.materiallogbook.dagger
 
 import dagger.Component
-import io.github.coffeegerm.materiallogbook.ui.EditEntryActivity
+import io.github.coffeegerm.materiallogbook.ui.entry.EditEntryActivity
 import io.github.coffeegerm.materiallogbook.ui.MainActivity
-import io.github.coffeegerm.materiallogbook.ui.NewEntryActivity
+import io.github.coffeegerm.materiallogbook.ui.entry.NewEntryActivity
 import io.github.coffeegerm.materiallogbook.ui.list.ListAdapter
 import io.github.coffeegerm.materiallogbook.ui.list.ListFragment
 import io.github.coffeegerm.materiallogbook.ui.settings.SettingsActivity
@@ -31,7 +31,7 @@ import io.github.coffeegerm.materiallogbook.utils.Utilities
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(AppModule::class)])
+@Component(modules = [(AppModule::class), (DataModule::class)])
 interface AppComponent {
   fun inject(mainActivity: MainActivity)
   fun inject(listFragment: ListFragment)

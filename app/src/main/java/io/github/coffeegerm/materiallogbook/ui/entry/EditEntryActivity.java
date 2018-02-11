@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.materiallogbook.ui;
+package io.github.coffeegerm.materiallogbook.ui.entry;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -42,7 +38,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -54,38 +49,38 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.utils.NotificationPublisher;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
 
-import static io.github.coffeegerm.materiallogbook.MaterialLogbook.syringe;
-import static io.github.coffeegerm.materiallogbook.utils.Constants.BOLUS_RATIO;
-import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION;
-import static io.github.coffeegerm.materiallogbook.utils.Constants.NOTIFICATION_ID;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.DATE_FORMAT;
 import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MODE;
+import static io.github.coffeegerm.materiallogbook.utils.Constants.TWELVE_HOUR_TIME_FORMAT;
 
 /**
- * Created by David Yarzebinski on 6/25/2017.
+ * Created by dyarz on 8/17/2017.
  * <p>
- * Activity used to create a new Entry added the Database
+ * Activity created to allow user to edit their entries
+ * already present in database
  */
 
-public class NewEntryActivity extends AppCompatActivity {
+public class EditEntryActivity extends AppCompatActivity {
+  
+  public static final String ITEM_ID = "itemId";
   
   @Inject
   public SharedPreferences sharedPreferences;
-  
   @Inject
   public Utilities utilities;
   
   @BindView(R.id.toolbar)
   Toolbar toolbar;
-  @BindView(R.id.cancelBtn)
-  Button cancelBtn;
-  @BindView(R.id.saveBtn)
-  Button saveBtn;
+  @BindView(R.id.cancel)
+  Button cancel;
+  @BindView(R.id.update)
+  Button update;
   @BindView(R.id.new_entry_date)
   EditText date;
   @BindView(R.id.new_entry_time)
@@ -96,6 +91,8 @@ public class NewEntryActivity extends AppCompatActivity {
   EditText carbohydrates;
   @BindView(R.id.new_entry_insulin_units)
   EditText insulin;
+  @BindView(R.id.delete_entry)
+  TextView deleteEntry;
   @BindView(R.id.breakfast_status)
   ImageButton breakfast;
   @BindView(R.id.lunch_status)
@@ -108,71 +105,48 @@ public class NewEntryActivity extends AppCompatActivity {
   ImageButton exercise;
   @BindView(R.id.sweets_status)
   ImageButton sweets;
-  @BindView(R.id.reminder_alarm)
-  EditText reminder;
-  @BindView(R.id.insulin_suggestion)
-  LinearLayout insulinSuggestionLinearLayout;
-  @BindView(R.id.insulin_suggestion_value)
-  TextView insulinSuggestionValue;
+  
   Handler handler;
+  /* Original values from item. Compare to possible updated values to find what needs to be updated in database */
+  Date originalDate;
+  int originalStatus;
+  int originalBloodGlucose;
+  int originalCarbohydrates;
+  double originalInsulin;
+  /* items to be used to altered to show that the item has been updated */
+  int updatedStatus;
+  int updatedBloodGlucose;
+  int updatedCarbohydrates;
+  double updatedInsulin;
+  private Calendar originalCalendar;
+  private Calendar updatedCalendar;
   private Realm realm;
-  private Calendar calendarToBeSaved;
-  private Calendar calendar;
-  private Calendar alarmCalendar;
-  private int status = 0;
-  private boolean wantsReminder = false;
+  private String itemIdString;
+  private EntryItem item;
   
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    syringe.inject(this);
+    MaterialLogbook.syringe.inject(this);
     if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
       setTheme(R.style.AppTheme_Dark);
-    setContentView(R.layout.activity_new_entry);
+    setContentView(R.layout.activity_edit_entry);
     ButterKnife.bind(this);
     realm = Realm.getDefaultInstance();
     handler = new Handler();
     setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.create_entry);
-    calendar = Calendar.getInstance();
-    // Calendar for saving entered Date and Time
-    calendarToBeSaved = Calendar.getInstance();
-    
-    // Set date and time to current date and time on initial create
-    int year = calendar.get(Calendar.YEAR);
-    int month = calendar.get(Calendar.MONTH);
-    month++;
-    int day = calendar.get(Calendar.DAY_OF_MONTH);
-    int hour = calendar.get(Calendar.HOUR_OF_DAY);
-    int minute = calendar.get(Calendar.MINUTE);
-    
-    date.setText(utilities.formatDate(month, day, year));
-    time.setText(utilities.checkTimeString(hour, minute));
-    
-    carbohydrates.addTextChangedListener(new TextWatcher() {
-      @Override
-      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-      }
-      
-      @Override
-      public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-      }
-      
-      @Override
-      public void afterTextChanged(Editable carbValue) {
-        if (!carbValue.toString().equals("")) {
-          insulinSuggestionLinearLayout.setVisibility(View.VISIBLE);
-          calculateInsulin(Float.parseFloat(carbValue.toString()));
-        } else {
-          insulinSuggestionLinearLayout.setVisibility(View.GONE);
-        }
-      }
-    });
+    if (getSupportActionBar() != null)
+      getSupportActionBar().setTitle(R.string.edit_entry_toolbar);
+    itemIdString = getIntent().getStringExtra(ITEM_ID);
+    item = getItem();
+    updatedCalendar = Calendar.getInstance();
+    getOriginalValues(); // must call before hints are set
+    setHints();
     
     date.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        DatePickerDialog dialog = new DatePickerDialog(NewEntryActivity.this,
+        DatePickerDialog dialog = new DatePickerDialog(EditEntryActivity.this,
               (Build.VERSION.SDK_INT >= 21 ? android.R.style.Theme_Material_Dialog_Alert
                     : android.R.style.Theme_Holo_Light_Dialog),
               new DatePickerDialog.OnDateSetListener() {
@@ -181,11 +155,11 @@ public class NewEntryActivity extends AppCompatActivity {
                   month++;
                   date.setText(utilities.formatDate(month, dayOfMonth, year));
                   month--;
-                  calendarToBeSaved.set(year, month, dayOfMonth);
+                  updatedCalendar.set(year, month, dayOfMonth);
                 }
-              }, calendar.get(Calendar.YEAR), // year
-              calendar.get(Calendar.MONTH), // month
-              calendar.get(Calendar.DAY_OF_MONTH)); // day
+              }, originalCalendar.get(Calendar.YEAR), // year
+              originalCalendar.get(Calendar.MONTH), // month
+              originalCalendar.get(Calendar.DAY_OF_MONTH)); // day
         
         if (Build.VERSION.SDK_INT < 21)
           if (dialog.getWindow() != null)
@@ -198,27 +172,78 @@ public class NewEntryActivity extends AppCompatActivity {
     time.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(NewEntryActivity.this,
+        TimePickerDialog timePickerDialog = new TimePickerDialog(EditEntryActivity.this,
               new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                   time.setText(utilities.checkTimeString(hourOfDay, minute));
-                  calendarToBeSaved.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                  calendarToBeSaved.set(Calendar.MINUTE, minute);
+                  updatedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                  updatedCalendar.set(Calendar.MINUTE, minute);
                 }
               },
-              calendar.get(Calendar.HOUR_OF_DAY), // current hour
-              calendar.get(Calendar.MINUTE), // current minute
+              originalCalendar.get(Calendar.HOUR_OF_DAY), // current hour
+              originalCalendar.get(Calendar.MINUTE), // current minute
               false); //no 24 hour view
         timePickerDialog.show();
+      }
+    });
+    
+    bloodGlucose.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+      
+      }
+      
+      @Override
+      public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+      
+      }
+      
+      @Override
+      public void afterTextChanged(Editable editable) {
+        updatedBloodGlucose = Integer.parseInt(editable.toString());
+      }
+    });
+    
+    carbohydrates.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+      
+      }
+      
+      @Override
+      public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+      
+      }
+      
+      @Override
+      public void afterTextChanged(Editable editable) {
+        updatedCarbohydrates = Integer.parseInt(editable.toString());
+      }
+    });
+    
+    insulin.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+      
+      }
+      
+      @Override
+      public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+      
+      }
+      
+      @Override
+      public void afterTextChanged(Editable editable) {
+        updatedInsulin = Double.parseDouble(editable.toString());
       }
     });
     
     breakfast.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        status = 1;
-        statusButtonCheck(status);
+        updatedStatus = 1;
+        setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Breakfast", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
@@ -234,8 +259,8 @@ public class NewEntryActivity extends AppCompatActivity {
     lunch.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        status = 2;
-        statusButtonCheck(status);
+        updatedStatus = 2;
+        setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Lunch", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
@@ -251,8 +276,8 @@ public class NewEntryActivity extends AppCompatActivity {
     dinner.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        status = 3;
-        statusButtonCheck(status);
+        updatedStatus = 3;
+        setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Dinner", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
@@ -268,8 +293,8 @@ public class NewEntryActivity extends AppCompatActivity {
     sick.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        status = 4;
-        statusButtonCheck(status);
+        updatedStatus = 4;
+        setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Sick", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
@@ -285,8 +310,8 @@ public class NewEntryActivity extends AppCompatActivity {
     exercise.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        status = 5;
-        statusButtonCheck(status);
+        updatedStatus = 5;
+        setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Exercise", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
@@ -299,13 +324,11 @@ public class NewEntryActivity extends AppCompatActivity {
       }
     });
     
-    sweets.setOnClickListener(new View.OnClickListener()
-    
-    {
+    sweets.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        status = 6;
-        statusButtonCheck(status);
+        updatedStatus = 6;
+        setStatus(updatedStatus);
         final Toast toast = Toast.makeText(getApplicationContext(), "Sweets", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 300);
         toast.show();
@@ -318,64 +341,87 @@ public class NewEntryActivity extends AppCompatActivity {
       }
     });
     
-    reminder.setOnClickListener(new View.OnClickListener() {
+    deleteEntry.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        alarmTimePicker();
+        final AlertDialog.Builder builder;
+        
+        // Sets theme based on VERSION_CODE
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+          builder = new AlertDialog.Builder(EditEntryActivity.this, android.R.style.Theme_Material_Dialog_NoActionBar);
+        else builder = new AlertDialog.Builder(EditEntryActivity.this);
+        
+        builder.setTitle(R.string.delete_single_entry)
+              .setMessage(R.string.delete_single_entry_message)
+              .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                  // continue with delete
+                  realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(@NonNull Realm realm) {
+                      item.deleteFromRealm();
+                      Toast.makeText(EditEntryActivity.this, R.string.entry_deleted, Toast.LENGTH_SHORT).show();
+                      finish();
+                    }
+                  });
+                }
+              })
+              .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                  // do nothing
+                  dialog.dismiss();
+                }
+              })
+              .setIcon(R.drawable.ic_trash)
+              .show();
       }
     });
     
-    cancelBtn.setOnClickListener(new View.OnClickListener()
-    
-    {
+    cancel.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         finish();
       }
     });
-    saveBtn.setOnClickListener(new View.OnClickListener()
     
-    {
+    update.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        saveEntry();
+        updateEntry();
       }
     });
   }
   
-  private void saveEntry() {
-    // Checks to make sure there is a blood glucose given.
-    if (bloodGlucose.getText().toString().equals(""))
-      Toast.makeText(NewEntryActivity.this, R.string.no_glucose_toast, Toast.LENGTH_SHORT).show();
-    else {
-      realm.executeTransaction(new Realm.Transaction() {
-        @Override
-        public void execute(@NonNull Realm realm) {
-          // Save Entry to database
-          EntryItem entryItem = NewEntryActivity.this.realm.createObject(EntryItem.class);
-          // Creates Date object made from the DatePicker and TimePicker
-          Date date = calendarToBeSaved.getTime();
-          entryItem.setDate(date);
-          entryItem.setStatus(status);
-          entryItem.setBloodGlucose(Integer.parseInt(bloodGlucose.getText().toString()));
-          // Prevention of NullPointerException
-          if (!carbohydrates.getText().toString().equals("")) {
-            entryItem.setCarbohydrates(Integer.parseInt(carbohydrates.getText().toString()));
-          }
-          // Prevention of NullPointerException
-          if (!insulin.getText().toString().equals("")) {
-            entryItem.setInsulin(Double.parseDouble(insulin.getText().toString()));
-          }
-        }
-      });
-      // If the user chooses to have a reminder at certain time.
-      if (wantsReminder) createReminder(getNotification());
-      // After save returns to MainActivity ListFragment
-      finish();
-    }
+  private EntryItem getItem() {
+    return realm.where(EntryItem.class).equalTo("id", itemIdString).findAll().get(0);
   }
   
-  private void statusButtonCheck(int status) {
+  private void getOriginalValues() {
+    originalStatus = item.getStatus();
+    originalCalendar = Calendar.getInstance();
+    originalCalendar.setTime(item.getDate());
+    originalDate = originalCalendar.getTime();
+    originalBloodGlucose = item.getBloodGlucose();
+    originalCarbohydrates = item.getCarbohydrates();
+    originalInsulin = item.getInsulin();
+  }
+  
+  private void setHints() {
+    String formattedDate = DATE_FORMAT.format(originalDate);
+    String formattedTime = TWELVE_HOUR_TIME_FORMAT.format(originalDate);
+    date.setHint(formattedDate);
+    time.setHint(formattedTime);
+    bloodGlucose.setHint(String.valueOf(originalBloodGlucose));
+    if (originalCarbohydrates != 0)
+      carbohydrates.setHint(String.valueOf(originalCarbohydrates));
+    else carbohydrates.setHint(R.string.dash);
+    if (originalInsulin != 0.0)
+      insulin.setHint(String.valueOf(originalInsulin));
+    else insulin.setHint(R.string.dash);
+    setStatus(originalStatus);
+  }
+  
+  private void setStatus(int status) {
     Drawable status_checked = getResources().getDrawable(R.drawable.status_checked);
     Drawable status_unchecked = getResources().getDrawable(R.drawable.status_unchecked);
     switch (status) {
@@ -432,61 +478,35 @@ public class NewEntryActivity extends AppCompatActivity {
     }
   }
   
-  private void calculateInsulin(float carbValue) {
-    float bolusRatio = (float) sharedPreferences.getInt(BOLUS_RATIO, 0);
-    float suggestionInsulin = carbValue / bolusRatio;
-    insulinSuggestionValue.setText(String.valueOf(suggestionInsulin));
-  }
-  
-  private void alarmTimePicker() {
-    // Get Current Time
-    final Calendar c = Calendar.getInstance();
-    alarmCalendar = Calendar.getInstance();
-    int hour = c.get(Calendar.HOUR_OF_DAY) + 2;
-    int minute = c.get(Calendar.MINUTE);
-    
-    // Launch Time Picker Dialog
-    TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-          new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-              alarmCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-              alarmCalendar.set(Calendar.MINUTE, minute);
-              reminder.setText(utilities.checkTimeString(hourOfDay, minute));
-              wantsReminder = true;
-            }
-          }, hour, minute, false);
-    timePickerDialog.show();
-  }
-  
-  private void createReminder(Notification notification) {
-    Intent notificationIntent = new Intent(this, NotificationPublisher.class);
-    notificationIntent.putExtra(NOTIFICATION_ID, 1);
-    notificationIntent.putExtra(NOTIFICATION, notification);
-    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-    long delay = alarmCalendar.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
-    long futureInMillis = SystemClock.elapsedRealtime() + delay;
-    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-    assert alarmManager != null;
-    String alarmHour = String.valueOf(alarmCalendar.get(Calendar.HOUR_OF_DAY));
-    String alarmMinute = String.valueOf(alarmCalendar.get(Calendar.MINUTE));
-    StringBuilder alarmString = new StringBuilder().append("Alarm set for ").append(alarmHour).append(":").append(alarmMinute);
-    alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
-    Toast.makeText(this, alarmString, Toast.LENGTH_SHORT).show();
-  }
-  
-  private Notification getNotification() {
-    String channelId = "Reminders";
-    PendingIntent newEntryActivityPendingIntent = PendingIntent.getActivity(this, 1, new Intent(this, NewEntryActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
-          .setContentTitle(getString(R.string.app_name))
-          .setContentText(getString(R.string.reminder_content))
-          .setTicker(getString(R.string.app_name))
-          .setSmallIcon(R.drawable.notebook_notification_white)
-          .setDefaults(Notification.DEFAULT_SOUND)
-          .setAutoCancel(true)
-          .setContentIntent(newEntryActivityPendingIntent);
-    return builder.build();
+  private void updateEntry() {
+    try {
+      Date dateToSave = new Date();
+      realm.beginTransaction();
+      item.deleteFromRealm();
+      EntryItem itemToSave = new EntryItem();
+      itemToSave.setStatus(updatedStatus);
+      if (updatedCalendar.getTimeInMillis() != originalCalendar.getTimeInMillis()) {
+        dateToSave.setTime(updatedCalendar.getTimeInMillis());
+        itemToSave.setDate(dateToSave);
+      } else {
+        dateToSave.setTime(originalCalendar.getTimeInMillis());
+        itemToSave.setDate(dateToSave);
+      }
+      if (!bloodGlucose.getText().toString().equals("")) {
+        itemToSave.setBloodGlucose(Integer.parseInt(bloodGlucose.getText().toString()));
+      }
+      if (!carbohydrates.getText().toString().equals("")) {
+        itemToSave.setCarbohydrates(Integer.parseInt(carbohydrates.getText().toString()));
+      }
+      if (!insulin.getText().toString().equals("")) {
+        itemToSave.setInsulin(Double.parseDouble(insulin.getText().toString()));
+      }
+      realm.copyToRealm(itemToSave);
+      realm.commitTransaction();
+    } finally {
+      realm.close();
+      finish();
+    }
   }
   
   @Override

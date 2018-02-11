@@ -55,6 +55,11 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.TWENTY_FOUR_H
 
 public final class ConvertToCSV {
   
+  @Inject
+  public SharedPreferences sharedPreferences;
+  @Inject
+  public DatabaseManager databaseManager;
+  
   // Storage Permissions
   private static final int REQUEST_EXTERNAL_STORAGE = 1;
   private static String[] PERMISSIONS_STORAGE = {
@@ -66,10 +71,6 @@ public final class ConvertToCSV {
   private final SimpleDateFormat dateFormat = DATE_FORMAT;
   private final SimpleDateFormat twelveHourTimeFormat = TWELVE_HOUR_TIME_FORMAT;
   private final SimpleDateFormat twentyFourHourTimeFormat = TWENTY_FOUR_HOUR_TIME_FORMAT;
-  @Inject
-  public SharedPreferences sharedPreferences;
-  @Inject
-  public DatabaseManager databaseManager;
   private File EXPORT_REALM_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
   
   public ConvertToCSV(Context context) {
@@ -83,9 +84,8 @@ public final class ConvertToCSV {
   public String createCSVFile() {
     try {
       File file = null;
-      final File sd = Environment.getExternalStorageDirectory();
-      if (sd.canWrite()) {
-        EXPORT_REALM_PATH.mkdirs();
+      final File externalStorageDirectory = Environment.getExternalStorageDirectory();
+      if (externalStorageDirectory.canWrite()) {
         file = new File(EXPORT_REALM_PATH, "material_logbook_export_" + System.currentTimeMillis() / 1000 + ".csv");
         
         FileOutputStream fileOutputStream = null;
@@ -150,10 +150,10 @@ public final class ConvertToCSV {
     
   }
   
-  private void writeLine(OutputStreamWriter osw, String... values) throws IOException {
+  private void writeLine(OutputStreamWriter outputStreamWriter, String... values) throws IOException {
     for (int i = 0; i < values.length; i++) {
-      osw.append(values[i]);
-      osw.append(i == values.length - 1 ? '\n' : ',');
+      outputStreamWriter.append(values[i]);
+      outputStreamWriter.append(i == values.length - 1 ? '\n' : ',');
     }
   }
   

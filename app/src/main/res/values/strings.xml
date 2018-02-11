@@ -124,4 +124,8 @@
   <string name="lowest_of_all">Lowest blood glucose:</string>
   <string name="no_data">No data to calculate</string>
   <string name="estimated_a1c">Estimated A1C:</string>
+  <string name="app_icon">App Icon</string>
+  <string name="support_desc">If this app has helped you manage your diabetes better and you would like to support the development of it, please feel free to become a patron to help keep the development of the app alive and well. \n \n I myself am a diabetic and want to help as many people as possible, and through this app I hope to be able to. </string>
+  <string name="support">Support</string>
+  <string name="patreon">Patreon</string>
 </resources>

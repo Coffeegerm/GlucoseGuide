@@ -35,4 +35,6 @@ public class Constants {
   public static final String NOTIFICATION_ID = "notification-id";
   public static final String NOTIFICATION = "notification";
   
+  public static final String PATREON_LINK = "https://www.patreon.com/coffeeandcreamstudios";
+  
 }

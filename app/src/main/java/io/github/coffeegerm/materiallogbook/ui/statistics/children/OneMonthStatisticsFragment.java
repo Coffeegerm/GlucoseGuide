@@ -37,10 +37,8 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
-import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Created by dyarz on 8/15/2017.
@@ -53,10 +51,8 @@ public class OneMonthStatisticsFragment extends Fragment {
   
   @Inject
   public SharedPreferences sharedPreferences;
-  
   @Inject
   public Utilities utilities;
-  
   @Inject
   public DatabaseManager databaseManager;
   
@@ -87,16 +83,14 @@ public class OneMonthStatisticsFragment extends Fragment {
   }
   
   private void setValues() {
-    Date oneMonthAgo = getOneMonthAgo();
-    RealmResults<EntryItem> entriesFromPastMonth = realm.where(EntryItem.class).greaterThan("date", oneMonthAgo).greaterThan("bloodGlucose", 0).findAll();
-    if (entriesFromPastMonth.size() == 0) {
+    if (databaseManager.getAllFromDate(getOneMonthAgo()).size() == 0) {
       average.setText(R.string.dash);
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
     } else {
-      average.setText(String.valueOf(databaseManager.getAverageGlucose(oneMonthAgo)));
-      highest.setText(String.valueOf(databaseManager.getHighestGlucose(oneMonthAgo)));
-      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(oneMonthAgo)));
+      average.setText(String.valueOf(databaseManager.getAverageGlucose(getOneMonthAgo())));
+      highest.setText(String.valueOf(databaseManager.getHighestGlucose(getOneMonthAgo())));
+      lowest.setText(String.valueOf(databaseManager.getLowestGlucose(getOneMonthAgo())));
     }
   }
   

@@ -22,7 +22,6 @@ import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
 import io.github.coffeegerm.materiallogbook.MaterialLogbook
-import io.github.coffeegerm.materiallogbook.data.DatabaseManager
 import io.github.coffeegerm.materiallogbook.utils.Constants
 import io.github.coffeegerm.materiallogbook.utils.Utilities
 import javax.inject.Singleton
@@ -50,8 +49,4 @@ class AppModule(application: MaterialLogbook) {
   @Provides
   @Singleton
   fun provideUtilities(): Utilities = Utilities()
-  
-  @Provides
-  @Singleton
-  fun providesDatabaseManager(): DatabaseManager = DatabaseManager()
 }

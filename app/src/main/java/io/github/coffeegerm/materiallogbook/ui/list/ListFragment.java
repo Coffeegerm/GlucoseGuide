@@ -42,7 +42,7 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
-import io.github.coffeegerm.materiallogbook.ui.NewEntryActivity;
+import io.github.coffeegerm.materiallogbook.ui.entry.NewEntryActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;

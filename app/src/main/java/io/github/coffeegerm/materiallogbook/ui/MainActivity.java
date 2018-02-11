@@ -48,6 +48,7 @@ import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.ui.list.ListFragment;
 import io.github.coffeegerm.materiallogbook.ui.settings.SettingsActivity;
 import io.github.coffeegerm.materiallogbook.ui.statistics.StatisticsFragment;
+import io.github.coffeegerm.materiallogbook.ui.support.SupportFragment;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
 
 import static io.github.coffeegerm.materiallogbook.MaterialLogbook.syringe;
@@ -56,15 +57,20 @@ import static io.github.coffeegerm.materiallogbook.utils.Constants.PREF_DARK_MOD
 public class MainActivity extends AppCompatActivity
       implements NavigationView.OnNavigationItemSelectedListener {
   
-  public static boolean isResumed = false;
   @Inject
   public SharedPreferences sharedPreferences;
   @Inject
   public Utilities utilities;
+  
+  public static boolean isResumed = false;
+  private boolean isCreated = false;
   public int lastSelectedTab;
+  
   Fragment listFragment = new ListFragment();
   Fragment statsFragment = new StatisticsFragment();
+  Fragment supportFragment = new SupportFragment();
   FragmentManager fragmentManager;
+  
   @BindView(R.id.toolbar)
   Toolbar toolbar;
   @BindView(R.id.drawer_layout)
@@ -73,7 +79,6 @@ public class MainActivity extends AppCompatActivity
   NavigationView navigationView;
   @BindView(R.id.feedback)
   TextView feedback;
-  private boolean isCreated = false;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +94,12 @@ public class MainActivity extends AppCompatActivity
     setNavigationView();
     fragmentManager = getSupportFragmentManager();
     if (isCreated && !isResumed) setFragment(listFragment);
-    
     feedback.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         sendFeedbackEmail();
       }
     });
-    
     setGlucoseGrade();
   }
   
@@ -150,6 +153,11 @@ public class MainActivity extends AppCompatActivity
       case R.id.nav_stats:
         setFragment(statsFragment);
         lastSelectedTab = R.id.nav_stats;
+        break;
+      
+      case R.id.nav_support:
+        setFragment(supportFragment);
+        lastSelectedTab = R.id.nav_support;
         break;
       
       case R.id.nav_settings:

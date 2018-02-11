@@ -37,10 +37,7 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.materiallogbook.MaterialLogbook;
 import io.github.coffeegerm.materiallogbook.R;
 import io.github.coffeegerm.materiallogbook.data.DatabaseManager;
-import io.github.coffeegerm.materiallogbook.data.model.EntryItem;
 import io.github.coffeegerm.materiallogbook.utils.Utilities;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Fragment used with Statistics ViewPager to show
@@ -51,10 +48,8 @@ public class ThreeDayStatisticsFragment extends Fragment {
   
   @Inject
   public SharedPreferences sharedPreferences;
-  
   @Inject
   public Utilities utilities;
-  
   @Inject
   public DatabaseManager databaseManager;
   
@@ -71,8 +66,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
   @BindView(R.id.imgDownArrow)
   ImageView ivDownArrow;
   
-  Realm realm;
-  
   int hyperglycemicIndex;
   int hypoglycemicIndex;
   
@@ -87,7 +80,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View threeDaysStatisticsView = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
     ButterKnife.bind(this, threeDaysStatisticsView);
-    realm = Realm.getDefaultInstance();
     setValues();
     setImages();
     hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
@@ -96,7 +88,7 @@ public class ThreeDayStatisticsFragment extends Fragment {
   }
   
   private void setValues() {
-    if (getValues().size() == 0) {
+    if (databaseManager.getAllFromDate(getDateThreeDaysAgo()).size() == 0) {
       average.setText(R.string.dash);
       highest.setText(R.string.dash);
       lowest.setText(R.string.dash);
@@ -111,10 +103,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.DATE, -3);
     return calendar.getTime();
-  }
-  
-  private RealmResults<EntryItem> getValues() {
-    return realm.where(EntryItem.class).greaterThan("date", getDateThreeDaysAgo()).greaterThan("bloodGlucose", 0).findAll();
   }
   
   private void setImages() {
