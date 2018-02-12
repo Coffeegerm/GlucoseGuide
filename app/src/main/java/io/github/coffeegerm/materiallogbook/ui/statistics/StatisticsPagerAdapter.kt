@@ -16,9 +16,11 @@
 
 package io.github.coffeegerm.materiallogbook.ui.statistics
 
+import android.content.res.Resources
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import io.github.coffeegerm.materiallogbook.R
 import io.github.coffeegerm.materiallogbook.ui.statistics.children.*
 
 /**
@@ -27,9 +29,9 @@ import io.github.coffeegerm.materiallogbook.ui.statistics.children.*
  * Adapter used for ViewPager within StatisticsFragment
  */
 
-class StatisticsPagerAdapter internal constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class StatisticsPagerAdapter internal constructor(fragmentManager: FragmentManager, resources: Resources) : FragmentPagerAdapter(fragmentManager) {
   
-  private val tabTitles = arrayOf("3 Days", "7 Days", "One Month", "Three Months", "All")
+  private val tabTitles = resources.getStringArray(R.array.statistic_tab_titles)
   
   override fun getItem(position: Int): Fragment? {
     return when (position) {

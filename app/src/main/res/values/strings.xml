@@ -128,4 +128,12 @@
   <string name="support_desc">If this app has helped you manage your diabetes better and you would like to support the development of it, please feel free to become a patron to help keep the development of the app alive and well. \n \n I myself am a diabetic and want to help as many people as possible, and through this app I hope to be able to. </string>
   <string name="support">Support</string>
   <string name="patreon">Become a supporter!</string>
+  
+  <array name="statistic_tab_titles">
+    <item name="three_days">3 Days</item>
+    <item name="seven_days">7 Days</item>
+    <item name="one_month">One Month</item>
+    <item name="three_months">Three Months</item>
+    <item name="all">All</item>
+  </array>
 </resources>

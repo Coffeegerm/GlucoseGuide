@@ -34,7 +34,7 @@ class StatisticsFragment : Fragment() {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_statistics, container, false)
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    val pagerAdapter = StatisticsPagerAdapter(childFragmentManager)
+    val pagerAdapter = StatisticsPagerAdapter(childFragmentManager, resources)
     viewPager.adapter = pagerAdapter
     tabLayout.setupWithViewPager(viewPager)
   }
