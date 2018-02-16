@@ -15,13 +15,13 @@
   -->
 
 <resources>
-  <string name="app_name">Material Logbook</string>
+  <string name="app_name">Glucose Guide</string>
 
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
 
-  <string name="close_app">Close Material Logbook</string>
-  <string name="close_confirmation">Do you really want to close Material Logbook?</string>
+  <string name="close_app">Close Glucose Guide</string>
+  <string name="close_confirmation">Do you really want to close Glucose Guide?</string>
   <string name="yes">Yes</string>
   <string name="no">No</string>
 

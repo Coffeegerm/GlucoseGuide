@@ -15,7 +15,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="io.github.coffeegerm.materiallogbook">
+  package="io.github.coffeegerm.glucoseguide">
 
   <uses-permission android:name="android.permission.INTERNET" />
 
@@ -23,16 +23,16 @@
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
   <application
-    android:name=".MaterialLogbook"
+    android:name="io.github.coffeegerm.glucoseguide.GlucoseGuide"
     android:allowBackup="true"
     android:fullBackupContent="false"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
-    android:roundIcon="@mipmap/ic_launcher_circle"
+    android:roundIcon="@mipmap/ic_launcher"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity
-      android:name="io.github.coffeegerm.materiallogbook.ui.SplashActivity"
+      android:name="io.github.coffeegerm.glucoseguide.ui.SplashActivity"
       android:screenOrientation="portrait"
       android:theme="@style/SplashTheme">
       <intent-filter>
@@ -41,20 +41,20 @@
       </intent-filter>
     </activity>
     <activity
-      android:name="io.github.coffeegerm.materiallogbook.ui.MainActivity"
+      android:name="io.github.coffeegerm.glucoseguide.ui.MainActivity"
       android:label="@string/app_name"
       android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
       </intent-filter>
     </activity>
-    <activity android:name="io.github.coffeegerm.materiallogbook.ui.entry.NewEntryActivity" />
-    <activity android:name="io.github.coffeegerm.materiallogbook.ui.entry.EditEntryActivity" />
-    <activity android:name="io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsTreatmentActivity" />
-    <activity android:name="io.github.coffeegerm.materiallogbook.ui.settings.children.SettingsDataActivity" />
-    <activity android:name="io.github.coffeegerm.materiallogbook.ui.settings.SettingsActivity" />
+    <activity android:name="io.github.coffeegerm.glucoseguide.ui.entry.NewEntryActivity" />
+    <activity android:name="io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity" />
+    <activity android:name="io.github.coffeegerm.glucoseguide.ui.settings.children.SettingsTreatmentActivity" />
+    <activity android:name="io.github.coffeegerm.glucoseguide.ui.settings.children.SettingsDataActivity" />
+    <activity android:name="io.github.coffeegerm.glucoseguide.ui.settings.SettingsActivity" />
 
-    <receiver android:name=".utils.NotificationPublisher" />
+    <receiver android:name="io.github.coffeegerm.glucoseguide.utils.NotificationPublisher" />
   </application>
 
 </manifest>
