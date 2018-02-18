@@ -26,11 +26,11 @@
   <string name="no">No</string>
 
   <!-- Navigation Drawer Items -->
-  <string name="navigation_drawer_list">Lista</string>
+  <string name="navigation_list">Lista</string>
   <string name="navigation_drawer_graph">Grafico</string>
-  <string name="navigation_drawer_statistics">Estadística</string>
-  <string name="navigation_drawer_news">Noticias</string>
-  <string name="navigation_drawer_settings">Configuraciones</string>
+  <string name="navigation_statistics">Estadística</string>
+  <string name="navigation_news">Noticias</string>
+  <string name="navigation_settings">Configuraciones</string>
   <string name="grade_detail">Este es un grado de sus niveles de glucosa en sangre durante los últimos tres días.</string>
 
   <!-- NewEntryActivity and EditEntryActivity strings -->

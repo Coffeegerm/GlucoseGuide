@@ -11,9 +11,9 @@
   <string name="no">Non</string>
 
   <!-- Navigation Drawer Items -->
-  <string name="navigation_drawer_list">Liste</string>
-  <string name="navigation_drawer_statistics">Statistiques</string>
-  <string name="navigation_drawer_settings">Paramètres</string>
+  <string name="navigation_list">Liste</string>
+  <string name="navigation_statistics">Statistiques</string>
+  <string name="navigation_settings">Paramètres</string>
   <string name="grade_detail">Ceci est une note de votre glycémie pour les trois derniers jours.</string>
 
   <!-- NewEntryActivity and EditEntryActivity strings -->
@@ -108,7 +108,7 @@
   <string name="no_data">Aucune donnée à calculer</string>
   <string name="estimated_a1c">A1C estimé:</string>
   <string name="navigation_drawer_graph">Graphique</string>
-  <string name="navigation_drawer_news">Nouvelles</string>
+  <string name="navigation_news">Nouvelles</string>
   <string name="support">Soutien</string>
   <string name="app_icon">Icône de l\'application</string>
   <string name="support_desc">Si cette application vous a aidé à mieux gérer votre diabète et que vous souhaitez en soutenir le développement, n\'hésitez pas à devenir un mécène pour contribuer au développement de l\'application.    Je suis moi-même un diabétique et je veux aider autant de personnes que possible, et grâce à cette application, j\'espère pouvoir le faire.</string>

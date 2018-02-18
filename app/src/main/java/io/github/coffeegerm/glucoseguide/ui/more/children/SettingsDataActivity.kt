@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.settings.children
+package io.github.coffeegerm.glucoseguide.ui.more.children
 
 import android.content.SharedPreferences
 import android.os.Bundle

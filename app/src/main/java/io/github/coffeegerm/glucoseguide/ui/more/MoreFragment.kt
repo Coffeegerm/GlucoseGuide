@@ -14,60 +14,46 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.settings
+package io.github.coffeegerm.glucoseguide.ui.more
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.R.layout.activity_settings
-import io.github.coffeegerm.glucoseguide.ui.settings.children.SettingsDataActivity
-import io.github.coffeegerm.glucoseguide.ui.settings.children.SettingsTreatmentActivity
+import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsDataActivity
+import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsTreatmentActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
-import kotlinx.android.synthetic.main.activity_settings.*
+import kotlinx.android.synthetic.main.fragment_more.*
 import javax.inject.Inject
 
-class SettingsActivity : AppCompatActivity() {
+class MoreFragment : Fragment() {
   
   @Inject
   lateinit var sharedPreferences: SharedPreferences
   
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_more, container, false)
+  
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     syringe.inject(this)
-    if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark)
-    setContentView(activity_settings)
     initView()
   }
   
   private fun initView() {
-    setupToolbar()
-    
     toggle_dark_mode.isChecked = sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false)
     toggle_dark_mode.setOnCheckedChangeListener({ _, isChecked -> sharedPreferences.edit().putBoolean(PREF_DARK_MODE, isChecked).apply() })
     
     military_time_switch.isChecked = sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)
     military_time_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreferences.edit().putBoolean(Constants.MILITARY_TIME, isChecked).apply() }
     
-    treatment_section.setOnClickListener({ startActivity(Intent(applicationContext, SettingsTreatmentActivity::class.java)) })
+    treatment_section.setOnClickListener({ startActivity(Intent(context, SettingsTreatmentActivity::class.java)) })
     
-    data_section.setOnClickListener { startActivity(Intent(applicationContext, SettingsDataActivity::class.java)) }
-  }
-  
-  private fun setupToolbar() {
-    setSupportActionBar(setting_toolbar)
-    if (supportActionBar != null) {
-      supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-      supportActionBar!!.setDisplayShowHomeEnabled(true)
-      supportActionBar!!.setTitle(R.string.settings)
-    }
-  }
-  
-  override fun onSupportNavigateUp(): Boolean {
-    onBackPressed()
-    return super.onSupportNavigateUp()
+    data_section.setOnClickListener { startActivity(Intent(context, SettingsDataActivity::class.java)) }
   }
 }

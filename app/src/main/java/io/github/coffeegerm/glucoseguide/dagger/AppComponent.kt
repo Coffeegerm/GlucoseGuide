@@ -17,14 +17,14 @@
 package io.github.coffeegerm.glucoseguide.dagger
 
 import dagger.Component
-import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity
 import io.github.coffeegerm.glucoseguide.ui.MainActivity
+import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity
 import io.github.coffeegerm.glucoseguide.ui.entry.NewEntryActivity
 import io.github.coffeegerm.glucoseguide.ui.list.ListAdapter
 import io.github.coffeegerm.glucoseguide.ui.list.ListFragment
-import io.github.coffeegerm.glucoseguide.ui.settings.SettingsActivity
-import io.github.coffeegerm.glucoseguide.ui.settings.children.SettingsDataActivity
-import io.github.coffeegerm.glucoseguide.ui.settings.children.SettingsTreatmentActivity
+import io.github.coffeegerm.glucoseguide.ui.more.MoreFragment
+import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsDataActivity
+import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsTreatmentActivity
 import io.github.coffeegerm.glucoseguide.ui.statistics.children.*
 import io.github.coffeegerm.glucoseguide.utils.ConvertToCSV
 import io.github.coffeegerm.glucoseguide.utils.Utilities
@@ -35,7 +35,7 @@ import javax.inject.Singleton
 interface AppComponent {
   fun inject(mainActivity: MainActivity)
   fun inject(listFragment: ListFragment)
-  fun inject(settingsActivity: SettingsActivity)
+  fun inject(moreActivity: MoreFragment)
   fun inject(newEntryActivity: NewEntryActivity)
   fun inject(editEntryActivity: EditEntryActivity)
   fun inject(listAdapter: ListAdapter)

@@ -1,0 +1,21 @@
+<!--
+  ~ Copyright 2018 Coffee and Cream Studios
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector android:height="24dp" android:viewportHeight="476.3"
+    android:viewportWidth="476.3" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FF000000" android:pathData="M411.8,250.2h-185.6V64.6c0,-7.5 -6,-13.5 -13.5,-13.5c-117.2,0 -212.6,95.4 -212.6,212.6s95.4,212.6 212.6,212.6s212.6,-95.4 212.6,-212.6C425.3,256.3 419.1,250.2 411.8,250.2zM212.6,449.3c-102.3,0 -185.6,-83.3 -185.6,-185.6c0,-97.8 76,-178.2 172.1,-185.1v185.1c0,7.5 6,13.5 13.5,13.5h185.1C390.9,373.3 310.5,449.3 212.6,449.3z"/>
+    <path android:fillColor="#FF000000" android:pathData="M476.3,211.9c-0.2,-51.6 -19.1,-101.3 -53.2,-140C382.6,26.2 324.6,0 263.6,0c-7.5,0 -13.5,6 -13.5,13.5v199.1c0,7.5 6,13.5 13.5,13.5h199.1l0,0c7.5,0 13.5,-6 13.5,-13.5C476.3,212.4 476.3,212.2 476.3,211.9zM277.1,199.2V27.6c48.2,3.5 93.4,25.8 125.6,62.3c27,30.5 43,68.9 46,109.3H277.1z"/>
+</vector>
