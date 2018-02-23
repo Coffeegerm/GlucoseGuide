@@ -30,8 +30,9 @@ import io.github.coffeegerm.glucoseguide.ui.more.MoreFragment
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsFragment
 
 /**
- * TODO: Add class comment header
+ * Class dedicated to controlling what fragment should be presented base on user selection
  */
+
 class NavigationOnItemSelectedListener(private val supportFragmentManager: FragmentManager, var context: Context) : BottomNavigationView.OnNavigationItemSelectedListener {
   
   private var coldLaunch = true
@@ -47,33 +48,35 @@ class NavigationOnItemSelectedListener(private val supportFragmentManager: Fragm
   }
   
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    var changesSelectedItem = true
     when (item.itemId) {
       
       R.id.nav_list -> {
         showFragment(listFragment)
-        return true
+        changesSelectedItem = true
       }
       
       R.id.nav_stats -> {
         showFragment(statsFragment)
-        return true
+        changesSelectedItem = true
       }
       
       R.id.nav_add_new_entry -> {
         context.startActivity(Intent(context, NewEntryActivity::class.java))
+        changesSelectedItem = false
       }
       
       R.id.nav_grading -> {
         showFragment(gradeFragment)
-        return true
+        changesSelectedItem = true
       }
       
       R.id.nav_settings -> {
         showFragment(moreFragment)
-        return true
+        changesSelectedItem = true
       }
     }
-    return true
+    return changesSelectedItem
   }
   
   private fun showFragment(fragment: Fragment) = supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commitNowAllowingStateLoss()

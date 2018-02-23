@@ -19,6 +19,7 @@ package io.github.coffeegerm.glucoseguide.ui.list;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ import io.github.coffeegerm.glucoseguide.R;
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem;
 import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity;
 import io.github.coffeegerm.glucoseguide.utils.Constants;
+import io.github.coffeegerm.glucoseguide.utils.DateAssistant;
 
 import static io.github.coffeegerm.glucoseguide.utils.Constants.DATE_FORMAT;
 import static io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE;
@@ -56,14 +58,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
   private static int shortClickHintCount = 0;
   @Inject
   public SharedPreferences sharedPreferences;
+  @Inject
+  public DateAssistant dateAssistant;
+  @Inject
+  public Resources resources;
+  @Inject
+  public Context context;
+  
   public EntryItem item;
   private LayoutInflater inflater;
-  private Context context;
   private List<EntryItem> entryItemList;
   
   ListAdapter(Context context) {
     this.inflater = LayoutInflater.from(context);
-    this.context = context;
     GlucoseGuide.syringe.inject(this);
   }
   
@@ -81,14 +88,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     item = entryItemList.get(holder.getAdapterPosition());
     
     // Check if today or yesterday and set date accordingly
-    Calendar today = Calendar.getInstance();
-    int todayDay = today.get(Calendar.DAY_OF_MONTH);
-    Calendar yesterday = Calendar.getInstance();
-    yesterday.add(Calendar.DATE, -1);
-    int yesterdayDay = yesterday.get(Calendar.DAY_OF_MONTH);
-    Calendar itemCalendar = Calendar.getInstance();
+    int todayDay = dateAssistant.getTodayOfMonth();
+    int yesterdayDay = dateAssistant.getYesterdayDayOfMonth();
+    Calendar itemCalendar = dateAssistant.getToday();
     itemCalendar.setTime(item.getDate());
-    int itemDay = itemCalendar.get(Calendar.DAY_OF_MONTH);
+    int itemDay = dateAssistant.getSpecificCalendarDayOfMonth(itemCalendar);
     if (itemDay == todayDay) holder.date.setText(R.string.today);
     else if (itemDay == yesterdayDay) holder.date.setText(R.string.yesterday);
     else {
@@ -101,12 +105,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     } else {
       holder.time.setText(TWELVE_HOUR_TIME_FORMAT.format(item.getDate()));
     }
-
-        /*
-        * Handle item clicks on List Fragment
-        * Long click will start EditEntryActivity
-        * */
-    holder.view.setOnClickListener(new View.OnClickListener() {
+    
+    holder.entryView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         if (shortClickHintCount <= 5) {
@@ -116,7 +116,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
       }
     });
     
-    holder.view.setOnLongClickListener(new View.OnLongClickListener() {
+    holder.entryView.setOnLongClickListener(new View.OnLongClickListener() {
       @Override
       public boolean onLongClick(View view) {
         Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
@@ -149,44 +149,46 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
   }
   
   class ListViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.tv_date)
+    
+    @BindView(R.id.item_list_date)
     TextView date;
-    @BindView(R.id.tv_time)
+    @BindView(R.id.item_list_time)
     TextView time;
-    @BindView(R.id.tv_blood_glucose)
+    @BindView(R.id.item_list_blood_glucose)
     TextView bloodGlucose;
-    @BindView(R.id.tv_insulin)
+    @BindView(R.id.item_list_insulin)
     TextView insulin;
-    @BindView(R.id.tv_carbs)
+    @BindView(R.id.item_list_carbohydrates)
     TextView carbohydrates;
-    @BindView(R.id.imgInsulins)
-    ImageView ivInsulin;
-    @BindView(R.id.imgCarbs)
-    ImageView ivCarbs;
-    @BindView(R.id.imgFinger)
-    ImageView ivFinger;
-    @BindView(R.id.line1)
-    View line1;
-    @BindView(R.id.line2)
-    View line2;
-    private View view;
+    @BindView(R.id.item_list_insulin_image)
+    ImageView insulinImage;
+    @BindView(R.id.item_list_image_carbs)
+    ImageView imageCarbs;
+    @BindView(R.id.item_list_image_blood_sugar)
+    ImageView imageBloodGlucose;
+    @BindView(R.id.item_list_line_left)
+    View lineLeft;
+    @BindView(R.id.item_list_line_right)
+    View lineRight;
+    
+    private View entryView;
     
     ListViewHolder(View itemView) {
       super(itemView);
-      this.view = itemView;
+      this.entryView = itemView;
       ButterKnife.bind(this, itemView);
       
       if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
-        ivFinger.setImageResource(R.drawable.ic_finger_dark);
-        ivCarbs.setImageResource(R.drawable.ic_food_dark);
-        ivInsulin.setImageResource(R.drawable.ic_syringe_dark);
-        int white = context.getResources().getColor(R.color.white);
-        line1.setBackgroundColor(white);
-        line2.setBackgroundColor(white);
+        imageBloodGlucose.setImageResource(R.drawable.ic_finger_dark);
+        imageCarbs.setImageResource(R.drawable.ic_food_dark);
+        insulinImage.setImageResource(R.drawable.ic_syringe_dark);
+        int white = resources.getColor(R.color.white);
+        lineLeft.setBackgroundColor(white);
+        lineRight.setBackgroundColor(white);
       } else {
-        ivFinger.setImageResource(R.drawable.ic_finger);
-        ivCarbs.setImageResource(R.drawable.ic_food);
-        ivInsulin.setImageResource(R.drawable.ic_syringe);
+        imageBloodGlucose.setImageResource(R.drawable.ic_finger);
+        imageCarbs.setImageResource(R.drawable.ic_food);
+        insulinImage.setImageResource(R.drawable.ic_syringe);
       }
     }
   }

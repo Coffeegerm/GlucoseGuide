@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.content.edit
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsDataActivity
@@ -42,12 +43,8 @@ class MoreFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     syringe.inject(this)
-    initView()
-  }
-  
-  private fun initView() {
     toggle_dark_mode.isChecked = sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false)
-    toggle_dark_mode.setOnCheckedChangeListener({ _, isChecked -> sharedPreferences.edit().putBoolean(PREF_DARK_MODE, isChecked).apply() })
+    toggle_dark_mode.setOnCheckedChangeListener({ _, isChecked -> changeTheme(isChecked) })
     
     military_time_switch.isChecked = sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)
     military_time_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreferences.edit().putBoolean(Constants.MILITARY_TIME, isChecked).apply() }
@@ -55,5 +52,12 @@ class MoreFragment : Fragment() {
     treatment_section.setOnClickListener({ startActivity(Intent(context, SettingsTreatmentActivity::class.java)) })
     
     data_section.setOnClickListener { startActivity(Intent(context, SettingsDataActivity::class.java)) }
+  }
+  
+  fun changeTheme(isChecked: Boolean) {
+    sharedPreferences.edit {
+      putBoolean(PREF_DARK_MODE, isChecked).apply()
+    }
+    // todo how the fuck dfo you recreate in kotlin
   }
 }

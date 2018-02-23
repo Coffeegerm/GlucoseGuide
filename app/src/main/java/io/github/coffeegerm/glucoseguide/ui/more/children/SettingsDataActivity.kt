@@ -25,7 +25,6 @@ import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.ConvertToCSV
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_settings_data.*
 import javax.inject.Inject

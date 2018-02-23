@@ -16,6 +16,7 @@
 
 package io.github.coffeegerm.glucoseguide.ui.list
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -26,9 +27,7 @@ import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
-import io.realm.Realm
 import io.realm.RealmResults
-import io.realm.Sort
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.item_empty_list.*
 import javax.inject.Inject
@@ -40,27 +39,28 @@ class ListFragment : Fragment() {
   
   private lateinit var listAdapter: ListAdapter
   
+  private lateinit var listViewModel: ListViewModel
+  
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     listAdapter = ListAdapter(context)
+    listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
   }
   
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_list, container, false)
   
-  
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    val realm = Realm.getDefaultInstance()
     list_recycler_view.adapter = listAdapter
-    if (realm.where(EntryItem::class.java).findAll().size == 0) {
+    if (listViewModel.getEntries().size == 0) {
       list_recycler_view.visibility = View.GONE
       empty_item_list.visibility = View.VISIBLE
     } else {
       list_recycler_view.visibility = View.VISIBLE
       empty_item_list.visibility = View.GONE
       list_recycler_view.layoutManager = LinearLayoutManager(activity)
-      setAdapterItems(realm.where(EntryItem::class.java).sort("date", Sort.DESCENDING).findAll())
+      setAdapterItems(listViewModel.getEntries())
     }
   }
   

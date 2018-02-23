@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Coffee and Cream Studios
+ * Copyright 2018 Coffee and Cream Studios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.utils;
+package io.github.coffeegerm.glucoseguide.ui.more.children;
 
 import android.Manifest;
 import android.app.Activity;
@@ -38,6 +38,7 @@ import javax.inject.Inject;
 import io.github.coffeegerm.glucoseguide.R;
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager;
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem;
+import io.github.coffeegerm.glucoseguide.utils.Constants;
 import io.realm.Realm;
 import io.realm.RealmResults;
 

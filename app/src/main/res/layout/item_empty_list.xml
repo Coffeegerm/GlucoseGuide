@@ -42,7 +42,7 @@
       tools:layout_editor_absoluteY="0dp">
 
       <TextView
-        android:id="@+id/tv_date"
+        android:id="@+id/item_list_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -50,12 +50,12 @@
         android:text="Today"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_time"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_list_time"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_goneMarginStart="16dp" />
 
       <TextView
-        android:id="@+id/tv_time"
+        android:id="@+id/item_list_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -66,14 +66,14 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toRightOf="@+id/tv_date"
+        app:layout_constraintLeft_toRightOf="@+id/item_list_date"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginEnd="8dp"
         app:layout_goneMarginStart="16dp" />
 
       <View
-        android:id="@+id/line1"
+        android:id="@+id/item_list_line_left"
         android:layout_width="1dp"
         android:layout_height="80dp"
         android:layout_marginBottom="8dp"
@@ -89,7 +89,7 @@
         app:layout_goneMarginEnd="8dp" />
 
       <View
-        android:id="@+id/line2"
+        android:id="@+id/item_list_line_right"
         android:layout_width="1dp"
         android:layout_height="80dp"
         android:layout_marginBottom="8dp"
@@ -103,17 +103,17 @@
         app:layout_goneMarginEnd="8dp" />
 
       <TextView
-        android:id="@+id/tv_blood_glucose"
+        android:id="@+id/item_list_blood_glucose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/avenir_demi_bold"
         android:text="125"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_carbs"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_list_carbohydrates"
         app:layout_constraintHorizontal_bias="0.578"
-        app:layout_constraintLeft_toRightOf="@+id/imgFinger"
-        app:layout_constraintRight_toLeftOf="@+id/line1"
+        app:layout_constraintLeft_toRightOf="@+id/item_list_image_blood_sugar"
+        app:layout_constraintRight_toLeftOf="@+id/item_list_line_left"
         app:layout_goneMarginEnd="8dp" />
 
       <TextView
@@ -181,20 +181,20 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/carbs_measurement_label"
         app:layout_constraintHorizontal_bias="0.906"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/line1" />
+        app:layout_constraintRight_toLeftOf="@+id/item_list_line_left" />
 
       <TextView
-        android:id="@+id/tv_carbs"
+        android:id="@+id/item_list_carbohydrates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/avenir_demi_bold"
         android:text="46"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_insulin"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_list_insulin"
         app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintLeft_toRightOf="@+id/imgCarbs"
-        app:layout_constraintRight_toLeftOf="@+id/line2"
+        app:layout_constraintLeft_toRightOf="@+id/item_list_image_carbs"
+        app:layout_constraintRight_toLeftOf="@+id/item_list_line_right"
         app:layout_goneMarginEnd="8dp" />
 
       <TextView
@@ -209,9 +209,9 @@
         android:fontFamily="@font/avenir_demi_bold"
         android:text="@string/carbs_measurement"
         app:layout_constraintHorizontal_bias="0.795"
-        app:layout_constraintLeft_toRightOf="@+id/line1"
-        app:layout_constraintRight_toLeftOf="@+id/line2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_blood_glucose" />
+        app:layout_constraintLeft_toRightOf="@+id/item_list_line_left"
+        app:layout_constraintRight_toLeftOf="@+id/item_list_line_right"
+        app:layout_constraintTop_toBottomOf="@+id/item_list_blood_glucose" />
 
       <TextView
         android:id="@+id/insulin_measurement_label"
@@ -225,11 +225,11 @@
         android:text="@string/insulin_measurement"
         app:layout_constraintBaseline_toBaselineOf="@+id/carbs_measurement_label"
         app:layout_constraintHorizontal_bias="0.876"
-        app:layout_constraintLeft_toRightOf="@+id/line2"
+        app:layout_constraintLeft_toRightOf="@+id/item_list_line_right"
         app:layout_constraintRight_toRightOf="parent" />
 
       <TextView
-        android:id="@+id/tv_insulin"
+        android:id="@+id/item_list_insulin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -238,13 +238,13 @@
         android:text="4.6"
         android:textSize="18sp"
         app:layout_constraintHorizontal_bias="0.453"
-        app:layout_constraintLeft_toRightOf="@+id/imgInsulins"
+        app:layout_constraintLeft_toRightOf="@+id/item_list_insulin_image"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time"
+        app:layout_constraintTop_toBottomOf="@+id/item_list_time"
         app:layout_goneMarginEnd="8dp" />
 
       <ImageView
-        android:id="@+id/imgInsulins"
+        android:id="@+id/item_list_insulin_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -255,16 +255,16 @@
         app:layout_constraintBottom_toTopOf="@+id/insulin_measurement_label"
         app:layout_constraintEnd_toEndOf="@+id/insulin_measurement_label"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/line2"
+        app:layout_constraintLeft_toRightOf="@+id/item_list_line_right"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/line2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time"
+        app:layout_constraintStart_toEndOf="@+id/item_list_line_right"
+        app:layout_constraintTop_toBottomOf="@+id/item_list_time"
         app:layout_goneMarginEnd="8dp"
         app:layout_goneMarginStart="23dp"
         app:srcCompat="@drawable/ic_syringe" />
 
       <ImageView
-        android:id="@+id/imgCarbs"
+        android:id="@+id/item_list_image_carbs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -272,21 +272,21 @@
         android:layout_marginTop="24dp"
         android:contentDescription="@string/carbs_image"
         app:layout_constraintHorizontal_bias="0.194"
-        app:layout_constraintLeft_toRightOf="@+id/line1"
-        app:layout_constraintRight_toLeftOf="@+id/line2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_date"
+        app:layout_constraintLeft_toRightOf="@+id/item_list_line_left"
+        app:layout_constraintRight_toLeftOf="@+id/item_list_line_right"
+        app:layout_constraintTop_toBottomOf="@+id/item_list_date"
         app:layout_goneMarginEnd="8dp"
         app:srcCompat="@drawable/ic_food" />
 
       <ImageView
-        android:id="@+id/imgFinger"
+        android:id="@+id/item_list_image_blood_sugar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/blood_glucose_image"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_date"
+        app:layout_constraintTop_toBottomOf="@+id/item_list_date"
         app:layout_goneMarginStart="8dp"
         app:srcCompat="@drawable/ic_finger" />
 

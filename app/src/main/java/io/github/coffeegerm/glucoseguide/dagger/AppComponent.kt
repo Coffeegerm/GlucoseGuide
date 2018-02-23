@@ -20,32 +20,41 @@ import dagger.Component
 import io.github.coffeegerm.glucoseguide.ui.MainActivity
 import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity
 import io.github.coffeegerm.glucoseguide.ui.entry.NewEntryActivity
+import io.github.coffeegerm.glucoseguide.ui.grading.GradeFragment
 import io.github.coffeegerm.glucoseguide.ui.list.ListAdapter
 import io.github.coffeegerm.glucoseguide.ui.list.ListFragment
+import io.github.coffeegerm.glucoseguide.ui.list.ListViewModel
 import io.github.coffeegerm.glucoseguide.ui.more.MoreFragment
+import io.github.coffeegerm.glucoseguide.ui.more.children.ConvertToCSV
 import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsDataActivity
 import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsTreatmentActivity
 import io.github.coffeegerm.glucoseguide.ui.statistics.children.*
-import io.github.coffeegerm.glucoseguide.utils.ConvertToCSV
 import io.github.coffeegerm.glucoseguide.utils.Utilities
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(AppModule::class), (DataModule::class)])
+@Component(modules = [(AppModule::class), (DataModule::class), (UtilitiesModule::class)])
 interface AppComponent {
   fun inject(mainActivity: MainActivity)
-  fun inject(listFragment: ListFragment)
-  fun inject(moreActivity: MoreFragment)
   fun inject(newEntryActivity: NewEntryActivity)
   fun inject(editEntryActivity: EditEntryActivity)
+  fun inject(settingsDataActivity: SettingsDataActivity)
+  fun inject(settingsTreatmentActivity: SettingsTreatmentActivity)
+  
   fun inject(listAdapter: ListAdapter)
+  
+  fun inject(listFragment: ListFragment)
+  fun inject(gradeFragment: GradeFragment)
+  fun inject(moreActivity: MoreFragment)
   fun inject(allStatisticsFragment: AllStatisticsFragment)
   fun inject(oneMonthStatisticsFragment: OneMonthStatisticsFragment)
   fun inject(sevenDayStatisticsFragment: SevenDayStatisticsFragment)
   fun inject(threeDayStatisticsFragment: ThreeDayStatisticsFragment)
   fun inject(threeMonthsStatisticsFragment: ThreeMonthsStatisticsFragment)
+  
+  fun inject(listViewModel: ListViewModel)
+  
   fun inject(convertToCSV: ConvertToCSV)
-  fun inject(settingsDataActivity: SettingsDataActivity)
-  fun inject(settingsTreatmentActivity: SettingsTreatmentActivity)
   fun inject(utilities: Utilities)
+  
 }

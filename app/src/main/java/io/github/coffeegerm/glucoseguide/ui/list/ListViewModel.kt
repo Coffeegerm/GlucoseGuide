@@ -14,33 +14,28 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.grading
+package io.github.coffeegerm.glucoseguide.ui.list
 
-import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.arch.lifecycle.ViewModel
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
-import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.utils.Utilities
-import kotlinx.android.synthetic.main.fragment_grade.*
+import io.github.coffeegerm.glucoseguide.data.DatabaseManager
+import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.realm.RealmResults
 import javax.inject.Inject
 
 /**
  * TODO: Add class comment header
  */
-
-class GradeFragment : Fragment() {
+class ListViewModel : ViewModel() {
   
   @Inject
-  lateinit var utilities: Utilities
+  lateinit var databaseManager: DatabaseManager
   
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_grade, container, false)
-  
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
+  init {
     GlucoseGuide.syringe.inject(this)
-    overall_grade.text = utilities.getGlucoseGrade()
+  }
+  
+  fun getEntries(): RealmResults<EntryItem> {
+    return databaseManager.getAllSortedAscending()
   }
 }

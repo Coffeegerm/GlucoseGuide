@@ -23,7 +23,6 @@ import dagger.Module
 import dagger.Provides
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.Utilities
 import javax.inject.Singleton
 
 /**
@@ -39,14 +38,8 @@ class AppModule(application: GlucoseGuide) {
   fun provideApplicationContext(): Context = app.applicationContext
   
   @Provides
-  @Singleton
   fun provideActivityResources(app: Context): Resources = app.resources
   
   @Provides
-  @Singleton
   fun provideSharedPreferences(context: Context): SharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE)
-  
-  @Provides
-  @Singleton
-  fun provideUtilities(): Utilities = Utilities()
 }

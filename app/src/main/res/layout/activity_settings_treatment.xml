@@ -23,7 +23,7 @@
   <android.support.design.widget.AppBarLayout
     android:id="@+id/treatment_appbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="@dimen/toolbar_height"
     android:layout_marginLeft="0dp"
     android:layout_marginRight="0dp"
     android:layout_marginTop="0dp">

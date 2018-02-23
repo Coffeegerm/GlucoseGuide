@@ -18,9 +18,7 @@ package io.github.coffeegerm.glucoseguide.utils
 
 import android.content.SharedPreferences
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
-import io.realm.Realm
-import java.util.*
+import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import javax.inject.Inject
 
 class Utilities {
@@ -31,6 +29,10 @@ class Utilities {
   
   @Inject
   lateinit var sharedPreferences: SharedPreferences
+  @Inject
+  lateinit var dateAssistant: DateAssistant
+  @Inject
+  lateinit var databaseManager: DatabaseManager
   
   fun checkTimeString(hourOfDay: Int, minute: Int): String {
     var hour = hourOfDay
@@ -59,16 +61,13 @@ class Utilities {
   // Calculates the glucose grade based on user
   // sugar from last three days
   fun getGlucoseGrade(): String {
-    val realm = Realm.getDefaultInstance()
     val grade: String
     val hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0)
-    val calendar = Calendar.getInstance()
-    calendar.add(Calendar.DATE, -3)
-    val threeDaysAgo = calendar.time
-    val entriesFromLastThreeDays = realm.where(EntryItem::class.java).greaterThan("date", threeDaysAgo).greaterThan("bloodGlucose", 0).findAll()
+    val entriesFromLastThreeDays = databaseManager.getAllFromDate(dateAssistant.getThreeDaysAgoDate())
     val hyperglycemicCount = entriesFromLastThreeDays.indices
           .map { entriesFromLastThreeDays[it]!! }
           .count { it.bloodGlucose > hyperglycemicIndex }
+    
     when {
       hyperglycemicCount == 0 -> grade = "-"
       hyperglycemicCount <= 3 -> grade = "A+"
@@ -85,6 +84,7 @@ class Utilities {
       hyperglycemicCount == 14 -> grade = "D-"
       else -> grade = "F"
     }
+    
     return grade
   }
   

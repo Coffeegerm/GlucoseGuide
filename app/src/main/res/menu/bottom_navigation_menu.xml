@@ -29,7 +29,7 @@
   <item
     android:id="@+id/nav_add_new_entry"
     android:icon="@drawable/icon_plus"
-    android:title="" />
+    android:title="@string/log" />
 
   <item
     android:id="@+id/nav_grading"

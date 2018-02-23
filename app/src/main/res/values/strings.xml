@@ -127,6 +127,8 @@
   <string name="support">Support</string>
   <string name="patreon">Become a supporter!</string>
   <string name="navigation_grade">Grade</string>
+  <string name="log">Log</string>
+  <string name="over_grade_label">Overall grade from the last three days:</string>
 
   <array name="statistic_tab_titles">
     <item name="three_days">3 Days</item>

@@ -15,18 +15,32 @@
   -->
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
+  android:layout_height="match_parent">
 
-  <android.support.v7.widget.RecyclerView
-    android:id="@+id/list_recycler_view"
+  <android.support.v7.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    android:background="@color/colorPrimary" />
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    tools:listitem="@layout/item_list" />
+    android:layout_marginTop="49dp"
+    android:orientation="vertical">
 
-  <include layout="@layout/item_empty_list" />
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/list_recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clipToPadding="false"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      tools:listitem="@layout/item_list" />
+
+    <include layout="@layout/item_empty_list" />
+
+  </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
