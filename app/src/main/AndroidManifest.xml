@@ -42,11 +42,12 @@
     </activity>
     <activity android:name="io.github.coffeegerm.glucoseguide.ui.entry.NewEntryActivity" />
     <activity android:name="io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity" />
-    <activity android:name="io.github.coffeegerm.glucoseguide.ui.more.children.SettingsTreatmentActivity" />
-    <activity android:name="io.github.coffeegerm.glucoseguide.ui.more.children.SettingsDataActivity" />
+    <activity android:name="io.github.coffeegerm.glucoseguide.ui.more.children.TreatmentActivity" />
+    <activity android:name="io.github.coffeegerm.glucoseguide.ui.more.children.DataActivity" />
     <activity android:name=".ui.MainActivity" >
 
     </activity>
+    <activity android:name=".ui.more.children.SupportActivity" />
 
     <receiver android:name="io.github.coffeegerm.glucoseguide.utils.NotificationPublisher" />
   </application>

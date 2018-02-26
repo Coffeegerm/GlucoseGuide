@@ -24,7 +24,7 @@ import android.support.v4.app.FragmentManager
 import android.view.MenuItem
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.ui.entry.NewEntryActivity
-import io.github.coffeegerm.glucoseguide.ui.grading.GradeFragment
+import io.github.coffeegerm.glucoseguide.ui.grade.GradeFragment
 import io.github.coffeegerm.glucoseguide.ui.list.ListFragment
 import io.github.coffeegerm.glucoseguide.ui.more.MoreFragment
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsFragment

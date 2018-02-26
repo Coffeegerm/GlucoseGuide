@@ -26,8 +26,8 @@ import android.view.ViewGroup
 import androidx.content.edit
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsDataActivity
-import io.github.coffeegerm.glucoseguide.ui.more.children.SettingsTreatmentActivity
+import io.github.coffeegerm.glucoseguide.ui.more.children.DataActivity
+import io.github.coffeegerm.glucoseguide.ui.more.children.TreatmentActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
 import kotlinx.android.synthetic.main.fragment_more.*
@@ -49,15 +49,14 @@ class MoreFragment : Fragment() {
     military_time_switch.isChecked = sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)
     military_time_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreferences.edit().putBoolean(Constants.MILITARY_TIME, isChecked).apply() }
     
-    treatment_section.setOnClickListener({ startActivity(Intent(context, SettingsTreatmentActivity::class.java)) })
+    treatment_section.setOnClickListener({ startActivity(Intent(context, TreatmentActivity::class.java)) })
     
-    data_section.setOnClickListener { startActivity(Intent(context, SettingsDataActivity::class.java)) }
+    data_section.setOnClickListener { startActivity(Intent(context, DataActivity::class.java)) }
   }
   
   fun changeTheme(isChecked: Boolean) {
     sharedPreferences.edit {
       putBoolean(PREF_DARK_MODE, isChecked).apply()
     }
-    // todo how the fuck dfo you recreate in kotlin
   }
 }

@@ -34,7 +34,7 @@ import javax.inject.Inject
  * Sub menu of SettingsActivity for Treatment section
  */
 
-class SettingsTreatmentActivity : AppCompatActivity() {
+class TreatmentActivity : AppCompatActivity() {
   
   @Inject
   lateinit var sharedPreferences: SharedPreferences

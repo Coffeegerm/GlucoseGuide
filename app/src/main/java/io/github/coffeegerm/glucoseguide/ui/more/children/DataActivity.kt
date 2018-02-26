@@ -39,7 +39,7 @@ import javax.inject.Inject
  * Responsible for deleting and exporting data as well.
  */
 
-class SettingsDataActivity : AppCompatActivity() {
+class DataActivity : AppCompatActivity() {
   
   private val convertToCsv: ConvertToCSV by lazy { ConvertToCSV(this) }
   
@@ -69,7 +69,7 @@ class SettingsDataActivity : AppCompatActivity() {
   }
   
   private fun deleteAllEntries() {
-    val builder: AlertDialog.Builder = AlertDialog.Builder(this@SettingsDataActivity)
+    val builder: AlertDialog.Builder = AlertDialog.Builder(this@DataActivity)
     
     builder.setTitle("Delete all entries")
           .setMessage("Are you sure you want to delete all entries?")
@@ -80,7 +80,7 @@ class SettingsDataActivity : AppCompatActivity() {
             } finally {
               realm?.close()
             }
-            Toast.makeText(this@SettingsDataActivity, R.string.all_deleted, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@DataActivity, R.string.all_deleted, Toast.LENGTH_SHORT).show()
           }
           .setNegativeButton(android.R.string.no) { dialog, _ ->
             // do nothing
