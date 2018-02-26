@@ -28,6 +28,7 @@ import io.github.coffeegerm.glucoseguide.ui.more.MoreFragment
 import io.github.coffeegerm.glucoseguide.ui.more.children.ConvertToCSV
 import io.github.coffeegerm.glucoseguide.ui.more.children.DataActivity
 import io.github.coffeegerm.glucoseguide.ui.more.children.TreatmentActivity
+import io.github.coffeegerm.glucoseguide.ui.more.children.UiActivity
 import io.github.coffeegerm.glucoseguide.ui.statistics.children.*
 import io.github.coffeegerm.glucoseguide.utils.Utilities
 import javax.inject.Singleton
@@ -40,6 +41,7 @@ interface AppComponent {
   fun inject(editEntryActivity: EditEntryActivity)
   fun inject(dataActivity: DataActivity)
   fun inject(treatmentActivity: TreatmentActivity)
+  fun inject(uiActivity: UiActivity)
   
   fun inject(listAdapter: ListAdapter)
   

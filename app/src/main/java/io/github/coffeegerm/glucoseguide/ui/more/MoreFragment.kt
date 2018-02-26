@@ -23,13 +23,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.content.edit
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.ui.more.children.DataActivity
 import io.github.coffeegerm.glucoseguide.ui.more.children.TreatmentActivity
-import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
+import io.github.coffeegerm.glucoseguide.ui.more.children.UiActivity
 import kotlinx.android.synthetic.main.fragment_more.*
 import javax.inject.Inject
 
@@ -43,20 +41,11 @@ class MoreFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     syringe.inject(this)
-    toggle_dark_mode.isChecked = sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false)
-    toggle_dark_mode.setOnCheckedChangeListener({ _, isChecked -> changeTheme(isChecked) })
     
-    military_time_switch.isChecked = sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)
-    military_time_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreferences.edit().putBoolean(Constants.MILITARY_TIME, isChecked).apply() }
+    ui_section.setOnClickListener { startActivity(Intent(context, UiActivity::class.java)) }
     
     treatment_section.setOnClickListener({ startActivity(Intent(context, TreatmentActivity::class.java)) })
     
     data_section.setOnClickListener { startActivity(Intent(context, DataActivity::class.java)) }
-  }
-  
-  fun changeTheme(isChecked: Boolean) {
-    sharedPreferences.edit {
-      putBoolean(PREF_DARK_MODE, isChecked).apply()
-    }
   }
 }

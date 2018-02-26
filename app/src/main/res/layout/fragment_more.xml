@@ -22,90 +22,85 @@
   tools:layout_editor_absoluteX="0dp"
   tools:layout_editor_absoluteY="81dp">
 
-  <!-- Toolbar -->
   <android.support.design.widget.AppBarLayout
-    android:id="@+id/settings_appbar"
+    android:id="@+id/more_appbar"
     android:layout_width="0dp"
     android:layout_height="@dimen/toolbar_height"
     android:layout_marginLeft="0dp"
     android:layout_marginRight="0dp"
     android:layout_marginTop="0dp"
-
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
     <android.support.v7.widget.Toolbar
-      android:id="@+id/setting_toolbar"
+      android:id="@+id/more_toolbar"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@color/colorPrimary" />
 
   </android.support.design.widget.AppBarLayout>
 
-  <TextView
-    android:id="@+id/ui_section_label"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="8dp"
-    android:fontFamily="@font/avenir_demi_bold"
-    android:text="@string/ui"
+  <LinearLayout
+    android:id="@+id/ui_section"
+    android:layout_width="0dp"
+    android:layout_height="56dp"
+    android:orientation="horizontal"
+    app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/settings_appbar" />
-
-  <Switch
-    android:id="@+id/toggle_dark_mode"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="8dp"
-    android:checked="false"
-    android:fontFamily="@font/avenir_regular"
-    android:text="@string/settings_dark_mode"
-    android:textSize="16sp"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/ui_section_label" />
+    app:layout_constraintTop_toBottomOf="@+id/more_appbar">
 
-  <Switch
-    android:id="@+id/military_time_switch"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp"
-    android:fontFamily="@font/avenir_regular"
-    android:text="@string/military_time_description"
-    android:textSize="16sp"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/toggle_dark_mode" />
+    <TextView
+      android:id="@+id/ui_section_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginBottom="16dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="16dp"
+      android:fontFamily="@font/avenir_demi_bold"
+      android:text="@string/ui"
+      android:textSize="16sp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/item_list_line_left" />
+
+    <View
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginEnd="16dp"
+      android:fontFamily="@font/avenir_medium"
+      android:text=">"
+      android:textSize="20sp" />
+
+  </LinearLayout>
 
   <View
     android:id="@+id/item_list_line_left"
     android:layout_width="0dp"
     android:layout_height="1dp"
-    android:layout_marginTop="8dp"
     android:background="@color/colorPrimaryDark"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/military_time_switch" />
+    app:layout_constraintTop_toBottomOf="@+id/ui_section" />
 
   <LinearLayout
     android:id="@+id/treatment_section"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="0dp"
-    android:layout_marginRight="0dp"
     android:layout_marginTop="0dp"
     android:orientation="horizontal"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/item_list_line_left">
+    app:layout_constraintTop_toBottomOf="@+id/item_list_line_left">
 
     <TextView
       android:id="@+id/textView2"

@@ -48,6 +48,7 @@
 
     </activity>
     <activity android:name=".ui.more.children.SupportActivity" />
+    <activity android:name=".ui.more.children.UiActivity" />
 
     <receiver android:name="io.github.coffeegerm.glucoseguide.utils.NotificationPublisher" />
   </application>
