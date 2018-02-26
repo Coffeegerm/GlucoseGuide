@@ -36,6 +36,6 @@ class ListViewModel : ViewModel() {
   }
   
   fun getEntries(): RealmResults<EntryItem> {
-    return databaseManager.getAllSortedAscending()
+    return databaseManager.getAllSortedDescending()
   }
 }

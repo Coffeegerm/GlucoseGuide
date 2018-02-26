@@ -58,5 +58,4 @@ interface AppComponent {
   
   fun inject(convertToCSV: ConvertToCSV)
   fun inject(utilities: Utilities)
-  
 }

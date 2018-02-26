@@ -61,6 +61,7 @@ class UiActivity : AppCompatActivity() {
   }
   
   override fun onSupportNavigateUp(): Boolean {
+    finish()
     startActivity(Intent(this, MainActivity::class.java))
     return super.onSupportNavigateUp()
   }

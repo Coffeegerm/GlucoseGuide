@@ -56,7 +56,7 @@ class DatabaseManager {
     return lowest
   }
   
-  fun getAllSortedAscending(): RealmResults<EntryItem> = realm.where(EntryItem::class.java).sort("date", Sort.ASCENDING).findAll()
+  fun getAllSortedDescending(): RealmResults<EntryItem> = realm.where(EntryItem::class.java).sort("date", Sort.DESCENDING).findAll()
   
   fun getAllFromDate(date: Date): RealmResults<EntryItem> = realm.where(EntryItem::class.java).greaterThan("date", date).greaterThan("bloodGlucose", 0).findAll();
   

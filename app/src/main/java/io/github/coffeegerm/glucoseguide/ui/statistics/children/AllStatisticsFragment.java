@@ -84,7 +84,7 @@ public class AllStatisticsFragment extends Fragment {
   }
   
   public void setValues() {
-    RealmResults<EntryItem> entryItems = databaseManager.getAllSortedAscending();
+    RealmResults<EntryItem> entryItems = databaseManager.getAllSortedDescending();
     if (entryItems.size() == 0) {
       averageBloodGlucose.setText(R.string.dash);
       highestBloodGlucose.setText(R.string.dash);

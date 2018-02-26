@@ -91,7 +91,7 @@ public final class ConvertToCSV {
         
         FileOutputStream fileOutputStream = null;
         OutputStreamWriter outputStreamWriter = null;
-        RealmResults<EntryItem> realmResults = databaseManager.getAllSortedAscending();
+        RealmResults<EntryItem> realmResults = databaseManager.getAllSortedDescending();
         ArrayList<EntryItem> entryItems = new ArrayList<>(realmResults);
         
         try {
