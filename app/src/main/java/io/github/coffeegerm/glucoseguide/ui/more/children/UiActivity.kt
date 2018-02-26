@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity
 import androidx.content.edit
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
+import io.github.coffeegerm.glucoseguide.ui.MainActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import kotlinx.android.synthetic.main.activity_ui.*
 import javax.inject.Inject
@@ -60,7 +61,7 @@ class UiActivity : AppCompatActivity() {
   }
   
   override fun onSupportNavigateUp(): Boolean {
-    onBackPressed()
+    startActivity(Intent(this, MainActivity::class.java))
     return super.onSupportNavigateUp()
   }
 }
