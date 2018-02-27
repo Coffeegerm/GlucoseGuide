@@ -30,11 +30,7 @@ import kotlinx.android.synthetic.main.activity_settings_data.*
 import javax.inject.Inject
 
 /**
- * Created by david_yarz on 11/8/17.
- *
- *
  * Activity which handles data within the app.
- *
  *
  * Responsible for deleting and exporting data as well.
  */
@@ -46,7 +42,7 @@ class DataActivity : AppCompatActivity() {
   @Inject
   lateinit var sharedPreferences: SharedPreferences
   
-  private var realm: Realm? = null
+  private var realm: Realm = Realm.getDefaultInstance()
   
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -59,7 +55,6 @@ class DataActivity : AppCompatActivity() {
   
   private fun init() {
     setupToolbar()
-    realm = Realm.getDefaultInstance()
     export_entries.setOnClickListener { exportEntries() }
     delete_all.setOnClickListener { deleteAllEntries() }
   }
@@ -76,9 +71,9 @@ class DataActivity : AppCompatActivity() {
           .setPositiveButton(android.R.string.yes) { _, _ ->
             // continue with delete
             try {
-              realm?.executeTransaction { realm -> realm.delete(EntryItem::class.java) }
+              realm.executeTransaction { realm -> realm.delete(EntryItem::class.java) }
             } finally {
-              realm?.close()
+              realm.close()
             }
             Toast.makeText(this@DataActivity, R.string.all_deleted, Toast.LENGTH_SHORT).show()
           }
