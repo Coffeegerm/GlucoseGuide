@@ -40,7 +40,6 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name="io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity" />
     <activity android:name="io.github.coffeegerm.glucoseguide.ui.more.children.TreatmentActivity" />
     <activity android:name="io.github.coffeegerm.glucoseguide.ui.more.children.DataActivity" />
     <activity android:name=".ui.MainActivity" >
@@ -49,7 +48,8 @@
     <activity android:name=".ui.more.children.SupportActivity" />
     <activity android:name=".ui.more.children.UiActivity" />
     <activity android:name=".ui.entry.NewEntryActivity" />
-
+    <activity android:name=".ui.entry.EditEntryActivity" />
+  
     <receiver android:name="io.github.coffeegerm.glucoseguide.utils.NotificationPublisher" />
   </application>
 

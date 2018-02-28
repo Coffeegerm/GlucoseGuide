@@ -27,6 +27,8 @@ public class Constants {
   public static final String HYPOGLYCEMIC_INDEX = "hypoglycemicIndex";
   public static final String BOLUS_RATIO = "BOLUS_RATIO";
   public static final String MILITARY_TIME = "MILITARY_TIME";
+  public static final String ITEM_ID = "ITEM_ID";
+  
   
   public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
   public static final SimpleDateFormat TWELVE_HOUR_TIME_FORMAT = new SimpleDateFormat("hh:mm aa", Locale.US);

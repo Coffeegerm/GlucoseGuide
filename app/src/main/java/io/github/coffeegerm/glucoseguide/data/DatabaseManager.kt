@@ -26,6 +26,8 @@ class DatabaseManager {
   
   val realm: Realm = Realm.getDefaultInstance()
   
+  fun getEntryFromId(entryId: String) = realm.where(EntryItem::class.java).equalTo("id", entryId).findFirst()
+  
   fun getHighestGlucose(providedDate: Date): Int {
     var highest = 0
     val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()

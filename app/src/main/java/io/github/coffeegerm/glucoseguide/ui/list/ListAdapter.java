@@ -121,7 +121,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
       public boolean onLongClick(View view) {
         Intent editEntryActivity = new Intent(context, EditEntryActivity.class);
         EntryItem selectedItem = entryItemList.get(holder.getAdapterPosition());
-        editEntryActivity.putExtra(EditEntryActivity.ITEM_ID, selectedItem.getId());
+        editEntryActivity.putExtra(Constants.ITEM_ID, selectedItem.getId());
         context.startActivity(editEntryActivity);
         return true;
       }
