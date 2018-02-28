@@ -24,7 +24,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -56,14 +55,6 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
   TextView highest;
   @BindView(R.id.lowest)
   TextView lowest;
-  @BindView(R.id.imgAvg)
-  ImageView ivAvg;
-  @BindView(R.id.imgUpArrow)
-  ImageView ivUpArrow;
-  @BindView(R.id.imgDownArrow)
-  ImageView ivDownArrow;
-  @BindView(R.id.ivA1C)
-  ImageView ivA1C;
   
   @Nullable
   @Override
@@ -71,7 +62,6 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
     View threeMonths = inflater.inflate(R.layout.fragment_three_months_statistics, container, false);
     ButterKnife.bind(this, threeMonths);
     GlucoseGuide.syringe.inject(this);
-    setImages();
     setValues();
     return threeMonths;
   }
@@ -102,14 +92,5 @@ public class ThreeMonthsStatisticsFragment extends Fragment {
   
   public double getA1C(int average) {
     return (46.7 + average) / 28.7;
-  }
-  
-  private void setImages() {
-    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-      ivAvg.setImageResource(R.drawable.ic_average_dark);
-      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-      ivA1C.setImageResource(R.drawable.ic_a1c_dark);
-    }
   }
 }

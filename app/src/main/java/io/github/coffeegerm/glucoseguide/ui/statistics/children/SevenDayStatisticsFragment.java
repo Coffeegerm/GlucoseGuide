@@ -24,7 +24,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -58,13 +57,6 @@ public class SevenDayStatisticsFragment extends Fragment {
   @BindView(R.id.seven_days_lowest)
   TextView lowest;
   
-  @BindView(R.id.imgAvg)
-  ImageView ivAvg;
-  @BindView(R.id.imgUpArrow)
-  ImageView ivUpArrow;
-  @BindView(R.id.imgDownArrow)
-  ImageView ivDownArrow;
-  
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -77,7 +69,6 @@ public class SevenDayStatisticsFragment extends Fragment {
     View sevenDaysView = inflater.inflate(R.layout.fragment_seven_days_stats, container, false);
     ButterKnife.bind(this, sevenDaysView);
     setValues();
-    setImages();
     return sevenDaysView;
   }
   
@@ -97,13 +88,5 @@ public class SevenDayStatisticsFragment extends Fragment {
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.DATE, -7);
     return calendar.getTime();
-  }
-  
-  private void setImages() {
-    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-      ivAvg.setImageResource(R.drawable.ic_average_dark);
-      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-    }
   }
 }

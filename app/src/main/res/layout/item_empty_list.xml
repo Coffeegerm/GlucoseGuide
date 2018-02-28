@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/avenir_demi_bold"
-        android:text="Today"
+        android:text="@string/today"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_list_time"
@@ -261,7 +261,7 @@
         app:layout_constraintTop_toBottomOf="@+id/item_list_time"
         app:layout_goneMarginEnd="8dp"
         app:layout_goneMarginStart="23dp"
-        app:srcCompat="@drawable/ic_syringe" />
+        app:srcCompat="?attr/insulin_image" />
 
       <ImageView
         android:id="@+id/item_list_image_carbs"
@@ -276,7 +276,7 @@
         app:layout_constraintRight_toLeftOf="@+id/item_list_line_right"
         app:layout_constraintTop_toBottomOf="@+id/item_list_date"
         app:layout_goneMarginEnd="8dp"
-        app:srcCompat="@drawable/ic_food" />
+        app:srcCompat="?attr/carbs_image" />
 
       <ImageView
         android:id="@+id/item_list_image_blood_sugar"
@@ -288,7 +288,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_list_date"
         app:layout_goneMarginStart="8dp"
-        app:srcCompat="@drawable/ic_finger" />
+        app:srcCompat="?attr/blood_glucose_image" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -299,7 +299,8 @@
       android:layout_marginBottom="8dp"
       android:layout_marginEnd="16dp"
       android:layout_marginStart="16dp"
-      android:text="This is an example entry! Make an entry of your own to make me disappear!" />
+      android:gravity="center"
+      android:text="@string/example_item_list_description" />
 
   </LinearLayout>
 

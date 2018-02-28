@@ -24,7 +24,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -38,7 +37,6 @@ import io.github.coffeegerm.glucoseguide.GlucoseGuide;
 import io.github.coffeegerm.glucoseguide.R;
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager;
 import io.github.coffeegerm.glucoseguide.utils.Utilities;
-import io.realm.Realm;
 
 /**
  * Created by dyarz on 8/15/2017.
@@ -62,13 +60,6 @@ public class OneMonthStatisticsFragment extends Fragment {
   TextView highest;
   @BindView(R.id.lowest)
   TextView lowest;
-  @BindView(R.id.imgAvg)
-  ImageView ivAvg;
-  @BindView(R.id.imgUpArrow)
-  ImageView ivUpArrow;
-  @BindView(R.id.imgDownArrow)
-  ImageView ivDownArrow;
-  private Realm realm;
   
   @Nullable
   @Override
@@ -76,8 +67,6 @@ public class OneMonthStatisticsFragment extends Fragment {
     View oneMonth = inflater.inflate(R.layout.fragment_one_month_statistics, container, false);
     GlucoseGuide.syringe.inject(this);
     ButterKnife.bind(this, oneMonth);
-    realm = Realm.getDefaultInstance();
-    setImages();
     setValues();
     return oneMonth;
   }
@@ -98,13 +87,5 @@ public class OneMonthStatisticsFragment extends Fragment {
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.DATE, -30);
     return calendar.getTime();
-  }
-  
-  private void setImages() {
-    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-      ivAvg.setImageResource(R.drawable.ic_average_dark);
-      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-    }
   }
 }

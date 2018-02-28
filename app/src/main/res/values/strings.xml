@@ -129,6 +129,7 @@
   <string name="navigation_grade">Grade</string>
   <string name="log">Log</string>
   <string name="over_grade_label">Overall grade from the last three days:</string>
+  <string name="example_item_list_description">This is an example entry! Make an entry of your own to make me disappear!</string>
 
   <array name="statistic_tab_titles">
     <item name="three_days">3 Days</item>

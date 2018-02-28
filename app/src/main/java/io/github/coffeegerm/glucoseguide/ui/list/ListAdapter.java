@@ -43,7 +43,6 @@ import io.github.coffeegerm.glucoseguide.utils.Constants;
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant;
 
 import static io.github.coffeegerm.glucoseguide.utils.Constants.DATE_FORMAT;
-import static io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE;
 import static io.github.coffeegerm.glucoseguide.utils.Constants.TWELVE_HOUR_TIME_FORMAT;
 import static io.github.coffeegerm.glucoseguide.utils.Constants.TWENTY_FOUR_HOUR_TIME_FORMAT;
 
@@ -55,7 +54,6 @@ import static io.github.coffeegerm.glucoseguide.utils.Constants.TWENTY_FOUR_HOUR
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
   
-  private static int shortClickHintCount = 0;
   @Inject
   public SharedPreferences sharedPreferences;
   @Inject
@@ -68,6 +66,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
   public EntryItem item;
   private LayoutInflater inflater;
   private List<EntryItem> entryItemList;
+  private static int shortClickHintCount = 0;
   
   ListAdapter(Context context) {
     this.inflater = LayoutInflater.from(context);
@@ -177,19 +176,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
       super(itemView);
       this.entryView = itemView;
       ButterKnife.bind(this, itemView);
-      
-      if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) {
-        imageBloodGlucose.setImageResource(R.drawable.ic_finger_dark);
-        imageCarbs.setImageResource(R.drawable.ic_food_dark);
-        insulinImage.setImageResource(R.drawable.ic_syringe_dark);
-        int white = resources.getColor(R.color.white);
-        lineLeft.setBackgroundColor(white);
-        lineRight.setBackgroundColor(white);
-      } else {
-        imageBloodGlucose.setImageResource(R.drawable.ic_finger);
-        imageCarbs.setImageResource(R.drawable.ic_food);
-        insulinImage.setImageResource(R.drawable.ic_syringe);
-      }
     }
   }
 }

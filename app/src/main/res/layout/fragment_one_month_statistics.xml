@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:src="@drawable/ic_average" />
+        android:src="?attr/stats_avg" />
 
       <TextView
         android:id="@+id/three_days_average_label"
@@ -99,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:src="@drawable/ic_up_arrow" />
+        android:src="?attr/stats_up_arrow" />
 
       <TextView
         android:id="@+id/three_days_highest_label"
@@ -159,7 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:src="@drawable/ic_down_arrow" />
+        android:src="?attr/stats_down_arrow" />
 
       <TextView
         android:id="@+id/three_days_lowest_label"

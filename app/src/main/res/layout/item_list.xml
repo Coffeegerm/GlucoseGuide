@@ -71,7 +71,7 @@
       android:layout_marginBottom="8dp"
       android:layout_marginEnd="8dp"
       android:layout_marginTop="16dp"
-      android:background="@color/colorPrimary"
+      android:background="?attr/list_item_sep"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintHorizontal_bias="0.3"
       app:layout_constraintLeft_toRightOf="@+id/blood_glucose_label"
@@ -87,7 +87,7 @@
       android:layout_marginBottom="8dp"
       android:layout_marginEnd="8dp"
       android:layout_marginTop="16dp"
-      android:background="@color/colorPrimary"
+      android:background="?attr/list_item_sep"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toRightOf="@+id/carbohydrates_label"
       app:layout_constraintRight_toLeftOf="@+id/insulin_label"
@@ -250,7 +250,7 @@
       app:layout_constraintTop_toBottomOf="@+id/item_list_time"
       app:layout_goneMarginEnd="8dp"
       app:layout_goneMarginStart="23dp"
-      app:srcCompat="@drawable/ic_syringe" />
+      app:srcCompat="?attr/insulin_image" />
 
     <ImageView
       android:id="@+id/item_list_image_carbs"
@@ -265,7 +265,7 @@
       app:layout_constraintRight_toLeftOf="@+id/item_list_line_right"
       app:layout_constraintTop_toBottomOf="@+id/item_list_date"
       app:layout_goneMarginEnd="8dp"
-      app:srcCompat="@drawable/ic_food" />
+      app:srcCompat="?attr/carbs_image" />
 
     <ImageView
       android:id="@+id/item_list_image_blood_sugar"
@@ -277,7 +277,7 @@
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/item_list_date"
       app:layout_goneMarginStart="8dp"
-      app:srcCompat="@drawable/ic_finger" />
+      app:srcCompat="?attr/blood_glucose_image" />
 
   </android.support.constraint.ConstraintLayout>
 

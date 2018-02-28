@@ -24,7 +24,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +35,6 @@ import io.github.coffeegerm.glucoseguide.GlucoseGuide;
 import io.github.coffeegerm.glucoseguide.R;
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager;
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem;
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**
@@ -57,14 +55,6 @@ public class AllStatisticsFragment extends Fragment {
   TextView highestBloodGlucose;
   @BindView(R.id.lowest_of_all_glucose)
   TextView lowestBloodGlucose;
-  @BindView(R.id.imgAvg)
-  ImageView ivAvg;
-  @BindView(R.id.imgUpArrow)
-  ImageView ivUpArrow;
-  @BindView(R.id.imgDownArrow)
-  ImageView ivDownArrow;
-  
-  private Realm realm;
   
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,9 +67,7 @@ public class AllStatisticsFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View allStatsView = inflater.inflate(R.layout.fragment_all_stats, container, false);
     ButterKnife.bind(this, allStatsView);
-    realm = Realm.getDefaultInstance();
     setValues();
-    setImages();
     return allStatsView;
   }
   
@@ -135,13 +123,5 @@ public class AllStatisticsFragment extends Fragment {
       }
     }
     return lowest;
-  }
-  
-  private void setImages() {
-    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-      ivAvg.setImageResource(R.drawable.ic_average_dark);
-      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-    }
   }
 }

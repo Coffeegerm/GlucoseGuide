@@ -24,7 +24,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -59,12 +58,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
   TextView highest;
   @BindView(R.id.three_days_lowest)
   TextView lowest;
-  @BindView(R.id.imgAvg)
-  ImageView ivAvg;
-  @BindView(R.id.imgUpArrow)
-  ImageView ivUpArrow;
-  @BindView(R.id.imgDownArrow)
-  ImageView ivDownArrow;
   
   int hyperglycemicIndex;
   int hypoglycemicIndex;
@@ -81,7 +74,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
     View threeDaysStatisticsView = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
     ButterKnife.bind(this, threeDaysStatisticsView);
     setValues();
-    setImages();
     hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
     hypoglycemicIndex = sharedPreferences.getInt("hypoglycemicIndex", 0);
     return threeDaysStatisticsView;
@@ -103,13 +95,5 @@ public class ThreeDayStatisticsFragment extends Fragment {
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.DATE, -3);
     return calendar.getTime();
-  }
-  
-  private void setImages() {
-    if (sharedPreferences.getBoolean("pref_dark_mode", false)) {
-      ivAvg.setImageResource(R.drawable.ic_average_dark);
-      ivUpArrow.setImageResource(R.drawable.ic_up_arrow_dark);
-      ivDownArrow.setImageResource(R.drawable.ic_down_arrow_dark);
-    }
   }
 }
