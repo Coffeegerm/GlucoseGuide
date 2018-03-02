@@ -28,6 +28,7 @@
   <attr name="stats_a_one_c" format="reference" />
 
   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:fontFamily">@font/avenir_regular</item>
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
@@ -48,13 +49,8 @@
     <item name="stats_a_one_c">@drawable/ic_a1c_light</item>
   </style>
 
-  <style name="AppTheme.Drawer">
-    <item name="android:textSize">18sp</item>
-    <item name="android:windowBackground">@color/white</item>
-    <item name="android:fontFamily">@font/avenir_regular</item>
-  </style>
-
   <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:fontFamily">@font/avenir_regular</item>
     <item name="colorPrimary">@color/darkThemeColorPrimary</item>
     <item name="colorPrimaryDark">@color/darkThemeColorPrimaryDark</item>
     <item name="colorAccent">@color/darkThemeColorAccent</item>

@@ -26,6 +26,7 @@ import javax.inject.Inject
 /**
  * TODO: Add class comment header
  */
+
 class ListViewModel : ViewModel() {
   
   @Inject

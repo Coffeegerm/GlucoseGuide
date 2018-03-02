@@ -20,8 +20,8 @@
   <color name="colorPrimaryDark">#00887f</color>
   <color name="colorPrimaryLight">#5dece0</color>
 
-  <!-- Accent color: light green -->
-  <color name="colorAccent">#3DC92E</color>
+  <!-- Accent color -->
+  <color name="colorAccent">#1B74DF</color>
 
   <!-- Text color primary: white -->
   <color name="textColorPrimary">#0D160B</color>
@@ -35,7 +35,7 @@
   <color name="darkThemeColorPrimaryLight">#4eb8ae</color>
   <color name="darkThemeColorPrimary">#00877F</color>
   <color name="darkThemeColorPrimaryDark">#005a53</color>
-  <color name="darkThemeColorAccent">#11AC00</color>
+  <color name="darkThemeColorAccent">#0659C7</color>
   <color name="darkThemeBackground">#232224</color>
 
   <!-- Others -->
