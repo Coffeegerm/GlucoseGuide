@@ -16,7 +16,6 @@
 
 package io.github.coffeegerm.glucoseguide.ui.statistics.children;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,7 +35,6 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.glucoseguide.GlucoseGuide;
 import io.github.coffeegerm.glucoseguide.R;
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager;
-import io.github.coffeegerm.glucoseguide.utils.Utilities;
 
 /**
  * Created by dyarz on 8/15/2017.
@@ -47,10 +45,6 @@ import io.github.coffeegerm.glucoseguide.utils.Utilities;
 
 public class OneMonthStatisticsFragment extends Fragment {
   
-  @Inject
-  public SharedPreferences sharedPreferences;
-  @Inject
-  public Utilities utilities;
   @Inject
   public DatabaseManager databaseManager;
   

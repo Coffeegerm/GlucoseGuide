@@ -28,31 +28,33 @@ class DatabaseManager {
   
   fun getEntryFromId(entryId: String) = realm.where(EntryItem::class.java).equalTo("id", entryId).findFirst()
   
+  fun deleteEntry(item: EntryItem) = item.deleteFromRealm()
+  
   fun getHighestGlucose(providedDate: Date): Int {
     var highest = 0
-    val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-    entriesFromLastThreeMonths.indices
+    val entriesToCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    entriesToCheck.indices
           .asSequence()
-          .map { entriesFromLastThreeMonths[it]!! }
+          .map { entriesToCheck[it]!! }
           .filter { it.bloodGlucose > highest }
           .forEach { highest = it.bloodGlucose }
     return highest
   }
   
   fun getAverageGlucose(providedDate: Date): Int {
-    val entriesFromLastThreeMonths = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-    val total = entriesFromLastThreeMonths.indices
-          .map { entriesFromLastThreeMonths[it]!! }
+    val entriesToCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    val total = entriesToCheck.indices
+          .map { entriesToCheck[it]!! }
           .sumBy { it.bloodGlucose }
-    return total / entriesFromLastThreeMonths.size
+    return total / entriesToCheck.size
   }
   
   fun getLowestGlucose(providedDate: Date): Int {
     var lowest = 1000
-    val entriesFromLastThreeDays = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
-    entriesFromLastThreeDays.indices
+    val entriesTOCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    entriesTOCheck.indices
           .asSequence()
-          .map { entriesFromLastThreeDays[it]!! }
+          .map { entriesTOCheck[it]!! }
           .filter { it.bloodGlucose < lowest }
           .forEach { lowest = it.bloodGlucose }
     return lowest
@@ -60,6 +62,6 @@ class DatabaseManager {
   
   fun getAllSortedDescending(): RealmResults<EntryItem> = realm.where(EntryItem::class.java).sort("date", Sort.DESCENDING).findAll()
   
-  fun getAllFromDate(date: Date): RealmResults<EntryItem> = realm.where(EntryItem::class.java).greaterThan("date", date).greaterThan("bloodGlucose", 0).findAll();
+  fun getAllFromDate(date: Date): RealmResults<EntryItem> = realm.where(EntryItem::class.java).greaterThan("date", date).greaterThan("bloodGlucose", 0).findAll()
   
 }

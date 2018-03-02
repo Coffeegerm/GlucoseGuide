@@ -52,22 +52,24 @@ class EditEntryActivity : AppCompatActivity() {
   @Inject
   lateinit var databaseManager: DatabaseManager
   
-  /* Original values from item. Compare to possible updated values to find what needs to be updated in database */
+  /* Original values from oldItem. Compare to possible updated values to find what needs to be updated in database */
   private lateinit var originalDate: Date
   private var originalStatus: Int = 0
   private var originalBloodGlucose: Int = 0
   private var originalCarbohydrates: Int = 0
   private var originalInsulin: Double = 0.toDouble()
-  /* items to be used to altered to show that the item has been updated */
+  
+  /* items to be used to altered to show that the oldItem has been updated */
   private var updatedStatus: Int = 0
   internal var updatedBloodGlucose: Int = 0
   internal var updatedCarbohydrates: Int = 0
   internal var updatedInsulin: Double = 0.toDouble()
   private var originalCalendar: Calendar = Calendar.getInstance()
   private var updatedCalendar: Calendar = Calendar.getInstance()
+  
   private var realm: Realm = Realm.getDefaultInstance()
-  private lateinit var itemIdString: String
-  private lateinit var item: EntryItem
+  private lateinit var itemId: String
+  private lateinit var oldItem: EntryItem
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -80,8 +82,8 @@ class EditEntryActivity : AppCompatActivity() {
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.setDisplayShowHomeEnabled(true)
     
-    itemIdString = intent.getStringExtra(Constants.ITEM_ID)
-    item = databaseManager.getEntryFromId(itemIdString)!!
+    itemId = intent.getStringExtra(Constants.ITEM_ID)
+    oldItem = databaseManager.getEntryFromId(itemId)!!
     
     getOriginalValues() // must call before hints are set
     setHints()
@@ -172,7 +174,7 @@ class EditEntryActivity : AppCompatActivity() {
             .setPositiveButton(android.R.string.yes) { _, _ ->
               // continue with delete
               realm.executeTransaction {
-                item.deleteFromRealm()
+                oldItem.deleteFromRealm()
                 Toast.makeText(this, R.string.entry_deleted, Toast.LENGTH_SHORT).show()
                 finish()
               }
@@ -189,12 +191,12 @@ class EditEntryActivity : AppCompatActivity() {
   }
   
   private fun getOriginalValues() {
-    originalStatus = item.status
-    originalCalendar.time = item.date
+    originalStatus = oldItem.status
+    originalCalendar.time = oldItem.date
     originalDate = originalCalendar.time
-    originalBloodGlucose = item.bloodGlucose
-    originalCarbohydrates = item.carbohydrates
-    originalInsulin = item.insulin
+    originalBloodGlucose = oldItem.bloodGlucose
+    originalCarbohydrates = oldItem.carbohydrates
+    originalInsulin = oldItem.insulin
   }
   
   private fun setHints() {
@@ -215,7 +217,7 @@ class EditEntryActivity : AppCompatActivity() {
     try {
       val dateToSave = Date()
       realm.beginTransaction()
-      item.deleteFromRealm()
+      databaseManager.deleteEntry(oldItem)
       val itemToSave = EntryItem()
       itemToSave.status = updatedStatus
       if (updatedCalendar.timeInMillis != originalCalendar.timeInMillis) {

@@ -60,8 +60,7 @@ class ConvertToCSV(private var context: Context) {
   
   init {
     GlucoseGuide.syringe.inject(this)
-    val activity = context as Activity
-    checkStoragePermissions(activity)
+    checkStoragePermissions(context as Activity)
   }
   
   fun createCSVFile(): String? {

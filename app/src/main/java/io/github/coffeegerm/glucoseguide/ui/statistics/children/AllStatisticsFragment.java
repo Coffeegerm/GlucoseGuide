@@ -16,7 +16,6 @@
 
 package io.github.coffeegerm.glucoseguide.ui.statistics.children;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,8 +43,6 @@ import io.realm.RealmResults;
 
 public class AllStatisticsFragment extends Fragment {
   
-  @Inject
-  public SharedPreferences sharedPreferences;
   @Inject
   public DatabaseManager databaseManager;
   

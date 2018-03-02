@@ -16,6 +16,7 @@
 
 package io.github.coffeegerm.glucoseguide.ui.list
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -30,6 +31,7 @@ import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.item_empty_list.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class ListFragment : Fragment() {
@@ -41,26 +43,34 @@ class ListFragment : Fragment() {
   
   private lateinit var listViewModel: ListViewModel
   
+  @Inject
+  lateinit var listViewModelFactory: ListViewModelFactory
+  
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    GlucoseGuide.syringe.inject(this)
     listAdapter = ListAdapter(context)
-    listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+    listViewModel = ViewModelProviders.of(this, listViewModelFactory).get(ListViewModel::class.java)
   }
   
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_list, container, false)
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    GlucoseGuide.syringe.inject(this)
     list_recycler_view.adapter = listAdapter
-    if (listViewModel.getEntries().size == 0) {
+    listViewModel.getLiveData().observe(this, Observer<RealmResults<EntryItem>> { entries -> checkListSize(entries!!) })
+  }
+  
+  private fun checkListSize(entriesToShow: RealmResults<EntryItem>) {
+    Timber.i(entriesToShow.size.toString())
+    if (entriesToShow.size == 0) {
       list_recycler_view.visibility = View.GONE
       empty_item_list.visibility = View.VISIBLE
     } else {
       list_recycler_view.visibility = View.VISIBLE
       empty_item_list.visibility = View.GONE
       list_recycler_view.layoutManager = LinearLayoutManager(activity)
-      setAdapterItems(listViewModel.getEntries())
+      setAdapterItems(entriesToShow)
     }
   }
   

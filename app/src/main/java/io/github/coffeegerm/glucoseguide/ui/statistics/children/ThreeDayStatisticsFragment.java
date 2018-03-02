@@ -16,7 +16,6 @@
 
 package io.github.coffeegerm.glucoseguide.ui.statistics.children;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,7 +35,6 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.glucoseguide.GlucoseGuide;
 import io.github.coffeegerm.glucoseguide.R;
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager;
-import io.github.coffeegerm.glucoseguide.utils.Utilities;
 
 /**
  * Fragment used with Statistics ViewPager to show
@@ -46,10 +44,6 @@ import io.github.coffeegerm.glucoseguide.utils.Utilities;
 public class ThreeDayStatisticsFragment extends Fragment {
   
   @Inject
-  public SharedPreferences sharedPreferences;
-  @Inject
-  public Utilities utilities;
-  @Inject
   public DatabaseManager databaseManager;
   
   @BindView(R.id.three_days_average)
@@ -58,9 +52,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
   TextView highest;
   @BindView(R.id.three_days_lowest)
   TextView lowest;
-  
-  int hyperglycemicIndex;
-  int hypoglycemicIndex;
   
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,8 +65,6 @@ public class ThreeDayStatisticsFragment extends Fragment {
     View threeDaysStatisticsView = inflater.inflate(R.layout.fragment_three_days_stats, container, false);
     ButterKnife.bind(this, threeDaysStatisticsView);
     setValues();
-    hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0);
-    hypoglycemicIndex = sharedPreferences.getInt("hypoglycemicIndex", 0);
     return threeDaysStatisticsView;
   }
   

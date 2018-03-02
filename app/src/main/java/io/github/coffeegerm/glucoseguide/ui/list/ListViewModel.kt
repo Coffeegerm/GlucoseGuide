@@ -16,27 +16,35 @@
 
 package io.github.coffeegerm.glucoseguide.ui.list
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.realm.RealmChangeListener
 import io.realm.RealmResults
-import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * TODO: Add class comment header
  */
 
-class ListViewModel : ViewModel() {
+class ListViewModel(databaseManager: DatabaseManager) : ViewModel() {
   
-  @Inject
-  lateinit var databaseManager: DatabaseManager
+  private val entriesLiveData = MutableLiveData<RealmResults<EntryItem>>()
   
-  init {
-    GlucoseGuide.syringe.inject(this)
+  private val realmChangeListener = RealmChangeListener<RealmResults<EntryItem>> {
+    entriesLiveData.postValue(it)
+    Timber.i("Entries for List updated")
   }
   
-  fun getEntries(): RealmResults<EntryItem> {
-    return databaseManager.getAllSortedDescending()
+  init {
+    databaseManager.getAllSortedDescending().addChangeListener(realmChangeListener)
+    Timber.i("Realm Change Listener Added")
+    entriesLiveData.postValue(databaseManager.getAllSortedDescending())
+  }
+  
+  fun getLiveData(): LiveData<RealmResults<EntryItem>> {
+    return entriesLiveData
   }
 }

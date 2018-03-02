@@ -36,14 +36,11 @@ import butterknife.ButterKnife;
 import io.github.coffeegerm.glucoseguide.GlucoseGuide;
 import io.github.coffeegerm.glucoseguide.R;
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager;
-import io.github.coffeegerm.glucoseguide.utils.Utilities;
 
 public class ThreeMonthsStatisticsFragment extends Fragment {
   
   @Inject
   public SharedPreferences sharedPreferences;
-  @Inject
-  public Utilities utilities;
   @Inject
   public DatabaseManager databaseManager;
   
