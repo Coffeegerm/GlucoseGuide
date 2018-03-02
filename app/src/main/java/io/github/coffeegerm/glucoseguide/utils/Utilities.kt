@@ -38,7 +38,7 @@ class Utilities {
     var hour = hourOfDay
     val timeSet: String
     val min: String = if (minute < 10)
-      "0" + minute
+      "0$minute"
     else
       minute.toString()
     when {

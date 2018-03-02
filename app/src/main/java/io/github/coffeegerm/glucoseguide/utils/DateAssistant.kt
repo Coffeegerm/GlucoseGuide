@@ -38,5 +38,20 @@ class DateAssistant {
     return today.time
   }
   
+  fun getSevenDaysAgoDate(): Date {
+    today.add(Calendar.DATE, -7)
+    return today.time
+  }
+  
+  fun getOneMonthAgo(): Date {
+    today.add(Calendar.DATE, -30)
+    return today.time
+  }
+  
+  fun getThreeMonthsAgoDate(): Date {
+    today.add(Calendar.DATE, -90)
+    return today.time
+  }
+  
   fun getSpecificCalendarDayOfMonth(calendar: Calendar) = calendar.get(Calendar.DAY_OF_MONTH)
 }

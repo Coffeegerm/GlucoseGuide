@@ -51,7 +51,7 @@ interface AppComponent {
   fun inject(allStatisticsFragment: AllStatisticsFragment)
   fun inject(oneMonthStatisticsFragment: OneMonthStatisticsFragment)
   fun inject(sevenDayStatisticsFragment: SevenDayStatisticsFragment)
-  fun inject(threeDayStatisticsFragment: ThreeDayStatisticsFragment)
+  fun inject(threeDayStatisticsFragment: ThreeDaysStatisticsFragment)
   fun inject(threeMonthsStatisticsFragment: ThreeMonthsStatisticsFragment)
   
   fun inject(listViewModel: ListViewModel)

@@ -59,11 +59,12 @@
         android:layout_weight="1" />
 
       <TextView
-        android:id="@+id/average"
+        android:id="@+id/three_months_average_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="16dp"
+        android:text="@string/dash"
         android:fontFamily="@font/avenir_medium"
         android:textSize="18sp" />
 
@@ -119,10 +120,11 @@
         android:layout_weight="1" />
 
       <TextView
-        android:id="@+id/highest"
+        android:id="@+id/three_months_highest_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:text="@string/dash"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/avenir_medium"
         android:textSize="18sp" />
@@ -179,9 +181,10 @@
         android:layout_weight="1" />
 
       <TextView
-        android:id="@+id/lowest"
+        android:id="@+id/three_months_lowest_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/dash"
         android:layout_gravity="center"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/avenir_medium"
@@ -243,6 +246,7 @@
         android:layout_gravity="center"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/avenir_medium"
+        android:text="@string/dash"
         android:textSize="18sp" />
 
     </LinearLayout>

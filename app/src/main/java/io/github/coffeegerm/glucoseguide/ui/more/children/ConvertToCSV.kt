@@ -70,14 +70,12 @@ class ConvertToCSV(private var context: Context) {
       if (externalStorageDirectory.canWrite()) {
         file = File(exportPath, "material_logbook_export_" + System.currentTimeMillis() / 1000 + ".csv")
         
-        var fileOutputStream: FileOutputStream? = null
-        var outputStreamWriter: OutputStreamWriter? = null
+        val fileOutputStream = FileOutputStream(file)
+        val outputStreamWriter = OutputStreamWriter(fileOutputStream)
         val realmResults = databaseManager.getAllSortedDescending()
         val entryItems = ArrayList(realmResults)
         
         try {
-          fileOutputStream = FileOutputStream(file)
-          outputStreamWriter = OutputStreamWriter(fileOutputStream)
           
           // CSV Structure
           // Date | Time | Blood Glucose | Carbohydrates | Insulin
@@ -112,8 +110,8 @@ class ConvertToCSV(private var context: Context) {
           outputStreamWriter.flush()
         } catch (ignored: Exception) {
         } finally {
-          if (outputStreamWriter != null) outputStreamWriter.close()
-          if (fileOutputStream != null) fileOutputStream.close()
+          outputStreamWriter.close()
+          fileOutputStream.close()
           val toastMessage = "CSV created at " + exportPath.toString()
           Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
         }
