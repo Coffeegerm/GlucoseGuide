@@ -24,7 +24,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -159,16 +158,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     TextView insulin;
     @BindView(R.id.item_list_carbohydrates)
     TextView carbohydrates;
-    @BindView(R.id.item_list_insulin_image)
-    ImageView insulinImage;
-    @BindView(R.id.item_list_image_carbs)
-    ImageView imageCarbs;
-    @BindView(R.id.item_list_image_blood_sugar)
-    ImageView imageBloodGlucose;
-    @BindView(R.id.item_list_line_left)
-    View lineLeft;
-    @BindView(R.id.item_list_line_right)
-    View lineRight;
     
     private View entryView;
     
