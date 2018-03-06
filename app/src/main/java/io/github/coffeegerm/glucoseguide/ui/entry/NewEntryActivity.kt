@@ -35,7 +35,10 @@ import android.widget.Toast
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
-import io.github.coffeegerm.glucoseguide.utils.Constants.*
+import io.github.coffeegerm.glucoseguide.utils.Constants.BOLUS_RATIO
+import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION
+import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION_ID
+import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
 import io.github.coffeegerm.glucoseguide.utils.NotificationPublisher
 import io.github.coffeegerm.glucoseguide.utils.Utilities
 import io.realm.Realm

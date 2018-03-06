@@ -35,18 +35,19 @@ import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.Constants.*
+import io.github.coffeegerm.glucoseguide.utils.DateFormatter
 import io.github.coffeegerm.glucoseguide.utils.Utilities
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_edit_entry.*
 import java.util.*
 import javax.inject.Inject
 
-/**
- * TODO create class header
- */
 
 class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+  
+  companion object {
+    var wasDateChanged = false
+  }
   
   @Inject
   lateinit var utilities: Utilities
@@ -54,6 +55,8 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   lateinit var sharedPreferences: SharedPreferences
   @Inject
   lateinit var databaseManager: DatabaseManager
+  @Inject
+  lateinit var dateFormatter: DateFormatter
   
   /* Original values from oldItem. Compare to possible updated values to find what needs to be updated in database */
   private lateinit var originalDate: Date
@@ -77,7 +80,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
+    if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
       setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_edit_entry)
     setSupportActionBar(edit_entry_toolbar)
@@ -103,6 +106,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
               correctMonth++
               edit_entry_date.setText(utilities.formatDate(correctMonth, dayOfMonth, year))
               correctMonth--
+              if (!wasDateChanged) wasDateChanged = true
               updatedCalendar.set(year, correctMonth, dayOfMonth)
             }, originalCalendar.get(Calendar.YEAR), // year
             originalCalendar.get(Calendar.MONTH), // month
@@ -121,6 +125,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
               edit_entry_time.setText(utilities.checkTimeString(hourOfDay, minute))
               updatedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
               updatedCalendar.set(Calendar.MINUTE, minute)
+              if (!wasDateChanged) wasDateChanged = true
             },
             originalCalendar.get(Calendar.HOUR_OF_DAY), // current hour
             originalCalendar.get(Calendar.MINUTE), // current minute
@@ -209,8 +214,8 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   
   private fun setHints() {
     edit_status_selector.setSelection(originalStatus)
-    edit_entry_date.hint = DATE_FORMAT.format(originalDate)
-    edit_entry_time.hint = TWELVE_HOUR_TIME_FORMAT.format(originalDate)
+    edit_entry_date.hint = dateFormatter.formatDate(originalDate)
+    edit_entry_time.hint = dateFormatter.twelveHourFormat(originalDate)
     edit_entry_blood_glucose_level.hint = originalBloodGlucose.toString()
     if (originalCarbohydrates != 0)
       edit_entry_carbohydrates_amount.hint = originalCarbohydrates.toString()
@@ -229,7 +234,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
       databaseManager.deleteEntry(oldItem)
       val itemToSave = EntryItem()
       itemToSave.status = updatedStatus
-      if (updatedCalendar.timeInMillis != originalCalendar.timeInMillis) {
+      if (wasDateChanged) {
         dateToSave.time = updatedCalendar.timeInMillis
         itemToSave.date = dateToSave
       } else {

@@ -34,8 +34,8 @@ import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.Constants.*
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
+import io.github.coffeegerm.glucoseguide.utils.DateFormatter
 import javax.inject.Inject
 
 class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
@@ -46,6 +46,8 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
   lateinit var dateAssistant: DateAssistant
   @Inject
   lateinit var resources: Resources
+  @Inject
+  lateinit var dateFormatter: DateFormatter
   
   var context: Context
   private lateinit var item: EntryItem
@@ -66,21 +68,14 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
   
   override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
     item = entryItemList!![holder.adapterPosition]
-    
-    // Check if today or yesterday and set date accordingly
-    val itemCalendar = dateAssistant.today
-    itemCalendar.time = item.date
-    when (dateAssistant.getSpecificCalendarDayOfMonth(itemCalendar)) {
-      dateAssistant.getTodayOfMonth() -> holder.date.setText(R.string.today)
-      dateAssistant.getYesterdayDayOfMonth() -> holder.date.setText(R.string.yesterday)
-      else -> holder.date.text = DATE_FORMAT.format(item.date)
-    }
+  
+    holder.date.text = dateFormatter.formatDate(item.date)
     
     // Set time based on user preference
     if (sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
-      holder.time.text = TWENTY_FOUR_HOUR_TIME_FORMAT.format(item.date)
+      holder.time.text = item.date?.let { dateFormatter.twentyFourHourFormat(it) }
     } else {
-      holder.time.text = TWELVE_HOUR_TIME_FORMAT.format(item.date)
+      holder.time.text = item.date?.let { dateFormatter.twelveHourFormat(it) }
     }
     
     holder.entryView.setOnClickListener {

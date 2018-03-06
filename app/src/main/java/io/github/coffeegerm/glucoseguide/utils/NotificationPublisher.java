@@ -24,17 +24,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import static io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION;
-import static io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION_ID;
-
-
-/**
- * Created by dyarz on 9/6/2017.
- * <p>
- * Class used to deliver notifications to the user.
- */
-
 public class NotificationPublisher extends BroadcastReceiver {
+  
+  /*
+  * The only reason that this class isn't in Kotlin is because
+  * for some reason whenever you try to do a Build.VERSION check in Kotlin
+  * the IDE will scream at you
+  * */
   
   @Override
   public void onReceive(Context context, Intent intent) {
@@ -44,8 +40,8 @@ public class NotificationPublisher extends BroadcastReceiver {
       assert notificationManager != null;
       notificationManager.createNotificationChannel(channel);
     }
-    Notification notification = intent.getParcelableExtra(NOTIFICATION);
-    int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+    Notification notification = intent.getParcelableExtra(Constants.NOTIFICATION);
+    int id = intent.getIntExtra(Constants.NOTIFICATION_ID, 0);
     assert notificationManager != null;
     notificationManager.notify(id, notification);
   }

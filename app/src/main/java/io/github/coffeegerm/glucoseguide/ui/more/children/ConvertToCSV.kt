@@ -30,7 +30,11 @@ import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.Constants.*
+import io.github.coffeegerm.glucoseguide.utils.Constants.DATE_FORMAT
+import io.github.coffeegerm.glucoseguide.utils.Constants.TWELVE_HOUR_TIME_FORMAT
+import io.github.coffeegerm.glucoseguide.utils.Constants.TWENTY_FOUR_HOUR_TIME_FORMAT
+import io.github.coffeegerm.glucoseguide.utils.DateFormatter
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -38,7 +42,8 @@ import java.io.OutputStreamWriter
 import javax.inject.Inject
 
 /**
- * TODO: Add class comment header
+ * Class dedicated to converting all entries to a CSV for printing
+ * and viewing with Endocrinologist
  */
 
 class ConvertToCSV(private var context: Context) {
@@ -49,14 +54,12 @@ class ConvertToCSV(private var context: Context) {
   lateinit var databaseManager: DatabaseManager
   @Inject
   lateinit var resources: Resources
+  @Inject
+  lateinit var dateFormatter: DateFormatter
   
   // Storage Permissions
   private val requestExternalStorageCode = 1
   private val exportPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-  
-  private val dateFormat = DATE_FORMAT
-  private val twelveHourTimeFormat = TWELVE_HOUR_TIME_FORMAT
-  private val twentyFourHourTimeFormat = TWENTY_FOUR_HOUR_TIME_FORMAT
   
   init {
     GlucoseGuide.syringe.inject(this)
@@ -91,14 +94,15 @@ class ConvertToCSV(private var context: Context) {
           // | Date | Time | Blood Glucose | Carbohydrates | Insulin
           for (currentEntry in entryItems.indices) {
             val entry = entryItems[currentEntry]
+            val date = entry.date
             val entryTime: String = if (sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
-              twentyFourHourTimeFormat.format(entry.date)
+              dateFormatter.formatDate(date)
             } else {
-              twelveHourTimeFormat.format(entry.date)
+              dateFormatter.formatDate(date)
             }
             
             writeLine(outputStreamWriter,
-                  dateFormat.format(entry.date),
+                  dateFormatter.formatDate(date),
                   entryTime,
                   entry.bloodGlucose.toString() + " mg/dL",
                   entry.carbohydrates.toString(),
@@ -118,6 +122,7 @@ class ConvertToCSV(private var context: Context) {
       }
       return if (file == null) null else file.path
     } catch (e: Exception) {
+      Timber.i("Unable to process")
       e.printStackTrace()
       return null
     }

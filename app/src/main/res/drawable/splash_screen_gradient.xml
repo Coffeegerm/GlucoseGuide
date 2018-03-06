@@ -18,7 +18,7 @@
   android:dither="true"
   android:shape="rectangle">
   <gradient
-    android:angle="-90"
-    android:endColor="@color/white"
+    android:angle="90"
+    android:endColor="@color/colorPrimaryLight"
     android:startColor="@color/colorPrimaryDark" />
 </shape>

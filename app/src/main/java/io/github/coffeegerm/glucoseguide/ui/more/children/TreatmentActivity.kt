@@ -23,7 +23,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.utils.Constants.*
+import io.github.coffeegerm.glucoseguide.utils.Constants.BOLUS_RATIO
+import io.github.coffeegerm.glucoseguide.utils.Constants.HYPERGLYCEMIC_INDEX
+import io.github.coffeegerm.glucoseguide.utils.Constants.HYPOGLYCEMIC_INDEX
+import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
 import kotlinx.android.synthetic.main.activity_treatment.*
 import javax.inject.Inject
 

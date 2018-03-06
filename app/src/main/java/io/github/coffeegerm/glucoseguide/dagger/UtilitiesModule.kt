@@ -19,6 +19,7 @@ package io.github.coffeegerm.glucoseguide.dagger
 import dagger.Module
 import dagger.Provides
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
+import io.github.coffeegerm.glucoseguide.utils.DateFormatter
 import io.github.coffeegerm.glucoseguide.utils.Utilities
 
 /**
@@ -30,6 +31,9 @@ class UtilitiesModule {
   
   @Provides
   fun providesDateAssistant() = DateAssistant()
+  
+  @Provides
+  fun providesDateFormatter() = DateFormatter()
   
   @Provides
   fun provideUtilities(): Utilities = Utilities()
