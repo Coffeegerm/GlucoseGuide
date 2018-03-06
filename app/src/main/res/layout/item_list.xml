@@ -60,6 +60,17 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/item_list_date"
       tools:text="12:20 pm" />
+  
+    <ImageView
+      android:id="@+id/status_image"
+      android:layout_width="32dp"
+      android:layout_height="32dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginTop="16dp"
+      android:contentDescription="@string/status_image"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
       android:id="@+id/item_list_blood_glucose"

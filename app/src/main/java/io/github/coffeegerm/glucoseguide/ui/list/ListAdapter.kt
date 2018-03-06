@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import butterknife.BindView
@@ -61,22 +62,17 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
     this.entryItemList = providedList
   }
   
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-    return ListViewHolder(inflater.inflate(R.layout.item_list, parent, false))
-  }
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder = ListViewHolder(inflater.inflate(R.layout.item_list, parent, false))
   
   override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
     item = entryItemList!![holder.adapterPosition]
     
     // Check if today or yesterday and set date accordingly
-    val todayDay = dateAssistant.getTodayOfMonth()
-    val yesterdayDay = dateAssistant.getYesterdayDayOfMonth()
     val itemCalendar = dateAssistant.today
     itemCalendar.time = item.date
-    val itemDay = dateAssistant.getSpecificCalendarDayOfMonth(itemCalendar)
-    when (itemDay) {
-      todayDay -> holder.date.setText(R.string.today)
-      yesterdayDay -> holder.date.setText(R.string.yesterday)
+    when (dateAssistant.getSpecificCalendarDayOfMonth(itemCalendar)) {
+      dateAssistant.getTodayOfMonth() -> holder.date.setText(R.string.today)
+      dateAssistant.getYesterdayDayOfMonth() -> holder.date.setText(R.string.yesterday)
       else -> holder.date.text = DATE_FORMAT.format(item.date)
     }
     
@@ -88,10 +84,7 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
     }
     
     holder.entryView.setOnClickListener {
-      if (shortClickHintCount <= 5) {
-        Toast.makeText(context, R.string.list_item_short_click, Toast.LENGTH_SHORT).show()
-        shortClickHintCount++
-      }
+      Toast.makeText(context, R.string.list_item_short_click, Toast.LENGTH_SHORT).show()
     }
     
     holder.entryView.setOnLongClickListener {
@@ -116,11 +109,21 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
       holder.insulin.setText(R.string.dash)
     else
       holder.insulin.text = item.insulin.toString()
+  
+    if (item.status > 0) {
+      holder.statusImage.visibility = View.VISIBLE
+      when (item.status) {
+        1 -> holder.statusImage.setImageDrawable(resources.getDrawable(R.drawable.breakfast))
+        2 -> holder.statusImage.setImageDrawable(resources.getDrawable(R.drawable.lunch))
+        3 -> holder.statusImage.setImageDrawable(resources.getDrawable(R.drawable.dinner))
+        4 -> holder.statusImage.setImageDrawable(resources.getDrawable(R.drawable.sweets))
+        5 -> holder.statusImage.setImageDrawable(resources.getDrawable(R.drawable.sick))
+        6 -> holder.statusImage.setImageDrawable(resources.getDrawable(R.drawable.exercise))
+      }
+    }
   }
   
-  override fun getItemCount(): Int {
-    return entryItemList!!.size
-  }
+  override fun getItemCount(): Int = entryItemList!!.size
   
   inner class ListViewHolder(val entryView: View) : RecyclerView.ViewHolder(entryView) {
     
@@ -134,13 +137,11 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
     lateinit var insulin: TextView
     @BindView(R.id.item_list_carbohydrates)
     lateinit var carbohydrates: TextView
+    @BindView(R.id.status_image)
+    lateinit var statusImage: ImageView
     
     init {
       ButterKnife.bind(this, entryView)
     }
-  }
-  
-  companion object {
-    private var shortClickHintCount = 0
   }
 }

@@ -29,6 +29,8 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
@@ -41,7 +43,7 @@ import kotlinx.android.synthetic.main.activity_new_entry.*
 import java.util.*
 import javax.inject.Inject
 
-class NewEntryActivity : AppCompatActivity() {
+class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
   
   @Inject
   lateinit var sharedPreferences: SharedPreferences
@@ -131,7 +133,18 @@ class NewEntryActivity : AppCompatActivity() {
     
     reminder_alarm.setOnClickListener { alarmTimePicker() }
     save_entry_fab.setOnClickListener { saveEntry() }
+  
+    val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.status_selection))
+    status_selector.adapter = spinnerAdapter
+    status_selector.onItemSelectedListener = this
   }
+  
+  override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+    status_selector.setSelection(position)
+    status = position
+  }
+  
+  override fun onNothingSelected(p0: AdapterView<*>?) {}
   
   private fun saveEntry() {
     // Checks to make sure there is a blood glucose given.

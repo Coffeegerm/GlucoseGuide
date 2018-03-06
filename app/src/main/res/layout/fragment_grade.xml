@@ -23,6 +23,7 @@
     android:id="@+id/toolbar2"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
+    android:elevation="@dimen/appBarElevation"
     android:background="@color/colorPrimary" />
 
   <TextView

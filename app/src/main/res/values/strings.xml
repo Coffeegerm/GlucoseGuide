@@ -51,14 +51,6 @@
   <string name="entry_deleted">Entry deleted</string>
   <string name="suggested_insulin">Suggested Insulin dosage:</string>
 
-  <!-- Image Descriptions for NewEntryActivity and EditEntryActivity -->
-  <string name="breakfast_description">Breakfast</string>
-  <string name="lunch_description">Lunch</string>
-  <string name="dinner_description">Dinner</string>
-  <string name="sick_description">Sick</string>
-  <string name="exercise_description">Exercise</string>
-  <string name="sweets_description">Sweets</string>
-
   <!-- List onOptions items -->
   <string name="sort">Sort</string>
   <string name="sort_from_newest">Newest to oldest</string>
@@ -130,12 +122,23 @@
   <string name="log">Log</string>
   <string name="over_grade_label">Overall grade from the last three days:</string>
   <string name="example_item_list_description">This is an example entry! Make an entry of your own to make me disappear!</string>
-
+  <string name="status_image">Status Image</string>
+  
   <array name="statistic_tab_titles">
     <item name="three_days">3 Days</item>
     <item name="seven_days">7 Days</item>
     <item name="one_month">One Month</item>
     <item name="three_months">Three Months</item>
     <item name="all">All</item>
+  </array>
+  
+  <array name="status_selection">
+    <item>None</item>
+    <item>Breakfast</item>
+    <item>Lunch</item>
+    <item>Dinner</item>
+    <item>Sweets</item>
+    <item>Sick</item>
+    <item>Exercise</item>
   </array>
 </resources>

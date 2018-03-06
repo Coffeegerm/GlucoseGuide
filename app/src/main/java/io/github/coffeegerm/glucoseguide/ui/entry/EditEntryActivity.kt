@@ -26,6 +26,9 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
@@ -43,7 +46,7 @@ import javax.inject.Inject
  * TODO create class header
  */
 
-class EditEntryActivity : AppCompatActivity() {
+class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
   
   @Inject
   lateinit var utilities: Utilities
@@ -86,6 +89,11 @@ class EditEntryActivity : AppCompatActivity() {
     oldItem = databaseManager.getEntryFromId(itemId)!!
     
     getOriginalValues() // must call before hints are set
+  
+    val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.status_selection))
+    edit_status_selector.adapter = spinnerAdapter
+    edit_status_selector.onItemSelectedListener = this
+    
     setHints()
     
     edit_entry_date.setOnClickListener {
@@ -200,6 +208,7 @@ class EditEntryActivity : AppCompatActivity() {
   }
   
   private fun setHints() {
+    edit_status_selector.setSelection(originalStatus)
     edit_entry_date.hint = DATE_FORMAT.format(originalDate)
     edit_entry_time.hint = TWELVE_HOUR_TIME_FORMAT.format(originalDate)
     edit_entry_blood_glucose_level.hint = originalBloodGlucose.toString()
@@ -253,4 +262,11 @@ class EditEntryActivity : AppCompatActivity() {
     onBackPressed()
     return super.onSupportNavigateUp()
   }
+  
+  override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+    edit_status_selector.setSelection(position)
+    updatedStatus = position
+  }
+  
+  override fun onNothingSelected(p0: AdapterView<*>?) {}
 }
