@@ -38,18 +38,16 @@ class ListFragment : Fragment() {
   
   @Inject
   lateinit var sharedPreferences: SharedPreferences
-  
-  private lateinit var listAdapter: ListAdapter
-  
-  private lateinit var listViewModel: ListViewModel
-  
   @Inject
   lateinit var listViewModelFactory: ListViewModelFactory
+  
+  private lateinit var listAdapter: ListAdapter
+  private lateinit var listViewModel: ListViewModel
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    listAdapter = ListAdapter(context)
+    listAdapter = context?.let { ListAdapter(it) }!!
     listViewModel = ViewModelProviders.of(this, listViewModelFactory).get(ListViewModel::class.java)
   }
   

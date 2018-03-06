@@ -26,7 +26,7 @@ import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.realm.Realm
-import kotlinx.android.synthetic.main.activity_settings_data.*
+import kotlinx.android.synthetic.main.activity_data.*
 import javax.inject.Inject
 
 /**
@@ -49,7 +49,7 @@ class DataActivity : AppCompatActivity() {
     GlucoseGuide.syringe.inject(this)
     if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
       setTheme(R.style.AppTheme_Dark)
-    setContentView(R.layout.activity_settings_data)
+    setContentView(R.layout.activity_data)
     init()
   }
   

@@ -25,6 +25,7 @@
   android:layout_marginTop="8dp"
   android:clickable="true"
   android:focusable="true"
+  app:cardCornerRadius="5dp"
   android:foreground="?android:attr/selectableItemBackground"
   app:cardElevation="@dimen/item_card_elevation">
 
@@ -109,12 +110,12 @@
       android:textSize="14sp"
       app:layout_constraintStart_toEndOf="@+id/item_list_insulin_image"
       app:layout_constraintTop_toBottomOf="@+id/item_list_image_carbs" />
-
+  
     <TextView
       android:id="@+id/blood_glucose_measurement_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="8dp"
+      android:layout_marginEnd="16dp"
       android:fontFamily="@font/avenir_demi_bold"
       android:text="@string/blood_glucose_measurement"
       app:layout_constraintBaseline_toBaselineOf="@+id/item_list_blood_glucose"
@@ -130,22 +131,22 @@
       app:layout_constraintBaseline_toBaselineOf="@+id/carbohydrates_label"
       app:layout_constraintEnd_toStartOf="@+id/carbs_measurement_label"
       tools:text="44" />
-
+  
     <TextView
       android:id="@+id/carbs_measurement_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="8dp"
+      android:layout_marginEnd="16dp"
       android:fontFamily="@font/avenir_demi_bold"
       android:text="@string/carbs_measurement"
       app:layout_constraintBaseline_toBaselineOf="@+id/item_list_carbohydrates"
       app:layout_constraintEnd_toEndOf="parent" />
-
+  
     <TextView
       android:id="@+id/insulin_measurement_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="8dp"
+      android:layout_marginEnd="16dp"
       android:fontFamily="@font/avenir_demi_bold"
       android:text="@string/insulin_measurement"
       app:layout_constraintBaseline_toBaselineOf="@+id/item_list_insulin"

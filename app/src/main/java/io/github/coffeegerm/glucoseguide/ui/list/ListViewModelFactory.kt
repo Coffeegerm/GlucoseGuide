@@ -21,10 +21,6 @@ import android.arch.lifecycle.ViewModelProvider
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import javax.inject.Inject
 
-/**
- * TODO: Add class comment header
- */
-
 class ListViewModelFactory @Inject constructor(private val databaseManager: DatabaseManager) : ViewModelProvider.Factory {
   @Suppress("UNCHECKED_CAST")
   override fun <T : ViewModel> create(modelClass: Class<T>): T {

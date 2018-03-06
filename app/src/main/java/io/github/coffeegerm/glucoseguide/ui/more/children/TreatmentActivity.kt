@@ -24,7 +24,7 @@ import android.text.TextWatcher
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.utils.Constants.*
-import kotlinx.android.synthetic.main.activity_settings_treatment.*
+import kotlinx.android.synthetic.main.activity_treatment.*
 import javax.inject.Inject
 
 /**
@@ -43,7 +43,7 @@ class TreatmentActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
     if (sharedPreferences.getBoolean(PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark)
-    setContentView(R.layout.activity_settings_treatment)
+    setContentView(R.layout.activity_treatment)
     init()
   }
   
