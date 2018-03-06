@@ -31,7 +31,6 @@ import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.item_empty_list.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class ListFragment : Fragment() {
@@ -60,7 +59,6 @@ class ListFragment : Fragment() {
   }
   
   private fun checkListSize(entriesToShow: RealmResults<EntryItem>) {
-    Timber.i(entriesToShow.size.toString())
     if (entriesToShow.size == 0) {
       list_recycler_view.visibility = View.GONE
       empty_item_list.visibility = View.VISIBLE

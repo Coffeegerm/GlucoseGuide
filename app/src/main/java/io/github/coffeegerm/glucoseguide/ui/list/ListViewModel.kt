@@ -23,11 +23,6 @@ import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.realm.RealmChangeListener
 import io.realm.RealmResults
-import timber.log.Timber
-
-/**
- * TODO: Add class comment header
- */
 
 class ListViewModel(databaseManager: DatabaseManager) : ViewModel() {
   
@@ -35,12 +30,10 @@ class ListViewModel(databaseManager: DatabaseManager) : ViewModel() {
   
   private val realmChangeListener = RealmChangeListener<RealmResults<EntryItem>> {
     entriesLiveData.postValue(it)
-    Timber.i("Entries for List updated")
   }
   
   init {
     databaseManager.getAllSortedDescending().addChangeListener(realmChangeListener)
-    Timber.i("Realm Change Listener Added")
     entriesLiveData.postValue(databaseManager.getAllSortedDescending())
   }
   
