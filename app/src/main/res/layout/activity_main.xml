@@ -14,36 +14,27 @@
   ~ limitations under the License.
   -->
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/drawer_layout"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:fitsSystemWindows="false"
-  tools:openDrawer="start">
+  android:layout_height="match_parent">
 
-  <include layout="@layout/fragment_container" />
-
-  <android.support.design.widget.NavigationView
-    android:id="@+id/nav_view"
-    android:layout_width="wrap_content"
+  <include
+    layout="@layout/fragment_container"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="start"
-    app:headerLayout="@layout/header_layout"
-    app:menu="@menu/activity_main_drawer"
-    app:theme="@style/AppTheme.Drawer">
+    android:layout_above="@id/bottom_navigation" />
 
-    <TextView
-      android:id="@+id/feedback"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom|center"
-      android:layout_marginBottom="8dp"
-      android:fontFamily="@font/avenir_demi_bold"
-      android:text="@string/feedback"
-      android:textSize="16sp" />
+  <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+    android:id="@+id/bottom_navigation"
+    android:layout_width="match_parent"
+    android:elevation="8dp"
+    app:elevation="8dp"
+    android:layout_height="45dp"
+    android:layout_alignParentBottom="true"
+    android:background="@color/colorPrimary"
+    app:itemIconTint="@color/textColorPrimary"
+    app:itemTextColor="@color/textColorPrimary"
+    app:menu="@menu/bottom_navigation_menu" />
 
-  </android.support.design.widget.NavigationView>
-
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

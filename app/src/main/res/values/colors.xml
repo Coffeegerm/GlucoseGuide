@@ -17,11 +17,11 @@
 <resources>
   <!-- Main color: teal-->
   <color name="colorPrimary">#00B9AE</color>
-  <color name="colorPrimaryDark">#00988F</color>
-  <color name="colorPrimaryLight">#2EC5BC</color>
+  <color name="colorPrimaryDark">#00887f</color>
+  <color name="colorPrimaryLight">#5dece0</color>
 
-  <!-- Accent color: dark grey -->
-  <color name="colorAccent">#484A47</color>
+  <!-- Accent color -->
+  <color name="colorAccent">#1B74DF</color>
 
   <!-- Text color primary: white -->
   <color name="textColorPrimary">#0D160B</color>
@@ -32,8 +32,10 @@
   <color name="textColorSecondaryInverse">#D1D1D1</color>
 
   <!-- Dark theme -->
+  <color name="darkThemeColorPrimaryLight">#4eb8ae</color>
   <color name="darkThemeColorPrimary">#00877F</color>
-  <color name="darkThemeColorPrimaryDark">#00655F</color>
+  <color name="darkThemeColorPrimaryDark">#005a53</color>
+  <color name="darkThemeColorAccent">#0659C7</color>
   <color name="darkThemeBackground">#232224</color>
 
   <!-- Others -->

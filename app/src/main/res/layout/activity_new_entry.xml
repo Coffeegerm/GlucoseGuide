@@ -14,371 +14,308 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
   <android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar"
+    android:id="@+id/new_entry_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
+    android:layout_height="@dimen/toolbar_height"
     android:background="@color/colorPrimary"
-    android:elevation="5dp"
     app:elevation="5dp" />
 
-  <LinearLayout
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/save_entry_fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:src="@drawable/ic_check_black_24dp"
+    app:fabSize="mini"
+    app:layout_anchor="@id/new_entry_toolbar"
+    app:layout_anchorGravity="bottom|end" />
+
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/toolbar"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_marginTop="55dp">
 
-    <TextView
-      android:layout_width="wrap_content"
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:padding="16dp">
+  
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/avenir_demi_bold"
+          android:text="@string/status"
+          android:textSize="18sp" />
+    
+        <View
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_weight="1" />
+    
+        <Spinner
+          android:id="@+id/status_selector"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="end" />
+  
+      </LinearLayout>
+
+      <!--Date and Time-->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+          android:id="@+id/new_entry_date_time_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:fontFamily="@font/avenir_demi_bold"
+          android:text="@string/new_entry_date_and_time_label"
+          android:textSize="18sp" />
+
+        <EditText
+          android:id="@+id/new_entry_date"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          android:layout_marginLeft="8dp"
+          android:layout_marginRight="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_weight="1"
+          android:ems="10"
+          android:focusable="false"
+          android:fontFamily="@font/avenir_regular"
+          android:gravity="end"
+          android:hint="@string/date"
+          android:inputType="date"
+          android:textSize="16sp" />
+
+        <EditText
+          android:id="@+id/new_entry_time"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          android:layout_weight="1"
+          android:ems="10"
+          android:focusable="false"
+          android:fontFamily="@font/avenir_regular"
+          android:gravity="end"
+          android:hint="@string/time"
+          android:inputType="datetime"
+          android:textSize="16sp" />
+      </LinearLayout>
+
+      <!--Glucose-->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+          android:id="@+id/new_entry_glucose_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:fontFamily="@font/avenir_demi_bold"
+          android:text="@string/new_entry_blood_glucose_label"
+          android:textSize="18sp" />
+
+        <EditText
+          android:id="@+id/new_entry_blood_glucose_level"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          android:layout_marginStart="50dp"
+          android:layout_weight="1"
+          android:fontFamily="@font/avenir_regular"
+          android:gravity="end"
+          android:inputType="number"
+          android:maxLength="4"
+          android:textSize="18sp" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:layout_marginBottom="2dp"
+          android:fontFamily="@font/avenir_regular"
+          android:labelFor="@+id/new_entry_blood_glucose_level"
+          android:text="@string/blood_glucose_measurement"
+          android:textSize="16sp" />
+      </LinearLayout>
+
+      <!--Carbohydrates-->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+          android:id="@+id/new_entry_carbs_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:fontFamily="@font/avenir_demi_bold"
+          android:text="@string/new_entry_carbohydrates_label"
+          android:textSize="18sp" />
+
+
+        <EditText
+          android:id="@+id/new_entry_carbohydrates_amount"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          android:layout_marginStart="50dp"
+          android:layout_weight="1"
+          android:fontFamily="@font/avenir_regular"
+          android:gravity="end"
+          android:inputType="number"
+          android:maxLength="4"
+          android:textSize="18sp" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:layout_marginBottom="2dp"
+          android:fontFamily="@font/avenir_regular"
+          android:labelFor="@+id/new_entry_carbohydrates_amount"
+          android:text="@string/carbs_measurement"
+          android:textSize="16sp" />
+
+      </LinearLayout>
+
+      <!--Insulin-->
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+          android:id="@+id/new_entry_insulin_label"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:fontFamily="@font/avenir_demi_bold"
+          android:text="@string/new_entry_insulin_label"
+          android:textSize="18sp" />
+
+        <EditText
+          android:id="@+id/new_entry_insulin_units"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="8dp"
+          android:layout_marginStart="120dp"
+          android:layout_weight="1"
+          android:fontFamily="@font/avenir_regular"
+          android:gravity="end"
+          android:inputType="numberDecimal"
+          android:maxLength="4"
+          android:textSize="18sp" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:layout_marginBottom="2dp"
+          android:fontFamily="@font/avenir_regular"
+          android:labelFor="@+id/new_entry_insulin_units"
+          android:text="@string/insulin_measurement"
+          android:textSize="16sp" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Suggested insulin: hidden until carbs are entered.-->
+    <LinearLayout
+      android:id="@+id/insulin_suggestion"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:layout_marginBottom="8dp"
-      android:text="@string/status" />
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="8dp"
-      android:gravity="center"
-      android:orientation="horizontal">
-
-      <ImageButton
-        android:id="@+id/breakfast_status"
-        android:layout_width="@dimen/status_button_height_width"
-        android:layout_height="@dimen/status_button_height_width"
-        android:layout_marginEnd="@dimen/status_button_start_end_margin"
-        android:layout_marginStart="@dimen/status_button_start_end_margin"
-        android:background="@drawable/status_unchecked"
-        android:contentDescription="@string/breakfast_description"
-        android:gravity="center"
-        android:src="@drawable/ic_breakfast" />
-
-      <ImageButton
-        android:id="@+id/lunch_status"
-        android:layout_width="@dimen/status_button_height_width"
-        android:layout_height="@dimen/status_button_height_width"
-        android:layout_marginEnd="@dimen/status_button_start_end_margin"
-        android:layout_marginStart="@dimen/status_button_start_end_margin"
-        android:background="@drawable/status_unchecked"
-        android:contentDescription="@string/lunch_description"
-        android:src="@drawable/ic_lunch" />
-
-      <ImageButton
-        android:id="@+id/dinner_status"
-        android:layout_width="@dimen/status_button_height_width"
-        android:layout_height="@dimen/status_button_height_width"
-        android:layout_marginEnd="@dimen/status_button_start_end_margin"
-        android:layout_marginStart="@dimen/status_button_start_end_margin"
-        android:background="@drawable/status_unchecked"
-        android:contentDescription="@string/dinner_description"
-        android:src="@drawable/ic_dinner" />
-
-      <ImageButton
-        android:id="@+id/sick_status"
-        android:layout_width="@dimen/status_button_height_width"
-        android:layout_height="@dimen/status_button_height_width"
-        android:layout_marginEnd="@dimen/status_button_start_end_margin"
-        android:layout_marginStart="@dimen/status_button_start_end_margin"
-        android:background="@drawable/status_unchecked"
-        android:contentDescription="@string/sick_description"
-        android:src="@drawable/ic_sick" />
-
-      <ImageButton
-        android:id="@+id/exercise_status"
-        android:layout_width="@dimen/status_button_height_width"
-        android:layout_height="@dimen/status_button_height_width"
-        android:layout_marginEnd="@dimen/status_button_start_end_margin"
-        android:layout_marginStart="@dimen/status_button_start_end_margin"
-        android:background="@drawable/status_unchecked"
-        android:contentDescription="@string/exercise_description"
-        android:src="@drawable/ic_excercise" />
-
-      <ImageButton
-        android:id="@+id/sweets_status"
-        android:layout_width="@dimen/status_button_height_width"
-        android:layout_height="@dimen/status_button_height_width"
-        android:layout_marginEnd="@dimen/status_button_start_end_margin"
-        android:layout_marginStart="@dimen/status_button_start_end_margin"
-        android:background="@drawable/status_unchecked"
-        android:contentDescription="@string/sweets_description"
-        android:src="@drawable/ic_sweets" />
-
-    </LinearLayout>
-
-    <!--Date and Time-->
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      android:layout_above="@+id/reminder_section"
+      android:layout_marginBottom="16dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginStart="16dp"
+      android:orientation="horizontal"
+      android:visibility="gone">
 
       <TextView
-        android:id="@+id/new_entry_date_time_label"
+        android:id="@+id/insulin_suggestion_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/avenir_demi_bold"
-        android:text="@string/new_entry_date_and_time_label"
-        android:textSize="18sp" />
-
-      <EditText
-        android:id="@+id/new_entry_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:focusable="false"
-        android:fontFamily="@font/avenir_regular"
-        android:gravity="end"
-        android:hint="@string/date"
-        android:inputType="date"
+        android:fontFamily="@font/avenir_medium"
+        android:text="@string/suggested_insulin"
         android:textSize="16sp" />
 
-      <EditText
-        android:id="@+id/new_entry_time"
+      <View
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:focusable="false"
-        android:fontFamily="@font/avenir_regular"
-        android:gravity="end"
-        android:hint="@string/time"
-        android:inputType="datetime"
-        android:textSize="16sp" />
-    </LinearLayout>
-
-    <!--Glucose-->
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
       <TextView
-        android:id="@+id/new_entry_glucose_label"
+        android:id="@+id/insulin_suggestion_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/avenir_demi_bold"
-        android:text="@string/new_entry_blood_glucose_label"
-        android:textSize="18sp" />
-
-      <EditText
-        android:id="@+id/new_entry_blood_glucose_level"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="50dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/avenir_regular"
-        android:gravity="end"
-        android:inputType="number"
-        android:maxLength="4"
+        android:fontFamily="@font/avenir_medium"
+        android:maxLength="5"
         android:textSize="18sp" />
 
       <TextView
+        android:id="@+id/insulin_suggestion_value_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="2dp"
+        android:layout_marginStart="4dp"
         android:fontFamily="@font/avenir_regular"
-        android:labelFor="@+id/new_entry_blood_glucose_level"
-        android:text="@string/blood_glucose_measurement"
-        android:textSize="16sp" />
-    </LinearLayout>
-
-    <!--Carbohydrates-->
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <TextView
-        android:id="@+id/new_entry_carbs_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/avenir_demi_bold"
-        android:text="@string/new_entry_carbohydrates_label"
-        android:textSize="18sp" />
-
-
-      <EditText
-        android:id="@+id/new_entry_carbohydrates_amount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="50dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/avenir_regular"
-        android:gravity="end"
-        android:inputType="number"
-        android:maxLength="4"
-        android:textSize="18sp" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="2dp"
-        android:fontFamily="@font/avenir_regular"
-        android:labelFor="@+id/new_entry_carbohydrates_amount"
-        android:text="@string/carbs_measurement"
-        android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <!--Insulin-->
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <TextView
-        android:id="@+id/new_entry_insulin_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/avenir_demi_bold"
-        android:text="@string/new_entry_insulin_label"
-        android:textSize="18sp" />
-
-      <EditText
-        android:id="@+id/new_entry_insulin_units"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="120dp"
-        android:layout_weight="1"
-        android:fontFamily="@font/avenir_regular"
-        android:gravity="end"
-        android:inputType="numberDecimal"
-        android:maxLength="4"
-        android:textSize="18sp" />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="2dp"
-        android:fontFamily="@font/avenir_regular"
-        android:labelFor="@+id/new_entry_insulin_units"
         android:text="@string/insulin_measurement"
         android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/reminder_section"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="24dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="8dp"
+      android:orientation="horizontal">
+
+      <TextView
+        android:id="@+id/reminder_tv"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/avenir_regular"
+        android:text="@string/reminder" />
+
+      <EditText
+        android:id="@+id/reminder_alarm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_weight="1"
+        android:focusable="false"
+        android:fontFamily="@font/avenir_regular"
+        android:gravity="end"
+        android:hint="@string/alarm_reminder"
+        android:inputType="datetime"
+        android:labelFor="@id/reminder_tv" />
 
     </LinearLayout>
 
-  </LinearLayout>
 
-  <!-- Suggested insulin: hidden until carbs are entered.-->
-  <LinearLayout
-    android:id="@+id/insulin_suggestion"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_above="@+id/reminder_section"
-    android:layout_marginBottom="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
-    android:orientation="horizontal"
-    android:visibility="gone">
+  </RelativeLayout>
 
-    <TextView
-      android:id="@+id/insulin_suggestion_label"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/avenir_medium"
-      android:text="@string/suggested_insulin"
-      android:textSize="16sp" />
-
-    <View
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:layout_weight="1" />
-
-    <TextView
-      android:id="@+id/insulin_suggestion_value"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:fontFamily="@font/avenir_medium"
-      android:maxLength="5"
-      android:textSize="18sp" />
-
-    <TextView
-      android:id="@+id/insulin_suggestion_value_label"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="4dp"
-      android:fontFamily="@font/avenir_regular"
-      android:text="@string/insulin_measurement"
-      android:textSize="16sp" />
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/reminder_section"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_above="@+id/buttonBar"
-    android:layout_marginBottom="24dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="8dp"
-    android:orientation="horizontal">
-
-    <TextView
-      android:id="@+id/reminder_tv"
-      android:layout_width="150dp"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:fontFamily="@font/avenir_regular"
-      android:text="@string/reminder" />
-
-    <EditText
-      android:id="@+id/reminder_alarm"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="60dp"
-      android:layout_weight="1"
-      android:focusable="false"
-      android:fontFamily="@font/avenir_regular"
-      android:gravity="end"
-      android:hint="@string/alarm_reminder"
-      android:inputType="datetime"
-      android:labelFor="@id/reminder_tv" />
-
-  </LinearLayout>
-
-  <LinearLayout
-    android:id="@+id/buttonBar"
-    style="?attr/buttonBarButtonStyle"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:background="@color/colorPrimary">
-
-    <Button
-      android:id="@+id/cancelBtn"
-      style="?attr/buttonBarButtonStyle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:fontFamily="@font/avenir_bold"
-      android:text="@string/cancel" />
-
-    <Button
-      android:id="@+id/saveBtn"
-      style="?attr/buttonBarButtonStyle"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:fontFamily="@font/avenir_bold"
-      android:text="@string/save" />
-
-  </LinearLayout>
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

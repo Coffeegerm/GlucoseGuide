@@ -16,7 +16,19 @@
 
 <resources>
 
+  <attr name="blood_glucose_image" format="reference" />
+  <attr name="insulin_image" format="reference" />
+  <attr name="carbs_image" format="reference" />
+
+  <attr name="list_item_sep" format="reference" />
+
+  <attr name="stats_up_arrow" format="reference" />
+  <attr name="stats_down_arrow" format="reference" />
+  <attr name="stats_avg" format="reference" />
+  <attr name="stats_a_one_c" format="reference" />
+
   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:fontFamily">@font/avenir_regular</item>
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
@@ -24,37 +36,42 @@
     <item name="android:textColorSecondary">@color/textColorSecondary</item>
     <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>
     <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>
-  </style>
 
-  <style name="AppTheme.Drawer">
-    <item name="android:textSize">18sp</item>
-    <item name="android:windowBackground">@color/white</item>
-    <item name="android:fontFamily">@font/avenir_regular</item>
+    <item name="blood_glucose_image">@drawable/ic_finger</item>
+    <item name="carbs_image">@drawable/ic_food</item>
+    <item name="insulin_image">@drawable/ic_syringe</item>
+
+    <item name="list_item_sep">@color/colorPrimary</item>
+
+    <item name="stats_up_arrow">@drawable/ic_up_arrow</item>
+    <item name="stats_down_arrow">@drawable/ic_down_arrow</item>
+    <item name="stats_avg">@drawable/ic_average</item>
+    <item name="stats_a_one_c">@drawable/ic_a1c_light</item>
   </style>
 
   <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:fontFamily">@font/avenir_regular</item>
     <item name="colorPrimary">@color/darkThemeColorPrimary</item>
     <item name="colorPrimaryDark">@color/darkThemeColorPrimaryDark</item>
-    <item name="colorAccent">@color/white</item>
+    <item name="colorAccent">@color/darkThemeColorAccent</item>
     <item name="android:textColor">@color/white</item>
     <item name="android:windowBackground">@color/darkThemeBackground</item>
     <item name="android:textColorPrimary">@color/textColorPrimaryInverse</item>
     <item name="android:textColorSecondary">@color/textColorSecondaryInverse</item>
     <item name="android:textColorPrimaryInverse">@color/textColorPrimary</item>
     <item name="android:textColorSecondaryInverse">@color/textColorSecondary</item>
-  </style>
 
-  <style name="AppTheme.Dark.Drawer">
-    <item name="android:textSize">18sp</item>
-    <item name="android:windowBackground">@color/darkThemeBackground</item>
-    <item name="android:fontFamily">@font/avenir_regular</item>
-  </style>
+    <item name="blood_glucose_image">@drawable/ic_finger_dark</item>
+    <item name="carbs_image">@drawable/ic_food_dark</item>
+    <item name="insulin_image">@drawable/ic_syringe_dark</item>
 
-  <style name="StatusButton" parent="android:style/Widget.Holo.Button">
-    <item name="android:background">@drawable/status_button</item>
-  </style>
+    <item name="list_item_sep">@color/white</item>
 
-  <style name="AppTheme.DialogAlert" parent="Theme.AppCompat.Dialog.Alert" />
+    <item name="stats_up_arrow">@drawable/ic_up_arrow_dark</item>
+    <item name="stats_down_arrow">@drawable/ic_down_arrow_dark</item>
+    <item name="stats_avg">@drawable/ic_average_dark</item>
+    <item name="stats_a_one_c">@drawable/ic_a1c_dark</item>
+  </style>
 
   <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
     <item name="android:windowBackground">@drawable/splash_screen</item>

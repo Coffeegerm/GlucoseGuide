@@ -35,7 +35,7 @@ class StatisticsPagerAdapter internal constructor(fragmentManager: FragmentManag
   
   override fun getItem(position: Int): Fragment? {
     return when (position) {
-      0 -> ThreeDayStatisticsFragment()
+      0 -> ThreeDaysStatisticsFragment()
       1 -> SevenDayStatisticsFragment()
       2 -> OneMonthStatisticsFragment()
       3 -> ThreeMonthsStatisticsFragment()
