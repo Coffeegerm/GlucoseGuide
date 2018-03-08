@@ -36,7 +36,6 @@ import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
-import io.github.coffeegerm.glucoseguide.utils.Utilities
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_edit_entry.*
 import java.util.*
@@ -49,8 +48,6 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     var wasDateChanged = false
   }
   
-  @Inject
-  lateinit var utilities: Utilities
   @Inject
   lateinit var sharedPreferences: SharedPreferences
   @Inject
@@ -92,7 +89,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     oldItem = databaseManager.getEntryFromId(itemId)!!
     
     getOriginalValues() // must call before hints are set
-  
+    
     val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.status_selection))
     edit_status_selector.adapter = spinnerAdapter
     edit_status_selector.onItemSelectedListener = this
@@ -104,7 +101,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
               var correctMonth = month
               correctMonth++
-              edit_entry_date.setText(utilities.formatDate(correctMonth, dayOfMonth, year))
+              edit_entry_date.setText(dateFormatter.formatDateForEditText(correctMonth, dayOfMonth, year))
               correctMonth--
               if (!wasDateChanged) wasDateChanged = true
               updatedCalendar.set(year, correctMonth, dayOfMonth)
@@ -122,7 +119,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     edit_entry_time.setOnClickListener {
       val timePickerDialog = TimePickerDialog(this,
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-              edit_entry_time.setText(utilities.checkTimeString(hourOfDay, minute))
+              edit_entry_time.setText(dateFormatter.formatTimeForEditText(hourOfDay, minute))
               updatedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
               updatedCalendar.set(Calendar.MINUTE, minute)
               if (!wasDateChanged) wasDateChanged = true

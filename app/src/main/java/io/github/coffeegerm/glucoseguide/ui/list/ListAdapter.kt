@@ -34,7 +34,6 @@ import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
 import javax.inject.Inject
 
@@ -42,8 +41,6 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
   
   @Inject
   lateinit var sharedPreferences: SharedPreferences
-  @Inject
-  lateinit var dateAssistant: DateAssistant
   @Inject
   lateinit var resources: Resources
   @Inject
@@ -68,7 +65,7 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
   
   override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
     item = entryItemList!![holder.adapterPosition]
-  
+    
     holder.date.text = dateFormatter.formatDate(item.date)
     
     // Set time based on user preference
@@ -104,7 +101,7 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
       holder.insulin.setText(R.string.dash)
     else
       holder.insulin.text = item.insulin.toString()
-  
+    
     if (item.status > 0) {
       holder.statusImage.visibility = View.VISIBLE
       when (item.status) {

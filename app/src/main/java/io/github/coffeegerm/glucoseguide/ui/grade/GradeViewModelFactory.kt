@@ -14,18 +14,24 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.dagger
+package io.github.coffeegerm.glucoseguide.ui.grade
 
-import dagger.Module
-import dagger.Provides
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
-import io.github.coffeegerm.glucoseguide.data.RealmTransactions
-import io.github.coffeegerm.glucoseguide.utils.DateAssistant
+import javax.inject.Inject
 
-@Module
-class DataModule {
-  
-  @Provides
-  fun providesDatabaseManager() = DatabaseManager(RealmTransactions(), DateAssistant())
-  
+/**
+ * TODO: Add class comment header
+ */
+
+class GradeViewModelFactory @Inject constructor(private val databaseManager: DatabaseManager) : ViewModelProvider.Factory {
+  @Suppress("UNCHECKED_CAST")
+  override fun <T : ViewModel> create(modelClass: Class<T>): T {
+    if (modelClass.isAssignableFrom(GradeViewModel::class.java)) {
+      val viewModel = GradeViewModel(databaseManager)
+      return viewModel as T
+    }
+    throw IllegalArgumentException("Unknown class name")
+  }
 }

@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.dagger
+package io.github.coffeegerm.glucoseguide.data
 
-import dagger.Module
-import dagger.Provides
-import io.github.coffeegerm.glucoseguide.utils.DateAssistant
-import io.github.coffeegerm.glucoseguide.utils.DateFormatter
+import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.realm.Realm
 
 /**
- * TODO: Add class comment header
+ * Class dedicated to transactions for the Realm database
  */
 
-@Module
-class UtilitiesModule {
+class RealmTransactions {
   
-  @Provides
-  fun providesDateAssistant() = DateAssistant()
+  val realm: Realm = Realm.getDefaultInstance()
   
-  @Provides
-  fun providesDateFormatter() = DateFormatter()
+  fun deleteEntry(item: EntryItem) = item.deleteFromRealm()
 }

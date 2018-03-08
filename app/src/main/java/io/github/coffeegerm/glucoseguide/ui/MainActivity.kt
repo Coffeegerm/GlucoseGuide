@@ -22,7 +22,6 @@ import android.support.v7.app.AppCompatActivity
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.Utilities
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -33,8 +32,6 @@ class MainActivity : AppCompatActivity() {
   
   @Inject
   lateinit var sharedPreferences: SharedPreferences
-  @Inject
-  lateinit var utilities: Utilities
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

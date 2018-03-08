@@ -37,7 +37,6 @@ class ListViewModel(databaseManager: DatabaseManager) : ViewModel() {
     entriesLiveData.postValue(databaseManager.getAllSortedDescending())
   }
   
-  fun getLiveData(): LiveData<RealmResults<EntryItem>> {
-    return entriesLiveData
-  }
+  fun getLiveData(): LiveData<RealmResults<EntryItem>> = entriesLiveData
+  
 }

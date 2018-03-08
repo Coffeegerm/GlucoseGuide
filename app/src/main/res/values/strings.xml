@@ -123,7 +123,11 @@
   <string name="over_grade_label">Overall grade from the last three days:</string>
   <string name="example_item_list_description">This is an example entry! Make an entry of your own to make me disappear!</string>
   <string name="status_image">Status Image</string>
-  
+  <string name="time_example">12:33 pm</string>
+  <string name="insulin_example">4.4</string>
+  <string name="carbs_example">44</string>
+  <string name="blood_glucose_example">144</string>
+
   <array name="statistic_tab_titles">
     <item name="three_days">3 Days</item>
     <item name="seven_days">7 Days</item>

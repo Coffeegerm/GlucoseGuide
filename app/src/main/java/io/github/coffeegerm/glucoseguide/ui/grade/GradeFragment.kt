@@ -16,6 +16,8 @@
 
 package io.github.coffeegerm.glucoseguide.ui.grade
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -23,7 +25,6 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.utils.Utilities
 import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
 
@@ -34,13 +35,20 @@ import javax.inject.Inject
 class GradeFragment : Fragment() {
   
   @Inject
-  lateinit var utilities: Utilities
+  lateinit var gradeViewModelFactory: GradeViewModelFactory
+  
+  private lateinit var gradeViewModel: GradeViewModel
+  
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    GlucoseGuide.syringe.inject(this)
+    gradeViewModel = ViewModelProviders.of(this, gradeViewModelFactory).get(GradeViewModel::class.java)
+  }
   
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_grade, container, false)
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    GlucoseGuide.syringe.inject(this)
-    overall_grade.text = utilities.getGlucoseGrade()
+    gradeViewModel.grade.observe(this, Observer<String> { grade -> overall_grade.text = grade })
   }
 }

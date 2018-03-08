@@ -16,19 +16,30 @@
 
 package io.github.coffeegerm.glucoseguide.data
 
+import android.content.SharedPreferences
+import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import java.util.*
+import javax.inject.Inject
 
-class DatabaseManager {
+class DatabaseManager @Inject constructor(var realmTransactions: RealmTransactions, var dateAssistant: DateAssistant) {
+  
+  init {
+    GlucoseGuide.syringe.inject(this)
+  }
+  
+  @Inject
+  lateinit var sharedPreferences: SharedPreferences
   
   val realm: Realm = Realm.getDefaultInstance()
   
   fun getEntryFromId(entryId: String) = realm.where(EntryItem::class.java).equalTo("id", entryId).findFirst()
   
-  fun deleteEntry(item: EntryItem) = item.deleteFromRealm()
+  fun deleteEntry(item: EntryItem) = realmTransactions.deleteEntry(item)
   
   fun getHighestGlucose(providedDate: Date): Int {
     var highest = 0
@@ -58,6 +69,34 @@ class DatabaseManager {
           .filter { it.bloodGlucose < lowest }
           .forEach { lowest = it.bloodGlucose }
     return lowest
+  }
+  
+  fun getGlucoseGrade(): String {
+    val grade: String
+    val hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0)
+    val entriesFromLastThreeDays = getAllFromDate(dateAssistant.getThreeDaysAgoDate())
+    val hyperglycemicCount = entriesFromLastThreeDays.indices
+          .map { entriesFromLastThreeDays[it]!! }
+          .count { it.bloodGlucose > hyperglycemicIndex }
+    
+    when {
+      hyperglycemicCount == 0 -> grade = "-"
+      hyperglycemicCount <= 3 -> grade = "A+"
+      hyperglycemicCount == 4 -> grade = "A"
+      hyperglycemicCount == 5 -> grade = "A-"
+      hyperglycemicCount == 6 -> grade = "B+"
+      hyperglycemicCount == 7 -> grade = "B"
+      hyperglycemicCount == 8 -> grade = "B-"
+      hyperglycemicCount == 9 -> grade = "C+"
+      hyperglycemicCount == 10 -> grade = "C"
+      hyperglycemicCount == 11 -> grade = "C-"
+      hyperglycemicCount == 12 -> grade = "D+"
+      hyperglycemicCount == 13 -> grade = "D"
+      hyperglycemicCount == 14 -> grade = "D-"
+      else -> grade = "F"
+    }
+    
+    return grade
   }
   
   fun getAllSortedDescending(): RealmResults<EntryItem> = realm.where(EntryItem::class.java).sort("date", Sort.DESCENDING).findAll()

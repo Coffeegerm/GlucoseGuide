@@ -32,7 +32,31 @@ class DateFormatter {
   
   fun formatDate(providedDate: Date?): String = standardDateFormat.format(providedDate)
   
-  fun twelveHourFormat(providedDate: Date): String = twelveHourTimeFormat.format(providedDate)
+  fun twelveHourFormat(providedDate: Date?): String = twelveHourTimeFormat.format(providedDate)
   
-  fun twentyFourHourFormat(providedDate: Date): String = twentyFourHourTimeFormat.format(providedDate)
+  fun twentyFourHourFormat(providedDate: Date?): String = twentyFourHourTimeFormat.format(providedDate)
+  
+  fun formatDateForEditText(month: Int, day: Int, year: Int): StringBuilder = StringBuilder().append(month).append("/").append(day).append("/").append(year)
+  
+  fun formatTimeForEditText(hourOfDay: Int, minute: Int): String {
+    var hour = hourOfDay
+    val timeSet: String
+    val min: String = if (minute < 10)
+      "0$minute"
+    else
+      minute.toString()
+    when {
+      hour > 12 -> {
+        hour -= 12
+        timeSet = "PM"
+      }
+      hour == 0 -> {
+        hour += 12
+        timeSet = "AM"
+      }
+      hour == 12 -> timeSet = "PM"
+      else -> timeSet = "AM"
+    }
+    return hour.toString() + ":" + min + " " + timeSet
+  }
 }

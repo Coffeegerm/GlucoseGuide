@@ -30,9 +30,6 @@ import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.Constants.DATE_FORMAT
-import io.github.coffeegerm.glucoseguide.utils.Constants.TWELVE_HOUR_TIME_FORMAT
-import io.github.coffeegerm.glucoseguide.utils.Constants.TWENTY_FOUR_HOUR_TIME_FORMAT
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
 import timber.log.Timber
 import java.io.File
@@ -57,10 +54,6 @@ class ConvertToCSV(private var context: Context) {
   @Inject
   lateinit var dateFormatter: DateFormatter
   
-  // Storage Permissions
-  private val requestExternalStorageCode = 1
-  private val exportPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-  
   init {
     GlucoseGuide.syringe.inject(this)
     checkStoragePermissions(context as Activity)
@@ -68,6 +61,7 @@ class ConvertToCSV(private var context: Context) {
   
   fun createCSVFile(): String? {
     try {
+      val exportPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
       var file: File? = null
       val externalStorageDirectory = Environment.getExternalStorageDirectory()
       if (externalStorageDirectory.canWrite()) {
@@ -96,9 +90,9 @@ class ConvertToCSV(private var context: Context) {
             val entry = entryItems[currentEntry]
             val date = entry.date
             val entryTime: String = if (sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
-              dateFormatter.formatDate(date)
+              dateFormatter.twentyFourHourFormat(date)
             } else {
-              dateFormatter.formatDate(date)
+              dateFormatter.twelveHourFormat(date)
             }
             
             writeLine(outputStreamWriter,
@@ -144,7 +138,7 @@ class ConvertToCSV(private var context: Context) {
       ActivityCompat.requestPermissions(
             activity,
             arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-            requestExternalStorageCode
+            1
       )
     }
   }

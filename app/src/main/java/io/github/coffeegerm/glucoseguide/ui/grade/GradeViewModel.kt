@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.statistics.children
+package io.github.coffeegerm.glucoseguide.ui.grade
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
-import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 
 /**
  * TODO: Add class comment header
  */
 
-class StatisticsViewModel(private val databaseManager: DatabaseManager, private val dateAssistant: DateAssistant) : ViewModel() {
+class GradeViewModel(private var databaseManager: DatabaseManager) : ViewModel() {
+  
+  var grade = MutableLiveData<String>()
+  
+  init {
+    grade.value = databaseManager.getGlucoseGrade()
+  }
 }

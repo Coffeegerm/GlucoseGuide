@@ -39,8 +39,8 @@ import io.github.coffeegerm.glucoseguide.utils.Constants.BOLUS_RATIO
 import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION
 import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION_ID
 import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
+import io.github.coffeegerm.glucoseguide.utils.DateFormatter
 import io.github.coffeegerm.glucoseguide.utils.NotificationPublisher
-import io.github.coffeegerm.glucoseguide.utils.Utilities
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_entry.*
 import java.util.*
@@ -52,7 +52,7 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
   lateinit var sharedPreferences: SharedPreferences
   
   @Inject
-  lateinit var utilities: Utilities
+  lateinit var dateFormatter: DateFormatter
   
   private var realm: Realm = Realm.getDefaultInstance()
   private lateinit var calendarToBeSaved: Calendar
@@ -84,8 +84,8 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     val hour = calendar.get(Calendar.HOUR_OF_DAY)
     val minute = calendar.get(Calendar.MINUTE)
     
-    new_entry_date.setText(utilities.formatDate(month, day, year))
-    new_entry_time.setText(utilities.checkTimeString(hour, minute))
+    new_entry_date.setText(dateFormatter.formatDateForEditText(month, day, year))
+    new_entry_time.setText(dateFormatter.formatTimeForEditText(hour, minute))
     
     new_entry_carbohydrates_amount.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -107,7 +107,7 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
               var correctMonth = month
               correctMonth++
-              new_entry_date.setText(utilities.formatDate(correctMonth, dayOfMonth, year))
+              new_entry_date.setText(dateFormatter.formatDateForEditText(correctMonth, dayOfMonth, year))
               correctMonth--
               calendarToBeSaved.set(year, correctMonth, dayOfMonth)
             }, calendar.get(Calendar.YEAR), // year
@@ -124,7 +124,7 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     new_entry_time.setOnClickListener {
       val timePickerDialog = TimePickerDialog(this,
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-              new_entry_time.setText(utilities.checkTimeString(hourOfDay, minute))
+              new_entry_time.setText(dateFormatter.formatTimeForEditText(hourOfDay, minute))
               calendarToBeSaved.set(Calendar.HOUR_OF_DAY, hourOfDay)
               calendarToBeSaved.set(Calendar.MINUTE, minute)
             },
@@ -136,7 +136,7 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     
     reminder_alarm.setOnClickListener { alarmTimePicker() }
     save_entry_fab.setOnClickListener { saveEntry() }
-  
+    
     val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.status_selection))
     status_selector.adapter = spinnerAdapter
     status_selector.onItemSelectedListener = this
@@ -196,7 +196,7 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
           TimePickerDialog.OnTimeSetListener { _, hourOfDay, anotherMinute ->
             alarmCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
             alarmCalendar.set(Calendar.MINUTE, anotherMinute)
-            reminder_alarm.setText(utilities.checkTimeString(hourOfDay, anotherMinute))
+            reminder_alarm.setText(dateFormatter.formatTimeForEditText(hourOfDay, anotherMinute))
             wantsReminder = true
           }, hour, minute, false)
     timePickerDialog.show()

@@ -17,6 +17,7 @@
 package io.github.coffeegerm.glucoseguide.dagger
 
 import dagger.Component
+import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.ui.MainActivity
 import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity
 import io.github.coffeegerm.glucoseguide.ui.entry.NewEntryActivity
@@ -30,7 +31,6 @@ import io.github.coffeegerm.glucoseguide.ui.more.children.DataActivity
 import io.github.coffeegerm.glucoseguide.ui.more.children.TreatmentActivity
 import io.github.coffeegerm.glucoseguide.ui.more.children.UiActivity
 import io.github.coffeegerm.glucoseguide.ui.statistics.children.*
-import io.github.coffeegerm.glucoseguide.utils.Utilities
 import javax.inject.Singleton
 
 @Singleton
@@ -57,5 +57,6 @@ interface AppComponent {
   fun inject(listViewModel: ListViewModel)
   
   fun inject(convertToCSV: ConvertToCSV)
-  fun inject(utilities: Utilities)
+  
+  fun inject(databaseManager: DatabaseManager)
 }

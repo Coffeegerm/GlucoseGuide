@@ -34,13 +34,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-  
+
     <android.support.constraint.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       tools:layout_editor_absoluteX="0dp"
       tools:layout_editor_absoluteY="0dp">
-    
+
       <TextView
         android:id="@+id/empty_item_list_date"
         android:layout_width="wrap_content"
@@ -48,12 +48,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/avenir_demi_bold"
+        android:text="@string/today"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Today" />
-    
+
       <TextView
         android:id="@+id/empty_item_list_time"
         android:layout_width="wrap_content"
@@ -61,23 +62,35 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/avenir_demi_bold"
+        android:text="@string/time_example"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/empty_item_list_date"
         tools:text="12:20 pm" />
-    
+
+      <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/status_image"
+        android:src="@drawable/lunch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
       <TextView
         android:id="@+id/empty_item_list_blood_glucose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/avenir_demi_bold"
+        android:text="@string/blood_glucose_example"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/empty_blood_glucose_label"
         app:layout_constraintEnd_toStartOf="@+id/empty_blood_glucose_measurement_label"
         tools:text="144" />
-    
+
       <TextView
         android:id="@+id/empty_blood_glucose_label"
         android:layout_width="wrap_content"
@@ -90,7 +103,7 @@
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/empty_item_list_image_blood_sugar"
         app:layout_constraintTop_toBottomOf="@+id/empty_item_list_time" />
-    
+
       <TextView
         android:id="@+id/empty_carbohydrates_label"
         android:layout_width="wrap_content"
@@ -103,7 +116,7 @@
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/empty_item_list_image_carbs"
         app:layout_constraintTop_toBottomOf="@+id/empty_item_list_image_blood_sugar" />
-    
+
       <TextView
         android:id="@+id/empty_insulin_label"
         android:layout_width="wrap_content"
@@ -116,7 +129,7 @@
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/empty_item_list_insulin_image"
         app:layout_constraintTop_toBottomOf="@+id/empty_item_list_image_carbs" />
-    
+
       <TextView
         android:id="@+id/empty_blood_glucose_measurement_label"
         android:layout_width="wrap_content"
@@ -126,18 +139,19 @@
         android:text="@string/blood_glucose_measurement"
         app:layout_constraintBaseline_toBaselineOf="@+id/empty_item_list_blood_glucose"
         app:layout_constraintEnd_toEndOf="parent" />
-    
+
       <TextView
         android:id="@+id/empty_item_list_carbohydrates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/avenir_demi_bold"
+        android:text="@string/carbs_example"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/empty_carbohydrates_label"
         app:layout_constraintEnd_toStartOf="@+id/empty_carbs_measurement_label"
         tools:text="44" />
-    
+
       <TextView
         android:id="@+id/empty_carbs_measurement_label"
         android:layout_width="wrap_content"
@@ -147,7 +161,7 @@
         android:text="@string/carbs_measurement"
         app:layout_constraintBaseline_toBaselineOf="@+id/empty_item_list_carbohydrates"
         app:layout_constraintEnd_toEndOf="parent" />
-    
+
       <TextView
         android:id="@+id/empty_insulin_measurement_label"
         android:layout_width="wrap_content"
@@ -157,18 +171,19 @@
         android:text="@string/insulin_measurement"
         app:layout_constraintBaseline_toBaselineOf="@+id/empty_item_list_insulin"
         app:layout_constraintEnd_toEndOf="parent" />
-    
+
       <TextView
         android:id="@+id/empty_item_list_insulin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/avenir_demi_bold"
+        android:text="@string/insulin_example"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/empty_insulin_label"
         app:layout_constraintEnd_toStartOf="@+id/empty_insulin_measurement_label"
         tools:text="4.4" />
-    
+
       <ImageView
         android:id="@+id/empty_item_list_insulin_image"
         android:layout_width="wrap_content"
@@ -181,7 +196,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/empty_item_list_image_carbs"
         app:srcCompat="?attr/insulin_image" />
-    
+
       <ImageView
         android:id="@+id/empty_item_list_image_carbs"
         android:layout_width="wrap_content"
@@ -192,7 +207,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/empty_item_list_image_blood_sugar"
         app:srcCompat="?attr/carbs_image" />
-    
+
       <ImageView
         android:id="@+id/empty_item_list_image_blood_sugar"
         android:layout_width="wrap_content"
@@ -202,7 +217,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/empty_item_list_time"
         app:srcCompat="?attr/blood_glucose_image" />
-  
+
     </android.support.constraint.ConstraintLayout>
 
     <TextView
