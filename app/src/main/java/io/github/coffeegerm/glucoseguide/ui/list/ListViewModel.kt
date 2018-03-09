@@ -21,22 +21,16 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
-import io.realm.RealmChangeListener
 import io.realm.RealmResults
 
-class ListViewModel(databaseManager: DatabaseManager) : ViewModel() {
+class ListViewModel(var databaseManager: DatabaseManager) : ViewModel() {
   
   private val entriesLiveData = MutableLiveData<RealmResults<EntryItem>>()
   
-  private val realmChangeListener = RealmChangeListener<RealmResults<EntryItem>> {
-    entriesLiveData.postValue(it)
-  }
-  
-  init {
-    databaseManager.getAllSortedDescending().addChangeListener(realmChangeListener)
+  fun getLiveData(): LiveData<RealmResults<EntryItem>> {
     entriesLiveData.postValue(databaseManager.getAllSortedDescending())
+    return entriesLiveData
   }
   
-  fun getLiveData(): LiveData<RealmResults<EntryItem>> = entriesLiveData
   
 }
