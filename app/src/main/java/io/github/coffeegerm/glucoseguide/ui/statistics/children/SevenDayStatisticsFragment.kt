@@ -24,28 +24,19 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModel
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModelFactory
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import kotlinx.android.synthetic.main.fragment_seven_days_stats.*
 import javax.inject.Inject
 
-/**
- * Fragment used with Statistics ViewPager to show
- * the last seven days of statistics
- */
-
 class SevenDayStatisticsFragment : Fragment() {
   
   @Inject
-  lateinit var databaseManager: DatabaseManager
-  @Inject
   lateinit var dateAssistant: DateAssistant
-  
   @Inject
   lateinit var statisticsViewModelFactory: StatisticsViewModelFactory
-  lateinit var statisticsViewModel: StatisticsViewModel
+  private lateinit var statisticsViewModel: StatisticsViewModel
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -58,10 +49,10 @@ class SevenDayStatisticsFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     val sevenDaysAgo = dateAssistant.getSevenDaysAgoDate()
-    if (databaseManager.getAllFromDate(sevenDaysAgo).isNotEmpty()) {
-      seven_days_average.text = databaseManager.getAverageGlucoseFromDate(sevenDaysAgo).toString()
-      seven_days_highest.text = databaseManager.getHighestGlucoseFromDate(sevenDaysAgo).toString()
-      seven_days_lowest.text = databaseManager.getLowestGlucoseFromDate(sevenDaysAgo).toString()
+    if (statisticsViewModel.getNumberOfEntries(sevenDaysAgo) != 0) {
+      seven_days_average.text = statisticsViewModel.getAverageBloodGlucose(sevenDaysAgo)
+      seven_days_highest.text = statisticsViewModel.getHighestBloodGlucose(sevenDaysAgo)
+      seven_days_lowest.text = statisticsViewModel.getLowestBloodGlucose(sevenDaysAgo)
     }
   }
 }

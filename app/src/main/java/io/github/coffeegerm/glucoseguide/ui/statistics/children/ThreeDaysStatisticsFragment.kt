@@ -24,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModel
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModelFactory
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
@@ -34,13 +33,10 @@ import javax.inject.Inject
 class ThreeDaysStatisticsFragment : Fragment() {
   
   @Inject
-  lateinit var databaseManager: DatabaseManager
-  @Inject
   lateinit var dateAssistant: DateAssistant
-  
   @Inject
   lateinit var statisticsViewModelFactory: StatisticsViewModelFactory
-  lateinit var statisticsViewModel: StatisticsViewModel
+  private lateinit var statisticsViewModel: StatisticsViewModel
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -52,10 +48,11 @@ class ThreeDaysStatisticsFragment : Fragment() {
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    if (databaseManager.getAllFromDate(dateAssistant.getThreeDaysAgoDate()).isNotEmpty()) {
-      three_days_average.text = databaseManager.getAverageGlucoseFromDate(dateAssistant.getThreeDaysAgoDate()).toString()
-      three_days_highest.text = databaseManager.getHighestGlucoseFromDate(dateAssistant.getThreeDaysAgoDate()).toString()
-      three_days_lowest.text = databaseManager.getLowestGlucoseFromDate(dateAssistant.getThreeDaysAgoDate()).toString()
+    val threeDaysAgo = dateAssistant.getThreeDaysAgoDate()
+    if (statisticsViewModel.getNumberOfEntries(threeDaysAgo) != 0) {
+      three_days_average.text = statisticsViewModel.getAverageBloodGlucose(threeDaysAgo)
+      three_days_highest.text = statisticsViewModel.getHighestBloodGlucose(threeDaysAgo)
+      three_days_lowest.text = statisticsViewModel.getLowestBloodGlucose(threeDaysAgo)
     }
   }
 }

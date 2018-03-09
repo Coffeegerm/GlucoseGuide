@@ -24,31 +24,19 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModel
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModelFactory
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import kotlinx.android.synthetic.main.fragment_one_month_statistics.*
 import javax.inject.Inject
 
-/**
- * Created by dyarz on 8/15/2017.
- *
- *
- * Fragment for Statistics ViewPager to show
- * one month data for user.
- */
-
 class OneMonthStatisticsFragment : Fragment() {
   
   @Inject
-  lateinit var databaseManager: DatabaseManager
-  @Inject
   lateinit var dateAssistant: DateAssistant
-  
   @Inject
   lateinit var statisticsViewModelFactory: StatisticsViewModelFactory
-  lateinit var statisticsViewModel: StatisticsViewModel
+  private lateinit var statisticsViewModel: StatisticsViewModel
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -61,10 +49,10 @@ class OneMonthStatisticsFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     val oneMonthAgo = dateAssistant.getOneMonthAgo()
-    if (databaseManager.getAllFromDate(oneMonthAgo).isNotEmpty()) {
-      one_month_average.text = databaseManager.getAverageGlucoseFromDate(oneMonthAgo).toString()
-      one_month_highest.text = databaseManager.getHighestGlucoseFromDate(oneMonthAgo).toString()
-      one_month_lowest.text = databaseManager.getLowestGlucoseFromDate(oneMonthAgo).toString()
+    if (statisticsViewModel.getNumberOfEntries(oneMonthAgo) != 0) {
+      one_month_average.text = statisticsViewModel.getAverageBloodGlucose(oneMonthAgo)
+      one_month_highest.text = statisticsViewModel.getHighestBloodGlucose(oneMonthAgo)
+      one_month_lowest.text = statisticsViewModel.getLowestBloodGlucose(oneMonthAgo)
     }
   }
 }

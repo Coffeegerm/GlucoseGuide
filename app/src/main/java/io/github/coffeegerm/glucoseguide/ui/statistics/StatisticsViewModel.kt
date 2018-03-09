@@ -19,14 +19,29 @@ package io.github.coffeegerm.glucoseguide.ui.statistics
 import android.arch.lifecycle.ViewModel
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
+import java.util.*
 
 /**
  * ViewModel responsible for logic in all Statistics Fragments
  */
 
-class StatisticsViewModel(var databaseManager: DatabaseManager, dateAssistant: DateAssistant) : ViewModel() {
+class StatisticsViewModel(var databaseManager: DatabaseManager, var dateAssistant: DateAssistant) : ViewModel() {
   
-  fun getAverage(): String = databaseManager.getAverage().toString()
+  fun getNumberOfEntries(): Int = databaseManager.getAllSortedDescending().size
   
-  fun getA1C(average: Int): Double = (46.7 + average) / 28.7
+  fun getNumberOfEntries(date: Date): Int = databaseManager.getAllFromDate(date).size
+  
+  fun getAverageBloodGlucose(): String = databaseManager.getAverage().toString()
+  
+  fun getHighestBloodGlucose(): String = databaseManager.getHighestBloodGlucose().toString()
+  
+  fun getLowestBloodGlucose(): String = databaseManager.getLowestBloodGlucose().toString()
+  
+  fun getAverageBloodGlucose(date: Date): String = databaseManager.getAverageGlucoseFromDate(date).toString()
+  
+  fun getHighestBloodGlucose(date: Date): String = databaseManager.getHighestGlucoseFromDate(date).toString()
+  
+  fun getLowestBloodGlucose(date: Date): String = databaseManager.getLowestGlucoseFromDate(date).toString()
+  
+  fun getA1C(): String = ((46.7 + databaseManager.getAverageGlucoseFromDate(dateAssistant.getThreeMonthsAgoDate())) / 28.7).toString()
 }

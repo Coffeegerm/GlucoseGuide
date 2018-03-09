@@ -24,25 +24,16 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModel
 import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModelFactory
 import kotlinx.android.synthetic.main.fragment_all_stats.*
 import javax.inject.Inject
 
-/**
- * Fragment used with Statistics ViewPager to show
- * the amount of all statistics
- */
-
 class AllStatisticsFragment : Fragment() {
   
   @Inject
-  lateinit var databaseManager: DatabaseManager
-  
-  @Inject
   lateinit var statisticsViewModelFactory: StatisticsViewModelFactory
-  lateinit var statisticsViewModel: StatisticsViewModel
+  private lateinit var statisticsViewModel: StatisticsViewModel
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -54,10 +45,10 @@ class AllStatisticsFragment : Fragment() {
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    if (databaseManager.getAllSortedDescending().isNotEmpty()) {
-      all_days_statistics_average.text = statisticsViewModel.getAverage()
-      highest_of_all_glucose.text = databaseManager.getHighestBloodGlucose().toString()
-      lowest_of_all_glucose.text = databaseManager.getLowestBloodGlucose().toString()
+    if (statisticsViewModel.getNumberOfEntries() != 0) {
+      all_days_statistics_average.text = statisticsViewModel.getAverageBloodGlucose()
+      highest_of_all_glucose.text = statisticsViewModel.getHighestBloodGlucose()
+      lowest_of_all_glucose.text = statisticsViewModel.getHighestBloodGlucose()
     }
   }
 }
