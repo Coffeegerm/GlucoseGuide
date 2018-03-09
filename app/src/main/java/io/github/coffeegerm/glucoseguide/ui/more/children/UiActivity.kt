@@ -17,45 +17,40 @@
 package io.github.coffeegerm.glucoseguide.ui.more.children
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import androidx.content.edit
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.ui.MainActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
 import kotlinx.android.synthetic.main.activity_ui.*
 import javax.inject.Inject
-
-/**
- * TODO: Add class comment header
- */
 
 class UiActivity : AppCompatActivity() {
   
   @Inject
-  lateinit var sharedPreferences: SharedPreferences
+  lateinit var sharedPreferenceManager: SharedPreferenceManager
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false)) setTheme(R.style.AppTheme_Dark)
+    if (sharedPreferenceManager.getBoolean(Constants.PREF_DARK_MODE)) setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_ui)
     setSupportActionBar(ui_toolbar)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.setDisplayShowHomeEnabled(true)
     supportActionBar?.title = getString(R.string.ui)
     
-    toggle_dark_mode.isChecked = sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false)
+    toggle_dark_mode.isChecked = sharedPreferenceManager.getBoolean(Constants.PREF_DARK_MODE)
     toggle_dark_mode.setOnCheckedChangeListener({ _, isChecked -> changeTheme(isChecked) })
     
-    military_time_switch.isChecked = sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)
-    military_time_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreferences.edit().putBoolean(Constants.MILITARY_TIME, isChecked).apply() }
+    military_time_switch.isChecked = sharedPreferenceManager.getBoolean(Constants.MILITARY_TIME)
+    military_time_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreferenceManager.putBoolean(Constants.MILITARY_TIME, isChecked) }
   }
   
   private fun changeTheme(isChecked: Boolean) {
-    sharedPreferences.edit { putBoolean(Constants.PREF_DARK_MODE, isChecked).apply() }
+    sharedPreferenceManager.putBoolean(Constants.PREF_DARK_MODE, isChecked)
     finish()
     startActivity(Intent(this, UiActivity::class.java))
   }

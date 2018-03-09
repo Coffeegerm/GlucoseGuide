@@ -16,6 +16,7 @@
 
 package io.github.coffeegerm.glucoseguide.ui.statistics.children
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +25,8 @@ import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
+import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModel
+import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModelFactory
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import kotlinx.android.synthetic.main.fragment_three_months_statistics.*
 import javax.inject.Inject
@@ -35,9 +38,14 @@ class ThreeMonthsStatisticsFragment : Fragment() {
   @Inject
   lateinit var dateAssistant: DateAssistant
   
+  @Inject
+  lateinit var statisticsViewModelFactory: StatisticsViewModelFactory
+  lateinit var statisticsViewModel: StatisticsViewModel
+  
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
+    statisticsViewModel = ViewModelProviders.of(this, statisticsViewModelFactory).get(StatisticsViewModel::class.java)
   }
   
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_three_months_statistics, container, false)
@@ -46,19 +54,18 @@ class ThreeMonthsStatisticsFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     val threeMonthsAgo = dateAssistant.getThreeMonthsAgoDate()
     if (databaseManager.getAllFromDate(threeMonthsAgo).isNotEmpty()) {
-      three_months_average_value.text = databaseManager.getAverageGlucose(threeMonthsAgo).toString()
-      three_months_highest_value.text = databaseManager.getHighestGlucose(threeMonthsAgo).toString()
-      three_months_lowest_value.text = databaseManager.getLowestGlucose(threeMonthsAgo).toString()
+      three_months_average_value.text = databaseManager.getAverageGlucoseFromDate(threeMonthsAgo).toString()
+      three_months_highest_value.text = databaseManager.getHighestGlucoseFromDate(threeMonthsAgo).toString()
+      three_months_lowest_value.text = databaseManager.getLowestGlucoseFromDate(threeMonthsAgo).toString()
     }
     
     if (databaseManager.getAllFromDate(threeMonthsAgo).size < 300) {
       a_one_c.setText(R.string.dash)
     } else {
-      a_one_c.text = getA1C(databaseManager.getAverageGlucose(threeMonthsAgo)).toString()
+      a_one_c.text = getA1C(databaseManager.getAverageGlucoseFromDate(threeMonthsAgo)).toString()
     }
   }
   
-  fun getA1C(average: Int): Double {
-    return (46.7 + average) / 28.7
-  }
+  private fun getA1C(average: Int): Double = (46.7 + average) / 28.7
+  
 }

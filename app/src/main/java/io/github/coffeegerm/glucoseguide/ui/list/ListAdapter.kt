@@ -18,42 +18,36 @@ package io.github.coffeegerm.glucoseguide.ui.list
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.res.Resources
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import butterknife.BindView
-import butterknife.ButterKnife
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
 import javax.inject.Inject
 
-class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+class ListAdapter internal constructor(var context: Context) : RecyclerView.Adapter<ListViewHolder>() {
   
   @Inject
-  lateinit var sharedPreferences: SharedPreferences
+  lateinit var sharedPreferencesManager: SharedPreferenceManager
   @Inject
   lateinit var resources: Resources
   @Inject
   lateinit var dateFormatter: DateFormatter
   
-  var context: Context
   private lateinit var item: EntryItem
   private var inflater: LayoutInflater
   private var entryItemList: List<EntryItem>? = null
   
   init {
     GlucoseGuide.syringe.inject(this)
-    this.context = context
     inflater = LayoutInflater.from(context)
   }
   
@@ -68,8 +62,7 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
     
     holder.date.text = dateFormatter.formatDate(item.date)
     
-    // Set time based on user preference
-    if (sharedPreferences.getBoolean(Constants.MILITARY_TIME, false)) {
+    if (sharedPreferencesManager.getBoolean(Constants.MILITARY_TIME)) {
       holder.time.text = item.date?.let { dateFormatter.twentyFourHourFormat(it) }
     } else {
       holder.time.text = item.date?.let { dateFormatter.twelveHourFormat(it) }
@@ -116,24 +109,4 @@ class ListAdapter internal constructor(context: Context) : RecyclerView.Adapter<
   }
   
   override fun getItemCount(): Int = entryItemList!!.size
-  
-  inner class ListViewHolder(val entryView: View) : RecyclerView.ViewHolder(entryView) {
-    
-    @BindView(R.id.item_list_date)
-    lateinit var date: TextView
-    @BindView(R.id.item_list_time)
-    lateinit var time: TextView
-    @BindView(R.id.item_list_blood_glucose)
-    lateinit var bloodGlucose: TextView
-    @BindView(R.id.item_list_insulin)
-    lateinit var insulin: TextView
-    @BindView(R.id.item_list_carbohydrates)
-    lateinit var carbohydrates: TextView
-    @BindView(R.id.status_image)
-    lateinit var statusImage: ImageView
-    
-    init {
-      ButterKnife.bind(this, entryView)
-    }
-  }
 }

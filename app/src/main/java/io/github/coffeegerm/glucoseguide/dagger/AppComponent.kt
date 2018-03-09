@@ -34,7 +34,7 @@ import io.github.coffeegerm.glucoseguide.ui.statistics.children.*
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(AppModule::class), (DataModule::class), (UtilitiesModule::class)])
+@Component(modules = [(AppModule::class), (DataModule::class)])
 interface AppComponent {
   fun inject(mainActivity: MainActivity)
   fun inject(newEntryActivity: NewEntryActivity)

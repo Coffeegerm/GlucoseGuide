@@ -18,9 +18,15 @@ package io.github.coffeegerm.glucoseguide.ui.statistics
 
 import android.arch.lifecycle.ViewModel
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
+import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 
 /**
- * TODO: Add class comment header
+ * ViewModel responsible for logic in all Statistics Fragments
  */
-class StatisticsViewModel(var databaseManager: DatabaseManager) : ViewModel() {
+
+class StatisticsViewModel(var databaseManager: DatabaseManager, dateAssistant: DateAssistant) : ViewModel() {
+  
+  fun getAverage(): String = databaseManager.getAverage().toString()
+  
+  fun getA1C(average: Int): Double = (46.7 + average) / 28.7
 }

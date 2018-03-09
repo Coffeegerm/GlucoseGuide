@@ -19,7 +19,6 @@ package io.github.coffeegerm.glucoseguide.ui.entry
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -41,6 +40,7 @@ import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION_ID
 import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
 import io.github.coffeegerm.glucoseguide.utils.NotificationPublisher
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_entry.*
 import java.util.*
@@ -49,14 +49,13 @@ import javax.inject.Inject
 class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
   
   @Inject
-  lateinit var sharedPreferences: SharedPreferences
-  
+  lateinit var sharedPreferencesManager: SharedPreferenceManager
   @Inject
   lateinit var dateFormatter: DateFormatter
   
   private var realm: Realm = Realm.getDefaultInstance()
-  private lateinit var calendarToBeSaved: Calendar
-  private lateinit var calendar: Calendar
+  private var calendarToBeSaved: Calendar = Calendar.getInstance()
+  private var calendar: Calendar = Calendar.getInstance()
   private lateinit var alarmCalendar: Calendar
   private var status = 0
   private var wantsReminder = false
@@ -64,17 +63,13 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     syringe.inject(this)
-    if (sharedPreferences.getBoolean(PREF_DARK_MODE, false))
+    if (sharedPreferencesManager.getBoolean(PREF_DARK_MODE))
       setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_new_entry)
     setSupportActionBar(new_entry_toolbar)
     supportActionBar?.setTitle(R.string.create_entry)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.setDisplayShowHomeEnabled(true)
-    
-    calendar = Calendar.getInstance()
-    // Calendar for saving entered Date and Time
-    calendarToBeSaved = Calendar.getInstance()
     
     // Set date and time to current date and time on initial create
     val year = calendar.get(Calendar.YEAR)
@@ -179,7 +174,7 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
   }
   
   private fun calculateInsulin(carbValue: Float) {
-    val bolusRatio = sharedPreferences.getInt(BOLUS_RATIO, 0).toFloat()
+    val bolusRatio = sharedPreferencesManager.getInt(BOLUS_RATIO).toFloat()
     val suggestionInsulin = carbValue / bolusRatio
     insulin_suggestion_value.text = suggestionInsulin.toString()
   }

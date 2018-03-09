@@ -16,24 +16,16 @@
 
 package io.github.coffeegerm.glucoseguide.data
 
-import android.content.SharedPreferences
-import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import java.util.*
 import javax.inject.Inject
 
-class DatabaseManager @Inject constructor(var realmTransactions: RealmTransactions, var dateAssistant: DateAssistant) {
-  
-  init {
-    GlucoseGuide.syringe.inject(this)
-  }
-  
-  @Inject
-  lateinit var sharedPreferences: SharedPreferences
+class DatabaseManager @Inject constructor(private var realmTransactions: RealmTransactions, private var dateAssistant: DateAssistant, private var sharedPreferenceManager: SharedPreferenceManager) {
   
   val realm: Realm = Realm.getDefaultInstance()
   
@@ -41,7 +33,44 @@ class DatabaseManager @Inject constructor(var realmTransactions: RealmTransactio
   
   fun deleteEntry(item: EntryItem) = realmTransactions.deleteEntry(item)
   
-  fun getHighestGlucose(providedDate: Date): Int {
+  fun copyToRealm(item: EntryItem) = realmTransactions.copyEntryToRealm(item)
+  
+  fun getAverage(): Int {
+    val entryItems = realm.where(EntryItem::class.java).findAll()
+    var total = 0
+    for (position in entryItems.indices) {
+      val item = entryItems[position]!!
+      total += item.bloodGlucose
+    }
+    return total / entryItems.size
+  }
+  
+  fun getHighestBloodGlucose(): Int {
+    val entryItems = realm.where(EntryItem::class.java).findAll()
+    var highest = 0
+    for (position in entryItems.indices) {
+      val item = entryItems[position]!!
+      if (item.bloodGlucose > highest) {
+        highest = item.bloodGlucose
+      }
+    }
+    return highest
+  }
+  
+  
+  fun getLowestBloodGlucose(): Int {
+    val entryItems = realm.where(EntryItem::class.java).findAll()
+    var lowest = 1000
+    for (position in entryItems.indices) {
+      val item = entryItems[position]!!
+      if (item.bloodGlucose < lowest) {
+        lowest = item.bloodGlucose
+      }
+    }
+    return lowest
+  }
+  
+  fun getHighestGlucoseFromDate(providedDate: Date): Int {
     var highest = 0
     val entriesToCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
     entriesToCheck.indices
@@ -52,7 +81,7 @@ class DatabaseManager @Inject constructor(var realmTransactions: RealmTransactio
     return highest
   }
   
-  fun getAverageGlucose(providedDate: Date): Int {
+  fun getAverageGlucoseFromDate(providedDate: Date): Int {
     val entriesToCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
     val total = entriesToCheck.indices
           .map { entriesToCheck[it]!! }
@@ -60,7 +89,7 @@ class DatabaseManager @Inject constructor(var realmTransactions: RealmTransactio
     return total / entriesToCheck.size
   }
   
-  fun getLowestGlucose(providedDate: Date): Int {
+  fun getLowestGlucoseFromDate(providedDate: Date): Int {
     var lowest = 1000
     val entriesTOCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
     entriesTOCheck.indices
@@ -73,7 +102,7 @@ class DatabaseManager @Inject constructor(var realmTransactions: RealmTransactio
   
   fun getGlucoseGrade(): String {
     val grade: String
-    val hyperglycemicIndex = sharedPreferences.getInt("hyperglycemicIndex", 0)
+    val hyperglycemicIndex = sharedPreferenceManager.getInt("hyperglycemicIndex")
     val entriesFromLastThreeDays = getAllFromDate(dateAssistant.getThreeDaysAgoDate())
     val hyperglycemicCount = entriesFromLastThreeDays.indices
           .map { entriesFromLastThreeDays[it]!! }

@@ -16,16 +16,18 @@
 
 package io.github.coffeegerm.glucoseguide.dagger
 
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.RealmTransactions
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
 
 @Module
 class DataModule {
   
   @Provides
-  fun providesDatabaseManager() = DatabaseManager(RealmTransactions(), DateAssistant())
+  fun providesDatabaseManager(sharedPreferences: SharedPreferences) = DatabaseManager(RealmTransactions(), DateAssistant(), SharedPreferenceManager(sharedPreferences))
   
 }

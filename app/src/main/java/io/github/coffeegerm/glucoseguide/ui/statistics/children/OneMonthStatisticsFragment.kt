@@ -16,6 +16,7 @@
 
 package io.github.coffeegerm.glucoseguide.ui.statistics.children
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +25,8 @@ import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
+import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModel
+import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModelFactory
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import kotlinx.android.synthetic.main.fragment_one_month_statistics.*
 import javax.inject.Inject
@@ -43,9 +46,14 @@ class OneMonthStatisticsFragment : Fragment() {
   @Inject
   lateinit var dateAssistant: DateAssistant
   
+  @Inject
+  lateinit var statisticsViewModelFactory: StatisticsViewModelFactory
+  lateinit var statisticsViewModel: StatisticsViewModel
+  
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
+    statisticsViewModel = ViewModelProviders.of(this, statisticsViewModelFactory).get(StatisticsViewModel::class.java)
   }
   
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_one_month_statistics, container, false)
@@ -54,9 +62,9 @@ class OneMonthStatisticsFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     val oneMonthAgo = dateAssistant.getOneMonthAgo()
     if (databaseManager.getAllFromDate(oneMonthAgo).isNotEmpty()) {
-      one_month_average.text = databaseManager.getAverageGlucose(oneMonthAgo).toString()
-      one_month_highest.text = databaseManager.getHighestGlucose(oneMonthAgo).toString()
-      one_month_lowest.text = databaseManager.getLowestGlucose(oneMonthAgo).toString()
+      one_month_average.text = databaseManager.getAverageGlucoseFromDate(oneMonthAgo).toString()
+      one_month_highest.text = databaseManager.getHighestGlucoseFromDate(oneMonthAgo).toString()
+      one_month_lowest.text = databaseManager.getLowestGlucoseFromDate(oneMonthAgo).toString()
     }
   }
 }

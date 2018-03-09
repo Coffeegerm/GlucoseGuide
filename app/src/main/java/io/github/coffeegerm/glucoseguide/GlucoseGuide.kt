@@ -18,7 +18,10 @@ package io.github.coffeegerm.glucoseguide
 
 import android.app.Application
 import io.github.coffeegerm.glucoseguide.BuildConfig.DEBUG
-import io.github.coffeegerm.glucoseguide.dagger.*
+import io.github.coffeegerm.glucoseguide.dagger.AppComponent
+import io.github.coffeegerm.glucoseguide.dagger.AppModule
+import io.github.coffeegerm.glucoseguide.dagger.DaggerAppComponent
+import io.github.coffeegerm.glucoseguide.dagger.DataModule
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber.DebugTree
@@ -37,7 +40,6 @@ class GlucoseGuide : Application() {
           .builder()
           .appModule(AppModule(this))
           .dataModule(DataModule())
-          .utilitiesModule(UtilitiesModule())
           .build()
     
     if (DEBUG) plant(DebugTree())

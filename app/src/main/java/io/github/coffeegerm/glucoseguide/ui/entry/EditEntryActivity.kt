@@ -18,7 +18,6 @@ package io.github.coffeegerm.glucoseguide.ui.entry
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -36,7 +35,7 @@ import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
-import io.realm.Realm
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
 import kotlinx.android.synthetic.main.activity_edit_entry.*
 import java.util.*
 import javax.inject.Inject
@@ -49,7 +48,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   }
   
   @Inject
-  lateinit var sharedPreferences: SharedPreferences
+  lateinit var sharedPreferenceManager: SharedPreferenceManager
   @Inject
   lateinit var databaseManager: DatabaseManager
   @Inject
@@ -70,14 +69,13 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   private var originalCalendar: Calendar = Calendar.getInstance()
   private var updatedCalendar: Calendar = Calendar.getInstance()
   
-  private var realm: Realm = Realm.getDefaultInstance()
   private lateinit var itemId: String
   private lateinit var oldItem: EntryItem
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
+    if (sharedPreferenceManager.getBoolean(Constants.PREF_DARK_MODE))
       setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_edit_entry)
     setSupportActionBar(edit_entry_toolbar)
@@ -183,11 +181,9 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             .setMessage(R.string.delete_single_entry_message)
             .setPositiveButton(android.R.string.yes) { _, _ ->
               // continue with delete
-              realm.executeTransaction {
-                oldItem.deleteFromRealm()
-                Toast.makeText(this, R.string.entry_deleted, Toast.LENGTH_SHORT).show()
-                finish()
-              }
+              databaseManager.deleteEntry(oldItem)
+              Toast.makeText(this, R.string.entry_deleted, Toast.LENGTH_SHORT).show()
+              finish()
             }
             .setNegativeButton(android.R.string.no) { dialog, _ ->
               // do nothing
@@ -227,8 +223,6 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   private fun updateEntry() {
     try {
       val dateToSave = Date()
-      realm.beginTransaction()
-      databaseManager.deleteEntry(oldItem)
       val itemToSave = EntryItem()
       itemToSave.status = updatedStatus
       if (wasDateChanged) {
@@ -247,17 +241,11 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
       if (edit_entry_insulin_units.text.toString() != "") {
         itemToSave.insulin = java.lang.Double.parseDouble(edit_entry_insulin_units.text.toString())
       }
-      realm.copyToRealm(itemToSave)
-      realm.commitTransaction()
+      databaseManager.deleteEntry(oldItem)
+      databaseManager.copyToRealm(itemToSave)
     } finally {
-      realm.close()
       finish()
     }
-  }
-  
-  public override fun onDestroy() {
-    realm.close()
-    super.onDestroy()
   }
   
   override fun onSupportNavigateUp(): Boolean {

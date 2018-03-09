@@ -18,7 +18,6 @@ package io.github.coffeegerm.glucoseguide.ui.list
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -35,8 +34,6 @@ import javax.inject.Inject
 
 class ListFragment : Fragment() {
   
-  @Inject
-  lateinit var sharedPreferences: SharedPreferences
   @Inject
   lateinit var listViewModelFactory: ListViewModelFactory
   

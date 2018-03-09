@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.data
+package io.github.coffeegerm.glucoseguide.utils
 
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
-import io.realm.Realm
+import android.content.SharedPreferences
 import javax.inject.Inject
 
 /**
- * Class dedicated to transactions for the Realm database
+ * Class made to pull out the logic in classes handling SharedPreferences
  */
 
-class RealmTransactions @Inject constructor() {
+class SharedPreferenceManager @Inject constructor(private var sharedPreferences: SharedPreferences) {
   
-  val realm: Realm = Realm.getDefaultInstance()
+  fun getBoolean(key: String): Boolean = sharedPreferences.getBoolean(key, false)
   
-  fun copyEntryToRealm(item: EntryItem) = realm.executeTransaction { realm.copyToRealm(item) }
+  fun getInt(key: String): Int = sharedPreferences.getInt(key, 0)
   
-  fun deleteEntry(item: EntryItem) = realm.executeTransaction { item.deleteFromRealm() }
+  fun putBoolean(key: String, value: Boolean) = sharedPreferences.edit().putBoolean(key, value).apply()
+  
+  fun putInt(key: String, value: Int) = sharedPreferences.edit().putInt(key, value).apply()
 }

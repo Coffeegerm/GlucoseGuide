@@ -18,13 +18,14 @@ package io.github.coffeegerm.glucoseguide.utils
 
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Class dedicated to formatting and returning
  * formatted dates for various classes to use
  */
 
-class DateFormatter {
+class DateFormatter @Inject constructor() {
   
   private val standardDateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.US)
   private val twelveHourTimeFormat = SimpleDateFormat("hh:mm aa", Locale.US)

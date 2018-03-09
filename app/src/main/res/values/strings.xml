@@ -69,6 +69,9 @@
   <string name="dash">-</string>
   <string name="create_entry">Create a new log entry!</string>
 
+  <string name="mailto" translatable="false">mailto:coffeeandcreamstudios@gmail.com</string>
+  <string name="emailSubject" translatable="false">Glucose Guide feedback</string>
+
   <!-- units of measurement-->
   <string name="blood_glucose_measurement">mg/dl</string>
   <string name="carbs_measurement">grams</string>
@@ -135,7 +138,7 @@
     <item name="three_months">Three Months</item>
     <item name="all">All</item>
   </array>
-  
+
   <array name="status_selection">
     <item>None</item>
     <item>Breakfast</item>

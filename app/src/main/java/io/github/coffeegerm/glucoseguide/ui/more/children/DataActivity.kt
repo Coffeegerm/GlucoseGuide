@@ -16,7 +16,6 @@
 
 package io.github.coffeegerm.glucoseguide.ui.more.children
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -25,6 +24,7 @@ import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.Constants
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_data.*
 import javax.inject.Inject
@@ -40,14 +40,14 @@ class DataActivity : AppCompatActivity() {
   private val convertToCsv: ConvertToCSV by lazy { ConvertToCSV(this) }
   
   @Inject
-  lateinit var sharedPreferences: SharedPreferences
+  lateinit var sharedPreferenceManager: SharedPreferenceManager
   
   private var realm: Realm = Realm.getDefaultInstance()
   
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    if (sharedPreferences.getBoolean(Constants.PREF_DARK_MODE, false))
+    if (sharedPreferenceManager.getBoolean(Constants.PREF_DARK_MODE))
       setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_data)
     init()

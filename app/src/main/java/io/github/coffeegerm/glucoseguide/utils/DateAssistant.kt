@@ -17,14 +17,15 @@
 package io.github.coffeegerm.glucoseguide.utils
 
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Class created for assistance in handling the Calendar usage in the application
  */
 
-class DateAssistant {
+class DateAssistant @Inject constructor() {
   
-  val today: Calendar = Calendar.getInstance()
+  private val today: Calendar = Calendar.getInstance()
   
   fun getTodayOfMonth(): Int = today.get(Calendar.DAY_OF_MONTH)
   

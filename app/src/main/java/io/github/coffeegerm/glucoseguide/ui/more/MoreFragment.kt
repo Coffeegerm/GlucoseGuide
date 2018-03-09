@@ -17,35 +17,37 @@
 package io.github.coffeegerm.glucoseguide.ui.more
 
 import android.content.Intent
-import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.ui.more.children.DataActivity
 import io.github.coffeegerm.glucoseguide.ui.more.children.TreatmentActivity
 import io.github.coffeegerm.glucoseguide.ui.more.children.UiActivity
 import kotlinx.android.synthetic.main.fragment_more.*
-import javax.inject.Inject
 
 class MoreFragment : Fragment() {
-  
-  @Inject
-  lateinit var sharedPreferences: SharedPreferences
   
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_more, container, false)
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    syringe.inject(this)
-    
     ui_section.setOnClickListener { startActivity(Intent(context, UiActivity::class.java)) }
     
     treatment_section.setOnClickListener({ startActivity(Intent(context, TreatmentActivity::class.java)) })
     
     data_section.setOnClickListener { startActivity(Intent(context, DataActivity::class.java)) }
+    
+    feedback_section.setOnClickListener { sendEmail() }
+  }
+  
+  private fun sendEmail() {
+    val emailIntent = Intent(Intent.ACTION_SENDTO)
+    emailIntent.data = Uri.parse(getString(R.string.mailto))
+    emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.emailSubject))
+    startActivity(emailIntent)
   }
 }
