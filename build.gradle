@@ -22,7 +22,6 @@ buildscript {
   ext.anko_version = '0.10.0'
   ext.dagger_version = '2.14.1'
   ext.support_library_version = '27.1.0'
-  ext.butterknife_version = '8.8.1'
 
   repositories {
     jcenter()
