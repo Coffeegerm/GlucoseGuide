@@ -15,21 +15,16 @@
   -->
 
 <resources>
-  <string name="app_name">Libro de Materiales</string>
-
-  <string name="navigation_drawer_open">Abrir el cajón de navegación</string>
-  <string name="navigation_drawer_close">Cerrar el cajón de navegación</string>
+  <string name="app_name">Glucose Guide</string>
 
   <string name="close_app">Cerrar material Logbook</string>
-  <string name="close_confirmation">¿Realmente quieres cerrar Material Logbook?</string>
+  <string name="close_confirmation">¿Realmente quieres cerrar Glucose Guide?</string>
   <string name="yes">Sí</string>
   <string name="no">No</string>
 
   <!-- Navigation Drawer Items -->
   <string name="navigation_list">Lista</string>
-  <string name="navigation_drawer_graph">Grafico</string>
   <string name="navigation_statistics">Estadística</string>
-  <string name="navigation_news">Noticias</string>
   <string name="navigation_settings">Configuraciones</string>
   <string name="grade_detail">Este es un grado de sus niveles de glucosa en sangre durante los últimos tres días.</string>
 
@@ -54,12 +49,6 @@
   <string name="suggested_insulin">Dosis sugerida de insulina:</string>
 
   <!-- Image Descriptions for NewEntryActivity and EditEntryActivity -->
-  <string name="breakfast_description">Desayuno</string>
-  <string name="lunch_description">Almuerzo</string>
-  <string name="dinner_description">Cena</string>
-  <string name="sick_description">Enfermos</string>
-  <string name="exercise_description">Ejercicio</string>
-  <string name="sweets_description">Dulces</string>
 
   <!-- List onOptions items -->
   <string name="sort">Ordenar</string>
@@ -128,4 +117,9 @@
   <string name="support">Apoyo</string>
   <string name="support_desc">Si esta aplicación te ha ayudado a controlar mejor tu diabetes y te gustaría apoyar el desarrollo de la misma, no dudes en convertirte en un usuario para ayudar a mantener el desarrollo de la aplicación vivo y en forma.    Yo mismo soy diabético y quiero ayudar a tantas personas como sea posible, y a través de esta aplicación espero poder hacerlo.</string>
   <string name="app_icon">Icono de la aplicación</string>
+  <string name="status_image">Imagen de estado</string>
+  <string name="example_item_list_description">Esta es una entrada de ejemplo! ¡Crea una entrada propia para hacerme desaparecer!</string>
+  <string name="over_grade_label">Calificación general de los últimos tres días:</string>
+  <string name="navigation_grade">Grado</string>
+  <string name="log">Log</string>
 </resources>

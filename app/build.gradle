@@ -37,9 +37,6 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-  lintOptions {
-    checkReleaseBuilds false
-  }
 }
 
 dependencies {
@@ -68,4 +65,14 @@ dependencies {
 }
 repositories {
   mavenCentral()
+}
+
+configurations {
+  all {
+    exclude group: "com.google.android"
+    exclude module: 'httpclient'
+    exclude module: 'commons-logging'
+    exclude group: 'org.apache.httpcomponents'
+    exclude group: 'org.json', module: 'json'
+  }
 }
