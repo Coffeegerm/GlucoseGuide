@@ -16,6 +16,7 @@
 
 package io.github.coffeegerm.glucoseguide.ui.grade
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
@@ -26,9 +27,10 @@ import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 
 class GradeViewModel(private var databaseManager: DatabaseManager) : ViewModel() {
   
-  var grade = MutableLiveData<String>()
+  private var grade = MutableLiveData<String>()
   
-  init {
+  fun getGrade(): LiveData<String> {
     grade.value = databaseManager.getGlucoseGrade()
+    return grade
   }
 }

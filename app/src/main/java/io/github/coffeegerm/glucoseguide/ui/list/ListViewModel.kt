@@ -32,5 +32,4 @@ class ListViewModel(var databaseManager: DatabaseManager) : ViewModel() {
     return entriesLiveData
   }
   
-  
 }

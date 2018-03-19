@@ -54,7 +54,7 @@ class GradeFragment : Fragment() {
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    gradeViewModel.grade.observe(this, Observer<String> { grade -> overall_grade.text = grade })
+    gradeViewModel.getGrade().observe(this, Observer<String> { grade -> overall_grade.text = grade })
     
     val points = mutableListOf<Entry>()
     val numberOfItemsInDatabase = mutableListOf<Int>() // should be the size of the database for reference

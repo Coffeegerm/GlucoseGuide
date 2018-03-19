@@ -24,11 +24,6 @@ import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.R
 import kotlinx.android.synthetic.main.fragment_statistics.*
 
-/**
- * Fragment responsible for showing the pager adapter that contains the statistics of the users
- * data from the last few days, months, or all time.
- */
-
 class StatisticsFragment : Fragment() {
   
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_statistics, container, false)

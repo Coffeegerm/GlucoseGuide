@@ -43,7 +43,6 @@ class ListViewHolder(private val entryView: View) : RecyclerView.ViewHolder(entr
   lateinit var sharedPreferencesManager: SharedPreferencesManager
   
   fun bindEntry(entry: EntryItem) {
-    val context = entryView.context
     entryView.item_list_date.text = dateFormatter.formatDate(entry.date)
     
     if (sharedPreferencesManager.getBoolean(Constants.MILITARY_TIME)) {
@@ -53,13 +52,13 @@ class ListViewHolder(private val entryView: View) : RecyclerView.ViewHolder(entr
     }
     
     entryView.setOnClickListener {
-      Toast.makeText(context, R.string.list_item_short_click, Toast.LENGTH_SHORT).show()
+      Toast.makeText(entryView.context, R.string.list_item_short_click, Toast.LENGTH_SHORT).show()
     }
     
     entryView.setOnLongClickListener {
-      val editEntryActivity = Intent(context, EditEntryActivity::class.java)
+      val editEntryActivity = Intent(entryView.context, EditEntryActivity::class.java)
       editEntryActivity.putExtra(Constants.ITEM_ID, entry.id)
-      context.startActivity(editEntryActivity)
+      entryView.context.startActivity(editEntryActivity)
       true
     }
     
@@ -75,12 +74,12 @@ class ListViewHolder(private val entryView: View) : RecyclerView.ViewHolder(entr
     if (entry.status > 0) {
       entryView.status_image.visibility = View.VISIBLE
       when (entry.status) {
-        1 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.breakfast))
-        2 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.lunch))
-        3 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.dinner))
-        4 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.sweets))
-        5 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.sick))
-        6 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.exercise))
+        1 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.breakfast))
+        2 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.lunch))
+        3 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.dinner))
+        4 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.sweets))
+        5 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.sick))
+        6 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.exercise))
       }
     }
   }

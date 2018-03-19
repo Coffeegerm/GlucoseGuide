@@ -122,4 +122,5 @@
   <string name="over_grade_label">Calificación general de los últimos tres días:</string>
   <string name="navigation_grade">Grado</string>
   <string name="log">Log</string>
+  <string name="arrow_symbol"><![CDATA[>]]></string>
 </resources>

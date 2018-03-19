@@ -107,4 +107,5 @@
   <string name="over_grade_label">Note générale des trois derniers jours:</string>
   <string name="example_item_list_description">Ceci est une entrée d\'exemple! Faites une entrée de votre cru pour me faire disparaître!</string>
   <string name="status_image">Image de statut</string>
+  <string name="arrow_symbol"><![CDATA[>]]></string>
 </resources>

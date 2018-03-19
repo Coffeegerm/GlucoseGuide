@@ -63,6 +63,7 @@ class ListFragment : Fragment() {
       list_recycler_view.visibility = View.VISIBLE
       empty_item_list.visibility = View.GONE
       list_recycler_view.layoutManager = LinearLayoutManager(activity)
+      list_recycler_view.setHasFixedSize(true)
       setAdapterItems(entriesToShow)
     }
   }

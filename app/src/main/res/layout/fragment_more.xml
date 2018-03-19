@@ -57,11 +57,11 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginBottom="16dp"
-      android:layout_marginStart="8dp"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
       android:fontFamily="@font/avenir_demi_bold"
       android:text="@string/ui"
-      android:textSize="16sp"
+      android:textSize="18sp"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/item_list_line_left" />
 
@@ -76,7 +76,7 @@
       android:layout_gravity="center"
       android:layout_marginEnd="16dp"
       android:fontFamily="@font/avenir_medium"
-      android:text=">"
+      android:text="@string/arrow_symbol"
       android:textSize="20sp" />
 
   </LinearLayout>
@@ -85,6 +85,8 @@
     android:id="@+id/item_list_line_left"
     android:layout_width="0dp"
     android:layout_height="1dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
     android:background="@color/colorPrimaryDark"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintLeft_toLeftOf="parent"
@@ -108,11 +110,11 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginBottom="16dp"
-      android:layout_marginStart="8dp"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
       android:fontFamily="@font/avenir_demi_bold"
       android:text="@string/treatment"
-      android:textSize="16sp"
+      android:textSize="18sp"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/item_list_line_left" />
 
@@ -127,7 +129,7 @@
       android:layout_gravity="center"
       android:layout_marginEnd="16dp"
       android:fontFamily="@font/avenir_medium"
-      android:text=">"
+      android:text="@string/arrow_symbol"
       android:textSize="20sp" />
 
   </LinearLayout>
@@ -136,8 +138,8 @@
     android:id="@+id/item_list_line_right"
     android:layout_width="0dp"
     android:layout_height="1dp"
-    android:layout_marginEnd="0dp"
-    android:layout_marginStart="0dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
     android:layout_marginTop="0dp"
     android:background="@color/colorPrimaryDark"
     app:layout_constraintHorizontal_bias="0.0"
@@ -160,11 +162,11 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginBottom="16dp"
-      android:layout_marginStart="8dp"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
       android:fontFamily="@font/avenir_demi_bold"
       android:text="@string/data"
-      android:textSize="16sp"
+      android:textSize="18sp"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/item_list_line_left" />
 
@@ -179,7 +181,7 @@
       android:layout_gravity="center"
       android:layout_marginEnd="16dp"
       android:fontFamily="@font/avenir_medium"
-      android:text=">"
+      android:text="@string/arrow_symbol"
       android:textSize="20sp" />
 
   </LinearLayout>
@@ -188,6 +190,8 @@
     android:id="@+id/view"
     android:layout_width="0dp"
     android:layout_height="1dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
     android:background="@color/colorPrimaryDark"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintLeft_toLeftOf="parent"
@@ -207,11 +211,11 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_marginBottom="16dp"
-      android:layout_marginStart="8dp"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
       android:fontFamily="@font/avenir_demi_bold"
       android:text="@string/feedback"
-      android:textSize="16sp"
+      android:textSize="18sp"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/item_list_line_left" />
 
@@ -226,7 +230,7 @@
       android:layout_gravity="center"
       android:layout_marginEnd="16dp"
       android:fontFamily="@font/avenir_medium"
-      android:text=">"
+      android:text="@string/arrow_symbol"
       android:textSize="20sp" />
 
   </LinearLayout>

@@ -127,7 +127,8 @@
   <string name="insulin_example" translatable="false">4.4</string>
   <string name="carbs_example" translatable="false">44</string>
   <string name="blood_glucose_example" translatable="false">144</string>
-
+  <string name="arrow_symbol"><![CDATA[>]]></string>
+  
   <array name="statistic_tab_titles">
     <item name="three_days">3 Days</item>
     <item name="seven_days">7 Days</item>

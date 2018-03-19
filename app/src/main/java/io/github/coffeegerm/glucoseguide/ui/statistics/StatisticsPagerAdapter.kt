@@ -23,12 +23,6 @@ import android.support.v4.app.FragmentPagerAdapter
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.ui.statistics.children.*
 
-/**
- * Created by David Yarzebinski on 7/28/2017
- *
- * Adapter used for ViewPager within StatisticsFragment
- */
-
 class StatisticsPagerAdapter internal constructor(fragmentManager: FragmentManager, resources: Resources) : FragmentPagerAdapter(fragmentManager) {
   
   private val tabTitles = resources.getStringArray(R.array.statistic_tab_titles)
@@ -46,6 +40,6 @@ class StatisticsPagerAdapter internal constructor(fragmentManager: FragmentManag
   
   override fun getCount(): Int = 5
   
-  override fun getPageTitle(position: Int): CharSequence? = tabTitles[position]
+  override fun getPageTitle(position: Int): CharSequence = tabTitles[position]
   
 }
