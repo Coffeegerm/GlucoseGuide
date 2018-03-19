@@ -23,34 +23,34 @@ import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.ui.MainActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_ui.*
 import javax.inject.Inject
 
 class UiActivity : AppCompatActivity() {
   
   @Inject
-  lateinit var sharedPreferenceManager: SharedPreferenceManager
+  lateinit var sharedPreferencesManager: SharedPreferencesManager
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    if (sharedPreferenceManager.getBoolean(Constants.PREF_DARK_MODE)) setTheme(R.style.AppTheme_Dark)
+    if (sharedPreferencesManager.getBoolean(Constants.PREF_DARK_MODE)) setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_ui)
     setSupportActionBar(ui_toolbar)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.setDisplayShowHomeEnabled(true)
     supportActionBar?.title = getString(R.string.ui)
     
-    toggle_dark_mode.isChecked = sharedPreferenceManager.getBoolean(Constants.PREF_DARK_MODE)
+    toggle_dark_mode.isChecked = sharedPreferencesManager.getBoolean(Constants.PREF_DARK_MODE)
     toggle_dark_mode.setOnCheckedChangeListener({ _, isChecked -> changeTheme(isChecked) })
     
-    military_time_switch.isChecked = sharedPreferenceManager.getBoolean(Constants.MILITARY_TIME)
-    military_time_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreferenceManager.putBoolean(Constants.MILITARY_TIME, isChecked) }
+    military_time_switch.isChecked = sharedPreferencesManager.getBoolean(Constants.MILITARY_TIME)
+    military_time_switch.setOnCheckedChangeListener { _, isChecked -> sharedPreferencesManager.putBoolean(Constants.MILITARY_TIME, isChecked) }
   }
   
   private fun changeTheme(isChecked: Boolean) {
-    sharedPreferenceManager.putBoolean(Constants.PREF_DARK_MODE, isChecked)
+    sharedPreferencesManager.putBoolean(Constants.PREF_DARK_MODE, isChecked)
     finish()
     startActivity(Intent(this, UiActivity::class.java))
   }

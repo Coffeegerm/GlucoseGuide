@@ -18,6 +18,7 @@ package io.github.coffeegerm.glucoseguide.ui.entry
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -33,9 +34,10 @@ import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.ui.MainActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_edit_entry.*
 import java.util.*
 import javax.inject.Inject
@@ -48,24 +50,24 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   }
   
   @Inject
-  lateinit var sharedPreferenceManager: SharedPreferenceManager
+  lateinit var sharedPreferencesManager: SharedPreferencesManager
   @Inject
   lateinit var databaseManager: DatabaseManager
   @Inject
   lateinit var dateFormatter: DateFormatter
   
-  /* Original values from oldItem. Compare to possible updated values to find what needs to be updated in database */
+  // Original values from oldItem. Compare to possible updated values to find what needs to be updated in database
   private lateinit var originalDate: Date
   private var originalStatus: Int = 0
   private var originalBloodGlucose: Int = 0
   private var originalCarbohydrates: Int = 0
-  private var originalInsulin: Double = 0.toDouble()
+  private var originalInsulin: Double = 0.0
   
-  /* items to be used to altered to show that the oldItem has been updated */
+  // items to be used to altered to show that the oldItem has been updated
   private var updatedStatus: Int = 0
   internal var updatedBloodGlucose: Int = 0
   internal var updatedCarbohydrates: Int = 0
-  internal var updatedInsulin: Double = 0.toDouble()
+  internal var updatedInsulin: Double = 0.0
   private var originalCalendar: Calendar = Calendar.getInstance()
   private var updatedCalendar: Calendar = Calendar.getInstance()
   
@@ -75,7 +77,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    if (sharedPreferenceManager.getBoolean(Constants.PREF_DARK_MODE))
+    if (sharedPreferencesManager.getBoolean(Constants.PREF_DARK_MODE))
       setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_edit_entry)
     setSupportActionBar(edit_entry_toolbar)
@@ -86,7 +88,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     itemId = intent.getStringExtra(Constants.ITEM_ID)
     oldItem = databaseManager.getEntryFromId(itemId)!!
     
-    getOriginalValues() // must call before hints are set
+    getOriginalValues()
     
     val spinnerAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.status_selection))
     edit_status_selector.adapter = spinnerAdapter
@@ -103,13 +105,12 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
               correctMonth--
               if (!wasDateChanged) wasDateChanged = true
               updatedCalendar.set(year, correctMonth, dayOfMonth)
-            }, originalCalendar.get(Calendar.YEAR), // year
-            originalCalendar.get(Calendar.MONTH), // month
-            originalCalendar.get(Calendar.DAY_OF_MONTH)) // day
+            }, originalCalendar.get(Calendar.YEAR),
+            originalCalendar.get(Calendar.MONTH),
+            originalCalendar.get(Calendar.DAY_OF_MONTH))
       
       if (Build.VERSION.SDK_INT < 21)
-        if (dialog.window != null)
-          dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        dialog.window.setBackgroundDrawable(ColorDrawable(0))
       
       dialog.show()
     }
@@ -122,9 +123,9 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
               updatedCalendar.set(Calendar.MINUTE, minute)
               if (!wasDateChanged) wasDateChanged = true
             },
-            originalCalendar.get(Calendar.HOUR_OF_DAY), // current hour
-            originalCalendar.get(Calendar.MINUTE), // current minute
-            false) //no 24 hour view
+            originalCalendar.get(Calendar.HOUR_OF_DAY),
+            originalCalendar.get(Calendar.MINUTE),
+            false)
       timePickerDialog.show()
     }
     
@@ -173,26 +174,20 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     
     
     delete_entry.setOnClickListener {
-      val builder: AlertDialog.Builder = AlertDialog.Builder(this@EditEntryActivity)
-      
-      // Sets theme based on VERSION_CODE
-      
+      val builder: AlertDialog.Builder = AlertDialog.Builder(this)
       builder.setTitle(R.string.delete_single_entry)
             .setMessage(R.string.delete_single_entry_message)
             .setPositiveButton(android.R.string.yes) { _, _ ->
-              // continue with delete
               databaseManager.deleteEntry(oldItem)
               Toast.makeText(this, R.string.entry_deleted, Toast.LENGTH_SHORT).show()
-              finish()
+              startActivity(Intent(applicationContext, MainActivity::class.java))
             }
             .setNegativeButton(android.R.string.no) { dialog, _ ->
-              // do nothing
               dialog.dismiss()
             }
             .setIcon(R.drawable.ic_trash)
             .show()
     }
-    
     update_fab.setOnClickListener { updateEntry() }
   }
   
@@ -221,31 +216,25 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   }
   
   private fun updateEntry() {
-    try {
-      val dateToSave = Date()
-      val itemToSave = EntryItem()
-      itemToSave.status = updatedStatus
-      if (wasDateChanged) {
+    val dateToSave = Date()
+    val itemToSave = EntryItem()
+    itemToSave.status = updatedStatus
+    when (wasDateChanged) {
+      true -> {
         dateToSave.time = updatedCalendar.timeInMillis
         itemToSave.date = dateToSave
-      } else {
+      }
+      false -> {
         dateToSave.time = originalCalendar.timeInMillis
         itemToSave.date = dateToSave
       }
-      if (edit_entry_blood_glucose_level.text.toString() != "") {
-        itemToSave.bloodGlucose = Integer.parseInt(edit_entry_blood_glucose_level.text.toString())
-      }
-      if (edit_entry_carbohydrates_amount.text.toString() != "") {
-        itemToSave.carbohydrates = Integer.parseInt(edit_entry_carbohydrates_amount.text.toString())
-      }
-      if (edit_entry_insulin_units.text.toString() != "") {
-        itemToSave.insulin = java.lang.Double.parseDouble(edit_entry_insulin_units.text.toString())
-      }
-      databaseManager.deleteEntry(oldItem)
-      databaseManager.copyToRealm(itemToSave)
-    } finally {
-      finish()
     }
+    if (edit_entry_blood_glucose_level.text.isNotEmpty()) itemToSave.bloodGlucose = edit_entry_blood_glucose_level.text.toString().toInt() else itemToSave.bloodGlucose = originalBloodGlucose
+    if (edit_entry_carbohydrates_amount.text.isNotEmpty()) itemToSave.carbohydrates = edit_entry_carbohydrates_amount.text.toString().toInt() else itemToSave.carbohydrates = originalCarbohydrates
+    if (edit_entry_insulin_units.text.isNotEmpty()) itemToSave.insulin = edit_entry_insulin_units.text.toString().toDouble() else itemToSave.insulin = originalInsulin
+    databaseManager.deleteEntry(oldItem)
+    databaseManager.copyToRealm(itemToSave)
+    finish()
   }
   
   override fun onSupportNavigateUp(): Boolean {

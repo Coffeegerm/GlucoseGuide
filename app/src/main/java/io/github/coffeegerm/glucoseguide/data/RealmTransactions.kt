@@ -28,6 +28,8 @@ class RealmTransactions @Inject constructor() {
   
   val realm: Realm = Realm.getDefaultInstance()
   
+  fun insertEntryToRealm(item: EntryItem) = realm.executeTransaction { realm.insertOrUpdate(item) }
+  
   fun copyEntryToRealm(item: EntryItem) = realm.executeTransaction { realm.copyToRealm(item) }
   
   fun deleteEntry(item: EntryItem) = realm.executeTransaction { item.deleteFromRealm() }

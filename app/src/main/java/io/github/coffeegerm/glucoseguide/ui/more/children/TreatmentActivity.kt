@@ -26,19 +26,19 @@ import io.github.coffeegerm.glucoseguide.utils.Constants.BOLUS_RATIO
 import io.github.coffeegerm.glucoseguide.utils.Constants.HYPERGLYCEMIC_INDEX
 import io.github.coffeegerm.glucoseguide.utils.Constants.HYPOGLYCEMIC_INDEX
 import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_treatment.*
 import javax.inject.Inject
 
 class TreatmentActivity : AppCompatActivity() {
   
   @Inject
-  lateinit var sharedPreferenceManager: SharedPreferenceManager
+  lateinit var sharedPreferencesManager: SharedPreferencesManager
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
-    if (sharedPreferenceManager.getBoolean(PREF_DARK_MODE)) setTheme(R.style.AppTheme_Dark)
+    if (sharedPreferencesManager.getBoolean(PREF_DARK_MODE)) setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_treatment)
     setSupportActionBar(treatment_toolbar)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -57,7 +57,7 @@ class TreatmentActivity : AppCompatActivity() {
       
       override fun afterTextChanged(s: Editable) {
         if (s.toString().isNotBlank())
-          sharedPreferenceManager
+          sharedPreferencesManager
                 .putInt(HYPOGLYCEMIC_INDEX, Integer.parseInt(s.toString()))
       }
     })
@@ -69,7 +69,7 @@ class TreatmentActivity : AppCompatActivity() {
       
       override fun afterTextChanged(s: Editable) {
         if (s.toString().isNotBlank())
-          sharedPreferenceManager
+          sharedPreferencesManager
                 .putInt(HYPERGLYCEMIC_INDEX, Integer.parseInt(s.toString()))
       }
     })
@@ -85,26 +85,26 @@ class TreatmentActivity : AppCompatActivity() {
       
       override fun afterTextChanged(editable: Editable) {
         if (editable.toString().isNotBlank())
-          sharedPreferenceManager
+          sharedPreferencesManager
                 .putInt(BOLUS_RATIO, Integer.parseInt(editable.toString()))
       }
     })
   }
   
   private fun checkRangeStatus() {
-    if (sharedPreferenceManager.getInt(HYPOGLYCEMIC_INDEX) == 0 && sharedPreferenceManager.getInt(HYPOGLYCEMIC_INDEX) == 0) {
-      sharedPreferenceManager.putInt(HYPOGLYCEMIC_INDEX, 80)
-      sharedPreferenceManager.putInt(HYPERGLYCEMIC_INDEX, 140)
+    if (sharedPreferencesManager.getInt(HYPOGLYCEMIC_INDEX) == 0 && sharedPreferencesManager.getInt(HYPOGLYCEMIC_INDEX) == 0) {
+      sharedPreferencesManager.putInt(HYPOGLYCEMIC_INDEX, 80)
+      sharedPreferencesManager.putInt(HYPERGLYCEMIC_INDEX, 140)
     }
-    if (sharedPreferenceManager.getInt(BOLUS_RATIO) == 0) {
-      sharedPreferenceManager.putInt(BOLUS_RATIO, 10)
+    if (sharedPreferencesManager.getInt(BOLUS_RATIO) == 0) {
+      sharedPreferencesManager.putInt(BOLUS_RATIO, 10)
     }
   }
   
   private fun setHints() {
-    hyperglycemic_edit_text.hint = sharedPreferenceManager.getInt(HYPERGLYCEMIC_INDEX).toString()
-    hypoglycemic_edit_text.hint = sharedPreferenceManager.getInt(HYPOGLYCEMIC_INDEX).toString()
-    bolus_ratio.hint = sharedPreferenceManager.getInt(BOLUS_RATIO).toString()
+    hyperglycemic_edit_text.hint = sharedPreferencesManager.getInt(HYPERGLYCEMIC_INDEX).toString()
+    hypoglycemic_edit_text.hint = sharedPreferencesManager.getInt(HYPOGLYCEMIC_INDEX).toString()
+    bolus_ratio.hint = sharedPreferencesManager.getInt(BOLUS_RATIO).toString()
   }
   
   override fun onSupportNavigateUp(): Boolean {

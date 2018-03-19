@@ -18,18 +18,20 @@ package io.github.coffeegerm.glucoseguide.data
 
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import java.util.*
 import javax.inject.Inject
 
-class DatabaseManager @Inject constructor(private var realmTransactions: RealmTransactions, private var dateAssistant: DateAssistant, private var sharedPreferenceManager: SharedPreferenceManager) {
+class DatabaseManager @Inject constructor(private var realmTransactions: RealmTransactions, private var dateAssistant: DateAssistant, private var sharedPreferencesManager: SharedPreferencesManager) {
   
   val realm: Realm = Realm.getDefaultInstance()
   
   fun getEntryFromId(entryId: String) = realm.where(EntryItem::class.java).equalTo("id", entryId).findFirst()
+  
+  fun insertToRealm(item: EntryItem) = realmTransactions.insertEntryToRealm(item)
   
   fun deleteEntry(item: EntryItem) = realmTransactions.deleteEntry(item)
   
@@ -102,7 +104,7 @@ class DatabaseManager @Inject constructor(private var realmTransactions: RealmTr
   
   fun getGlucoseGrade(): String {
     val grade: String
-    val hyperglycemicIndex = sharedPreferenceManager.getInt("hyperglycemicIndex")
+    val hyperglycemicIndex = sharedPreferencesManager.getInt("hyperglycemicIndex")
     val entriesFromLastThreeDays = getAllFromDate(dateAssistant.getThreeDaysAgoDate())
     val hyperglycemicCount = entriesFromLastThreeDays.indices
           .map { entriesFromLastThreeDays[it]!! }

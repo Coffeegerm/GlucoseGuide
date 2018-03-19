@@ -33,6 +33,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
+import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.model.EntryItem
 import io.github.coffeegerm.glucoseguide.utils.Constants.BOLUS_RATIO
 import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION
@@ -40,8 +41,7 @@ import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION_ID
 import io.github.coffeegerm.glucoseguide.utils.Constants.PREF_DARK_MODE
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
 import io.github.coffeegerm.glucoseguide.utils.NotificationPublisher
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
-import io.realm.Realm
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_new_entry.*
 import java.util.*
 import javax.inject.Inject
@@ -49,11 +49,12 @@ import javax.inject.Inject
 class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
   
   @Inject
-  lateinit var sharedPreferencesManager: SharedPreferenceManager
+  lateinit var sharedPreferencesManager: SharedPreferencesManager
   @Inject
   lateinit var dateFormatter: DateFormatter
+  @Inject
+  lateinit var databaseManager: DatabaseManager
   
-  private var realm: Realm = Realm.getDefaultInstance()
   private var calendarToBeSaved: Calendar = Calendar.getInstance()
   private var calendar: Calendar = Calendar.getInstance()
   private lateinit var alarmCalendar: Calendar
@@ -88,7 +89,7 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
       override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
       
       override fun afterTextChanged(carbValue: Editable) {
-        if (carbValue.toString() != "") {
+        if (carbValue.toString().isNotBlank()) {
           insulin_suggestion.visibility = View.VISIBLE
           calculateInsulin(java.lang.Float.parseFloat(carbValue.toString()))
         } else {
@@ -105,9 +106,9 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
               new_entry_date.setText(dateFormatter.formatDateForEditText(correctMonth, dayOfMonth, year))
               correctMonth--
               calendarToBeSaved.set(year, correctMonth, dayOfMonth)
-            }, calendar.get(Calendar.YEAR), // year
-            calendar.get(Calendar.MONTH), // month
-            calendar.get(Calendar.DAY_OF_MONTH)) // day
+            }, calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH))
       
       if (Build.VERSION.SDK_INT < 21)
         if (dialog.window != null)
@@ -123,9 +124,9 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
               calendarToBeSaved.set(Calendar.HOUR_OF_DAY, hourOfDay)
               calendarToBeSaved.set(Calendar.MINUTE, minute)
             },
-            calendar.get(Calendar.HOUR_OF_DAY), // current hour
-            calendar.get(Calendar.MINUTE), // current minute
-            false) //no 24 hour view
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE),
+            false)
       timePickerDialog.show()
     }
     
@@ -137,38 +138,19 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     status_selector.onItemSelectedListener = this
   }
   
-  override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-    status_selector.setSelection(position)
-    status = position
-  }
-  
-  override fun onNothingSelected(p0: AdapterView<*>?) {}
-  
   private fun saveEntry() {
-    // Checks to make sure there is a blood glucose given.
-    if (new_entry_blood_glucose_level.text.toString() == "")
+    if (new_entry_blood_glucose_level.text.isEmpty())
       Toast.makeText(this, R.string.no_glucose_toast, Toast.LENGTH_SHORT).show()
     else {
-      realm.executeTransaction {
-        // Save Entry to database
-        val entryItem = this.realm.createObject(EntryItem::class.java)
-        // Creates Date object made from the DatePicker and TimePicker
-        val date = calendarToBeSaved.time
-        entryItem.date = date
-        entryItem.status = status
-        entryItem.bloodGlucose = Integer.parseInt(new_entry_blood_glucose_level.text.toString())
-        // Prevention of NullPointerException
-        if (new_entry_carbohydrates_amount.text.toString() != "") {
-          entryItem.carbohydrates = Integer.parseInt(new_entry_carbohydrates_amount.text.toString())
-        }
-        // Prevention of NullPointerException
-        if (new_entry_insulin_units.text.toString() != "") {
-          entryItem.insulin = java.lang.Double.parseDouble(new_entry_insulin_units.text.toString())
-        }
-      }
-      // If the user chooses to have a reminder at certain time.
+      val entryItem = EntryItem()
+      val date = calendarToBeSaved.time
+      entryItem.date = date
+      entryItem.status = status
+      entryItem.bloodGlucose = new_entry_blood_glucose_level.text.toString().toInt()
+      if (new_entry_carbohydrates_amount.text.isNotEmpty()) entryItem.carbohydrates = new_entry_carbohydrates_amount.text.toString().toInt()
+      if (new_entry_insulin_units.text.toString().isNotEmpty()) entryItem.insulin = new_entry_insulin_units.text.toString().toDouble()
+      databaseManager.insertToRealm(entryItem)
       if (wantsReminder) createReminder(getNotification())
-      // After save returns to MainActivity ListFragment
       finish()
     }
   }
@@ -226,13 +208,15 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     return builder.build()
   }
   
-  public override fun onDestroy() {
-    realm.close()
-    super.onDestroy()
-  }
-  
   override fun onSupportNavigateUp(): Boolean {
     onBackPressed()
     return super.onSupportNavigateUp()
   }
+  
+  override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+    status_selector.setSelection(position)
+    status = position
+  }
+  
+  override fun onNothingSelected(p0: AdapterView<*>?) {}
 }

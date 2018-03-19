@@ -20,9 +20,14 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import kotlinx.android.synthetic.main.fragment_grade.*
@@ -50,5 +55,47 @@ class GradeFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     gradeViewModel.grade.observe(this, Observer<String> { grade -> overall_grade.text = grade })
+    
+    val points = mutableListOf<Entry>()
+    val numberOfItemsInDatabase = mutableListOf<Int>() // should be the size of the database for reference
+    
+    val lineDataSet = LineDataSet(points, "entries")
+    
+    val textColor = context?.let { ContextCompat.getColor(it, R.color.colorAccent) }
+    
+    textColor?.let { handleXAxis(it) }
+    textColor?.let { handleLeftAxis(it) }
+    handleRightAxis()
+    
+    lineChart.setDrawGridBackground(false)
+    lineChart.setPinchZoom(false)
+    lineChart.isDoubleTapToZoomEnabled = false
+    lineChart.legend.isEnabled = false
+    val description = Description()
+    description.text = ""
+    lineChart.description = description
+    
+    lineChart.invalidate()
+  }
+  
+  private fun handleXAxis(textColor: Int) {
+    lineChart.xAxis.setLabelCount(4, true)
+    lineChart.xAxis.setDrawAxisLine(false)
+    lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+    lineChart.xAxis.setDrawGridLines(false)
+    lineChart.xAxis.textColor = textColor
+  }
+  
+  private fun handleLeftAxis(textColor: Int) {
+    lineChart.axisLeft.setLabelCount(3, true)
+    lineChart.axisLeft.textColor = textColor
+    lineChart.axisLeft.setDrawAxisLine(false)
+    lineChart.axisLeft.yOffset = -8f
+  }
+  
+  private fun handleRightAxis() {
+    lineChart.axisRight.setDrawLabels(false)
+    lineChart.axisRight.setDrawGridLines(false)
+    lineChart.axisRight.setDrawAxisLine(false)
   }
 }

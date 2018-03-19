@@ -27,7 +27,7 @@ class ListViewModel(var databaseManager: DatabaseManager) : ViewModel() {
   
   private val entriesLiveData = MutableLiveData<RealmResults<EntryItem>>()
   
-  fun getLiveData(): LiveData<RealmResults<EntryItem>> {
+  fun getEntriesLiveData(): LiveData<RealmResults<EntryItem>> {
     entriesLiveData.postValue(databaseManager.getAllSortedDescending())
     return entriesLiveData
   }

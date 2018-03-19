@@ -23,7 +23,7 @@ import dagger.Module
 import dagger.Provides
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import javax.inject.Singleton
 
 /**
@@ -45,6 +45,6 @@ class AppModule(application: GlucoseGuide) {
   fun provideSharedPreferences(context: Context): SharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE)
   
   @Provides
-  fun providesSharedPreferencesManager(sharedPreferences: SharedPreferences): SharedPreferenceManager = SharedPreferenceManager(sharedPreferences)
+  fun providesSharedPreferencesManager(sharedPreferences: SharedPreferences): SharedPreferencesManager = SharedPreferencesManager(sharedPreferences)
   
 }

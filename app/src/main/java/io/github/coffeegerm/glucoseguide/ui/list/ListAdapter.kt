@@ -27,15 +27,15 @@ class ListAdapter internal constructor(var context: Context) : RecyclerView.Adap
   
   
   private var inflater: LayoutInflater = LayoutInflater.from(context)
-  private var entryItemList: List<EntryItem>? = null
+  private var entryItemList: List<EntryItem> = mutableListOf()
   
-  fun setListItems(providedList: List<EntryItem>) {
-    this.entryItemList = providedList
+  fun setEntries(providedEntries: List<EntryItem>) {
+    this.entryItemList = providedEntries
   }
   
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder = ListViewHolder(inflater.inflate(R.layout.item_list, parent, false))
   
-  override fun onBindViewHolder(holder: ListViewHolder, position: Int) = holder.bindEntry(entryItemList!![position])
+  override fun onBindViewHolder(holder: ListViewHolder, position: Int) = holder.bindEntry(entryItemList[position])
   
-  override fun getItemCount(): Int = entryItemList!!.size
+  override fun getItemCount(): Int = entryItemList.size
 }

@@ -30,7 +30,7 @@ import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -46,7 +46,7 @@ import javax.inject.Inject
 class ConvertToCSV(private var context: Context) {
   
   @Inject
-  lateinit var sharedPreferenceManager: SharedPreferenceManager
+  lateinit var sharedPreferencesManager: SharedPreferencesManager
   @Inject
   lateinit var databaseManager: DatabaseManager
   @Inject
@@ -89,7 +89,7 @@ class ConvertToCSV(private var context: Context) {
           for (currentEntry in entryItems.indices) {
             val entry = entryItems[currentEntry]
             val date = entry.date
-            val entryTime: String = if (sharedPreferenceManager.getBoolean(Constants.MILITARY_TIME)) {
+            val entryTime: String = if (sharedPreferencesManager.getBoolean(Constants.MILITARY_TIME)) {
               dateFormatter.twentyFourHourFormat(date)
             } else {
               dateFormatter.twelveHourFormat(date)

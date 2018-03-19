@@ -22,12 +22,12 @@ import dagger.Provides
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.RealmTransactions
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 
 @Module
 class DataModule {
   
   @Provides
-  fun providesDatabaseManager(sharedPreferences: SharedPreferences) = DatabaseManager(RealmTransactions(), DateAssistant(), SharedPreferenceManager(sharedPreferences))
+  fun providesDatabaseManager(sharedPreferences: SharedPreferences) = DatabaseManager(RealmTransactions(), DateAssistant(), SharedPreferencesManager(sharedPreferences))
   
 }

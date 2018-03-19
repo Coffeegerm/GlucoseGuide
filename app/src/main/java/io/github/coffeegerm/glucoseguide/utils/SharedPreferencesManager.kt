@@ -23,7 +23,7 @@ import javax.inject.Inject
  * Class made to pull out the logic in classes handling SharedPreferences
  */
 
-class SharedPreferenceManager @Inject constructor(private var sharedPreferences: SharedPreferences) {
+class SharedPreferencesManager @Inject constructor(private var sharedPreferences: SharedPreferences) {
   
   fun getBoolean(key: String): Boolean = sharedPreferences.getBoolean(key, false)
   

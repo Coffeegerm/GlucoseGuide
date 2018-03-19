@@ -21,19 +21,19 @@ import android.support.v7.app.AppCompatActivity
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.utils.Constants
-import io.github.coffeegerm.glucoseguide.utils.SharedPreferenceManager
+import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
   
   @Inject
-  lateinit var sharedPreferenceManager: SharedPreferenceManager
+  lateinit var sharedPreferencesManager: SharedPreferencesManager
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     syringe.inject(this)
-    if (sharedPreferenceManager.getBoolean(Constants.PREF_DARK_MODE)) setTheme(R.style.AppTheme_Dark)
+    if (sharedPreferencesManager.getBoolean(Constants.PREF_DARK_MODE)) setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_main)
     bottom_navigation.onNavigationItemSelectedListener = NavigationOnItemSelectedListener(supportFragmentManager, context = applicationContext)
     bottom_navigation.enableShiftingMode(false)

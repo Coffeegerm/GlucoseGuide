@@ -52,11 +52,11 @@ class ListFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     list_recycler_view.adapter = listAdapter
-    listViewModel.getLiveData().observe(this, Observer<RealmResults<EntryItem>> { entries -> checkListSize(entries!!) })
+    listViewModel.getEntriesLiveData().observe(this, Observer<RealmResults<EntryItem>> { entries -> updateUI(entries!!) })
   }
   
-  private fun checkListSize(entriesToShow: RealmResults<EntryItem>) {
-    if (entriesToShow.size == 0) {
+  private fun updateUI(entriesToShow: RealmResults<EntryItem>) {
+    if (entriesToShow.isEmpty()) {
       list_recycler_view.visibility = View.GONE
       empty_item_list.visibility = View.VISIBLE
     } else {
@@ -68,7 +68,7 @@ class ListFragment : Fragment() {
   }
   
   private fun setAdapterItems(entriesToShow: RealmResults<EntryItem>) {
-    listAdapter.setListItems(entriesToShow)
+    listAdapter.setEntries(entriesToShow)
     listAdapter.notifyDataSetChanged()
   }
 }
