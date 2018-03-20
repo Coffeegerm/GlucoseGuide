@@ -26,7 +26,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.data.model.Entry
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.item_empty_list.*
@@ -52,10 +52,10 @@ class ListFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     list_recycler_view.adapter = listAdapter
-    listViewModel.getEntriesLiveData().observe(this, Observer<RealmResults<EntryItem>> { entries -> updateUI(entries!!) })
+    listViewModel.getEntriesLiveData().observe(this, Observer<RealmResults<Entry>> { entries -> updateUI(entries!!) })
   }
   
-  private fun updateUI(entriesToShow: RealmResults<EntryItem>) {
+  private fun updateUI(entriesToShow: RealmResults<Entry>) {
     if (entriesToShow.isEmpty()) {
       list_recycler_view.visibility = View.GONE
       empty_item_list.visibility = View.VISIBLE
@@ -68,7 +68,7 @@ class ListFragment : Fragment() {
     }
   }
   
-  private fun setAdapterItems(entriesToShow: RealmResults<EntryItem>) {
+  private fun setAdapterItems(entriesToShow: RealmResults<Entry>) {
     listAdapter.setEntries(entriesToShow)
     listAdapter.notifyDataSetChanged()
   }

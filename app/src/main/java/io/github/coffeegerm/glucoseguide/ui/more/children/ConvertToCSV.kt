@@ -84,7 +84,7 @@ class ConvertToCSV(private var context: Context) {
                 resources.getString(R.string.insulin)
           )
           
-          // Data from EntryItem
+          // Data from Entry
           // | Date | Time | Blood Glucose | Carbohydrates | Insulin
           for (currentEntry in entryItems.indices) {
             val entry = entryItems[currentEntry]

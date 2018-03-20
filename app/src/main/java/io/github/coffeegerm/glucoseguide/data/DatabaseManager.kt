@@ -16,7 +16,7 @@
 
 package io.github.coffeegerm.glucoseguide.data
 
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.data.model.Entry
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import io.realm.Realm
@@ -29,16 +29,16 @@ class DatabaseManager @Inject constructor(private var realmTransactions: RealmTr
   
   val realm: Realm = Realm.getDefaultInstance()
   
-  fun getEntryFromId(entryId: String) = realm.where(EntryItem::class.java).equalTo("id", entryId).findFirst()
+  fun getEntryFromId(entryId: String) = realm.where(Entry::class.java).equalTo("id", entryId).findFirst()
   
-  fun insertToRealm(item: EntryItem) = realmTransactions.insertEntryToRealm(item)
+  fun insertToRealm(item: Entry) = realmTransactions.insertEntryToRealm(item)
   
-  fun deleteEntry(item: EntryItem) = realmTransactions.deleteEntry(item)
+  fun deleteEntry(item: Entry) = realmTransactions.deleteEntry(item)
   
-  fun copyToRealm(item: EntryItem) = realmTransactions.copyEntryToRealm(item)
+  fun copyToRealm(item: Entry) = realmTransactions.copyEntryToRealm(item)
   
   fun getAverage(): Int {
-    val entryItems = realm.where(EntryItem::class.java).findAll()
+    val entryItems = realm.where(Entry::class.java).findAll()
     var total = 0
     for (position in entryItems.indices) {
       val item = entryItems[position]!!
@@ -48,7 +48,7 @@ class DatabaseManager @Inject constructor(private var realmTransactions: RealmTr
   }
   
   fun getHighestBloodGlucose(): Int {
-    val entryItems = realm.where(EntryItem::class.java).findAll()
+    val entryItems = realm.where(Entry::class.java).findAll()
     var highest = 0
     for (position in entryItems.indices) {
       val item = entryItems[position]!!
@@ -61,7 +61,7 @@ class DatabaseManager @Inject constructor(private var realmTransactions: RealmTr
   
   
   fun getLowestBloodGlucose(): Int {
-    val entryItems = realm.where(EntryItem::class.java).findAll()
+    val entryItems = realm.where(Entry::class.java).findAll()
     var lowest = 1000
     for (position in entryItems.indices) {
       val item = entryItems[position]!!
@@ -74,7 +74,7 @@ class DatabaseManager @Inject constructor(private var realmTransactions: RealmTr
   
   fun getHighestGlucoseFromDate(providedDate: Date): Int {
     var highest = 0
-    val entriesToCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    val entriesToCheck = realm.where(Entry::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
     entriesToCheck.indices
           .asSequence()
           .map { entriesToCheck[it]!! }
@@ -84,7 +84,7 @@ class DatabaseManager @Inject constructor(private var realmTransactions: RealmTr
   }
   
   fun getAverageGlucoseFromDate(providedDate: Date): Int {
-    val entriesToCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    val entriesToCheck = realm.where(Entry::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
     val total = entriesToCheck.indices
           .map { entriesToCheck[it]!! }
           .sumBy { it.bloodGlucose }
@@ -93,7 +93,7 @@ class DatabaseManager @Inject constructor(private var realmTransactions: RealmTr
   
   fun getLowestGlucoseFromDate(providedDate: Date): Int {
     var lowest = 1000
-    val entriesTOCheck = realm.where(EntryItem::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
+    val entriesTOCheck = realm.where(Entry::class.java).greaterThan("date", providedDate).greaterThan("bloodGlucose", 0).findAll()
     entriesTOCheck.indices
           .asSequence()
           .map { entriesTOCheck[it]!! }
@@ -130,8 +130,8 @@ class DatabaseManager @Inject constructor(private var realmTransactions: RealmTr
     return grade
   }
   
-  fun getAllSortedDescending(): RealmResults<EntryItem> = realm.where(EntryItem::class.java).sort("date", Sort.DESCENDING).findAll()
+  fun getAllSortedDescending(): RealmResults<Entry> = realm.where(Entry::class.java).sort("date", Sort.DESCENDING).findAll()
   
-  fun getAllFromDate(date: Date): RealmResults<EntryItem> = realm.where(EntryItem::class.java).greaterThan("date", date).greaterThan("bloodGlucose", 0).findAll()
+  fun getAllFromDate(date: Date): RealmResults<Entry> = realm.where(Entry::class.java).greaterThan("date", date).greaterThan("bloodGlucose", 0).findAll()
   
 }

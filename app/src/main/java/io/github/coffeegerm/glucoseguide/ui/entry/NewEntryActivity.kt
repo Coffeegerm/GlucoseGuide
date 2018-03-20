@@ -34,7 +34,7 @@ import android.widget.Toast
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.data.model.Entry
 import io.github.coffeegerm.glucoseguide.utils.Constants.BOLUS_RATIO
 import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION
 import io.github.coffeegerm.glucoseguide.utils.Constants.NOTIFICATION_ID
@@ -142,7 +142,7 @@ class NewEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
     if (new_entry_blood_glucose_level.text.isEmpty())
       Toast.makeText(this, R.string.no_glucose_toast, Toast.LENGTH_SHORT).show()
     else {
-      val entryItem = EntryItem()
+      val entryItem = Entry()
       val date = calendarToBeSaved.time
       entryItem.date = date
       entryItem.status = status

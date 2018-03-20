@@ -33,7 +33,7 @@ import android.widget.Toast
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.data.model.Entry
 import io.github.coffeegerm.glucoseguide.ui.MainActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
@@ -56,14 +56,14 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   @Inject
   lateinit var dateFormatter: DateFormatter
   
-  // Original values from oldItem. Compare to possible updated values to find what needs to be updated in database
+  // Original values from old. Compare to possible updated values to find what needs to be updated in database
   private lateinit var originalDate: Date
   private var originalStatus: Int = 0
   private var originalBloodGlucose: Int = 0
   private var originalCarbohydrates: Int = 0
   private var originalInsulin: Double = 0.0
   
-  // items to be used to altered to show that the oldItem has been updated
+  // items to be used to altered to show that the old has been updated
   private var updatedStatus: Int = 0
   internal var updatedBloodGlucose: Int = 0
   internal var updatedCarbohydrates: Int = 0
@@ -72,7 +72,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   private var updatedCalendar: Calendar = Calendar.getInstance()
   
   private lateinit var itemId: String
-  private lateinit var oldItem: EntryItem
+  private lateinit var old: Entry
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -86,7 +86,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     supportActionBar?.setDisplayShowHomeEnabled(true)
     
     itemId = intent.getStringExtra(Constants.ITEM_ID)
-    oldItem = databaseManager.getEntryFromId(itemId)!!
+    old = databaseManager.getEntryFromId(itemId)!!
     
     getOriginalValues()
     
@@ -178,7 +178,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
       builder.setTitle(R.string.delete_single_entry)
             .setMessage(R.string.delete_single_entry_message)
             .setPositiveButton(android.R.string.yes) { _, _ ->
-              databaseManager.deleteEntry(oldItem)
+              databaseManager.deleteEntry(old)
               Toast.makeText(this, R.string.entry_deleted, Toast.LENGTH_SHORT).show()
               startActivity(Intent(applicationContext, MainActivity::class.java))
             }
@@ -192,12 +192,12 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   }
   
   private fun getOriginalValues() {
-    originalStatus = oldItem.status
-    originalCalendar.time = oldItem.date
+    originalStatus = old.status
+    originalCalendar.time = old.date
     originalDate = originalCalendar.time
-    originalBloodGlucose = oldItem.bloodGlucose
-    originalCarbohydrates = oldItem.carbohydrates
-    originalInsulin = oldItem.insulin
+    originalBloodGlucose = old.bloodGlucose
+    originalCarbohydrates = old.carbohydrates
+    originalInsulin = old.insulin
   }
   
   private fun setHints() {
@@ -217,7 +217,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
   
   private fun updateEntry() {
     val dateToSave = Date()
-    val itemToSave = EntryItem()
+    val itemToSave = Entry()
     itemToSave.status = updatedStatus
     when (wasDateChanged) {
       true -> {
@@ -232,7 +232,7 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     if (edit_entry_blood_glucose_level.text.isNotEmpty()) itemToSave.bloodGlucose = edit_entry_blood_glucose_level.text.toString().toInt() else itemToSave.bloodGlucose = originalBloodGlucose
     if (edit_entry_carbohydrates_amount.text.isNotEmpty()) itemToSave.carbohydrates = edit_entry_carbohydrates_amount.text.toString().toInt() else itemToSave.carbohydrates = originalCarbohydrates
     if (edit_entry_insulin_units.text.isNotEmpty()) itemToSave.insulin = edit_entry_insulin_units.text.toString().toDouble() else itemToSave.insulin = originalInsulin
-    databaseManager.deleteEntry(oldItem)
+    databaseManager.deleteEntry(old)
     databaseManager.copyToRealm(itemToSave)
     finish()
   }

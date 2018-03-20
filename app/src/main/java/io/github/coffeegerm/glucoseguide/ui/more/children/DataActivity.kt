@@ -22,7 +22,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.data.model.Entry
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.SharedPreferencesManager
 import io.realm.Realm
@@ -71,7 +71,7 @@ class DataActivity : AppCompatActivity() {
           .setPositiveButton(android.R.string.yes) { _, _ ->
             // continue with delete
             try {
-              realm.executeTransaction { realm -> realm.delete(EntryItem::class.java) }
+              realm.executeTransaction { realm -> realm.delete(Entry::class.java) }
             } finally {
               realm.close()
             }

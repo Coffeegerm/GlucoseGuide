@@ -19,7 +19,7 @@ package io.github.coffeegerm.glucoseguide.data.model
 import io.realm.RealmObject
 import java.util.*
 
-open class EntryItem : RealmObject() {
+open class Entry : RealmObject() {
   var id: String = UUID.randomUUID().toString()
   var status: Int = 0
   var date: Date? = null

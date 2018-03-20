@@ -23,7 +23,7 @@ import android.view.View
 import android.widget.Toast
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.data.model.Entry
 import io.github.coffeegerm.glucoseguide.ui.entry.EditEntryActivity
 import io.github.coffeegerm.glucoseguide.utils.Constants
 import io.github.coffeegerm.glucoseguide.utils.DateFormatter
@@ -42,7 +42,7 @@ class ListViewHolder(private val entryView: View) : RecyclerView.ViewHolder(entr
   @Inject
   lateinit var sharedPreferencesManager: SharedPreferencesManager
   
-  fun bindEntry(entry: EntryItem) {
+  fun bindEntry(entry: Entry) {
     entryView.item_list_date.text = dateFormatter.formatDate(entry.date)
     
     if (sharedPreferencesManager.getBoolean(Constants.MILITARY_TIME)) {

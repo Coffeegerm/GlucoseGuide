@@ -21,21 +21,21 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.model.EntryItem
+import io.github.coffeegerm.glucoseguide.data.model.Entry
 
 class ListAdapter internal constructor(var context: Context) : RecyclerView.Adapter<ListViewHolder>() {
   
   
   private var inflater: LayoutInflater = LayoutInflater.from(context)
-  private var entryItemList: List<EntryItem> = mutableListOf()
+  private var entryList: List<Entry> = mutableListOf()
   
-  fun setEntries(providedEntries: List<EntryItem>) {
-    this.entryItemList = providedEntries
+  fun setEntries(providedEntries: List<Entry>) {
+    this.entryList = providedEntries
   }
   
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder = ListViewHolder(inflater.inflate(R.layout.item_list, parent, false))
   
-  override fun onBindViewHolder(holder: ListViewHolder, position: Int) = holder.bindEntry(entryItemList[position])
+  override fun onBindViewHolder(holder: ListViewHolder, position: Int) = holder.bindEntry(entryList[position])
   
-  override fun getItemCount(): Int = entryItemList.size
+  override fun getItemCount(): Int = entryList.size
 }
