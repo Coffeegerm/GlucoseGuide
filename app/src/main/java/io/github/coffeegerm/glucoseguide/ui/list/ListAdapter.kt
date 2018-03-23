@@ -30,7 +30,12 @@ class ListAdapter internal constructor(var context: Context) : RecyclerView.Adap
   private var entryList: List<Entry> = mutableListOf()
   
   fun setEntries(providedEntries: List<Entry>) {
-    this.entryList = providedEntries
+    entryList = providedEntries
+  }
+  
+  fun updateEntries(providedEntries: List<Entry>) {
+    entryList = providedEntries
+    notifyDataSetChanged()
   }
   
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder = ListViewHolder(inflater.inflate(R.layout.item_list, parent, false))

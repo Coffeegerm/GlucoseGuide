@@ -24,27 +24,23 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
+import io.github.coffeegerm.glucoseguide.data.EntryListViewModel
 import io.github.coffeegerm.glucoseguide.data.model.Entry
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.item_empty_list.*
-import javax.inject.Inject
+import java.util.*
 
 class ListFragment : Fragment() {
   
-  @Inject
-  lateinit var listViewModelFactory: ListViewModelFactory
-  
   private lateinit var listAdapter: ListAdapter
-  private lateinit var listViewModel: ListViewModel
+  private lateinit var entryListViewModel: EntryListViewModel
+  private var entryList: List<Entry> = Collections.emptyList()
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    GlucoseGuide.syringe.inject(this)
     listAdapter = context?.let { ListAdapter(it) }!!
-    listViewModel = ViewModelProviders.of(this, listViewModelFactory).get(ListViewModel::class.java)
+    entryListViewModel = ViewModelProviders.of(this).get(EntryListViewModel::class.java)
   }
   
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_list, container, false)
@@ -52,10 +48,13 @@ class ListFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     list_recycler_view.adapter = listAdapter
-    listViewModel.getEntriesLiveData().observe(this, Observer<RealmResults<Entry>> { entries -> updateUI(entries!!) })
+    entryListViewModel.getEntries().observe(this, Observer<List<Entry>> { entries ->
+      entryList = entries!!
+      updateUI(entryList)
+    })
   }
   
-  private fun updateUI(entriesToShow: RealmResults<Entry>) {
+  private fun updateUI(entriesToShow: List<Entry>) {
     if (entriesToShow.isEmpty()) {
       list_recycler_view.visibility = View.GONE
       empty_item_list.visibility = View.VISIBLE
@@ -64,12 +63,7 @@ class ListFragment : Fragment() {
       empty_item_list.visibility = View.GONE
       list_recycler_view.layoutManager = LinearLayoutManager(activity)
       list_recycler_view.setHasFixedSize(true)
-      setAdapterItems(entriesToShow)
+      listAdapter.updateEntries(entriesToShow)
     }
-  }
-  
-  private fun setAdapterItems(entriesToShow: RealmResults<Entry>) {
-    listAdapter.setEntries(entriesToShow)
-    listAdapter.notifyDataSetChanged()
   }
 }
