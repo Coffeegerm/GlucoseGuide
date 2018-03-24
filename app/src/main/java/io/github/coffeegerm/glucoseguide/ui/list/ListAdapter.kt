@@ -29,10 +29,6 @@ class ListAdapter internal constructor(var context: Context) : RecyclerView.Adap
   private var inflater: LayoutInflater = LayoutInflater.from(context)
   private var entryList: List<Entry> = mutableListOf()
   
-  fun setEntries(providedEntries: List<Entry>) {
-    entryList = providedEntries
-  }
-  
   fun updateEntries(providedEntries: List<Entry>) {
     entryList = providedEntries
     notifyDataSetChanged()

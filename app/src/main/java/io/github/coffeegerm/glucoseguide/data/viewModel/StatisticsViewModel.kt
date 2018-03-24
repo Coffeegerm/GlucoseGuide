@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.statistics
+package io.github.coffeegerm.glucoseguide.data.viewModel
 
 import android.arch.lifecycle.ViewModel
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager

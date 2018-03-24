@@ -30,6 +30,8 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
+import io.github.coffeegerm.glucoseguide.data.viewModel.GradeViewModel
+import io.github.coffeegerm.glucoseguide.data.viewModel.GradeViewModelFactory
 import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
 

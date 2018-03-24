@@ -14,25 +14,23 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.statistics
+package io.github.coffeegerm.glucoseguide.data.viewModel
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
-import io.github.coffeegerm.glucoseguide.utils.DateAssistant
-import javax.inject.Inject
 
 /**
  * TODO: Add class comment header
  */
 
-class StatisticsViewModelFactory @Inject constructor(private val databaseManager: DatabaseManager, private val dateAssistant: DateAssistant) : ViewModelProvider.Factory {
-  @Suppress("UNCHECKED_CAST")
-  override fun <T : ViewModel> create(modelClass: Class<T>): T {
-    if (modelClass.isAssignableFrom(StatisticsViewModel::class.java)) {
-      val viewModel = StatisticsViewModel(databaseManager, dateAssistant)
-      return viewModel as T
-    }
-    throw IllegalArgumentException("Unknown class name")
+class GradeViewModel(private var databaseManager: DatabaseManager) : ViewModel() {
+  
+  private var grade = MutableLiveData<String>()
+  
+  fun getGrade(): LiveData<String> {
+    grade.value = databaseManager.getGlucoseGrade()
+    return grade
   }
 }

@@ -42,14 +42,13 @@ class ListViewHolder(private val entryView: View) : RecyclerView.ViewHolder(entr
   @Inject
   lateinit var sharedPreferencesManager: SharedPreferencesManager
   
+  private lateinit var entryToUse: Entry
+  
   fun bindEntry(entry: Entry) {
-    entryView.item_list_date.text = dateFormatter.formatDate(entry.date)
+    entryToUse = entry
+    entryView.item_list_date.text = dateFormatter.formatDate(entryToUse.date)
     
-    if (sharedPreferencesManager.getBoolean(Constants.MILITARY_TIME)) {
-      entryView.item_list_time.text = entry.date?.let { dateFormatter.twentyFourHourFormat(it) }
-    } else {
-      entryView.item_list_time.text = entry.date?.let { dateFormatter.twelveHourFormat(it) }
-    }
+    if (sharedPreferencesManager.getBoolean(Constants.MILITARY_TIME)) entryView.item_list_time.text = entryToUse.date?.let { dateFormatter.twentyFourHourFormat(it) } else entryView.item_list_time.text = entryToUse.date?.let { dateFormatter.twelveHourFormat(it) }
     
     entryView.setOnClickListener {
       Toast.makeText(entryView.context, R.string.list_item_short_click, Toast.LENGTH_SHORT).show()
@@ -57,23 +56,23 @@ class ListViewHolder(private val entryView: View) : RecyclerView.ViewHolder(entr
     
     entryView.setOnLongClickListener {
       val editEntryActivity = Intent(entryView.context, EditEntryActivity::class.java)
-      editEntryActivity.putExtra(Constants.ITEM_ID, entry.id)
+      editEntryActivity.putExtra(Constants.ITEM_ID, entryToUse.id)
       entryView.context.startActivity(editEntryActivity)
       true
     }
     
-    if (entry.bloodGlucose.toString() != "0")
-      entryView.item_list_blood_glucose.text = entry.bloodGlucose.toString()
+    if (entryToUse.bloodGlucose.toString() != "0")
+      entryView.item_list_blood_glucose.text = entryToUse.bloodGlucose.toString()
     
-    if (entry.carbohydrates.toString() != "0")
-      entryView.item_list_carbohydrates.text = entry.carbohydrates.toString()
+    if (entryToUse.carbohydrates.toString() != "0")
+      entryView.item_list_carbohydrates.text = entryToUse.carbohydrates.toString()
     
-    if (entry.insulin.toString() != "0.0")
-      entryView.item_list_insulin.text = entry.insulin.toString()
+    if (entryToUse.insulin.toString() != "0.0")
+      entryView.item_list_insulin.text = entryToUse.insulin.toString()
     
-    if (entry.status > 0) {
+    if (entryToUse.status > 0) {
       entryView.status_image.visibility = View.VISIBLE
-      when (entry.status) {
+      when (entryToUse.status) {
         1 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.breakfast))
         2 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.lunch))
         3 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.dinner))

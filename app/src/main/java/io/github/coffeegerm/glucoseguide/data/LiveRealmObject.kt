@@ -22,11 +22,6 @@ import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.RealmObjectChangeListener
 
-
-/**
- * TODO: Add class comment header
- */
-
 /**
  * This class represents a RealmObject wrapped inside a LiveData.
  *

@@ -14,23 +14,29 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.grade
+package io.github.coffeegerm.glucoseguide.data.viewModel
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import io.github.coffeegerm.glucoseguide.data.DatabaseManager
+import io.github.coffeegerm.glucoseguide.data.LiveRealmObject
+import io.github.coffeegerm.glucoseguide.data.model.Entry
+import io.realm.Realm
 
-/**
- * TODO: Add class comment header
- */
-
-class GradeViewModel(private var databaseManager: DatabaseManager) : ViewModel() {
+class EntryViewModel : ViewModel() {
   
-  private var grade = MutableLiveData<String>()
+  private var realm: Realm = Realm.getDefaultInstance()
+  private lateinit var liveEntry: LiveData<Entry>
   
-  fun getGrade(): LiveData<String> {
-    grade.value = databaseManager.getGlucoseGrade()
-    return grade
+  fun getEntry(): LiveData<Entry> = liveEntry
+  
+  fun setup(entryId: String) {
+    val entry = realm.where(Entry::class.java).equalTo("id", entryId).findFirst()
+          ?: throw IllegalStateException("No entry found")
+    liveEntry = LiveRealmObject(entry)
+  }
+  
+  override fun onCleared() {
+    realm.close()
+    super.onCleared()
   }
 }

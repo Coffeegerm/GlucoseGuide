@@ -25,8 +25,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.data.EntryListViewModel
 import io.github.coffeegerm.glucoseguide.data.model.Entry
+import io.github.coffeegerm.glucoseguide.data.viewModel.EntryListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.item_empty_list.*
 import java.util.*

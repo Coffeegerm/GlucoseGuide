@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.list
+package io.github.coffeegerm.glucoseguide.data.viewModel
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import javax.inject.Inject
 
-class ListViewModelFactory @Inject constructor(private val databaseManager: DatabaseManager) : ViewModelProvider.Factory {
+/**
+ * TODO: Add class comment header
+ */
+
+class GradeViewModelFactory @Inject constructor(private val databaseManager: DatabaseManager) : ViewModelProvider.Factory {
   @Suppress("UNCHECKED_CAST")
   override fun <T : ViewModel> create(modelClass: Class<T>): T {
-    if (modelClass.isAssignableFrom(ListViewModel::class.java)) {
-      val viewModel = ListViewModel(databaseManager)
+    if (modelClass.isAssignableFrom(GradeViewModel::class.java)) {
+      val viewModel = GradeViewModel(databaseManager)
       return viewModel as T
     }
     throw IllegalArgumentException("Unknown class name")

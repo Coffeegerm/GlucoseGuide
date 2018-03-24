@@ -14,29 +14,25 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.data
+package io.github.coffeegerm.glucoseguide.data.viewModel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
+import io.github.coffeegerm.glucoseguide.data.LiveRealmResults
 import io.github.coffeegerm.glucoseguide.data.model.Entry
 import io.realm.Realm
+import io.realm.Sort
 
-/**
- * TODO: Add class comment header
- */
-
-class EntryViewModel : ViewModel() {
+class EntryListViewModel : ViewModel() {
   
   private var realm: Realm = Realm.getDefaultInstance()
-  private lateinit var liveEntry: LiveData<Entry>
+  private var entries: LiveData<List<Entry>>
   
-  fun getEntry(): LiveData<Entry> = liveEntry
-  
-  fun setup(entryId: String) {
-    val entry = realm.where(Entry::class.java).equalTo("id", entryId).findFirst()
-          ?: throw IllegalStateException("No entry found")
-    liveEntry = LiveRealmObject(entry)
+  init {
+    entries = LiveRealmResults<Entry>(realm.where(Entry::class.java).sort("date", Sort.DESCENDING).findAllAsync())
   }
+  
+  fun getEntries(): LiveData<List<Entry>> = entries
   
   override fun onCleared() {
     realm.close()

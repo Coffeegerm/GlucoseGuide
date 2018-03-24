@@ -24,8 +24,8 @@ import android.view.View
 import android.view.ViewGroup
 import io.github.coffeegerm.glucoseguide.GlucoseGuide.Companion.syringe
 import io.github.coffeegerm.glucoseguide.R
-import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModel
-import io.github.coffeegerm.glucoseguide.ui.statistics.StatisticsViewModelFactory
+import io.github.coffeegerm.glucoseguide.data.viewModel.StatisticsViewModel
+import io.github.coffeegerm.glucoseguide.data.viewModel.StatisticsViewModelFactory
 import kotlinx.android.synthetic.main.fragment_all_stats.*
 import javax.inject.Inject
 

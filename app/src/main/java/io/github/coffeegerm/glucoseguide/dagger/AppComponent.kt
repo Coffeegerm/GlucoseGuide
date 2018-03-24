@@ -25,7 +25,7 @@ import io.github.coffeegerm.glucoseguide.ui.grade.GradeFragment
 import io.github.coffeegerm.glucoseguide.ui.list.ListAdapter
 import io.github.coffeegerm.glucoseguide.ui.list.ListFragment
 import io.github.coffeegerm.glucoseguide.ui.list.ListViewHolder
-import io.github.coffeegerm.glucoseguide.ui.list.ListViewModel
+import io.github.coffeegerm.glucoseguide.data.viewModel.ListViewModel
 import io.github.coffeegerm.glucoseguide.ui.more.MoreFragment
 import io.github.coffeegerm.glucoseguide.ui.more.children.ConvertToCSV
 import io.github.coffeegerm.glucoseguide.ui.more.children.DataActivity

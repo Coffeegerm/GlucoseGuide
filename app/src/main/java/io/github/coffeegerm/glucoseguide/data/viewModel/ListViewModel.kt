@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.coffeegerm.glucoseguide.ui.list
+package io.github.coffeegerm.glucoseguide.data.viewModel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
