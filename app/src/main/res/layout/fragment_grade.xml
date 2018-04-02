@@ -23,8 +23,18 @@
     android:id="@+id/grade_toolbar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
-    android:background="@color/colorPrimary"
-    android:elevation="@dimen/appBarElevation" />
+    android:background="@color/colorPrimary" />
+
+  <TextView
+    android:id="@+id/textView3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="16dp"
+    android:fontFamily="@font/avenir_bold"
+    android:text="@string/graph_desc"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/grade_toolbar" />
 
   <com.github.mikephil.charting.charts.LineChart
     android:id="@+id/lineChart"
@@ -32,11 +42,12 @@
     android:layout_height="200dp"
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="16dp"
+    android:padding="4dp"
+    android:layout_marginTop="8dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/grade_toolbar" />
+    app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
   <TextView
     android:id="@+id/overall_grade_label"
@@ -46,7 +57,6 @@
     android:layout_marginTop="8dp"
     android:fontFamily="@font/avenir_medium"
     android:text="@string/over_grade_label"
-    android:textSize="16sp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/lineChart" />
 
@@ -57,5 +67,6 @@
     android:layout_marginEnd="16dp"
     app:layout_constraintBaseline_toBaselineOf="@+id/overall_grade_label"
     app:layout_constraintEnd_toEndOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -20,29 +20,29 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import io.github.coffeegerm.glucoseguide.GlucoseGuide
 import io.github.coffeegerm.glucoseguide.R
+import io.github.coffeegerm.glucoseguide.data.DatabaseManager
 import io.github.coffeegerm.glucoseguide.data.viewModel.GradeViewModel
 import io.github.coffeegerm.glucoseguide.data.viewModel.GradeViewModelFactory
+import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import kotlinx.android.synthetic.main.fragment_grade.*
 import javax.inject.Inject
-
-/**
- * TODO: Add class comment header
- */
 
 class GradeFragment : Fragment() {
   
   @Inject
   lateinit var gradeViewModelFactory: GradeViewModelFactory
+  @Inject
+  lateinit var databaseManager: DatabaseManager
+  @Inject
+  lateinit var dateAssistant: DateAssistant
   
   private lateinit var gradeViewModel: GradeViewModel
   
@@ -58,46 +58,41 @@ class GradeFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     gradeViewModel.getGrade().observe(this, Observer<String> { grade -> overall_grade.text = grade })
     
-    val points = mutableListOf<Entry>()
-    val numberOfItemsInDatabase = mutableListOf<Int>() // should be the size of the database for reference
+    val numberOfEntries = databaseManager.getAllFromDate(dateAssistant.getThreeDaysAgoDate()).size
     
-    val lineDataSet = LineDataSet(points, "entries")
-    
-    val textColor = context?.let { ContextCompat.getColor(it, R.color.colorAccent) }
-    
-    textColor?.let { handleXAxis(it) }
-    textColor?.let { handleLeftAxis(it) }
-    handleRightAxis()
-    
-    lineChart.setDrawGridBackground(false)
-    lineChart.setPinchZoom(false)
-    lineChart.isDoubleTapToZoomEnabled = false
-    lineChart.legend.isEnabled = false
-    val description = Description()
-    description.text = ""
-    lineChart.description = description
+    lineChartStyling()
+    if (numberOfEntries != 0) {
+      lineChart.setVisibleXRangeMaximum(numberOfEntries.toFloat())
+      lineChart.data = getGraphData()
+    }
     
     lineChart.invalidate()
   }
   
-  private fun handleXAxis(textColor: Int) {
-    lineChart.xAxis.setLabelCount(4, true)
-    lineChart.xAxis.setDrawAxisLine(false)
-    lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-    lineChart.xAxis.setDrawGridLines(false)
-    lineChart.xAxis.textColor = textColor
+  private fun getGraphData(): LineData {
+    val points = mutableListOf<Entry>() // points that are going to be presented on the line chart
+    
+    val entriesFromLastThreeDays = databaseManager.getAllFromDate(dateAssistant.getThreeDaysAgoDate())
+    
+    entriesFromLastThreeDays.forEach {
+      points.add(Entry(it.date!!.time.toFloat(), it.bloodGlucose.toFloat()))
+    }
+    
+    // data set that is going to be passed to the line chart to view
+    // will be last three days of glucose measurements
+    val lineDataSet = LineDataSet(points, "entries")
+    
+    return LineData(lineDataSet)
   }
   
-  private fun handleLeftAxis(textColor: Int) {
-    lineChart.axisLeft.setLabelCount(3, true)
-    lineChart.axisLeft.textColor = textColor
-    lineChart.axisLeft.setDrawAxisLine(false)
-    lineChart.axisLeft.yOffset = -8f
-  }
-  
-  private fun handleRightAxis() {
-    lineChart.axisRight.setDrawLabels(false)
-    lineChart.axisRight.setDrawGridLines(false)
-    lineChart.axisRight.setDrawAxisLine(false)
+  private fun lineChartStyling() {
+    lineChart.setDrawGridBackground(false)
+    lineChart.setPinchZoom(false)
+    lineChart.axisLeft.isEnabled = false
+    lineChart.axisRight.isEnabled = false
+    lineChart.xAxis.isEnabled = false
+    lineChart.isDoubleTapToZoomEnabled = false
+    lineChart.legend.isEnabled = false
+    lineChart.description.isEnabled = false
   }
 }

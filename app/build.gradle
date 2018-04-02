@@ -65,6 +65,7 @@ dependencies {
   implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
 
   implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+  implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 }
 repositories {
   mavenCentral()

@@ -17,6 +17,7 @@
 package io.github.coffeegerm.glucoseguide
 
 import android.app.Application
+import com.jakewharton.threetenabp.AndroidThreeTen
 import io.github.coffeegerm.glucoseguide.BuildConfig.DEBUG
 import io.github.coffeegerm.glucoseguide.dagger.AppComponent
 import io.github.coffeegerm.glucoseguide.dagger.AppModule
@@ -35,6 +36,7 @@ class GlucoseGuide : Application() {
   
   override fun onCreate() {
     super.onCreate()
+    AndroidThreeTen.init(this)
     initRealm()
     syringe = DaggerAppComponent
           .builder()

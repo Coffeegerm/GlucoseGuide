@@ -48,29 +48,28 @@
       android:layout_height="match_parent"
       android:orientation="vertical"
       android:padding="16dp">
-  
+
       <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    
+
         <TextView
+          style="@style/entryLabelStyle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/avenir_demi_bold"
-          android:text="@string/status"
-          android:textSize="18sp" />
-    
+          android:text="@string/status" />
+
         <View
           android:layout_width="0dp"
           android:layout_height="0dp"
           android:layout_weight="1" />
-    
+
         <Spinner
           android:id="@+id/status_selector"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:gravity="end" />
-  
+
       </LinearLayout>
 
       <!--Date and Time-->
@@ -79,13 +78,13 @@
         android:layout_height="wrap_content">
 
         <TextView
+          style="@style/entryLabelStyle"
           android:id="@+id/new_entry_date_time_label"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:fontFamily="@font/avenir_demi_bold"
           android:text="@string/new_entry_date_and_time_label"
-          android:textSize="18sp" />
+          />
 
         <EditText
           android:id="@+id/new_entry_date"
@@ -125,13 +124,13 @@
         android:layout_height="wrap_content">
 
         <TextView
+          style="@style/entryLabelStyle"
           android:id="@+id/new_entry_glucose_label"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:fontFamily="@font/avenir_demi_bold"
           android:text="@string/new_entry_blood_glucose_label"
-          android:textSize="18sp" />
+           />
 
         <EditText
           android:id="@+id/new_entry_blood_glucose_level"
@@ -166,10 +165,10 @@
           android:id="@+id/new_entry_carbs_label"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          style="@style/entryLabelStyle"
           android:layout_gravity="center"
-          android:fontFamily="@font/avenir_demi_bold"
           android:text="@string/new_entry_carbohydrates_label"
-          android:textSize="18sp" />
+          />
 
 
         <EditText
@@ -207,9 +206,9 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:fontFamily="@font/avenir_demi_bold"
+          style="@style/entryLabelStyle"
           android:text="@string/new_entry_insulin_label"
-          android:textSize="18sp" />
+           />
 
         <EditText
           android:id="@+id/new_entry_insulin_units"

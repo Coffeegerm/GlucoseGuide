@@ -28,11 +28,10 @@
   <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
     android:id="@+id/bottom_navigation"
     android:layout_width="match_parent"
-    android:elevation="8dp"
-    app:elevation="8dp"
     android:layout_height="45dp"
     android:layout_alignParentBottom="true"
     android:background="@color/colorPrimary"
+    app:elevation="8dp"
     app:itemIconTint="@color/textColorPrimary"
     app:itemTextColor="@color/textColorPrimary"
     app:menu="@menu/bottom_navigation_menu" />
