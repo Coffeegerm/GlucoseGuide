@@ -37,7 +37,14 @@ class GlucoseGuide : Application() {
   override fun onCreate() {
     super.onCreate()
     AndroidThreeTen.init(this)
-    initRealm()
+    
+    Realm.init(this)
+    val config = RealmConfiguration.Builder()
+          .schemaVersion(4)
+          .deleteRealmIfMigrationNeeded()
+          .build()
+    Realm.setDefaultConfiguration(config)
+    
     syringe = DaggerAppComponent
           .builder()
           .appModule(AppModule(this))
@@ -45,14 +52,5 @@ class GlucoseGuide : Application() {
           .build()
     
     if (DEBUG) plant(DebugTree())
-  }
-  
-  private fun initRealm() {
-    Realm.init(this)
-    val config = RealmConfiguration.Builder()
-          .schemaVersion(4)
-          .deleteRealmIfMigrationNeeded()
-          .build()
-    Realm.setDefaultConfiguration(config)
   }
 }
