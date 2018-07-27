@@ -7,7 +7,7 @@ This "Frequently Asked Questions" document will be updated continually to accomm
 GlucoseGuide is an open-source diabetic logbook for users to have a simple way to track their sugar and carbohydrate intake.
 Developed by Coffeegerm with the diabetic user in mind.
 
-##What is the importance of Diabetic logbook?
+## What is the importance of Diabetic logbook?
 
 Log books and data collection are a crucial part of keeping your diabetes under control.
 When you write down the number it is easier to see your blood sugar patterns and know when you are on target or, conversely, why you are not on target.
