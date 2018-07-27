@@ -45,6 +45,15 @@ class AllStatisticsFragment : Fragment() {
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    getStatistics()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    getStatistics()
+  }
+
+  private fun getStatistics() {
     if (statisticsViewModel.getNumberOfEntries() != 0) {
       all_days_statistics_average.text = statisticsViewModel.getAverageBloodGlucose()
       highest_of_all_glucose.text = statisticsViewModel.getHighestBloodGlucose()

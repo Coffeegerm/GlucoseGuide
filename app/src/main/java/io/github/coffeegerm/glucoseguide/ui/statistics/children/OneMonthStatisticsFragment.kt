@@ -28,31 +28,44 @@ import io.github.coffeegerm.glucoseguide.data.viewModel.StatisticsViewModel
 import io.github.coffeegerm.glucoseguide.data.viewModel.StatisticsViewModelFactory
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import kotlinx.android.synthetic.main.fragment_one_month_statistics.*
+import java.util.*
 import javax.inject.Inject
 
 class OneMonthStatisticsFragment : Fragment() {
-  
+
   @Inject
   lateinit var dateAssistant: DateAssistant
   @Inject
   lateinit var statisticsViewModelFactory: StatisticsViewModelFactory
   private lateinit var statisticsViewModel: StatisticsViewModel
-  
+
+  private lateinit var oneMonthAgo: Date
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
     statisticsViewModel = ViewModelProviders.of(this, statisticsViewModelFactory).get(StatisticsViewModel::class.java)
   }
-  
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_one_month_statistics, container, false)
-  
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val oneMonthAgo = dateAssistant.getOneMonthAgo()
+    oneMonthAgo = dateAssistant.getOneMonthAgo()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    getStatistics()
+  }
+
+  private fun getStatistics() {
     if (statisticsViewModel.getNumberOfEntries(oneMonthAgo) != 0) {
       one_month_average.text = statisticsViewModel.getAverageBloodGlucose(oneMonthAgo)
       one_month_highest.text = statisticsViewModel.getHighestBloodGlucose(oneMonthAgo)
       one_month_lowest.text = statisticsViewModel.getLowestBloodGlucose(oneMonthAgo)
     }
   }
+
+
 }

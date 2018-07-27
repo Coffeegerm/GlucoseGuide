@@ -32,28 +32,37 @@ import kotlinx.android.synthetic.main.item_empty_list.*
 import java.util.*
 
 class ListFragment : Fragment() {
-  
+
   private lateinit var listAdapter: ListAdapter
   private lateinit var entryListViewModel: EntryListViewModel
   private var entryList: List<Entry> = Collections.emptyList()
-  
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     listAdapter = context?.let { ListAdapter(it) }!!
     entryListViewModel = ViewModelProviders.of(this).get(EntryListViewModel::class.java)
   }
-  
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_list, container, false)
-  
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     list_recycler_view.adapter = listAdapter
+    updateEntryList()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    updateEntryList()
+  }
+
+  private fun updateEntryList() {
     entryListViewModel.getEntries().observe(this, Observer<List<Entry>> { entries ->
       entryList = entries!!
       updateUI(entryList)
     })
   }
-  
+
   private fun updateUI(entriesToShow: List<Entry>) {
     if (entriesToShow.isEmpty()) {
       list_recycler_view.visibility = View.GONE

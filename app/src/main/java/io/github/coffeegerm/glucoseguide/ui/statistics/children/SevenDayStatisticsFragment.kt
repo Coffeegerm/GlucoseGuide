@@ -28,27 +28,39 @@ import io.github.coffeegerm.glucoseguide.data.viewModel.StatisticsViewModel
 import io.github.coffeegerm.glucoseguide.data.viewModel.StatisticsViewModelFactory
 import io.github.coffeegerm.glucoseguide.utils.DateAssistant
 import kotlinx.android.synthetic.main.fragment_seven_days_stats.*
+import java.util.*
 import javax.inject.Inject
 
 class SevenDayStatisticsFragment : Fragment() {
-  
+
   @Inject
   lateinit var dateAssistant: DateAssistant
   @Inject
   lateinit var statisticsViewModelFactory: StatisticsViewModelFactory
   private lateinit var statisticsViewModel: StatisticsViewModel
-  
+
+  private lateinit var sevenDaysAgo: Date
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     GlucoseGuide.syringe.inject(this)
     statisticsViewModel = ViewModelProviders.of(this, statisticsViewModelFactory).get(StatisticsViewModel::class.java)
   }
-  
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(R.layout.fragment_seven_days_stats, container, false)
-  
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val sevenDaysAgo = dateAssistant.getSevenDaysAgoDate()
+    sevenDaysAgo = dateAssistant.getSevenDaysAgoDate()
+    getStatistics()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    getStatistics()
+  }
+
+  private fun getStatistics() {
     if (statisticsViewModel.getNumberOfEntries(sevenDaysAgo) != 0) {
       seven_days_average.text = statisticsViewModel.getAverageBloodGlucose(sevenDaysAgo)
       seven_days_highest.text = statisticsViewModel.getHighestBloodGlucose(sevenDaysAgo)

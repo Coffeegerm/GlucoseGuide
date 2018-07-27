@@ -37,7 +37,4 @@ class ListViewModel(var databaseManager: DatabaseManager) : ViewModel() {
       entriesLiveData.postValue(it)
     })
   }
-  
-  fun getEntriesLiveData(): LiveData<RealmResults<Entry>> = entriesLiveData
-  
 }
