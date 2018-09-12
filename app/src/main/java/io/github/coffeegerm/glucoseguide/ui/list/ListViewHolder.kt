@@ -76,9 +76,10 @@ class ListViewHolder(private val entryView: View) : RecyclerView.ViewHolder(entr
         1 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.breakfast))
         2 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.lunch))
         3 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.dinner))
-        4 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.sweets))
-        5 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.sick))
-        6 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.exercise))
+        4 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.bedtime))
+        5 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.sweets))
+        6 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.sick))
+        7 -> entryView.status_image.setImageDrawable(ContextCompat.getDrawable(entryView.context, R.drawable.exercise))
       }
     }
   }
