@@ -109,9 +109,6 @@ class EditEntryActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             originalCalendar.get(Calendar.MONTH),
             originalCalendar.get(Calendar.DAY_OF_MONTH))
       
-      if (Build.VERSION.SDK_INT < 21)
-        dialog.window.setBackgroundDrawable(ColorDrawable(0))
-      
       dialog.show()
     }
     

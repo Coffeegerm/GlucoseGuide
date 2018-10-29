@@ -22,12 +22,12 @@ apply plugin: 'realm-android'
 
 android {
   kapt { generateStubs = true }
-  compileSdkVersion 27
-  buildToolsVersion '27.0.3'
+  compileSdkVersion 28
+  buildToolsVersion '28.0.3'
   defaultConfig {
     applicationId "io.github.coffeegerm.glucose_guide"
     minSdkVersion 21
-    targetSdkVersion 27
+    targetSdkVersion 28
     versionCode 11
     versionName "4.0"
     multiDexEnabled true
@@ -66,10 +66,7 @@ dependencies {
   implementation "com.google.dagger:dagger:$dagger_version"
   kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-  implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
-
   implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-  implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
 }
 repositories {
   mavenCentral()

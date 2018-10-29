@@ -64,7 +64,6 @@
     <item name="blood_glucose_image">@drawable/ic_finger_dark</item>
     <item name="carbs_image">@drawable/ic_food_dark</item>
     <item name="insulin_image">@drawable/ic_syringe_dark</item>
-    <item name="bedtime_image">@drawable/bedtime_dark</item>
 
     <item name="list_item_sep">@color/white</item>
 

@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity() {
     syringe.inject(this)
     if (sharedPreferencesManager.getBoolean(Constants.PREF_DARK_MODE)) setTheme(R.style.AppTheme_Dark)
     setContentView(R.layout.activity_main)
-    bottom_navigation.onNavigationItemSelectedListener = NavigationOnItemSelectedListener(supportFragmentManager, applicationContext)
-    bottom_navigation.enableShiftingMode(false)
-    bottom_navigation.enableItemShiftingMode(false)
+    bottom_navigation.setOnNavigationItemSelectedListener(NavigationOnItemSelectedListener(supportFragmentManager,this))
   }
 }
